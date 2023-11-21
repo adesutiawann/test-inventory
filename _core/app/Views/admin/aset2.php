@@ -25,7 +25,12 @@
             <div class="alert alert-success">
                 <?= session()->getFlashData('success') ?>
             </div>
-        <?php endif ?>       
+        <?php endif ?>     
+        
+        
+        <div class="col-md-2 ">
+                    <input type="submit" class="btn btn-primary text-white" value="Tambah">
+                </div>
     </div>
 </div>
 
@@ -52,6 +57,8 @@
                 </thead>
                 <tbody></tbody>
             </table>
+        </div>
+                            </div></div></div>
         </div>
     </div>
 </div>
