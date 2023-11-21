@@ -15,6 +15,7 @@ class AsetModel extends Model
     protected $allowedFields    = ['id','tgl_masuk','tgl_keluar','manufacture','type','prosesor',
     'generasi','serial','hdd','ram','rincian','status','stock','kondisi','ket'];
 
+    
     protected $validationRules = [
       //  'Aset' => 'required|is_unique[tb_aset.aset,id,{id}]',
     ];

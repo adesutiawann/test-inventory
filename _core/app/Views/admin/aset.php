@@ -157,8 +157,7 @@
                 <thead>
                     <tr>
                         <th>NO.</th>
-                        <th>Tgl Masuk</th>
-                        <th>Tgl Keluar</th>
+                        <th  width="800px">Tanggal</th>
                         <th>Manufaktur</th>
                         <th>Type</th>
                         <th>Prosesor</th>
@@ -198,52 +197,19 @@
                     orderable: false
                 },
                 {
-                    data: 'tgl_masuk'
+        data: null,
+        render: function (data, type, row) {
+            // Assuming 'tgl_masuk' and 'tgl_keluar' are Date objects or date strings
+            return 'Masuk  :'+ row.tgl_masuk + ' <br> Keluar  :' + row.tgl_keluar;
+        }
+    }, 
+                 {
+                    data: 'nama'
+                    
+                }, {
+                    data: 'namax'
                     
                 }, 
-                {
-                    data: 'tgl_keluar'
-                },
-                {
-                    data: 'manufacture'
-                },
-                {
-                    data: 'type'
-                    
-                },
-                {
-                    data: 'prosesor'
-                },
-                {
-                    data: 'generasi'
-                }, 
-                {
-                    data: 'serial'
-                },
-                {
-                    data: 'hdd'
-                },
-                {
-                    data: 'ram'
-                    
-                },
-                {
-                    data: 'rincian'
-                },
-                {
-                    data: 'status'
-                },
-                {
-                    data: 'stock'
-                    
-                },
-                {
-                    data: 'kondisi'
-                },
-                {
-                    data: 'ket'
-                },
-               
                 {
                     data: 'action',
                     orderable: false

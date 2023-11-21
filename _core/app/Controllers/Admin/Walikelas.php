@@ -43,7 +43,7 @@ class Walikelas extends BaseController
     {
         $db = db_connect();
         $builder = $db->table('walikelas')
-            ->select('walikelas.id, walikelas.kelas, admin.nama')
+            ->select('walikelas.id,walikelas.kelas, admin.nama')
             ->join('admin', 'admin.id=walikelas.guru')
             ->orderBy('walikelas.id', 'desc');
 
