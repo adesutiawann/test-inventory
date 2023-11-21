@@ -1,0 +1,7 @@
+User-agent: *
+Disallow: 
+
+
+https://wa511.api-wa.my.id/login/
+email/login: fatoni.pino@gmail.com
+pass: onesender12345!
