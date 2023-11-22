@@ -31,7 +31,7 @@
 
         <div class="row ">
             <div class="col-6 ml-4">
-                <a href="<?= base_url('admin/aset/add') ?>" class="btn app-btn-primary mb-3 text-white"><i class="fas fa-plus"></i> Tambah Asets</a>
+                <a href="<?= base_url('admin/suratkeluar/add') ?>" class="btn app-btn-primary mb-3 text-white"><i class="fas fa-plus"></i> Tambah Asets</a>
 
             </div>
             <div class="col-3">
@@ -77,11 +77,11 @@
                 <thead>
                     <tr>
                         <th>NO.</th>
-                        <th>Serial</th>
-                        <th>Manufacture</th>
-                        <th>Spesifikasi</th>
+                        <th>Nomor</th>
+                        <th>Kepada</th>
+                        <th>Dari</th>
 
-                        <th>Status</th>
+                        <th>Prihal</th>
                         <th>Tanggal</th>
 
                         <th>Keterangan</th>

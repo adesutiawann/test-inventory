@@ -15,12 +15,13 @@
 
     <!-- FontAwesome JS-->
     <script defer src="<?= base_url() ?>/assets/plugins/fontawesome/js/all.min.js"></script>
-    
- 
+
+
     <!-- App CSS -->
     <link id="theme-style" rel="stylesheet" href="<?= base_url() ?>/assets/css/portal.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
     <?= $this->renderSection('css') ?>
+    <!-- App DATA TABEL -->
 
 </head>
 
@@ -44,40 +45,42 @@
                         <div class="app-utilities col-auto">
 
                             <div class="app-utility-item app-user-dropdown dropdown">
-                           
+
                                 <a class="dropdown-toggle" id="user-dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">
-                                <span class="text-dark pr-4">Hi,<strong>Ade Sutiawan</strong></span>
-                                    </a>
+                                    <span class="text-dark pr-4">Hi,<strong>Ade Sutiawan</strong></span>
+                                </a>
                                 <ul class="dropdown-menu" aria-labelledby="user-dropdown-toggle">
-                                    <li>                                   
-                                  
-                                    <a class="dropdown-item" href="<?= base_url('admin/profile') ?>">
-                                    <span class="nav-icon">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-check" viewBox="0 0 16 16">
-                                            <path d="M6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H1s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C9.516 10.68 8.289 10 6 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z" />
-                                            <path fill-rule="evenodd" d="M15.854 5.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L12.5 7.793l2.646-2.647a.5.5 0 0 1 .708 0z" />
-                                        </svg>
-                                    </span>  Update Profile</a></li>
                                     <li>
-                                    
-                                    <a class="dropdown-item" href="<?= base_url('admin/password') ?>">
-                                    <span class="nav-icon">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-shield-lock-fill" viewBox="0 0 16 16">
-                                            <path fill-rule="evenodd" d="M8 0c-.69 0-1.843.265-2.928.56-1.11.3-2.229.655-2.887.87a1.54 1.54 0 0 0-1.044 1.262c-.596 4.477.787 7.795 2.465 9.99a11.777 11.777 0 0 0 2.517 2.453c.386.273.744.482 1.048.625.28.132.581.24.829.24s.548-.108.829-.24a7.159 7.159 0 0 0 1.048-.625 11.775 11.775 0 0 0 2.517-2.453c1.678-2.195 3.061-5.513 2.465-9.99a1.541 1.541 0 0 0-1.044-1.263 62.467 62.467 0 0 0-2.887-.87C9.843.266 8.69 0 8 0zm0 5a1.5 1.5 0 0 1 .5 2.915l.385 1.99a.5.5 0 0 1-.491.595h-.788a.5.5 0 0 1-.49-.595l.384-1.99A1.5 1.5 0 0 1 8 5z" />
-                                        </svg>
-                                    </span>
-                                      Ganti Password</a></li>
+
+                                        <a class="dropdown-item" href="<?= base_url('admin/profile') ?>">
+                                            <span class="nav-icon">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-check" viewBox="0 0 16 16">
+                                                    <path d="M6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm2-3a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm4 8c0 1-1 1-1 1H1s-1 0-1-1 1-4 6-4 6 3 6 4zm-1-.004c-.001-.246-.154-.986-.832-1.664C9.516 10.68 8.289 10 6 10c-2.29 0-3.516.68-4.168 1.332-.678.678-.83 1.418-.832 1.664h10z" />
+                                                    <path fill-rule="evenodd" d="M15.854 5.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L12.5 7.793l2.646-2.647a.5.5 0 0 1 .708 0z" />
+                                                </svg>
+                                            </span> Update Profile</a>
+                                    </li>
+                                    <li>
+
+                                        <a class="dropdown-item" href="<?= base_url('admin/password') ?>">
+                                            <span class="nav-icon">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-shield-lock-fill" viewBox="0 0 16 16">
+                                                    <path fill-rule="evenodd" d="M8 0c-.69 0-1.843.265-2.928.56-1.11.3-2.229.655-2.887.87a1.54 1.54 0 0 0-1.044 1.262c-.596 4.477.787 7.795 2.465 9.99a11.777 11.777 0 0 0 2.517 2.453c.386.273.744.482 1.048.625.28.132.581.24.829.24s.548-.108.829-.24a7.159 7.159 0 0 0 1.048-.625 11.775 11.775 0 0 0 2.517-2.453c1.678-2.195 3.061-5.513 2.465-9.99a1.541 1.541 0 0 0-1.044-1.263 62.467 62.467 0 0 0-2.887-.87C9.843.266 8.69 0 8 0zm0 5a1.5 1.5 0 0 1 .5 2.915l.385 1.99a.5.5 0 0 1-.491.595h-.788a.5.5 0 0 1-.49-.595l.384-1.99A1.5 1.5 0 0 1 8 5z" />
+                                                </svg>
+                                            </span>
+                                            Ganti Password</a>
+                                    </li>
                                     <li>
                                         <hr class="dropdown-divider">
                                     </li>
                                     <li><a class="dropdown-item" href="<?= base_url('auth/logout') ?>">
-                                    <span class="nav-icon pl-2">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-right" viewBox="0 0 16 16">
-                                            <path fill-rule="evenodd" d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0v2z" />
-                                            <path fill-rule="evenodd" d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z" />
-                                        </svg>
-                                    </span>
-                                    Keluar</a></li>
+                                            <span class="nav-icon pl-2">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-right" viewBox="0 0 16 16">
+                                                    <path fill-rule="evenodd" d="M10 12.5a.5.5 0 0 1-.5.5h-8a.5.5 0 0 1-.5-.5v-9a.5.5 0 0 1 .5-.5h8a.5.5 0 0 1 .5.5v2a.5.5 0 0 0 1 0v-2A1.5 1.5 0 0 0 9.5 2h-8A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h8a1.5 1.5 0 0 0 1.5-1.5v-2a.5.5 0 0 0-1 0v2z" />
+                                                    <path fill-rule="evenodd" d="M15.854 8.354a.5.5 0 0 0 0-.708l-3-3a.5.5 0 0 0-.708.708L14.293 7.5H5.5a.5.5 0 0 0 0 1h8.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3z" />
+                                                </svg>
+                                            </span>
+                                            Keluar</a></li>
                                 </ul>
                             </div>
                             <!--//app-user-dropdown-->
@@ -119,15 +122,15 @@
                             </a>
                             <!--//nav-link-->
                         </li>
-                    
 
-                           <li class="nav-item">
+
+                        <li class="nav-item">
                             <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
                             <a class="nav-link <?= ($menu == 'aset') ? 'active' : '' ?>"" href=" <?= base_url('admin/aset') ?>">
-                            <span class="nav-icon">			    
+                                <span class="nav-icon">
 
-                                <i class="fa-solid fa-boxes-stacked"></i>
-						         </span>
+                                    <i class="fa-solid fa-boxes-stacked"></i>
+                                </span>
                                 <span class="nav-link-text">Inventory</span>
                             </a>
                             <!--//nav-link-->
@@ -137,15 +140,15 @@
                         <li class="nav-item has-submenu">
                             <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
                             <a class="nav-link submenu-toggle" href="#" data-bs-toggle="collapse" data-bs-target="#submenu-5" aria-expanded="false" aria-controls="submenu-2">
-                            <span class="nav-icon">
-                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-card-list" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd" d="M14.5 3h-13a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h13a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z"></path>
-                                <path fill-rule="evenodd" d="M5 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 5 8zm0-2.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm0 5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5z"></path>
-                                <circle cx="3.5" cy="5.5" r=".5"></circle>
-                                <circle cx="3.5" cy="8" r=".5"></circle>
-                                <circle cx="3.5" cy="10.5" r=".5"></circle>
+                                <span class="nav-icon">
+                                    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-card-list" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd" d="M14.5 3h-13a.5.5 0 0 0-.5.5v9a.5.5 0 0 0 .5.5h13a.5.5 0 0 0 .5-.5v-9a.5.5 0 0 0-.5-.5zm-13-1A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13z"></path>
+                                        <path fill-rule="evenodd" d="M5 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 5 8zm0-2.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm0 5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5z"></path>
+                                        <circle cx="3.5" cy="5.5" r=".5"></circle>
+                                        <circle cx="3.5" cy="8" r=".5"></circle>
+                                        <circle cx="3.5" cy="10.5" r=".5"></circle>
 
-                                </svg>
+                                    </svg>
                                 </span>
                                 <span class="nav-link-text">SURAT</span>
                                 <span class="submenu-arrow">
@@ -156,16 +159,16 @@
                                 <!--//submenu-arrow-->
                             </a>
 
-                            
+
                             <!--//nav-link-->
-                            <div id="submenu-5" class="collapse submenu submenu-5 <?= ($menu == 'masuk' || $menu == 'keluar') ? 'show' : '' ?>"" data-bs-parent=" #menu-accordion">
+                            <div id="submenu-5" class="collapse submenu submenu-5 <?= ($menu == 'sm' || $menu == 'sk') ? 'show' : '' ?>"" data-bs-parent=" #menu-accordion">
                                 <ul class="submenu-list list-unstyled">
-                                   
-                                
+
+
                                     <li class="submenu-item">
                                         <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-                                        <a class="submenu-link <?= ($menu == 'masuk') ? 'active' : '' ?>" href=" <?= base_url('admin/walikelas') ?>">
-                                        
+                                        <a class="submenu-link <?= ($menu == 'sm') ? 'active' : '' ?>" href=" <?= base_url('admin/suratmasuk') ?>">
+
                                             <span class="nav-link-text">Surat Masuk</span>
                                         </a>
                                         <!--//nav-link-->
@@ -173,54 +176,28 @@
 
                                     <li class="submenu-item">
                                         <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-                                         <a class="submenu-link <?= ($menu == 'keluar') ? 'active' : '' ?>"" href=" <?= base_url('admin/pembina') ?>">
-                                          
+                                        <a class="submenu-link <?= ($menu == 'sk') ? 'active' : '' ?>"" href=" <?= base_url('admin/suratkeluar') ?>">
+
                                             <span class="nav-link-text">Surat Keluar</span>
                                         </a>
                                         <!--//nav-link-->
                                     </li>
-                                 
-                                   
-
-                                   
 
                                 </ul>
                             </div>
                         </li>
 
-                    
-                        <li class="nav-item" hidden>
-                            <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-                            <a class="nav-link <?= ($menu == 'siswa') ? 'active' : '' ?>"" href=" <?= base_url('admin/siswa') ?>">
-                                <span class="nav-icon">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-people-fill" viewBox="0 0 16 16">
-                                        <path d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1H7zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
-                                        <path fill-rule="evenodd" d="M5.216 14A2.238 2.238 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.325 6.325 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1h4.216z" />
-                                        <path d="M4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z" />
-                                    </svg>
-                                </span>
-                                <span class="nav-link-text">Siswa</span>
-                            </a>
-                            <!--//nav-link-->
-                        </li>
-                       
 
-                        <li class="nav-item" hidden>
-                            <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-                            <a class="nav-link <?= ($menu == 'jadwal') ? 'active' : '' ?>"" href=" <?= base_url('admin/jadwal') ?>">
-                            <i class="bi-calendar-week nav-icon"></i>
-                                <span class="nav-link-text">Jadwal Mengajar</span>
-                            </a>
-                            <!--//nav-link-->
+
+
+
+                        <!--//nav-link-->
                         </li>
 
-                          <!--//nav-link-->
-                          </li>
-
-                          <li class="nav-item has-submenu" hidden>
+                        <li class="nav-item has-submenu" hidden>
                             <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
                             <a class="nav-link submenu-toggle" href="#" data-bs-toggle="collapse" data-bs-target="#submenu-2" aria-expanded="false" aria-controls="submenu-2">
-                            <span class="nav-icon">
+                                <span class="nav-icon">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-lines-fill" viewBox="0 0 16 16">
                                         <path d="M6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm-5 6s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zM11 3.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5zm.5 2.5a.5.5 0 0 0 0 1h4a.5.5 0 0 0 0-1h-4zm2 3a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1h-2zm0 3a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1h-2z" />
                                     </svg>
@@ -234,16 +211,16 @@
                                 <!--//submenu-arrow-->
                             </a>
 
-                            
+
                             <!--//nav-link-->
                             <div id="submenu-2" class="collapse submenu submenu-2 <?= ($menu == 'walikelas' || $menu == 'pembina' || $menu == 'piket' || $menu == 'bp') ? 'show' : '' ?>"" data-bs-parent=" #menu-accordion">
                                 <ul class="submenu-list list-unstyled">
-                                   
-                                
+
+
                                     <li class="submenu-item">
                                         <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
                                         <a class="submenu-link <?= ($menu == 'walikelas') ? 'active' : '' ?>" href=" <?= base_url('admin/walikelas') ?>">
-                                        
+
                                             <span class="nav-link-text">Tentukan Wali Kelas</span>
                                         </a>
                                         <!--//nav-link-->
@@ -251,46 +228,46 @@
 
                                     <li class="submenu-item">
                                         <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-                                         <a class="submenu-link <?= ($menu == 'pembina') ? 'active' : '' ?>"" href=" <?= base_url('admin/pembina') ?>">
-                                          
+                                        <a class="submenu-link <?= ($menu == 'pembina') ? 'active' : '' ?>"" href=" <?= base_url('admin/pembina') ?>">
+
                                             <span class="nav-link-text">Tentukan Pembina Extra</span>
                                         </a>
                                         <!--//nav-link-->
                                     </li>
                                     <li class="submenu-item">
                                         <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-                                         <a class="submenu-link <?= ($menu == 'piket') ? 'active' : '' ?>"" href=" <?= base_url('admin/piket') ?>">
-                                        
+                                        <a class="submenu-link <?= ($menu == 'piket') ? 'active' : '' ?>"" href=" <?= base_url('admin/piket') ?>">
+
                                             <span class="nav-link-text">Tentukan Guru Piket</span>
                                         </a>
                                         <!--//nav-link-->
                                     </li>
                                     <li class="submenu-item">
                                         <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-                                         <a class="submenu-link <?= ($menu == 'bp') ? 'active' : '' ?>"" href=" <?= base_url('admin/bp') ?>">
-                                            
+                                        <a class="submenu-link <?= ($menu == 'bp') ? 'active' : '' ?>"" href=" <?= base_url('admin/bp') ?>">
+
                                             <span class="nav-link-text">Tentukan Petugas BP/BK</span>
                                         </a>
-                                    
+
                                     </li>
 
                                 </ul>
                             </div>
                         </li>
-  <!--//nav-link-->
+                        <!--//nav-link-->
 
-                        
-                            <!--//nav-item-->
 
-                            <li class="nav-item has-submenu">
+                        <!--//nav-item-->
+
+                        <li class="nav-item has-submenu">
                             <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
                             <a class="nav-link submenu-toggle" href="#" data-bs-toggle="collapse" data-bs-target="#submenu-2" aria-expanded="false" aria-controls="submenu-2">
-                            <span class="nav-icon">
-						        <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-folder" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-  <path d="M9.828 4a3 3 0 0 1-2.12-.879l-.83-.828A1 1 0 0 0 6.173 2H2.5a1 1 0 0 0-1 .981L1.546 4h-1L.5 3a2 2 0 0 1 2-2h3.672a2 2 0 0 1 1.414.586l.828.828A2 2 0 0 0 9.828 3v1z"></path>
-  <path fill-rule="evenodd" d="M13.81 4H2.19a1 1 0 0 0-.996 1.09l.637 7a1 1 0 0 0 .995.91h10.348a1 1 0 0 0 .995-.91l.637-7A1 1 0 0 0 13.81 4zM2.19 3A2 2 0 0 0 .198 5.181l.637 7A2 2 0 0 0 2.826 14h10.348a2 2 0 0 0 1.991-1.819l.637-7A2 2 0 0 0 13.81 3H2.19z"></path>
-</svg>
-						         </span>
+                                <span class="nav-icon">
+                                    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-folder" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                        <path d="M9.828 4a3 3 0 0 1-2.12-.879l-.83-.828A1 1 0 0 0 6.173 2H2.5a1 1 0 0 0-1 .981L1.546 4h-1L.5 3a2 2 0 0 1 2-2h3.672a2 2 0 0 1 1.414.586l.828.828A2 2 0 0 0 9.828 3v1z"></path>
+                                        <path fill-rule="evenodd" d="M13.81 4H2.19a1 1 0 0 0-.996 1.09l.637 7a1 1 0 0 0 .995.91h10.348a1 1 0 0 0 .995-.91l.637-7A1 1 0 0 0 13.81 4zM2.19 3A2 2 0 0 0 .198 5.181l.637 7A2 2 0 0 0 2.826 14h10.348a2 2 0 0 0 1.991-1.819l.637-7A2 2 0 0 0 13.81 3H2.19z"></path>
+                                    </svg>
+                                </span>
                                 <span class="nav-link-text">Master Data</span>
                                 <span class="submenu-arrow">
                                     <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-chevron-down" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -300,16 +277,16 @@
                                 <!--//submenu-arrow-->
                             </a>
 
-                            
+
                             <!--//nav-link-->
                             <div id="submenu-2" class="collapse submenu submenu-2 <?= ($menu == 'walikelas' || $menu == 'pembina' || $menu == 'piket' || $menu == 'bp') ? 'show' : '' ?>"" data-bs-parent=" #menu-accordion">
                                 <ul class="submenu-list list-unstyled">
-                                   
-                                
+
+
                                     <li class="submenu-item">
                                         <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
                                         <a class="submenu-link <?= ($menu == 'walikelas') ? 'active' : '' ?>" href=" <?= base_url('admin/manufacture') ?>">
-                                        
+
                                             <span class="nav-link-text">Manufaktur</span>
                                         </a>
                                         <!--//nav-link-->
@@ -317,85 +294,85 @@
 
                                     <li class="submenu-item">
                                         <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-                                         <a class="submenu-link <?= ($menu == 'type') ? 'active' : '' ?>"" href=" <?= base_url('admin/type') ?>">
-                                          
+                                        <a class="submenu-link <?= ($menu == 'type') ? 'active' : '' ?>"" href=" <?= base_url('admin/type') ?>">
+
                                             <span class="nav-link-text">Type</span>
                                         </a>
                                         <!--//nav-link-->
                                     </li>
                                     <li class="submenu-item">
                                         <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-                                         <a class="submenu-link <?= ($menu == 'prosesor') ? 'active' : '' ?>"" href=" <?= base_url('admin/prosesor') ?>">
-                                        
+                                        <a class="submenu-link <?= ($menu == 'prosesor') ? 'active' : '' ?>"" href=" <?= base_url('admin/prosesor') ?>">
+
                                             <span class="nav-link-text">Prosesor</span>
                                         </a>
                                         <!--//nav-link-->
                                     </li>
                                     <li class="submenu-item">
                                         <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-                                         <a class="submenu-link <?= ($menu == 'generasi') ? 'active' : '' ?>"" href=" <?= base_url('admin/generasi') ?>">
-                                            
+                                        <a class="submenu-link <?= ($menu == 'generasi') ? 'active' : '' ?>"" href=" <?= base_url('admin/generasi') ?>">
+
                                             <span class="nav-link-text">Generasi</span>
                                         </a>
-                                    
+
                                     </li>
                                     <li class="submenu-item">
                                         <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-                                         <a class="submenu-link <?= ($menu == 'hdd') ? 'active' : '' ?>"" href=" <?= base_url('admin/hdd') ?>">
-                                            
+                                        <a class="submenu-link <?= ($menu == 'hdd') ? 'active' : '' ?>"" href=" <?= base_url('admin/hdd') ?>">
+
                                             <span class="nav-link-text">HDD/SSD</span>
                                         </a>
-                                    
+
                                     </li>
                                     <li class="submenu-item">
                                         <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-                                         <a class="submenu-link <?= ($menu == 'ram') ? 'active' : '' ?>"" href=" <?= base_url('admin/ram') ?>">
-                                            
+                                        <a class="submenu-link <?= ($menu == 'ram') ? 'active' : '' ?>"" href=" <?= base_url('admin/ram') ?>">
+
                                             <span class="nav-link-text">RAM</span>
                                         </a>
-                                    
+
                                     </li>
 
                                     <li class="submenu-item">
                                         <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-                                         <a class="submenu-link <?= ($menu == 'rincian') ? 'active' : '' ?>"" href=" <?= base_url('admin/rincian') ?>">
-                                            
+                                        <a class="submenu-link <?= ($menu == 'rincian') ? 'active' : '' ?>"" href=" <?= base_url('admin/rincian') ?>">
+
                                             <span class="nav-link-text">Rincian</span>
                                         </a>
-                                    
+
                                     </li>
                                     <li class="submenu-item">
                                         <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-                                         <a class="submenu-link <?= ($menu == 'status') ? 'active' : '' ?>"" href=" <?= base_url('admin/status') ?>">
-                                            
+                                        <a class="submenu-link <?= ($menu == 'status') ? 'active' : '' ?>"" href=" <?= base_url('admin/status') ?>">
+
                                             <span class="nav-link-text">Setatus</span>
                                         </a>
-                                    
+
                                     </li>
 
                                     <li class="submenu-item">
                                         <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-                                         <a class="submenu-link <?= ($menu == 'stok') ? 'active' : '' ?>"" href=" <?= base_url('admin/stok') ?>">
-                                            
+                                        <a class="submenu-link <?= ($menu == 'stok') ? 'active' : '' ?>"" href=" <?= base_url('admin/stok') ?>">
+
                                             <span class="nav-link-text">Stok</span>
                                         </a>
-                                    
+
                                     </li>
                                     <li class="submenu-item">
                                         <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-                                         <a class="submenu-link <?= ($menu == 'kondisi') ? 'active' : '' ?>"" href=" <?= base_url('admin/kondisi') ?>">
-                                            
+                                        <a class="submenu-link <?= ($menu == 'kondisi') ? 'active' : '' ?>"" href=" <?= base_url('admin/kondisi') ?>">
+
                                             <span class="nav-link-text">Kondisi</span>
                                         </a>
-                                    
+
                                     </li>
 
                                 </ul>
                             </div>
                         </li>
-                           <!--//nav-link-->
-                           
-                        <li class="nav-item" >
+                        <!--//nav-link-->
+
+                        <li class="nav-item">
                             <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
                             <a class="nav-link <?= ($menu == 'panggilan') ? 'active' : '' ?>"" href=" <?= base_url('admin/panggilan') ?>">
                                 <span class="nav-icon">
@@ -422,49 +399,9 @@
                             </a> -->
                             <!--//nav-link-->
                         </li>
-                        <li class="nav-item has-submenu" hidden >
-                            <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-                            <a class="nav-link submenu-toggle" href="#" data-bs-toggle="collapse" data-bs-target="#submenu-1" aria-expanded="false" aria-controls="submenu-1">
-                                <span class="nav-icon">
-                                    <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-list-check" viewBox="0 0 16 16">
-                                        <path fill-rule="evenodd" d="M5 11.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zM3.854 2.146a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 1 1 .708-.708L2 3.293l1.146-1.147a.5.5 0 0 1 .708 0zm0 4a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 1 1 .708-.708L2 7.293l1.146-1.147a.5.5 0 0 1 .708 0zm0 4a.5.5 0 0 1 0 .708l-1.5 1.5a.5.5 0 0 1-.708 0l-.5-.5a.5.5 0 0 1 .708-.708l.146.147 1.146-1.147a.5.5 0 0 1 .708 0z" />
-                                    </svg>
-                                </span>
-                                <span class="nav-link-text">Laporan Absensi</span>
-                                <span class="submenu-arrow">
-                                    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-chevron-down" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                        <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z" />
-                                    </svg>
-                                </span>
-                                <!--//submenu-arrow-->
-                            </a>
-                            <!--//nav-link-->
-                            <div id="submenu-1" class="collapse submenu submenu-1 <?= ($menu == 'laporan' || $menu == 'laporan_all' || $menu == 'laporan_semester' || $menu == 'laporan_siswa') ? 'show' : '' ?>"" data-bs-parent=" #menu-accordion">
-                                <ul class="submenu-list list-unstyled">
-                                    <li class="submenu-item"><a class="submenu-link <?= ($menu == 'laporan') ? 'active' : '' ?>" href="<?= base_url('admin/laporan') ?>">Laporan per Kelas</a></li>
-                                    <li class="submenu-item"><a class="submenu-link <?= ($menu == 'laporan_all') ? 'active' : '' ?>" href="<?= base_url('admin/laporan_all') ?>">Laporan Semua Kelas</a></li>
-                                    <li class="submenu-item"><a class="submenu-link <?= ($menu == 'laporan_semester') ? 'active' : '' ?>" href="<?= base_url('admin/laporan_semester') ?>">Laporan per Semester</a></li>
-                                    <li class="submenu-item"><a class="submenu-link <?= ($menu == 'laporan_siswa') ? 'active' : '' ?>" href="<?= base_url('admin/laporan_siswa') ?>">Laporan Siswa</a></li>
-                                    <li class="submenu-item"><a class="submenu-link <?= ($menu == 'laporan_wali') ? 'active' : '' ?>" href="<?= base_url('admin/laporan_wali') ?>">Laporan Wali Kelas</a></li>
 
-                                </ul>
-                            </div>
-                        </li>
                         <!--//nav-item-->
-                        <li class="nav-item" hidden>
-                            <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-                            <a class="nav-link <?= ($menu == 'laporan_extra') ? 'active' : '' ?>"" href=" <?= base_url('admin/laporan_extra') ?>">
-                                <span class="nav-icon">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-card-image" viewBox="0 0 16 16">
-                                        <path d="M6.002 5.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z" />
-                                        <path d="M1.5 2A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13zm13 1a.5.5 0 0 1 .5.5v6l-3.775-1.947a.5.5 0 0 0-.577.093l-3.71 3.71-2.66-1.772a.5.5 0 0 0-.63.062L1.002 12v.54A.505.505 0 0 1 1 12.5v-9a.5.5 0 0 1 .5-.5h13z" />
-                                    </svg>
-                                </span>
-                                <span class="nav-link-text">Laporan Kegiatan Extra</span>
-                            </a>
-                            <!--//nav-link-->
-                        </li>
+
                         <li class="nav-item">
                             <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
                             <a class="nav-link <?= ($menu == 'user') ? 'active' : '' ?>"" href=" <?= base_url('admin/user') ?>">
@@ -501,23 +438,23 @@
                 <div class="app-sidepanel-footer">
                     <nav class="app-nav app-nav-footer">
                         <ul class="app-menu footer-menu list-unstyled">
-                           
+
                             <!--//nav-item-->
-                           
+
                             <!--//nav-item-->
                             <li class="nav-item">
-                            <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-                            <a class="nav-link <?= ($menu == 'setting') ? 'active' : '' ?>"" href=" <?= base_url('admin/setting') ?>">
-                                <span class="nav-icon">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-gear" viewBox="0 0 16 16">
-                                        <path d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492zM5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0z" />
-                                        <path d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52l-.094-.319zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115l.094-.319z" />
-                                    </svg>
-                                </span>
-                                <span class="nav-link-text">Setting</span>
-                            </a>
-                            <!--//nav-link-->
-                        </li>
+                                <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
+                                <a class="nav-link <?= ($menu == 'setting') ? 'active' : '' ?>"" href=" <?= base_url('admin/setting') ?>">
+                                    <span class="nav-icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-gear" viewBox="0 0 16 16">
+                                            <path d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492zM5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0z" />
+                                            <path d="M9.796 1.343c-.527-1.79-3.065-1.79-3.592 0l-.094.319a.873.873 0 0 1-1.255.52l-.292-.16c-1.64-.892-3.433.902-2.54 2.541l.159.292a.873.873 0 0 1-.52 1.255l-.319.094c-1.79.527-1.79 3.065 0 3.592l.319.094a.873.873 0 0 1 .52 1.255l-.16.292c-.892 1.64.901 3.434 2.541 2.54l.292-.159a.873.873 0 0 1 1.255.52l.094.319c.527 1.79 3.065 1.79 3.592 0l.094-.319a.873.873 0 0 1 1.255-.52l.292.16c1.64.893 3.434-.902 2.54-2.541l-.159-.292a.873.873 0 0 1 .52-1.255l.319-.094c1.79-.527 1.79-3.065 0-3.592l-.319-.094a.873.873 0 0 1-.52-1.255l.16-.292c.893-1.64-.902-3.433-2.541-2.54l-.292.159a.873.873 0 0 1-1.255-.52l-.094-.319zm-2.633.283c.246-.835 1.428-.835 1.674 0l.094.319a1.873 1.873 0 0 0 2.693 1.115l.291-.16c.764-.415 1.6.42 1.184 1.185l-.159.292a1.873 1.873 0 0 0 1.116 2.692l.318.094c.835.246.835 1.428 0 1.674l-.319.094a1.873 1.873 0 0 0-1.115 2.693l.16.291c.415.764-.42 1.6-1.185 1.184l-.291-.159a1.873 1.873 0 0 0-2.693 1.116l-.094.318c-.246.835-1.428.835-1.674 0l-.094-.319a1.873 1.873 0 0 0-2.692-1.115l-.292.16c-.764.415-1.6-.42-1.184-1.185l.159-.291A1.873 1.873 0 0 0 1.945 8.93l-.319-.094c-.835-.246-.835-1.428 0-1.674l.319-.094A1.873 1.873 0 0 0 3.06 4.377l-.16-.292c-.415-.764.42-1.6 1.185-1.184l.292.159a1.873 1.873 0 0 0 2.692-1.115l.094-.319z" />
+                                        </svg>
+                                    </span>
+                                    <span class="nav-link-text">Setting</span>
+                                </a>
+                                <!--//nav-link-->
+                            </li>
                             <!--//nav-item-->
                         </ul>
                         <!--//footer-menu-->

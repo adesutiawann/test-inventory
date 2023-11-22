@@ -21,10 +21,10 @@ use App\Models\StokModel;
 use App\Models\KondisiModel;
 //use App\Models\PelajaranModel;
 
-class aset extends BaseController
+class Suratkeluar extends BaseController
 {
     protected $admin;
-    protected $aset;
+    protected $suratkeluar;
 
     protected $manufacture;
     protected $type;
@@ -40,7 +40,7 @@ class aset extends BaseController
     public function __construct()
     {
         $this->admin     = new AdminModel();
-        $this->aset = new AsetModel();
+        $this->suratkeluar = new AsetModel();
         $this->siswa     = new SiswaModel();
 
         // $this->pelajaran     = new PelajaranModel();
@@ -64,7 +64,7 @@ class aset extends BaseController
         }
 
         $data = [
-            'title'   => 'Aset',
+            'title'   => 'Surat Keluar',
             'segment' => $this->request->uri->getSegments(),
             'admin'   => $this->admin->find(session()->get('id')),
             'nama'    => $this->manufacture->orderBy('nama', 'asc')->findAll(),
@@ -80,7 +80,7 @@ class aset extends BaseController
 
         ];
 
-        return view('admin/aset', $data);
+        return view('admin/suratkeluar', $data);
     }
 
     public function add()
@@ -90,7 +90,7 @@ class aset extends BaseController
         }
 
         $data = [
-            'title'   => 'Aset',
+            'title'   => 'Surat Keluar',
             'segment' => $this->request->uri->getSegments(),
             'admin'   => $this->admin->find(session()->get('id')),
             'nama'    => $this->manufacture->orderBy('nama', 'asc')->findAll(),
@@ -107,17 +107,17 @@ class aset extends BaseController
 
         ];
 
-        return view('admin/asetadd', $data);
+        return view('admin/suratkeluaradd', $data);
     }
 
     public function data()
     {
         // Menghubungkan ke database
         $db = db_connect();
-        // Membuat instance query builder untuk tabel 'tb_aset'      
-        $builder = $db->table('tb_aset')
+        // Membuat instance query builder untuk tabel 'tb_suratkeluar'      
+        $builder = $db->table('tb_suratkeluar')
             ->select(
-                'tb_aset.id,tb_aset.tgl_masuk,tb_aset.tgl_keluar,tb_aset.serial,tb_aset.ket,
+                'tb_suratkeluar.id,tb_suratkeluar.tgl_masuk,tb_suratkeluar.tgl_keluar,tb_suratkeluar.serial,tb_suratkeluar.ket,
                 tb_hdd.nama as hdd ,
                 tb_manufacture.nama as manufacture,
                 tb_prosesor.nama as prosesor,
@@ -131,28 +131,28 @@ class aset extends BaseController
 
             )
 
-            ->join('tb_hdd', 'tb_hdd.id = tb_aset.hdd')
-            ->join('tb_manufacture', 'tb_manufacture.id = tb_aset.manufacture')
-            ->join('tb_type', 'tb_type.id = tb_aset.type')
-            ->join('tb_prosesor', 'tb_prosesor.id = tb_aset.prosesor')
-            ->join('tb_generasi', 'tb_generasi.id = tb_aset.generasi')
-            ->join('tb_ram', 'tb_ram.id = tb_aset.ram')
-            ->join('tb_rincian', 'tb_rincian.id = tb_aset.rincian')
-            ->join('tb_status', 'tb_status.id = tb_aset.status')
-            ->join('tb_stok', 'tb_stok.id = tb_aset.stock')
-            ->join('tb_kondisi', 'tb_kondisi.id = tb_aset.kondisi')
+            ->join('tb_hdd', 'tb_hdd.id = tb_suratkeluar.hdd')
+            ->join('tb_manufacture', 'tb_manufacture.id = tb_suratkeluar.manufacture')
+            ->join('tb_type', 'tb_type.id = tb_suratkeluar.type')
+            ->join('tb_prosesor', 'tb_prosesor.id = tb_suratkeluar.prosesor')
+            ->join('tb_generasi', 'tb_generasi.id = tb_suratkeluar.generasi')
+            ->join('tb_ram', 'tb_ram.id = tb_suratkeluar.ram')
+            ->join('tb_rincian', 'tb_rincian.id = tb_suratkeluar.rincian')
+            ->join('tb_status', 'tb_status.id = tb_suratkeluar.status')
+            ->join('tb_stok', 'tb_stok.id = tb_suratkeluar.stock')
+            ->join('tb_kondisi', 'tb_kondisi.id = tb_suratkeluar.kondisi')
 
-            // ->where('tb_aset.kondisi',$id)
+            // ->where('tb_suratkeluar.kondisi',$id)
 
-            ->orderBy('tb_aset.id', 'desc');
+            ->orderBy('tb_suratkeluar.id', 'desc');
 
 
         return DataTable::of($builder)
             ->add('action', function ($row) {
-                return '<a href="' . base_url('admin/aset/edit/' . $row->id) .
+                return '<a href="' . base_url('admin/suratkeluar/edit/' . $row->id) .
                     '" class="btn btn-sm btn-info text-white">
                 <i class="fa-solid fa-pen-to-square"></i></a> 
-                <a href="' . base_url('admin/aset/delete/' . $row->id) .
+                <a href="' . base_url('admin/suratkeluar/delete/' . $row->id) .
                     '" class="btn btn-sm btn-danger text-white" onclick="return confirm(\'Yakin?\')"><i class="fa-solid fa-trash-can"></i></a>';
             })
             ->addNumbering('no')->toJson(true);
@@ -172,7 +172,7 @@ class aset extends BaseController
 
         $data = [
 
-            'title'   => 'Edit aset',
+            'title'   => 'Edit suratkeluar',
             'input'   => 'hidden',
             'edit'   => '',
             'ade' => '1',
@@ -180,11 +180,11 @@ class aset extends BaseController
             'segment' => $this->request->uri->getSegments(),
             //'pel'   => $this->admin->find(session()->get('id')),
 
-            'aset'    => $this->aset->find($id),
-            'nama'   => $this->aset->select('nama'),
+            'suratkeluar'    => $this->suratkeluar->find($id),
+            'nama'   => $this->suratkeluar->select('nama'),
         ];
 
-        return view('admin/aset', $data);
+        return view('admin/suratkeluar', $data);
     }
 
     public function save()
@@ -200,12 +200,12 @@ class aset extends BaseController
                 //'tahun_pelajaran' => $this->tp->tahun,
             ];
 
-            if ($this->aset->save($post)) {
+            if ($this->suratkeluar->save($post)) {
                 session()->setFlashdata('success', 'Data berhasil di edit.');
-                return redirect()->to(base_url('admin/aset'));
+                return redirect()->to(base_url('admin/suratkeluar'));
             } else {
                 session()->setFlashdata('error', 'Data Gagal di simpan.');
-                return redirect()->to(base_url('admin/aset'));
+                return redirect()->to(base_url('admin/suratkeluar'));
             }
         } else {
             // $tgl= date("Y-m-d");
@@ -225,15 +225,15 @@ class aset extends BaseController
                 'tgl_keluar'            => $this->request->getVar('keluar'),
                 'serial'            => $this->request->getVar('serial'),
                 //'kelas'           => $this->request->getVar('kelas'),
-                //'tahun_aset' => $this->tp->tahun,
+                //'tahun_suratkeluar' => $this->tp->tahun,
             ];
 
-            if ($this->aset->save($post)) {
+            if ($this->suratkeluar->save($post)) {
                 session()->setFlashdata('success', 'Data berhasil di simpan.');
-                return redirect()->to(base_url('admin/aset'));
+                return redirect()->to(base_url('admin/suratkeluar'));
             } else {
                 session()->setFlashdata('error', 'Data Sudah Terdaftar !');
-                return redirect()->to(base_url('admin/aset'));
+                return redirect()->to(base_url('admin/suratkeluar'));
             }
         }
     }
@@ -251,22 +251,22 @@ class aset extends BaseController
             //'tahun_pelajaran' => $this->tp->tahun,
         ];
 
-        if ($this->aset->save($post)) {
+        if ($this->suratkeluar->save($post)) {
             session()->setFlashdata('success', 'Data berhasil di edit.');
-            return redirect()->to(base_url('admin/aset'));
+            return redirect()->to(base_url('admin/suratkeluar'));
         } else {
             session()->setFlashdata('error', 'Data Gagal di simpan.');
-            return redirect()->to(base_url('admin/aset'));
+            return redirect()->to(base_url('admin/suratkeluar'));
         }
     }
     public function delete($id)
     {
-        if ($this->aset->delete($id)) {
+        if ($this->suratkeluar->delete($id)) {
             session()->setFlashdata('success', 'Data berhasil di hapus.');
-            return redirect()->to(base_url('admin/aset'));
+            return redirect()->to(base_url('admin/suratkeluar'));
         } else {
             session()->setFlashdata('danger', 'Data berhasil di hapus.');
-            return redirect()->to(base_url('admin/aset'));
+            return redirect()->to(base_url('admin/suratkeluar'));
         }
     }
 }

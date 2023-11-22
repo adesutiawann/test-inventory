@@ -27,11 +27,11 @@
                     <strong>Tambahkan Nama :</strong>
                 </div>
                 <div class="col-md-4">
-                
-                        <input type="text"  name="nama" class="form-control"  required>
-                       
-                    </div>
-              
+
+                    <input type="text" name="nama" class="form-control" required>
+
+                </div>
+
                 <div class="col-md-2 ">
                     <input type="submit" class="btn btn-primary text-white" value="Tambah">
                 </div>
@@ -75,13 +75,14 @@
                     data: 'no',
                     orderable: false
                 },
+
                 {
                     data: 'nama'
                 },
                 {
                     data: 'tgl'
                 },
-               
+
                 {
                     data: 'action',
                     orderable: false
