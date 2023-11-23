@@ -21,6 +21,8 @@ use App\Models\StokModel;
 use App\Models\KondisiModel;
 //use App\Models\PelajaranModel;
 
+use App\Models\SuratkeluarModel;
+
 class Suratkeluar extends BaseController
 {
     protected $admin;
@@ -37,11 +39,12 @@ class Suratkeluar extends BaseController
     protected $stok;
     protected $kondisi;
 
+
     public function __construct()
     {
         $this->admin     = new AdminModel();
         $this->suratkeluar = new AsetModel();
-        $this->siswa     = new SiswaModel();
+        $this->suratkeluar     = new SuratkeluarModel();
 
         // $this->pelajaran     = new PelajaranModel();
 
@@ -208,24 +211,11 @@ class Suratkeluar extends BaseController
                 return redirect()->to(base_url('admin/suratkeluar'));
             }
         } else {
-            // $tgl= date("Y-m-d");
+            $tgl = date("Y-m-d");
             $post = [
-                'manufacture'            => $this->request->getVar('manufacture'),
-                'type'            => $this->request->getVar('type'),
-                'prosesor'            => $this->request->getVar('prosesor'),
-                'generasi'            => $this->request->getVar('generasi'),
-                'hdd'            => $this->request->getVar('hdd'),
-                'ram'            => $this->request->getVar('ram'),
-                'rincian'            => $this->request->getVar('rincian'),
-                'status'            => $this->request->getVar('status'),
-                'stock'            => $this->request->getVar('stock'),
-                'kondisi'            => $this->request->getVar('kondisi'),
-                'ket'            => $this->request->getVar('ket'),
-                'tgl_masuk'            => $this->request->getVar('masuk'),
-                'tgl_keluar'            => $this->request->getVar('keluar'),
-                'serial'            => $this->request->getVar('serial'),
-                //'kelas'           => $this->request->getVar('kelas'),
-                //'tahun_suratkeluar' => $this->tp->tahun,
+                'id_sk'            => $this->request->getVar('id_sk'),
+                'id_aset'            => $this->request->getVar('id_aset'),
+                'tgl'           => $tgl,
             ];
 
             if ($this->suratkeluar->save($post)) {
