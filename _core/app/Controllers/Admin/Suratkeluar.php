@@ -7,7 +7,6 @@ use \Hermawan\DataTables\DataTable;
 use App\Controllers\BaseController;
 use App\Models\AdminModel;
 use App\Models\AsetModel;
-use App\Models\SiswaModel;
 
 use App\Models\ManufactureModel;
 use App\Models\TypeModel;
@@ -39,11 +38,13 @@ class Suratkeluar extends BaseController
     protected $stok;
     protected $kondisi;
 
+    protected $aset;
+
 
     public function __construct()
     {
         $this->admin     = new AdminModel();
-        $this->suratkeluar = new AsetModel();
+        $this->aset = new AsetModel();
         $this->suratkeluar     = new SuratkeluarModel();
 
         // $this->pelajaran     = new PelajaranModel();
@@ -65,6 +66,7 @@ class Suratkeluar extends BaseController
         if (session()->get('logged_admin') != true) {
             return redirect()->to(base_url());
         }
+        // $data['aset'] = $this->aset->findAll();
 
         $data = [
             'title'   => 'Surat Keluar',
@@ -80,12 +82,27 @@ class Suratkeluar extends BaseController
             'status'    => $this->status->orderBy('nama', 'asc')->findAll(),
             'kondisi'    => $this->kondisi->orderBy('nama', 'asc')->findAll(),
             'stock'    => $this->stok->orderBy('nama', 'asc')->findAll(),
+            'aktiv'   => 'ALL',
+            'aset' => $this->suratkeluar->getAll(),
+            //'suratkeluar'    => $this->suratkeluar->find($id),
 
         ];
 
         return view('admin/suratkeluar', $data);
     }
 
+    public function ok($id)
+    {
+        $data = [
+            'title'   => 'Surat Keluar',
+            'aktiv'   => $id,
+            'segment' => $this->request->uri->getSegments(),
+            //'aset' =>  $this->suratkeluar->where('kondisi', 'OK')->getAll(),
+            'aset'    => $this->suratkeluar->getId($id),
+
+        ];
+        return view('admin/suratkeluar', $data);
+    }
     public function add()
     {
         if (session()->get('logged_admin') != true) {
@@ -145,7 +162,56 @@ class Suratkeluar extends BaseController
             ->join('tb_stok', 'tb_stok.id = tb_suratkeluar.stock')
             ->join('tb_kondisi', 'tb_kondisi.id = tb_suratkeluar.kondisi')
 
-            // ->where('tb_suratkeluar.kondisi',$id)
+            //->where('tb_suratkeluar.kondisi',$id)
+
+            ->orderBy('tb_suratkeluar.id', 'desc');
+
+
+        return DataTable::of($builder)
+            ->add('action', function ($row) {
+                return '<a href="' . base_url('admin/suratkeluar/edit/' . $row->id) .
+                    '" class="btn btn-sm btn-info text-white">
+                <i class="fa-solid fa-pen-to-square"></i></a> 
+                <a href="' . base_url('admin/suratkeluar/delete/' . $row->id) .
+                    '" class="btn btn-sm btn-danger text-white" onclick="return confirm(\'Yakin?\')"><i class="fa-solid fa-trash-can"></i></a>';
+            })
+            ->addNumbering('no')->toJson(true);
+        //return view('admin/suratkeluar', $data);
+    }
+
+    public function datab($id)
+    {
+        // Menghubungkan ke database
+        $db = db_connect();
+        // Membuat instance query builder untuk tabel 'tb_suratkeluar'      
+        $builder = $db->table('tb_suratkeluar')
+            ->select(
+                'tb_suratkeluar.id,tb_suratkeluar.tgl_masuk,tb_suratkeluar.tgl_keluar,tb_suratkeluar.serial,tb_suratkeluar.ket,
+                tb_hdd.nama as hdd ,
+                tb_manufacture.nama as manufacture,
+                tb_prosesor.nama as prosesor,
+                tb_type.nama as type,
+                tb_generasi.nama as generasi,
+                tb_ram.nama as ram,
+                tb_rincian.nama as rincian,
+                tb_status.nama as status,
+                tb_stok.nama as stok,
+                tb_kondisi.nama as kondisi',
+
+            )
+
+            ->join('tb_hdd', 'tb_hdd.id = tb_suratkeluar.hdd')
+            ->join('tb_manufacture', 'tb_manufacture.id = tb_suratkeluar.manufacture')
+            ->join('tb_type', 'tb_type.id = tb_suratkeluar.type')
+            ->join('tb_prosesor', 'tb_prosesor.id = tb_suratkeluar.prosesor')
+            ->join('tb_generasi', 'tb_generasi.id = tb_suratkeluar.generasi')
+            ->join('tb_ram', 'tb_ram.id = tb_suratkeluar.ram')
+            ->join('tb_rincian', 'tb_rincian.id = tb_suratkeluar.rincian')
+            ->join('tb_status', 'tb_status.id = tb_suratkeluar.status')
+            ->join('tb_stok', 'tb_stok.id = tb_suratkeluar.stock')
+            ->join('tb_kondisi', 'tb_kondisi.id = tb_suratkeluar.kondisi')
+
+            ->where('tb_suratkeluar.kondisi', $id)
 
             ->orderBy('tb_suratkeluar.id', 'desc');
 
@@ -160,7 +226,6 @@ class Suratkeluar extends BaseController
             })
             ->addNumbering('no')->toJson(true);
     }
-
 
 
     public function edit($id)
@@ -220,10 +285,10 @@ class Suratkeluar extends BaseController
 
             if ($this->suratkeluar->save($post)) {
                 session()->setFlashdata('success', 'Data berhasil di simpan.');
-                return redirect()->to(base_url('admin/suratkeluar'));
+                return redirect()->to(base_url('admin/suratkeluar/add'));
             } else {
                 session()->setFlashdata('error', 'Data Sudah Terdaftar !');
-                return redirect()->to(base_url('admin/suratkeluar'));
+                return redirect()->to(base_url('admin/suratkeluar/add'));
             }
         }
     }
@@ -253,10 +318,10 @@ class Suratkeluar extends BaseController
     {
         if ($this->suratkeluar->delete($id)) {
             session()->setFlashdata('success', 'Data berhasil di hapus.');
-            return redirect()->to(base_url('admin/suratkeluar'));
+            return redirect()->to(base_url('admin/suratkeluar/add'));
         } else {
             session()->setFlashdata('danger', 'Data berhasil di hapus.');
-            return redirect()->to(base_url('admin/suratkeluar'));
+            return redirect()->to(base_url('admin/suratkeluar/add'));
         }
     }
 }

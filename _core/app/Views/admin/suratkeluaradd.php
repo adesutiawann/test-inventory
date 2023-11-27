@@ -81,49 +81,61 @@
                                     <th class="cell">Customer</th>
                                     <th class="cell">Date</th>
                                     <th class="cell">Status</th>
-                                    <th class="cell">Total</th>
-                                    <th class="cell"></th>
+                                    <th class="cell">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td class="cell">#15346</td>
-                                    <td class="cell"><span class="truncate">Lorem ipsum dolor sit amet eget volutpat erat</span></td>
-                                    <td class="cell">John Sanders</td>
-                                    <td class="cell"><span>17 Oct</span><span class="note">2:16 PM</span></td>
-                                    <td class="cell"><span class="badge bg-success">Paid</span></td>
-                                    <td class="cell">$259.35</td>
-                                    <td class="cell"><a class="btn-sm app-btn-secondary" href="#">View</a></td>
-                                </tr>
-                                <tr>
-                                    <td class="cell">#15345</td>
-                                    <td class="cell"><span class="truncate">Consectetur adipiscing elit</span></td>
-                                    <td class="cell">Dylan Ambrose</td>
-                                    <td class="cell"><span class="cell-data">16 Oct</span><span class="note">03:16 AM</span></td>
-                                    <td class="cell"><span class="badge bg-warning">Pending</span></td>
-                                    <td class="cell">$96.20</td>
-                                    <td class="cell"><a class="btn-sm app-btn-secondary" href="#">View</a></td>
-                                </tr>
-                                <tr>
-                                    <td class="cell">#15344</td>
-                                    <td class="cell"><span class="truncate">Pellentesque diam imperdiet</span></td>
-                                    <td class="cell">Teresa Holland</td>
-                                    <td class="cell"><span class="cell-data">16 Oct</span><span class="note">01:16 AM</span></td>
-                                    <td class="cell"><span class="badge bg-success">Paid</span></td>
-                                    <td class="cell">$123.00</td>
-                                    <td class="cell"><a class="btn-sm app-btn-secondary" href="#">View</a></td>
-                                </tr>
+                                <?php
+                                $no = 1;
+                                $koneksi = new mysqli("localhost", "root", "", "absensi_walikelas");
 
-                                <tr>
-                                    <td class="cell">#15343</td>
-                                    <td class="cell"><span class="truncate">Vestibulum a accumsan lectus sed mollis ipsum</span></td>
-                                    <td class="cell">Jayden Massey</td>
-                                    <td class="cell"><span class="cell-data">15 Oct</span><span class="note">8:07 PM</span></td>
-                                    <td class="cell"><span class="badge bg-success">Paid</span></td>
-                                    <td class="cell">$199.00</td>
-                                    <td class="cell"><a class="btn-sm app-btn-secondary" href="#">View</a></td>
-                                </tr>
+                                $id = '001/PRY-MSI/KITECH/XI/2023';
+                                $sql1 = $koneksi->query("select *
+                                from tb_asetk 
+                             
+                                where id_sk='" . $id . "'");
 
+
+                                //$sql1 = $koneksi->query("SELECT * FROM tb_bkeluar ");
+                                //  $jumlah = mysqli_num_rows($sql1);
+
+                                //if ($jumlah > 0) {
+
+                                while ($data = $sql1->fetch_assoc()) {
+                                    $sql_cek = "SELECT
+                                    tb_aset.id,
+                                    tb_aset.serial,
+                                    tb_manufacture.nama AS manufacture
+                                FROM
+                                    tb_aset
+                                JOIN
+                                    tb_manufacture ON tb_manufacture.id = tb_aset.manufacture
+                                
+                                WHERE
+                                    tb_aset.serial = '" . $data['id_aset'] . "'";
+
+                                    // Menggunakan parameterized query untuk mencegah SQL injection
+                                    //$hasil = mysqli_query($koneksi, $query);
+                                    //$datar = mysqli_fetch_array($hasil);
+                                    $query_cek = mysqli_query($koneksi, $sql_cek);
+                                    $dataxr = mysqli_fetch_array($query_cek, MYSQLI_BOTH);
+
+                                    // $jm = $datar['manufacture'];
+
+
+                                ?>
+                                    <tr>
+                                        <td class="cell">#<?= $data['id_aset']; ?></td>
+                                        <td class="cell"><span class="truncate">Lorem ipsum dolor sit amet eget volutpat erat</span></td>
+                                        <td class="cell">yark</td>
+                                        <td class="cell"><span><?= $data['manufacture']; ?></span></td>
+                                        <td class="cell"><span class="badge bg-success">Paid</span></td>
+
+                                        <td class="cell text-center">
+                                            <a class="" href="<?= base_url('admin/suratkeluar/delete/' . $data['id']) ?>"><i class="fa-solid fa-trash-can text-danger"></i></a>
+                                        </td>
+                                    </tr>
+                                <?php } ?>
 
 
                             </tbody>

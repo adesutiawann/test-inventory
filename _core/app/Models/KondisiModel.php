@@ -12,9 +12,9 @@ class KondisiModel extends Model
     protected $returnType       = 'object';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['id','nama','tgl'];
+    protected $allowedFields    = ['id', 'nama', 'tgl'];
 
     protected $validationRules = [
-       'nama' => 'required|is_unique[tb_kondisi.nama,id,{id}]',
+        'nama' => 'required|is_unique[tb_kondisi.nama,id,{id}]',
     ];
 }

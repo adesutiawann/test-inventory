@@ -1,10 +1,15 @@
 <?= $this->extend('admin/template') ?>
 
-<?= $this->section('css') ?>
-<link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap5.min.css">
-<?= $this->endSection() ?>
+
 
 <?= $this->section('content') ?>
+<?php
+
+use PhpParser\Node\Expr\Print_;
+
+$menu = $aktiv;
+// $submenu = $segment[2];
+?>
 <style>
     /* Contoh CSS untuk menentukan lebar dan tinggi textarea */
     textarea {
@@ -58,14 +63,12 @@
         </div>
     </div>
 </div>
-
-
 <nav id="orders-table-tab" class="orders-table-tab app-nav-tabs nav shadow-sm flex-column flex-sm-row mb-1" role="tablist">
 
-    <a href="<?= base_url('admin/aset/data') ?>" class="flex-sm-fill text-sm-center nav-link" id="orders-all-tab" data-bs-toggle="tab" href="<?= base_url('admin/aset/data') ?>" role="tab" aria-controls="orders-all" aria-selected="" tabindex="-1">All</a>
-    <a class="flex-sm-fill text-sm-center nav-link" id="orders-paid-tab" data-bs-toggle="tab" href="<?= base_url('admin/aset/dataoke') ?>" role="tab" aria-controls="orders-paid" aria-selected="false" tabindex="-1">Oke</a>
-    <a class="flex-sm-fill text-sm-center nav-link active" id="orders-pending-tab" data-bs-toggle="tab" href="<?= base_url('admin/aset/datarusak') ?>" role="tab" aria-controls="orders-pending" aria-selected="true">Rusak</a>
-    <a class="flex-sm-fill text-sm-center nav-link" id="orders-cancelled-tab" data-bs-toggle="tab" href="<?= base_url('admin/aset/datablank') ?>" role="tab" aria-controls="orders-cancelled" aria-selected="false" tabindex="-1">Blank</a>
+    <a class="flex-sm-fill text-sm-center nav-link <?= ($menu == 'ALL') ? 'active' : '' ?>" href="<?= base_url('admin/suratkeluar') ?>" aria-controls="orders-all" aria-selected="false">All</a>
+    <a class="flex-sm-fill text-sm-center nav-link <?= ($menu == 'OK') ? 'active' : '' ?>" href="<?= base_url('admin/suratkeluar/ok/OK') ?>" aria-controls="orders-paid" aria-selected="false">Oke</a>
+    <a class="flex-sm-fill text-sm-center nav-link <?= ($menu == 'RUSAK') ? 'active' : '' ?>" href="<?= base_url('admin/suratkeluar/ok/RUSAK') ?>" role="tab" aria-controls="orders-pending" aria-selected="true">Rusak</a>
+    <a class="flex-sm-fill text-sm-center nav-link <?= ($menu == 'BLANKS') ? 'active' : '' ?>" href="<?= base_url('admin/suratkeluar/ok/BLANKS') ?>" role="tab" aria-controls="orders-cancelled" aria-selected="true" tabindex="-1">Blank</a>
 </nav>
 
 <div class="app-card app-card-accordion shadow-sm mb-4">
@@ -73,23 +76,53 @@
     <div class="app-card-body p-4">
 
         <div class="table-responsive">
-            <table id="table" class="table table-striped dataTable" style="width: 100%;" aria-describedby="example_info">
+
+            <table id="tabel1" class="table table-striped">
                 <thead>
                     <tr>
                         <th>NO.</th>
-                        <th>Nomor</th>
-                        <th>Kepada</th>
-                        <th>Dari</th>
+                        <th>Serial</th>
+                        <th>Manufacture</th>
+                        <th>Spesifikasi</th>
 
-                        <th>Prihal</th>
+                        <th>Status</th>
                         <th>Tanggal</th>
 
                         <th>Keterangan</th>
                         <th>Action</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
-                <tbody></tbody>
+                <tbody>
+
+                    <?php
+                    $no = 1;
+                    foreach ($aset as $key => $value) : ?>
+                        <tr>
+                            <td><?= $no++ ?></td>
+                            <td><b><?= $value->serial ?></b></td>
+                            <td>
+                                <b> <?= $value->manufacture ?></b><br>
+                                Type : <?= $value->type ?>
+                            </td>
+                            <td>
+                                Prosesor : <?= $value->prosesor ?> <br>
+                                Generasi : <?= $value->generasi ?> <br>
+                                Hdd/SSD : <?= $value->hdd ?><br>
+                                Ram :<?= $value->ram ?>/<?= $value->rincian ?><br>
+                            </td>
+                            <td>Dari</td>
+
+                            <td>Prihal</td>
+                            <td>Tanggal</td>
+
+                            <td>Keterangan</td>
+                            <td>Action</td>
+                        </tr>
+                    <?php endforeach ?>
+                </tbody>
             </table>
+
         </div>
     </div>
 </div>
@@ -107,83 +140,4 @@
 <!-- Tambahkan skrip JavaScript -->
 
 
-<?= $this->endSection() ?>
-
-
-
-
-<?= $this->section('js') ?>
-<script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap5.min.js"></script>
-
-<script>
-    //$(document).ready(function() {
-
-    $(document).ready(function() {
-        try {
-            $('#table').DataTable({
-                processing: true,
-                serverSide: true,
-                ajax: '<?= base_url('admin/aset/data') ?>',
-                order: [],
-                columns: [{
-                        data: 'no',
-                        orderable: false
-                    },
-                    {
-                        data: 'serial'
-
-                    },
-                    {
-                        data: null,
-                        render: function(data, type, row) {
-                            // Assuming 'tgl_masuk' and 'tgl_keluar' are Date objects or date strings
-                            return '<b>' + row.manufacture +
-                                '</b> <br> type  :' + row.type;
-                        }
-                    }, {
-                        data: null,
-                        render: function(data, type, row) {
-                            // Assuming 'tgl_masuk' and 'tgl_keluar' are Date objects or date strings
-                            return 'Prosesor  :' + row.prosesor +
-                                ' <br> Generasi  :' + row.generasi +
-                                ' <br> Hdd/SSD   :' + row.hdd +
-                                ' <br> Ram       :' + row.ram +
-                                ' GB<br> Rincian    :' + row.prosesor;
-                        }
-                    }, {
-                        data: null,
-                        render: function(data, type, row) {
-                            var bgClass = row.kondisi === 'OK' ? 'success' :
-                                row.kondisi === 'RUSAK' ? 'danger' :
-                                row.kondisi === 'BLANKS' ? 'warning' : '';
-
-                            // Assuming 'tgl_masuk' and 'tgl_keluar' are Date objects or date strings
-                            return 'Status  :' + row.status + '<br> Stock  :' + row.stok +
-                                ' <br> Stok  : <span class="badge bg-' + bgClass + '">' + row.kondisi + '</span>';
-                        }
-                    },
-                    {
-                        data: null,
-                        render: function(data, type, row) {
-                            // Assuming 'tgl_masuk' and 'tgl_keluar' are Date objects or date strings
-                            return 'In :' + row.tgl_masuk + ' <br>Out  :' + row.tgl_keluar;
-                        }
-                    },
-                    {
-                        data: 'ket'
-
-                    },
-                    {
-                        data: 'action',
-                        orderable: false
-                    },
-                ]
-            });
-
-        } catch (error) {
-            console.error('DataTables initialization error:', error);
-        }
-    });
-</script>
 <?= $this->endSection() ?>

@@ -23,6 +23,7 @@
     <?= $this->renderSection('css') ?>
     <!-- App DATA TABEL -->
 
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap5.min.css">
 </head>
 
 <body class="app">
@@ -161,7 +162,7 @@
 
 
                             <!--//nav-link-->
-                            <div id="submenu-5" class="collapse submenu submenu-5 <?= ($menu == 'sm' || $menu == 'sk') ? 'show' : '' ?>"" data-bs-parent=" #menu-accordion">
+                            <div id="submenu-5" class="collapse submenu submenu-5 <?= ($menu == 'sm' || $menu == 'suratkeluar') ? 'show' : '' ?>"" data-bs-parent=" #menu-accordion">
                                 <ul class="submenu-list list-unstyled">
 
 
@@ -176,7 +177,7 @@
 
                                     <li class="submenu-item">
                                         <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-                                        <a class="submenu-link <?= ($menu == 'sk') ? 'active' : '' ?>"" href=" <?= base_url('admin/suratkeluar') ?>">
+                                        <a class="submenu-link <?= ($menu == 'suratkeluar') ? 'active' : '' ?>"" href=" <?= base_url('admin/suratkeluar') ?>">
 
                                             <span class="nav-link-text">Surat Keluar</span>
                                         </a>
@@ -194,67 +195,6 @@
                         <!--//nav-link-->
                         </li>
 
-                        <li class="nav-item has-submenu" hidden>
-                            <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-                            <a class="nav-link submenu-toggle" href="#" data-bs-toggle="collapse" data-bs-target="#submenu-2" aria-expanded="false" aria-controls="submenu-2">
-                                <span class="nav-icon">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-lines-fill" viewBox="0 0 16 16">
-                                        <path d="M6 8a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm-5 6s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zM11 3.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5zm.5 2.5a.5.5 0 0 0 0 1h4a.5.5 0 0 0 0-1h-4zm2 3a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1h-2zm0 3a.5.5 0 0 0 0 1h2a.5.5 0 0 0 0-1h-2z" />
-                                    </svg>
-                                </span>
-                                <span class="nav-link-text">Data Guru</span>
-                                <span class="submenu-arrow">
-                                    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-chevron-down" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                        <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z" />
-                                    </svg>
-                                </span>
-                                <!--//submenu-arrow-->
-                            </a>
-
-
-                            <!--//nav-link-->
-                            <div id="submenu-2" class="collapse submenu submenu-2 <?= ($menu == 'walikelas' || $menu == 'pembina' || $menu == 'piket' || $menu == 'bp') ? 'show' : '' ?>"" data-bs-parent=" #menu-accordion">
-                                <ul class="submenu-list list-unstyled">
-
-
-                                    <li class="submenu-item">
-                                        <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-                                        <a class="submenu-link <?= ($menu == 'walikelas') ? 'active' : '' ?>" href=" <?= base_url('admin/walikelas') ?>">
-
-                                            <span class="nav-link-text">Tentukan Wali Kelas</span>
-                                        </a>
-                                        <!--//nav-link-->
-                                    </li>
-
-                                    <li class="submenu-item">
-                                        <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-                                        <a class="submenu-link <?= ($menu == 'pembina') ? 'active' : '' ?>"" href=" <?= base_url('admin/pembina') ?>">
-
-                                            <span class="nav-link-text">Tentukan Pembina Extra</span>
-                                        </a>
-                                        <!--//nav-link-->
-                                    </li>
-                                    <li class="submenu-item">
-                                        <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-                                        <a class="submenu-link <?= ($menu == 'piket') ? 'active' : '' ?>"" href=" <?= base_url('admin/piket') ?>">
-
-                                            <span class="nav-link-text">Tentukan Guru Piket</span>
-                                        </a>
-                                        <!--//nav-link-->
-                                    </li>
-                                    <li class="submenu-item">
-                                        <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-                                        <a class="submenu-link <?= ($menu == 'bp') ? 'active' : '' ?>"" href=" <?= base_url('admin/bp') ?>">
-
-                                            <span class="nav-link-text">Tentukan Petugas BP/BK</span>
-                                        </a>
-
-                                    </li>
-
-                                </ul>
-                            </div>
-                        </li>
-                        <!--//nav-link-->
 
 
                         <!--//nav-item-->
@@ -279,13 +219,13 @@
 
 
                             <!--//nav-link-->
-                            <div id="submenu-2" class="collapse submenu submenu-2 <?= ($menu == 'walikelas' || $menu == 'pembina' || $menu == 'piket' || $menu == 'bp') ? 'show' : '' ?>"" data-bs-parent=" #menu-accordion">
+                            <div id="submenu-2" class="collapse submenu submenu-2 <?= ($menu == 'manufacture' || $menu == 'type' || $menu == 'prosesor' || $menu == 'generasi' || $menu == 'hdd' || $menu == 'ram' || $menu == 'rincian' || $menu == 'status' || $menu == 'stok' || $menu == 'kondisi') ? 'show' : '' ?>"" data-bs-parent=" #menu-accordion">
                                 <ul class="submenu-list list-unstyled">
 
 
                                     <li class="submenu-item">
                                         <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-                                        <a class="submenu-link <?= ($menu == 'walikelas') ? 'active' : '' ?>" href=" <?= base_url('admin/manufacture') ?>">
+                                        <a class="submenu-link <?= ($menu == 'manufacture') ? 'active' : '' ?>" href=" <?= base_url('admin/manufacture') ?>">
 
                                             <span class="nav-link-text">Manufaktur</span>
                                         </a>
@@ -499,6 +439,17 @@
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
     <script src="<?= base_url() ?>/assets/plugins/popper.min.js"></script>
     <script src="<?= base_url() ?>/assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+
+    <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap5.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            {
+                $('#tabel1').DataTable()
+            }
+
+        })
+    </script>
 
     <!-- Charts JS -->
     <!-- <script src="<?= base_url() ?>/assets/plugins/chart.js/chart.min.js"></script> -->

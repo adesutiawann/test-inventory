@@ -21,47 +21,47 @@
             </div>
         <?php endif ?>
 
-        
-        <?php if(isset($ram->id)){
-            ?>
-        <form action="<?= base_url('admin/ram/saveedit') ?>" method="POST">
-            <div class="row">
-                <div class="col-md-3">
-                    <strong>Edit Nama :</strong>
-                </div>
-                <div class="col-md-4">
-                    
-             
-                         
-                        <input type="" hidden name="id" value="<?=$ram->id ?>">
-                         <input type="text" value="<?=$ram->nama?>" name="nama" class="form-control" autofocus  required>
-                       
+
+        <?php if (isset($ram->id)) {
+        ?>
+            <form action="<?= base_url('admin/ram/saveedit') ?>" method="POST">
+                <div class="row">
+                    <div class="col-md-3">
+                        <strong>Edit Nama :</strong>
                     </div>
-              
-                <div class="col-md-2 ">
-                    <input type="submit" class="btn btn-primary text-white" value="Tambah">
+                    <div class="col-md-4">
+
+
+
+                        <input type="" hidden name="id" value="<?= $ram->id ?>">
+                        <input type="text" value="<?= $ram->nama ?>" name="nama" class="form-control" autofocus required>
+
+                    </div>
+
+                    <div class="col-md-2 ">
+                        <input type="submit" class="btn btn-primary text-white" value="Tambah">
+                    </div>
                 </div>
-            </div>
-        </form>
-        <?php } else{ ?>
+            </form>
+        <?php } else { ?>
             <form action="<?= base_url('admin/ram/save') ?>" method="POST">
-            <div class="row">
-                <div class="col-md-3">
-                    <strong>Tambahkan Nama :</strong>
-                </div>
-                <div class="col-md-4">
-             
-                         
-                        <input type="text"  name="nama" class="form-control"  required autofocus>
-                       
+                <div class="row">
+                    <div class="col-md-3">
+                        <strong>Tambahkan Nama :</strong>
                     </div>
-              
-                <div class="col-md-2 ">
-                    <input type="submit" class="btn btn-primary text-white" value="Tambah">
+                    <div class="col-md-4">
+
+
+                        <input type="text" name="nama" class="form-control" required autofocus>
+
+                    </div>
+
+                    <div class="col-md-2 ">
+                        <input type="submit" class="btn btn-primary text-white" value="Tambah">
+                    </div>
                 </div>
-            </div>
-        </form>
-        <?php }?>
+            </form>
+        <?php } ?>
     </div>
 </div>
 
@@ -106,7 +106,7 @@
                 {
                     data: 'tgl'
                 },
-               
+
                 {
                     data: 'action',
                     orderable: false
