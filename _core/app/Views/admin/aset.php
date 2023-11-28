@@ -5,6 +5,13 @@
 <?= $this->endSection() ?>
 
 <?= $this->section('content') ?>
+<?php
+
+use PhpParser\Node\Expr\Print_;
+
+$menu = $aktiv;
+// $submenu = $segment[2];
+?>
 <style>
     /* Contoh CSS untuk menentukan lebar dan tinggi textarea */
     textarea {
@@ -60,12 +67,13 @@
 </div>
 
 
+
 <nav id="orders-table-tab" class="orders-table-tab app-nav-tabs nav shadow-sm flex-column flex-sm-row mb-1" role="tablist">
 
-    <a href="<?= base_url('admin/aset/data') ?>" class="flex-sm-fill text-sm-center nav-link" id="orders-all-tab" data-bs-toggle="tab" href="<?= base_url('admin/aset/data') ?>" role="tab" aria-controls="orders-all" aria-selected="" tabindex="-1">All</a>
-    <a class="flex-sm-fill text-sm-center nav-link" id="orders-paid-tab" data-bs-toggle="tab" href="<?= base_url('admin/aset/dataoke') ?>" role="tab" aria-controls="orders-paid" aria-selected="false" tabindex="-1">Oke</a>
-    <a class="flex-sm-fill text-sm-center nav-link active" id="orders-pending-tab" data-bs-toggle="tab" href="<?= base_url('admin/aset/datarusak') ?>" role="tab" aria-controls="orders-pending" aria-selected="true">Rusak</a>
-    <a class="flex-sm-fill text-sm-center nav-link" id="orders-cancelled-tab" data-bs-toggle="tab" href="<?= base_url('admin/aset/datablank') ?>" role="tab" aria-controls="orders-cancelled" aria-selected="false" tabindex="-1">Blank</a>
+    <a class="flex-sm-fill text-sm-center nav-link <?= ($menu == 'ALL') ? 'active' : '' ?>" href="<?= base_url('admin/aset') ?>" aria-controls="orders-all" aria-selected="false">All</a>
+    <a class="flex-sm-fill text-sm-center nav-link <?= ($menu == 'OK') ? 'active' : '' ?>" href="<?= base_url('admin/aset/ok/OK') ?>" aria-controls="orders-paid" aria-selected="false">Oke</a>
+    <a class="flex-sm-fill text-sm-center nav-link <?= ($menu == 'RUSAK') ? 'active' : '' ?>" href="<?= base_url('admin/aset/ok/RUSAK') ?>" role="tab" aria-controls="orders-pending" aria-selected="true">Rusak</a>
+    <a class="flex-sm-fill text-sm-center nav-link <?= ($menu == 'BLANKS') ? 'active' : '' ?>" href="<?= base_url('admin/aset/ok/BLANKS') ?>" role="tab" aria-controls="orders-cancelled" aria-selected="true" tabindex="-1">Blank</a>
 </nav>
 
 <div class="app-card app-card-accordion shadow-sm mb-4">
@@ -73,7 +81,8 @@
     <div class="app-card-body p-4">
 
         <div class="table-responsive">
-            <table id="table" class="table table-striped dataTable" style="width: 100%;" aria-describedby="example_info">
+
+            <table id="tabel1" class="table table-striped">
                 <thead>
                     <tr>
                         <th>NO.</th>
@@ -88,7 +97,62 @@
                         <th>Action</th>
                     </tr>
                 </thead>
-                <tbody></tbody>
+                <tbody>
+
+                    <?php
+                    $no = 1;
+                    foreach ($aset as $key => $value) :
+
+                    ?>
+                        <tr>
+                            <td><?= $no++ ?></td>
+                            <td><b><?= $value->serial ?></b></td>
+                            <td>
+                                <b> <?= $value->manufacture ?></b><br>
+                                Type : <?= $value->type ?>
+                            </td>
+                            <td>
+                                Prosesor : <?= $value->prosesor ?> <br>
+                                Generasi : <?= $value->generasi ?> <br>
+                                Hdd/SSD : <?= $value->hdd ?><br>
+                                Ram :<?= $value->ram ?>/<?= $value->rincian ?><br>
+                            </td>
+                            <td>
+                                Status :<?= $value->status ?><br>
+                                Stock :<?= $value->stok ?><br>
+                                Kondisi:
+                                <span class="badge bg-<?= ($value->kondisi == 'OK') ? 'success' : (($value->kondisi == 'RUSAK') ? 'warning' : 'danger') ?>">
+                                    <?= $value->kondisi ?>
+                                </span>
+                            </td>
+
+                            <td>
+                                In :
+                                <span class="text-success">
+                                    <?= $value->tgl_masuk ?><br>
+                                </span>Out :
+                                <span class="text-danger">
+                                    <?= $value->tgl_keluar ?><br>
+                                </span>
+                            </td>
+                            <td>
+                                <span class="">
+                                    <?= $value->ket ?><br>
+                                </span>
+                            </td>
+                            <td>
+                                <a href="<?= base_url('admin/aset/edit/' . $value->id) ?>" class="btn btn-sm btn-info text-white mt-2 mr-2">
+                                    <i class="fa-solid fa-pen-to-square"></i>
+                                </a>
+                                <a href="<?= base_url("admin/aset/delete/{$value->id}") ?>" class="btn btn-sm btn-danger text-white" onclick="return confirm('Yakin ingin menghapus?')">
+                                    <i class="fa-solid fa-trash-can"></i>
+                                </a>
+
+
+                            </td>
+                        </tr>
+                    <?php endforeach ?>
+                </tbody>
             </table>
         </div>
     </div>

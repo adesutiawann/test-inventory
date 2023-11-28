@@ -77,9 +77,22 @@ class aset extends BaseController
             'status'    => $this->status->orderBy('nama', 'asc')->findAll(),
             'kondisi'    => $this->kondisi->orderBy('nama', 'asc')->findAll(),
             'stock'    => $this->stok->orderBy('nama', 'asc')->findAll(),
-
+            'aktiv'   => 'ALL',
+            'aset' => $this->aset->getAll(),
         ];
 
+        return view('admin/aset', $data);
+    }
+    public function ok($id)
+    {
+        $data = [
+            'title'   => 'Data Aset',
+            'aktiv'   => $id,
+            'segment' => $this->request->uri->getSegments(),
+            //'aset' =>  $this->suratkeluar->where('kondisi', 'OK')->getAll(),
+            'aset'    => $this->aset->getId($id),
+
+        ];
         return view('admin/aset', $data);
     }
 

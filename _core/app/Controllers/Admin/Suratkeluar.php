@@ -20,12 +20,15 @@ use App\Models\StokModel;
 use App\Models\KondisiModel;
 //use App\Models\PelajaranModel;
 
+use App\Models\Suratkeluar_sk_Model;
 use App\Models\SuratkeluarModel;
 
 class Suratkeluar extends BaseController
 {
     protected $admin;
     protected $suratkeluar;
+
+    protected $suratkeluar_sk;
 
     protected $manufacture;
     protected $type;
@@ -46,6 +49,8 @@ class Suratkeluar extends BaseController
         $this->admin     = new AdminModel();
         $this->aset = new AsetModel();
         $this->suratkeluar     = new SuratkeluarModel();
+
+        $this->suratkeluar_sk     = new Suratkeluar_sk_Model();
 
         // $this->pelajaran     = new PelajaranModel();
 
@@ -83,7 +88,10 @@ class Suratkeluar extends BaseController
             'kondisi'    => $this->kondisi->orderBy('nama', 'asc')->findAll(),
             'stock'    => $this->stok->orderBy('nama', 'asc')->findAll(),
             'aktiv'   => 'ALL',
-            'aset' => $this->suratkeluar->getAll(),
+            // 'aset' => $this->aset->getAll(),
+            'suratkeluar_sk' => $this->suratkeluar_sk->getAllsuratkeluar(),
+
+            'asetk' => $this->suratkeluar->getIdasetkeluar(),
             //'suratkeluar'    => $this->suratkeluar->find($id),
 
         ];
@@ -108,7 +116,7 @@ class Suratkeluar extends BaseController
         if (session()->get('logged_admin') != true) {
             return redirect()->to(base_url());
         }
-
+        //  $id = '1';
         $data = [
             'title'   => 'Surat Keluar',
             'segment' => $this->request->uri->getSegments(),
@@ -123,7 +131,8 @@ class Suratkeluar extends BaseController
             'status'    => $this->status->orderBy('nama', 'asc')->findAll(),
             'kondisi'    => $this->kondisi->orderBy('nama', 'asc')->findAll(),
             'stock'    => $this->stok->orderBy('nama', 'asc')->findAll(),
-
+            // 'asetk' => $this->suratkeluar->getIdasetkeluar(),
+            'asetk' => $this->suratkeluar->getIdasetkeluar(),
 
         ];
 
@@ -314,7 +323,30 @@ class Suratkeluar extends BaseController
             return redirect()->to(base_url('admin/suratkeluar'));
         }
     }
-    public function delete($id)
+    public function savesuratkeluar()
+    {
+
+        $tgl = date("Y-m-d");
+
+        $post = [
+            'id'       => $this->request->getVar('id'),
+            'kepada'            => $this->request->getVar('nama'),
+            'dari'            => $this->request->getVar('nama'),
+            'nama'            => $this->request->getVar('nama'),
+            'nama'            => $this->request->getVar('nama'),
+            'tgl'           => $tgl,
+            //'tahun_pelajaran' => $this->tp->tahun,
+        ];
+
+        if ($this->suratkeluar->save($post)) {
+            session()->setFlashdata('success', 'Data berhasil di edit.');
+            return redirect()->to(base_url('admin/suratkeluar'));
+        } else {
+            session()->setFlashdata('error', 'Data Gagal di simpan.');
+            return redirect()->to(base_url('admin/suratkeluar'));
+        }
+    }
+    public function delete_asetk($id)
     {
         if ($this->suratkeluar->delete($id)) {
             session()->setFlashdata('success', 'Data berhasil di hapus.');

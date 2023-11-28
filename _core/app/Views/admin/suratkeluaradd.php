@@ -59,7 +59,7 @@
 
                         </div>
                         <div class="col-sm-7">
-                            <input type="text" name="id_aset" class="form-control text-center" placeholder="Serial" aria-label="Serial">
+                            <input type="text" name="id_aset" class="form-control text-center" placeholder="Serial">
                         </div>
                         <div class="col-sm">
                             <button class="btn btn-primary text-white" type="submit"><i class="fa-solid fa-plus"></i> Add</button>
@@ -73,69 +73,51 @@
             <div class="app-card app-card-accordion shadow-sm mb-4 pl-3">
                 <div class="app-card-body pl-3 ml-3">
                     <div class="table-responsive">
+                        <?php //print_r($asetk) 
+                        ?>
                         <table class="table app-table-hover mb-0 text-left">
                             <thead>
                                 <tr>
+                                    <th class="cell">No</th>
                                     <th class="cell">Serial</th>
                                     <th class="cell">Product</th>
-                                    <th class="cell">Customer</th>
-                                    <th class="cell">Date</th>
                                     <th class="cell">Status</th>
-                                    <th class="cell">Action</th>
+                                    <th class="cell text-center">Action</th>
                                 </tr>
                             </thead>
+
                             <tbody>
                                 <?php
                                 $no = 1;
-                                $koneksi = new mysqli("localhost", "root", "", "absensi_walikelas");
-
-                                $id = '001/PRY-MSI/KITECH/XI/2023';
-                                $sql1 = $koneksi->query("select *
-                                from tb_asetk 
-                             
-                                where id_sk='" . $id . "'");
-
-
-                                //$sql1 = $koneksi->query("SELECT * FROM tb_bkeluar ");
-                                //  $jumlah = mysqli_num_rows($sql1);
-
-                                //if ($jumlah > 0) {
-
-                                while ($data = $sql1->fetch_assoc()) {
-                                    $sql_cek = "SELECT
-                                    tb_aset.id,
-                                    tb_aset.serial,
-                                    tb_manufacture.nama AS manufacture
-                                FROM
-                                    tb_aset
-                                JOIN
-                                    tb_manufacture ON tb_manufacture.id = tb_aset.manufacture
-                                
-                                WHERE
-                                    tb_aset.serial = '" . $data['id_aset'] . "'";
-
-                                    // Menggunakan parameterized query untuk mencegah SQL injection
-                                    //$hasil = mysqli_query($koneksi, $query);
-                                    //$datar = mysqli_fetch_array($hasil);
-                                    $query_cek = mysqli_query($koneksi, $sql_cek);
-                                    $dataxr = mysqli_fetch_array($query_cek, MYSQLI_BOTH);
-
-                                    // $jm = $datar['manufacture'];
-
+                                foreach ($asetk as $key => $value) :
 
                                 ?>
                                     <tr>
-                                        <td class="cell">#<?= $data['id_aset']; ?></td>
-                                        <td class="cell"><span class="truncate">Lorem ipsum dolor sit amet eget volutpat erat</span></td>
-                                        <td class="cell">yark</td>
-                                        <td class="cell"><span><?= $data['manufacture']; ?></span></td>
-                                        <td class="cell"><span class="badge bg-success">Paid</span></td>
+                                        <td><?= $no++ ?></td>
 
-                                        <td class="cell text-center">
-                                            <a class="" href="<?= base_url('admin/suratkeluar/delete/' . $data['id']) ?>"><i class="fa-solid fa-trash-can text-danger"></i></a>
+
+                                        <td class="cell"><b><?= $value->serial ?></b></td>
+                                        <td class="cell">
+                                            <span class="truncate"><?= $value->manufacture ?></span><br>
+                                            <span class="truncate">Type :<?= $value->type ?></span>
+                                        </td>
+                                        <td class="cell">
+                                            Status :<?= $value->status ?><br>
+                                            Stock :<?= $value->stok ?><br>
+                                            Kondisi:
+                                            <span class="badge bg-<?= ($value->kondisi == 'OK') ? 'success' : (($value->kondisi == 'RUSAK') ? 'warning' : 'danger') ?>">
+                                                <?= $value->kondisi  ?>
+                                            </span>
+                                        </td>
+
+
+                                        <td class="cell text-center ">
+                                            <a class="" href="<?= base_url('admin/suratkeluar/delete_asetk/' . $value->id_asetk) ?>">
+                                                <i class="fa-solid fa-trash-can text-danger"></i> </a>
+                                            </a>
                                         </td>
                                     </tr>
-                                <?php } ?>
+                                <?php endforeach ?>
 
 
                             </tbody>
@@ -147,28 +129,28 @@
 
         </div>
         <hr>
-        <form action="<?= base_url('admin/aset/save') ?>" method="POST">
+        <form action="<?= base_url('admin/suratkeluar/save_sk') ?>" method="POST">
             <div class="row">
                 <div class="col-6">
                     Kepada :
-                    <input type="text" name="serial" class="form-control" required placeholder=" Tujuan ">
+                    <input type="text" name="kepada" class="form-control" required placeholder=" Tujuan ">
 
                 </div>
                 <div class="col-6">
                     Dari :
-                    <input type="text" name="serial" class="form-control" required placeholder=" Dari">
+                    <input type="text" name="dari" class="form-control" required placeholder=" Dari">
 
                 </div>
                 <div class="col-6">
                     Prihal :
-                    <input type="text" name="serial" class="form-control" required placeholder=" Perihal ">
+                    <input type="text" name="prihal" class="form-control" required placeholder=" Perihal ">
 
                 </div>
                 <div class="col-6 mb-4">
                     Status
-                    <select name="kondisi" class="form-select">
+                    <select name="status" class="form-select">
                         <?php foreach ($stock as $gr) : ?>
-                            <option value="<?= $gr->id ?>"><?= $gr->nama ?></option>
+                            <option value="<?= $gr->nama ?>"><?= $gr->nama ?></option>
                         <?php endforeach ?>
                     </select>
                 </div>

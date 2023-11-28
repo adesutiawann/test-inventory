@@ -63,6 +63,7 @@ $menu = $aktiv;
         </div>
     </div>
 </div>
+
 <nav id="orders-table-tab" class="orders-table-tab app-nav-tabs nav shadow-sm flex-column flex-sm-row mb-1" role="tablist">
 
     <a class="flex-sm-fill text-sm-center nav-link <?= ($menu == 'ALL') ? 'active' : '' ?>" href="<?= base_url('admin/suratkeluar') ?>" aria-controls="orders-all" aria-selected="false">All</a>
@@ -76,20 +77,18 @@ $menu = $aktiv;
     <div class="app-card-body p-4">
 
         <div class="table-responsive">
-
+            <?php // print_r($suratkeluar)
+            ?>
             <table id="tabel1" class="table table-striped">
                 <thead>
                     <tr>
                         <th>NO.</th>
-                        <th>Serial</th>
-                        <th>Manufacture</th>
-                        <th>Spesifikasi</th>
-
-                        <th>Status</th>
-                        <th>Tanggal</th>
+                        <th>NOMOR</th>
+                        <th>Barang</th>
+                        <th>Penerima</th>
 
                         <th>Keterangan</th>
-                        <th>Action</th>
+
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -97,27 +96,61 @@ $menu = $aktiv;
 
                     <?php
                     $no = 1;
-                    foreach ($aset as $key => $value) : ?>
+                    foreach ($suratkeluar_sk as $key => $value) :
+
+                    ?>
                         <tr>
                             <td><?= $no++ ?></td>
-                            <td><b><?= $value->serial ?></b></td>
-                            <td>
-                                <b> <?= $value->manufacture ?></b><br>
-                                Type : <?= $value->type ?>
+                            <td><b><?= $value->nomor ?></b><br>
+                                Tanggal : <span class="text-danger">
+                                    <?= $value->tgl ?>
                             </td>
                             <td>
-                                Prosesor : <?= $value->prosesor ?> <br>
-                                Generasi : <?= $value->generasi ?> <br>
-                                Hdd/SSD : <?= $value->hdd ?><br>
-                                Ram :<?= $value->ram ?>/<?= $value->rincian ?><br>
+
+                                <?php
+                                $nox = 1;
+                                foreach ($asetk as $keyx => $valuex) : ?>
+
+                                    <?= $nox++ ?>
+                                    <b><?= $valuex->serial ?></b>
+
+                                    <span class="truncate"><?= $valuex->manufacture ?></span><br>
+                                    <span class="truncate">Type :<?= $valuex->type ?></span>
+
+                                    </span><br>
+
+                                <?php endforeach ?>
                             </td>
-                            <td>Dari</td>
 
-                            <td>Prihal</td>
-                            <td>Tanggal</td>
+                            <td>
+                                NIK : <?= $value->nik ?> <br>
+                                Penerima : <?= $value->penerima ?> <br>
+                                Telpon : <?= $value->telpon ?><br>
+                                Lokasi : <?= $value->lokasi ?>
 
-                            <td>Keterangan</td>
-                            <td>Action</td>
+                            </td>
+                            <td>
+
+                                Status : <b>
+                                    <= $value->stok ?>
+                                </b><br>
+                                Ket : <?= $value->ket ?>
+
+                                </span>
+                            </td>
+
+
+
+                            <td>
+                                <a href="<?= base_url('admin/suratkeluar/sk_edit/' . $value->nomor) ?>" class="btn btn-sm btn-info text-white mt-2 mr-2">
+                                    <i class="fa-solid fa-pen-to-square"></i>
+                                </a>
+                                <a href="<?= base_url('admin/suratkeluar/sk_delete/' . $value->nomor) ?>" class="btn btn-sm btn-danger text-white" onclick="return confirm('Yakin ingin menghapus?')">
+                                    <i class="fa-solid fa-trash-can"></i>
+                                </a>
+
+
+                            </td>
                         </tr>
                     <?php endforeach ?>
                 </tbody>
