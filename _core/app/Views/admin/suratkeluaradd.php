@@ -40,7 +40,7 @@
                         </div>
                         <div class="col-lg-8">
 
-                            <input type="text" name="id_sk" class="form-control text-center" required value="001/PRY-MSI/KITECH/XI/2023">
+                            <input type="text" name="nomor" class="form-control text-center" required value="001/PRY-MSI/KITECH/XI/2023">
                         </div>
                         <div class="col-sm-2">
                             Tanggal :<br>
@@ -75,7 +75,7 @@
                     <div class="table-responsive">
                         <?php //print_r($asetk) 
                         ?>
-                        <table class="table app-table-hover mb-0 text-left">
+                        <table class=" table app-table-hover mb-0 text-left">
                             <thead>
                                 <tr>
                                     <th class="cell">No</th>
@@ -128,41 +128,100 @@
             </div>
 
         </div>
-        <hr>
-        <form action="<?= base_url('admin/suratkeluar/save_sk') ?>" method="POST">
-            <div class="row">
-                <div class="col-6">
-                    Kepada :
-                    <input type="text" name="kepada" class="form-control" required placeholder=" Tujuan ">
 
-                </div>
-                <div class="col-6">
-                    Dari :
-                    <input type="text" name="dari" class="form-control" required placeholder=" Dari">
+        <form action="<?= base_url('admin/suratkeluar/savesuratkeluar') ?>" method="POST">
+            <div class="container ">
+                <div class="row gx-2">
+                    <div class="col-md-12 col-lg-6">
+                        <div class="p-3 border bg-light">
+                            <h6>Barang</h6>
+                            <hr>
+                            <input type="text" name="nomor" class="form-control text-center" required value="">
 
-                </div>
-                <div class="col-6">
-                    Prihal :
-                    <input type="text" name="prihal" class="form-control" required placeholder=" Perihal ">
+                            <div class="row">
 
-                </div>
-                <div class="col-6 mb-4">
-                    Status
-                    <select name="status" class="form-select">
-                        <?php foreach ($stock as $gr) : ?>
-                            <option value="<?= $gr->nama ?>"><?= $gr->nama ?></option>
-                        <?php endforeach ?>
-                    </select>
-                </div>
+                                <div class="col-2">
+                                    Jumlah :
+                                    <input type="text" name="jumlah" class="form-control" required placeholder="000">
 
+                                </div>
+                                <div class="col-5">
+                                    Satuan :
+                                    <input type="text" name="satuan" class="form-control" required placeholder="Unit">
 
-                <div class="col-12 text-end">
-                    <button class="btn btn-primary text-white" type="submit">
-                        <i class="fa-solid fa-download"></i> Simpan </button>
+                                </div>
+
+                                <div class="col-5 mb-4">
+                                    Status
+                                    <select name="status" class="form-select">
+                                        <?php foreach ($stock as $gr) : ?>
+                                            <option value="<?= $gr->nama ?>"><?= $gr->nama ?></option>
+                                        <?php endforeach ?>
+                                    </select>
+                                </div>
+                                <div class="col-md-12 mb-5">
+                                    Keterangan
+                                    <div class="form-floating">
+                                        <textarea name="ket" class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px"></textarea>
+                                        <label for="floatingTextarea2">Keterangan</label>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 col-lg-6">
+                        <div class="p-3 border bg-light">
+                            <h6>Penerima</h6>
+                            <hr>
+                            <div class="row ">
+                                <div class="col-2">
+                                    NIK :
+                                    <input type="text" name="nik" class="form-control UPPERCASE" required placeholder="NIK">
+
+                                </div>
+                                <div class="col-5">
+                                    Penerima :
+                                    <input type="text" name="penerima" class="form-control" required placeholder="Nama Penerima">
+
+                                </div>
+                                <div class="col-5">
+                                    Telpon :
+                                    <input type="text" name="telpon" class="form-control" required placeholder="Telpon ">
+
+                                </div>
+                                <div class="col-md-12 mb-5 mt-3">
+                                    Lokasi
+                                    <div class="form-floating">
+                                        <textarea name="lokasi" class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px"></textarea>
+                                        <label for="floatingTextarea2">Lokasi</label>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </form>
+
+            <div class="col-12 text-end mt-3">
+                <button class="btn btn-primary text-white" type="submit">
+                    <i class="fa-solid fa-download"></i> Simpan </button>
+            </div>
+
+
     </div>
+
+
+</div>
+
+
+</div>
+</div>
+</form>
+</div>
 </div>
 </div>
 

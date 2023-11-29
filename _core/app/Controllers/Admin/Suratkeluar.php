@@ -91,7 +91,7 @@ class Suratkeluar extends BaseController
             // 'aset' => $this->aset->getAll(),
             'suratkeluar_sk' => $this->suratkeluar_sk->getAllsuratkeluar(),
 
-            'asetk' => $this->suratkeluar->getIdasetkeluar(),
+            //'asetk' => $this->suratkeluar->getIdasetkeluar($id),
             //'suratkeluar'    => $this->suratkeluar->find($id),
 
         ];
@@ -132,7 +132,7 @@ class Suratkeluar extends BaseController
             'kondisi'    => $this->kondisi->orderBy('nama', 'asc')->findAll(),
             'stock'    => $this->stok->orderBy('nama', 'asc')->findAll(),
             // 'asetk' => $this->suratkeluar->getIdasetkeluar(),
-            'asetk' => $this->suratkeluar->getIdasetkeluar(),
+            // 'asetk' => $this->suratkeluar->getIdasetkeluar(),
 
         ];
 
@@ -188,53 +188,6 @@ class Suratkeluar extends BaseController
         //return view('admin/suratkeluar', $data);
     }
 
-    public function datab($id)
-    {
-        // Menghubungkan ke database
-        $db = db_connect();
-        // Membuat instance query builder untuk tabel 'tb_suratkeluar'      
-        $builder = $db->table('tb_suratkeluar')
-            ->select(
-                'tb_suratkeluar.id,tb_suratkeluar.tgl_masuk,tb_suratkeluar.tgl_keluar,tb_suratkeluar.serial,tb_suratkeluar.ket,
-                tb_hdd.nama as hdd ,
-                tb_manufacture.nama as manufacture,
-                tb_prosesor.nama as prosesor,
-                tb_type.nama as type,
-                tb_generasi.nama as generasi,
-                tb_ram.nama as ram,
-                tb_rincian.nama as rincian,
-                tb_status.nama as status,
-                tb_stok.nama as stok,
-                tb_kondisi.nama as kondisi',
-
-            )
-
-            ->join('tb_hdd', 'tb_hdd.id = tb_suratkeluar.hdd')
-            ->join('tb_manufacture', 'tb_manufacture.id = tb_suratkeluar.manufacture')
-            ->join('tb_type', 'tb_type.id = tb_suratkeluar.type')
-            ->join('tb_prosesor', 'tb_prosesor.id = tb_suratkeluar.prosesor')
-            ->join('tb_generasi', 'tb_generasi.id = tb_suratkeluar.generasi')
-            ->join('tb_ram', 'tb_ram.id = tb_suratkeluar.ram')
-            ->join('tb_rincian', 'tb_rincian.id = tb_suratkeluar.rincian')
-            ->join('tb_status', 'tb_status.id = tb_suratkeluar.status')
-            ->join('tb_stok', 'tb_stok.id = tb_suratkeluar.stock')
-            ->join('tb_kondisi', 'tb_kondisi.id = tb_suratkeluar.kondisi')
-
-            ->where('tb_suratkeluar.kondisi', $id)
-
-            ->orderBy('tb_suratkeluar.id', 'desc');
-
-
-        return DataTable::of($builder)
-            ->add('action', function ($row) {
-                return '<a href="' . base_url('admin/suratkeluar/edit/' . $row->id) .
-                    '" class="btn btn-sm btn-info text-white">
-                <i class="fa-solid fa-pen-to-square"></i></a> 
-                <a href="' . base_url('admin/suratkeluar/delete/' . $row->id) .
-                    '" class="btn btn-sm btn-danger text-white" onclick="return confirm(\'Yakin?\')"><i class="fa-solid fa-trash-can"></i></a>';
-            })
-            ->addNumbering('no')->toJson(true);
-    }
 
 
     public function edit($id)
@@ -327,23 +280,57 @@ class Suratkeluar extends BaseController
     {
 
         $tgl = date("Y-m-d");
+        if ($this->request->getVar('id')) {
+            $post = [
+                'nomor'       => $this->request->getVar('nomor'),
+                'jumlah'            => $this->request->getVar('jumlah'),
+                'satuan'            => $this->request->getVar('satuan'),
+                'ket'            => $this->request->getVar('ket'),
 
-        $post = [
-            'id'       => $this->request->getVar('id'),
-            'kepada'            => $this->request->getVar('nama'),
-            'dari'            => $this->request->getVar('nama'),
-            'nama'            => $this->request->getVar('nama'),
-            'nama'            => $this->request->getVar('nama'),
-            'tgl'           => $tgl,
-            //'tahun_pelajaran' => $this->tp->tahun,
-        ];
+                'nik'            => $this->request->getVar('nik'),
+                'penerima'            => $this->request->getVar('penerima'),
+                'telpon'            => $this->request->getVar('telpon'),
+                'lokasi'            => $this->request->getVar('lokasi'),
 
-        if ($this->suratkeluar->save($post)) {
-            session()->setFlashdata('success', 'Data berhasil di edit.');
-            return redirect()->to(base_url('admin/suratkeluar'));
+                'tgl'           => $tgl,
+
+                'status'            => $this->request->getVar('status'),
+                //'tahun_pelajaran' => $this->tp->tahun,
+            ];
+
+            if ($this->suratkeluar_sk->save($post)) {
+                session()->setFlashdata('success', 'Data berhasil di EDIT surat keluar !');
+                return redirect()->to(base_url('admin/suratkeluar'));
+            } else {
+                session()->setFlashdata('error', 'Data Gagal di simpan.');
+                return redirect()->to(base_url('admin/suratkeluar'));
+            }
         } else {
-            session()->setFlashdata('error', 'Data Gagal di simpan.');
-            return redirect()->to(base_url('admin/suratkeluar'));
+
+            $post = [
+                //'nomor'       => $this->request->getVar('nomor'),
+                'jumlah'            => $this->request->getVar('jumlah'),
+                'satuan'            => $this->request->getVar('satuan'),
+                'ket'            => $this->request->getVar('ket'),
+
+                'nik'            => $this->request->getVar('nik'),
+                'penerima'            => $this->request->getVar('penerima'),
+                'telpon'            => $this->request->getVar('telpon'),
+                'lokasi'            => $this->request->getVar('lokasi'),
+
+                'tgl'           => $tgl,
+
+                'status'            => $this->request->getVar('status'),
+                //'tahun_pelajaran' => $this->tp->tahun,
+            ];
+
+            if ($this->suratkeluar_sk->save($post)) {
+                session()->setFlashdata('success', 'Data berhasil di simpan surat keluar !');
+                return redirect()->to(base_url('admin/suratkeluar'));
+            } else {
+                session()->setFlashdata('error', 'Data Gagal di simpan.');
+                return redirect()->to(base_url('admin/suratkeluar'));
+            }
         }
     }
     public function delete_asetk($id)

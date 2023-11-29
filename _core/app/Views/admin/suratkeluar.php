@@ -86,9 +86,7 @@ $menu = $aktiv;
                         <th>NOMOR</th>
                         <th>Barang</th>
                         <th>Penerima</th>
-
                         <th>Keterangan</th>
-
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -101,7 +99,7 @@ $menu = $aktiv;
                     ?>
                         <tr>
                             <td><?= $no++ ?></td>
-                            <td><b><?= $value->nomor ?></b><br>
+                            <td><b><?= $id = $value->nomor ?></b><br>
                                 Tanggal : <span class="text-danger">
                                     <?= $value->tgl ?>
                             </td>
@@ -109,7 +107,11 @@ $menu = $aktiv;
 
                                 <?php
                                 $nox = 1;
-                                foreach ($asetk as $keyx => $valuex) : ?>
+
+                                $dataasetk = $this->suratkeluar->getIdasetkeluar($id);
+
+                                //foreach ($data['asetk'] as $keyx => $valuex)
+                                foreach ($dataasetk as $keyx => $valuex) : ?>
 
                                     <?= $nox++ ?>
                                     <b><?= $valuex->serial ?></b>
@@ -132,7 +134,7 @@ $menu = $aktiv;
                             <td>
 
                                 Status : <b>
-                                    <= $value->stok ?>
+                                    <?= $value->status ?>
                                 </b><br>
                                 Ket : <?= $value->ket ?>
 

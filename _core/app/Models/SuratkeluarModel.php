@@ -95,7 +95,7 @@ class SuratkeluarModel extends Model
     return $query->getResult();
   }
 
-  function getIdasetkeluar()
+  function getIdasetkeluar($id)
   {
     $builder = $this->db->table('tb_asetk')
       ->select(
@@ -127,7 +127,7 @@ class SuratkeluarModel extends Model
       ->join('tb_stok', 'tb_stok.id = tb_aset.stock')
       ->join('tb_kondisi', 'tb_kondisi.id = tb_aset.kondisi')
 
-      //->where('tb_aset.serial', $id)
+      ->where('tb_asetk.id_sk', $id)
 
       ->orderBy('tb_aset.id', 'desc');
     $query = $builder->get();
