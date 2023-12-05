@@ -14,7 +14,7 @@
             <div class="row gx-5 gy-3">
                 <div class="col-12">
 
-                    <div>Selamat datang di aplikasi laporan Absensi untuk wali kelas, anda bisa mengelola data wali kelas, siswa, dan lain sebagainya.</div>
+                    <div>Selamat datang di aplikasi aset inventory, anda bisa mengelola data aset komputer dan lain sebagainya.</div>
                 </div>
             </div>
             <!--//row-->
@@ -27,13 +27,13 @@
 </div>
 <!--//app-card-->
 
-<h1 class="app-page-title">Statistik hari ini</h1>
+<h1 class="app-page-title">Statistik Aset</h1>
 <div class="row g-4 mb-4">
     <div class="col-6 col-lg-3">
         <div class="app-card app-card-stat shadow-sm h-100">
             <div class="app-card-body p-3 p-lg-4">
-                <h4 class="stats-type mb-1">Total Siswa</h4>
-                <div class="stats-figure"><?= $total_siswa ?></div>
+                <h4 class="stats-type mb-1">Total Aset Destop</h4>
+                <div class="stats-figure"><?= $total_d ?></div>
             </div>
             <!--//app-card-body-->
             <a class="app-card-link-mask" href="#"></a>
@@ -45,32 +45,32 @@
     <div class="col-6 col-lg-3">
         <div class="app-card app-card-stat shadow-sm h-100">
             <div class="app-card-body p-3 p-lg-4">
-                <h4 class="stats-type mb-1">Siswa Sakit</h4>
+                <h4 class="stats-type mb-1">Total Aset Nootbooks</h4>
+                <div class="stats-figure"><?= $total_n ?></div>
+            </div>
+            <!--//app-card-body-->
+            <a class="app-card-link-mask" href="#"></a>
+        </div>
+        <!--//app-card-->
+    </div>
+    <!--//col-->
+    <div class="col-6 col-lg-3">
+        <div class="app-card app-card-stat shadow-sm h-100">
+            <div class="app-card-body p-3 p-lg-4">
+                <h4 class="stats-type mb-1">Total Aset Printer</h4>
+                <div class="stats-figure"><?= $total_p ?></div>
+            </div>
+            <!--//app-card-body-->
+            <a class="app-card-link-mask" href="#"></a>
+        </div>
+        <!--//app-card-->
+    </div>
+    <!--//col-->
+    <div class="col-6 col-lg-3">
+        <div class="app-card app-card-stat shadow-sm h-100">
+            <div class="app-card-body p-3 p-lg-4">
+                <h4 class="stats-type mb-1">Total Aset Server</h4>
                 <div class="stats-figure"><?= $total_s ?></div>
-            </div>
-            <!--//app-card-body-->
-            <a class="app-card-link-mask" href="#"></a>
-        </div>
-        <!--//app-card-->
-    </div>
-    <!--//col-->
-    <div class="col-6 col-lg-3">
-        <div class="app-card app-card-stat shadow-sm h-100">
-            <div class="app-card-body p-3 p-lg-4">
-                <h4 class="stats-type mb-1">Siswa Izin</h4>
-                <div class="stats-figure"><?= $total_i ?></div>
-            </div>
-            <!--//app-card-body-->
-            <a class="app-card-link-mask" href="#"></a>
-        </div>
-        <!--//app-card-->
-    </div>
-    <!--//col-->
-    <div class="col-6 col-lg-3">
-        <div class="app-card app-card-stat shadow-sm h-100">
-            <div class="app-card-body p-3 p-lg-4">
-                <h4 class="stats-type mb-1">Siswa Alpha</h4>
-                <div class="stats-figure"><?= $total_a ?></div>
             </div>
             <!--//app-card-body-->
             <a class="app-card-link-mask" href="#"></a>

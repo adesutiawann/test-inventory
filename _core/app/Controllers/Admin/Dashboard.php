@@ -8,6 +8,8 @@ use App\Models\Tahun_pelajaranModel;
 use App\Models\SiswaModel;
 use App\Models\AbsensiModel;
 
+use App\Models\AsetModel;
+
 class Dashboard extends BaseController
 {
     protected $admin;
@@ -15,12 +17,18 @@ class Dashboard extends BaseController
     protected $siswa;
     protected $absensi;
 
+
+    protected $aset;
+
     public function __construct()
     {
         $this->admin           = new AdminModel();
         $this->tahun_pelajaran = new Tahun_pelajaranModel();
         $this->siswa           = new SiswaModel();
         $this->absensi         = new AbsensiModel();
+
+
+        $this->aset = new AsetModel();
     }
 
     public function index()
@@ -35,6 +43,15 @@ class Dashboard extends BaseController
             'title'       => 'Dashboard',
             'segment'     => $this->request->uri->getSegments(),
             'admin'       => $this->admin->find(session()->get('id')),
+
+            //'total_destop' => $this->aset->where(['type' => "Destop"])->countAllResults(),
+            'total_d' => $this->aset->where('type', '2')->countAllResults(),
+            'total_n' => $this->aset->where('type', '1')->countAllResults(),
+            'total_p' => $this->aset->where('type', '3')->countAllResults(),
+
+            'total_s' => $this->aset->where('type', '5')->countAllResults(),
+
+
             'total_siswa' => $this->siswa->where(['tahun_pelajaran' => $ta->tahun])->countAllResults(),
             'total_s'     => $this->absensi->where(['tanggal' => date("Y-m-d"), 'absensi' => 's', 'tahun_pelajaran' => $ta->tahun])->countAllResults(),
             'total_i'     => $this->absensi->where(['tanggal' => date("Y-m-d"), 'absensi' => 'i', 'tahun_pelajaran' => $ta->tahun])->countAllResults(),

@@ -21,23 +21,47 @@
             </div>
         <?php endif ?>
 
-        <form action="<?= base_url('admin/bp/save') ?>" method="POST">
-            <div class="row">
-                <div class="col-md-3">
-                    <strong>Tambahkan data Guru BP/BK:</strong>
+
+        <?php if (isset($port->id)) {
+        ?>
+            <form action="<?= base_url('admin/port/saveedit') ?>" method="POST">
+                <div class="row">
+                    <div class="col-md-3">
+                        <strong>Edit Nama :</strong>
+                    </div>
+                    <div class="col-md-4">
+
+
+
+                        <input type="" hidden name="id" value="<?= $port->id ?>">
+                        <input type="text" value="<?= $port->nama ?>" name="nama" class="form-control" autofocus required>
+
+                    </div>
+
+                    <div class="col-md-2 ">
+                        <input type="submit" class="btn btn-primary text-white" value="Tambah">
+                    </div>
                 </div>
-                <div class="col-md-4">
-                    <select name="guru" class="form-select">
-                        <?php foreach ($guru as $gr) : ?>
-                            <option value="<?= $gr->id ?>"><?= $gr->nama ?></option>
-                        <?php endforeach ?>
-                    </select>
+            </form>
+        <?php } else { ?>
+            <form action="<?= base_url('admin/port/save') ?>" method="POST">
+                <div class="row">
+                    <div class="col-md-3">
+                        <strong>Tambahkan Nama :</strong>
+                    </div>
+                    <div class="col-md-4">
+
+
+                        <input type="text" name="nama" class="form-control" required autofocus>
+
+                    </div>
+
+                    <div class="col-md-2 ">
+                        <input type="submit" class="btn btn-primary text-white" value="Tambah">
+                    </div>
                 </div>
-                <div class="col-md-2">
-                    <input type="submit" class="btn btn-primary text-white" value="Tambah">
-                </div>
-            </div>
-        </form>
+            </form>
+        <?php } ?>
     </div>
 </div>
 
@@ -48,8 +72,9 @@
                 <thead>
                     <tr>
                         <th>NO.</th>
-                        <th>NAMA</th>
-                        <th>AKSI</th>
+                        <th>port</th>
+                        <th>TANGGAL</th>
+                        <th>ACTION</th>
                     </tr>
                 </thead>
                 <tbody></tbody>
@@ -69,15 +94,19 @@
         $('#table').DataTable({
             processing: true,
             serverSide: true,
-            ajax: '<?= base_url('admin/bp/data') ?>',
+            ajax: '<?= base_url('admin/port/data') ?>',
             order: [],
             columns: [{
                     data: 'no',
                     orderable: false
                 },
                 {
-                    data: 'nama'
+                    data: 'port'
                 },
+                {
+                    data: 'tgl'
+                },
+
                 {
                     data: 'action',
                     orderable: false

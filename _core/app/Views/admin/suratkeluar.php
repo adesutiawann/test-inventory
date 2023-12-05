@@ -8,6 +8,8 @@
 use PhpParser\Node\Expr\Print_;
 
 $menu = $aktiv;
+
+$con = new mysqli("localhost", "root", "", "absensi_walikelas") or die(mysqli_error($con));
 // $submenu = $segment[2];
 ?>
 <style>
@@ -104,24 +106,15 @@ $menu = $aktiv;
                                     <?= $value->tgl ?>
                             </td>
                             <td>
-
                                 <?php
-                                $nox = 1;
+                                $guru = mysqli_query($con, "SELECT * FROM tb_asetk where id_sk='" . $id . "' ");
+                                $non = 1;
+                                foreach ($guru as $g) {
 
-                                $dataasetk = $this->suratkeluar->getIdasetkeluar($id);
+                                    echo $non++ . '. ' . $g['id_aset'] . '<br>';
+                                }
+                                ?>
 
-                                //foreach ($data['asetk'] as $keyx => $valuex)
-                                foreach ($dataasetk as $keyx => $valuex) : ?>
-
-                                    <?= $nox++ ?>
-                                    <b><?= $valuex->serial ?></b>
-
-                                    <span class="truncate"><?= $valuex->manufacture ?></span><br>
-                                    <span class="truncate">Type :<?= $valuex->type ?></span>
-
-                                    </span><br>
-
-                                <?php endforeach ?>
                             </td>
 
                             <td>

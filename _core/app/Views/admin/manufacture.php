@@ -53,12 +53,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>NO.</td>
-                        <td>MANUFACTURE</td>
-                        <td>TANGGAL</td>
-                        <td>ACTION</th>
-                    </tr>
+
                 </tbody>
             </table>
         </div>
@@ -73,7 +68,7 @@
 
 <script>
     $(document).ready(function() {
-        $('#tablex').DataTable({
+        $('#tabel1').DataTable({
             processing: true,
             serverSide: true,
             ajax: '<?= base_url('admin/manufacture/data') ?>',

@@ -88,13 +88,17 @@ class Suratkeluar extends BaseController
             'kondisi'    => $this->kondisi->orderBy('nama', 'asc')->findAll(),
             'stock'    => $this->stok->orderBy('nama', 'asc')->findAll(),
             'aktiv'   => 'ALL',
-            // 'aset' => $this->aset->getAll(),
+            'aset' => $this->aset->getAll(),
             'suratkeluar_sk' => $this->suratkeluar_sk->getAllsuratkeluar(),
 
-            //'asetk' => $this->suratkeluar->getIdasetkeluar($id),
+
+
+            'asetk' => $this->suratkeluar->getIdasetkeluar(),
             //'suratkeluar'    => $this->suratkeluar->find($id),
 
         ];
+
+
 
         return view('admin/suratkeluar', $data);
     }
@@ -131,7 +135,7 @@ class Suratkeluar extends BaseController
             'status'    => $this->status->orderBy('nama', 'asc')->findAll(),
             'kondisi'    => $this->kondisi->orderBy('nama', 'asc')->findAll(),
             'stock'    => $this->stok->orderBy('nama', 'asc')->findAll(),
-            // 'asetk' => $this->suratkeluar->getIdasetkeluar(),
+            'asetk' => $this->suratkeluar->getIdasetkeluar(),
             // 'asetk' => $this->suratkeluar->getIdasetkeluar(),
 
         ];

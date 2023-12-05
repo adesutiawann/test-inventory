@@ -38,7 +38,7 @@ $menu = $aktiv;
 
         <div class="row ">
             <div class="col-6 ml-4">
-                <a href="<?= base_url('admin/aset/add') ?>" class="btn app-btn-primary mb-3 text-white"><i class="fas fa-plus"></i> Tambah Asets</a>
+                <a href="<?= base_url('admin/monitor/add') ?>" class="btn app-btn-primary mb-3 text-white"><i class="fas fa-plus"></i> Tambah Asets</a>
 
             </div>
             <div class="col-3">
