@@ -23,7 +23,7 @@ use App\Models\KondisiModel;
 use App\Models\PortModel;
 //use App\Models\PelajaranModel;
 
-class Monitor extends BaseController
+class Keyboard extends BaseController
 {
     protected $admin;
     protected $aset;
@@ -68,7 +68,7 @@ class Monitor extends BaseController
         }
 
         $data = [
-            'title'   => 'Data Monitor',
+            'title'   => 'Data Keyboard',
             'segment' => $this->request->uri->getSegments(),
             'admin'   => $this->admin->find(session()->get('id')),
             'nama'    => $this->manufacture->orderBy('nama', 'asc')->findAll(),
@@ -83,22 +83,23 @@ class Monitor extends BaseController
             'stock'    => $this->stok->orderBy('nama', 'asc')->findAll(),
             'port'    => $this->port->orderBy('port', 'asc')->findAll(),
             'aktiv'   => 'ALL',
-            'aset' => $this->aset->getAllmonitor(),
+            'aset' => $this->aset->getAllkeyboard(),
+            //'aset' =>  $this->aset->where('tb_type.nama', 'Destop')->getAll(),
         ];
 
-        return view('admin/monitor', $data);
+        return view('admin/keyboard', $data);
     }
     public function ok($id)
     {
         $data = [
-            'title'   => 'Data Monitor',
+            'title'   => 'Data keyboard',
             'aktiv'   => $id,
             'segment' => $this->request->uri->getSegments(),
             //'aset' =>  $this->suratkeluar->where('kondisi', 'OK')->getAll(),
             'aset'    => $this->aset->getId($id),
 
         ];
-        return view('admin/monitor', $data);
+        return view('admin/keyboard', $data);
     }
 
     public function add()
@@ -108,12 +109,12 @@ class Monitor extends BaseController
         }
 
         $data = [
-            'title'   => 'Add Monitor',
+            'title'   => 'Add keyboard',
             'segment' => $this->request->uri->getSegments(),
             'admin'   => $this->admin->find(session()->get('id')),
             'nama'    => $this->manufacture->orderBy('nama', 'asc')->findAll(),
             //'type'    => $this->type->orderBy('nama', 'asc')->findAll(),
-            'type' => $this->type->where('nama', 'Monitor')->orderBy('nama', 'asc')->findAll(),
+            'type' => $this->type->where('nama', 'keyboard')->orderBy('nama', 'asc')->findAll(),
 
             'prosesor'    => $this->prosesor->orderBy('nama', 'asc')->findAll(),
             'generasi'    => $this->generasi->orderBy('nama', 'asc')->findAll(),
@@ -128,7 +129,7 @@ class Monitor extends BaseController
 
         ];
 
-        return view('admin/monitoradd', $data);
+        return view('admin/keyboardadd', $data);
     }
 
     public function data()
@@ -313,17 +314,16 @@ class Monitor extends BaseController
 
             if ($this->aset->save($post)) {
                 session()->setFlashdata('success', 'Data berhasil di edit.');
-                return redirect()->to(base_url('admin/monitor'));
+                return redirect()->to(base_url('admin/keyboard'));
             } else {
                 session()->setFlashdata('error', 'Data Gagal di simpan.');
-                return redirect()->to(base_url('admin/monitor'));
+                return redirect()->to(base_url('admin/keyboard'));
             }
         } else {
             // $tgl= date("Y-m-d");
             $post = [
                 'manufacture'            => $this->request->getVar('manufacture'),
                 'type'            => $this->request->getVar('type'),
-                'port'            => $this->request->getVar('port'),
                 'status'            => $this->request->getVar('status'),
                 'stock'            => $this->request->getVar('stock'),
                 'kondisi'            => $this->request->getVar('kondisi'),
@@ -337,10 +337,10 @@ class Monitor extends BaseController
 
             if ($this->aset->save($post)) {
                 session()->setFlashdata('success', 'Data berhasil di simpan.');
-                return redirect()->to(base_url('admin/monitor'));
+                return redirect()->to(base_url('admin/keyboard'));
             } else {
                 session()->setFlashdata('error', 'Data Sudah Terdaftar !');
-                return redirect()->to(base_url('admin/monitor'));
+                return redirect()->to(base_url('admin/keyboard'));
             }
         }
     }
@@ -370,10 +370,10 @@ class Monitor extends BaseController
     {
         if ($this->aset->delete($id)) {
             session()->setFlashdata('success', 'Data berhasil di hapus.');
-            return redirect()->to(base_url('admin/monitor'));
+            return redirect()->to(base_url('admin/keyboard'));
         } else {
             session()->setFlashdata('danger', 'Data berhasil di hapus.');
-            return redirect()->to(base_url('admin/monitor'));
+            return redirect()->to(base_url('admin/keyboard'));
         }
     }
 }

@@ -38,7 +38,7 @@ $menu = $aktiv;
 
         <div class="row ">
             <div class="col-6 ml-4">
-                <a href="<?= base_url('admin/monitor/add') ?>" class="btn app-btn-primary mb-3 text-white"><i class="fas fa-plus"></i> Tambah Asets</a>
+                <a href="<?= base_url('admin/keyboard/add') ?>" class="btn app-btn-primary mb-3 text-white"><i class="fas fa-plus"></i> Tambah Asets</a>
 
             </div>
             <div class="col-3">
@@ -81,7 +81,7 @@ $menu = $aktiv;
     <div class="app-card-body p-4">
 
         <div class="table-responsive">
-            <? //= print_r($aset) 
+            <?//= print_r($aset)
             ?>
             <table id="tabel1" class="table table-striped">
                 <thead>
@@ -89,7 +89,6 @@ $menu = $aktiv;
                         <th>NO.</th>
                         <th>Serial</th>
                         <th>Manufacture</th>
-                        <th>Spesifikasi</th>
 
                         <th>Status</th>
                         <th>Tanggal</th>
@@ -112,9 +111,7 @@ $menu = $aktiv;
                                 <b> <?= $value->manufacture ?></b><br>
                                 Type : <?= $value->type ?>
                             </td>
-                            <td>
-                                Port : <?= $value->port ?> <br>
-                            </td>
+
                             <td>
                                 Status :<?= $value->status ?><br>
                                 Stock :<?= $value->stok ?><br>

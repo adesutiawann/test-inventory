@@ -31,56 +31,54 @@
             </div>
         <?php endif ?>
 
-        <form action="<?= base_url('admin/monitor/save') ?>" method="POST">
+        <form action="<?= base_url('admin/keyboard/save') ?>" method="POST">
             <div class="row">
                 <div class="col-md-12 mb-4">
-                    <strong>Form Data monitor:</strong>
+                    <strong>Form Data :</strong>
                 </div>
                 <hr>
-                <div class="col-md-4">
+                <div class="col-md-3">
                     Manufacture
-                    <select name="manufacture" class="form-select">
+                    <select name="manufacture" class="form-select" required>
+                        <option value="">Pilih Manufaktur</option>
                         <?php foreach ($nama as $gr) : ?>
                             <option value="<?= $gr->id ?>"><?= $gr->nama ?></option>
                         <?php endforeach ?>
                     </select>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-3" hidden>
                     Type
-                    <select name="type" class="form-select">
+                    <select name="type" class="form-select" required>
+
                         <?php foreach ($type as $gr) : ?>
                             <option value="<?= $gr->id ?>"><?= $gr->nama ?></option>
                         <?php endforeach ?>
                     </select>
                 </div>
-                <div class="col-md-4">
-                    Port Cable
-                    <select name="port" class="form-select">
-                        <?php foreach ($port as $gr) : ?>
-                            <option value="<?= $gr->id ?>"><?= $gr->port ?></option>
-                        <?php endforeach ?>
-                    </select>
-                </div>
 
-                <div class="col-md-4">
+
+                <div class="col-md-3">
                     Status
-                    <select name="status" class="form-select">
+                    <select name="status" class="form-select" required>
+                        <option value="">Pilih Status</option>
                         <?php foreach ($status as $gr) : ?>
                             <option value="<?= $gr->id ?>"><?= $gr->nama ?></option>
                         <?php endforeach ?>
                     </select>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-3">
                     Stok
-                    <select name="stock" class="form-select">
+                    <select name="stock" class="form-select" required>
+                        <option value="">Pilih Stok</option>
                         <?php foreach ($stock as $gr) : ?>
                             <option value="<?= $gr->id ?>"><?= $gr->nama ?></option>
                         <?php endforeach ?>
                     </select>
                 </div>
-                <div class="col-md-4 mb-4">
+                <div class="col-md-3 mb-4">
                     Kondisi
-                    <select name="kondisi" class="form-select">
+                    <select name="kondisi" class="form-select" required>
+                        <option value="">Pilih Kondisi</option>
                         <?php foreach ($kondisi as $gr) : ?>
                             <option value="<?= $gr->id ?>"><?= $gr->nama ?></option>
                         <?php endforeach ?>

@@ -24,7 +24,7 @@
 
         <?php if (isset($port->id)) {
         ?>
-            <form action="<?= base_url('admin/port/saveedit') ?>" method="POST">
+            <form action="<?= base_url('admin/port/save') ?>" method="POST">
                 <div class="row">
                     <div class="col-md-3">
                         <strong>Edit Nama :</strong>
@@ -34,7 +34,7 @@
 
 
                         <input type="" hidden name="id" value="<?= $port->id ?>">
-                        <input type="text" value="<?= $port->nama ?>" name="nama" class="form-control" autofocus required>
+                        <input type="text" value="<?= $port->port ?>" name="nama" class="form-control" oninput=" this.value = this.value.toUpperCase()" autofocus required>
 
                     </div>
 
@@ -52,7 +52,7 @@
                     <div class="col-md-4">
 
 
-                        <input type="text" name="nama" class="form-control" required autofocus>
+                        <input type="text" name="nama" class="form-control" oninput="this.value = this.value.toUpperCase()" required autofocus>
 
                     </div>
 

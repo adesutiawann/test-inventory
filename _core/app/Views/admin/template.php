@@ -168,7 +168,7 @@
 
                                     <li class="submenu-item">
                                         <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-                                        <a class="submenu-link <?= ($menu == 'keyboard') ? 'active' : '' ?>" href=" <?= base_url('admin/suratmasuk') ?>">
+                                        <a class="submenu-link <?= ($menu == 'keyboard') ? 'active' : '' ?>" href=" <?= base_url('admin/keyboard') ?>">
 
                                             <span class="nav-link-text">Keyboard</span>
                                         </a>

@@ -14,12 +14,13 @@ class AsetModel extends Model
   protected $protectFields    = true;
   protected $allowedFields    = [
     'id', 'tgl_masuk', 'tgl_keluar', 'manufacture', 'type', 'prosesor',
-    'generasi', 'serial', 'hdd', 'ram', 'rincian', 'status', 'stock', 'kondisi', 'ket'
+    'generasi', 'port', 'serial', 'hdd', 'ram', 'rincian', 'status', 'stock', 'kondisi', 'ket'
   ];
 
 
   protected $validationRules = [
-    //  'Aset' => 'required|is_unique[tb_aset.aset,id,{id}]',
+    // 'serial' => 'required|is_unique[tb_aset.aset,serial,{serial}]',
+    'serial' => 'required|is_unique[tb_aset.serial,id,{id}]',
   ];
 
   function getAll()
@@ -53,6 +54,68 @@ class AsetModel extends Model
       ->join('tb_kondisi', 'tb_kondisi.id = tb_aset.kondisi')
 
       //->where('tb_kondisi.nama', $id)
+
+      ->orderBy('tb_aset.id', 'desc');
+    $query = $builder->get();
+    return $query->getResult();
+  }
+  function getAllmonitor()
+  {
+    // Membuat instance query builder untuk tabel 'tb_aset'      
+    $builder = $this->db->table('tb_aset')
+      ->select(
+        'tb_aset.id,tb_aset.tgl_masuk,tb_aset.tgl_keluar,tb_aset.serial,tb_aset.ket,
+          
+            tb_manufacture.nama as manufacture,
+         
+            tb_type.nama as type,
+           
+            tb_port.port as port,
+       
+            tb_status.nama as status,
+            tb_stok.nama as stok,
+            tb_kondisi.nama as kondisi',
+
+      )
+
+      ->join('tb_manufacture', 'tb_manufacture.id = tb_aset.manufacture')
+      ->join('tb_type', 'tb_type.id = tb_aset.type')
+      ->join('tb_port', 'tb_port.id = tb_aset.port')
+      ->join('tb_status', 'tb_status.id = tb_aset.status')
+      ->join('tb_stok', 'tb_stok.id = tb_aset.stock')
+      ->join('tb_kondisi', 'tb_kondisi.id = tb_aset.kondisi')
+
+      ->where('tb_type.nama', 'Monitor')
+
+      ->orderBy('tb_aset.id', 'desc');
+    $query = $builder->get();
+    return $query->getResult();
+  }
+  function getAllkeyboard()
+  {
+    // Membuat instance query builder untuk tabel 'tb_aset'      
+    $builder = $this->db->table('tb_aset')
+      ->select(
+        'tb_aset.id,tb_aset.tgl_masuk,tb_aset.tgl_keluar,tb_aset.serial,tb_aset.ket,
+          
+            tb_manufacture.nama as manufacture,
+         
+            tb_type.nama as type,
+           
+       
+            tb_status.nama as status,
+            tb_stok.nama as stok,
+            tb_kondisi.nama as kondisi',
+
+      )
+
+      ->join('tb_manufacture', 'tb_manufacture.id = tb_aset.manufacture')
+      ->join('tb_type', 'tb_type.id = tb_aset.type')
+      ->join('tb_status', 'tb_status.id = tb_aset.status')
+      ->join('tb_stok', 'tb_stok.id = tb_aset.stock')
+      ->join('tb_kondisi', 'tb_kondisi.id = tb_aset.kondisi')
+
+      ->where('tb_type.nama', 'Keyboard')
 
       ->orderBy('tb_aset.id', 'desc');
     $query = $builder->get();
