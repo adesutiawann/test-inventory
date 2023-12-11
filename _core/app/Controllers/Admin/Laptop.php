@@ -19,11 +19,9 @@ use App\Models\RincianModel;
 use App\Models\StatusModel;
 use App\Models\StokModel;
 use App\Models\KondisiModel;
-
-use App\Models\PortModel;
 //use App\Models\PelajaranModel;
 
-class Keyboard extends BaseController
+class laptop extends BaseController
 {
     protected $admin;
     protected $aset;
@@ -37,7 +35,6 @@ class Keyboard extends BaseController
     protected $rincian;
     protected $status;
     protected $stok;
-    protected $port;
     protected $kondisi;
 
     public function __construct()
@@ -58,7 +55,6 @@ class Keyboard extends BaseController
         $this->status = new StatusModel;
         $this->stok = new StokModel;
         $this->kondisi = new KondisiModel;
-        $this->port = new PortModel;
     }
 
     public function index()
@@ -68,7 +64,7 @@ class Keyboard extends BaseController
         }
 
         $data = [
-            'title'   => 'Data Keyboard',
+            'title'   => 'Data laptop',
             'segment' => $this->request->uri->getSegments(),
             'admin'   => $this->admin->find(session()->get('id')),
             'nama'    => $this->manufacture->orderBy('nama', 'asc')->findAll(),
@@ -81,25 +77,23 @@ class Keyboard extends BaseController
             'status'    => $this->status->orderBy('nama', 'asc')->findAll(),
             'kondisi'    => $this->kondisi->orderBy('nama', 'asc')->findAll(),
             'stock'    => $this->stok->orderBy('nama', 'asc')->findAll(),
-            'port'    => $this->port->orderBy('port', 'asc')->findAll(),
             'aktiv'   => 'ALL',
-            'aset' => $this->aset->getAllkeyboard(),
-            //'aset' =>  $this->aset->where('tb_type.nama', 'Destop')->getAll(),
+            'aset' => $this->aset->getAlllaptop(),
         ];
 
-        return view('admin/keyboard', $data);
+        return view('admin/laptop', $data);
     }
     public function ok($id)
     {
         $data = [
-            'title'   => 'Data keyboard',
+            'title'   => 'Data Aset',
             'aktiv'   => $id,
             'segment' => $this->request->uri->getSegments(),
             //'aset' =>  $this->suratkeluar->where('kondisi', 'OK')->getAll(),
             'aset'    => $this->aset->getId($id),
 
         ];
-        return view('admin/keyboard', $data);
+        return view('admin/aset', $data);
     }
 
     public function add()
@@ -109,13 +103,12 @@ class Keyboard extends BaseController
         }
 
         $data = [
-            'title'   => 'Add keyboard',
+            'title'   => 'Add Laptop',
             'segment' => $this->request->uri->getSegments(),
             'admin'   => $this->admin->find(session()->get('id')),
             'nama'    => $this->manufacture->orderBy('nama', 'asc')->findAll(),
-            'namax'    => $this->manufacture->orderBy('nama', 'asc')->findAll(),
             //'type'    => $this->type->orderBy('nama', 'asc')->findAll(),
-            'type' => $this->type->where('nama', 'keyboard')->orderBy('nama', 'asc')->findAll(),
+            'type' => $this->type->where('nama', 'laptop')->orderBy('nama', 'asc')->findAll(),
 
             'prosesor'    => $this->prosesor->orderBy('nama', 'asc')->findAll(),
             'generasi'    => $this->generasi->orderBy('nama', 'asc')->findAll(),
@@ -125,12 +118,11 @@ class Keyboard extends BaseController
             'status'    => $this->status->orderBy('nama', 'asc')->findAll(),
             'kondisi'    => $this->kondisi->orderBy('nama', 'asc')->findAll(),
             'stock'    => $this->stok->orderBy('nama', 'asc')->findAll(),
-            'port'    => $this->port->orderBy('port', 'asc')->findAll(),
 
 
         ];
 
-        return view('admin/keyboardadd', $data);
+        return view('admin/laptopadd', $data);
     }
 
     public function data()
@@ -286,35 +278,18 @@ class Keyboard extends BaseController
         $data = [
 
             'title'   => 'Edit aset',
-            'menu'   => 'Edit aset',
             'input'   => 'hidden',
             'edit'   => '',
+            'ade' => '1',
+
             'segment' => $this->request->uri->getSegments(),
             //'pel'   => $this->admin->find(session()->get('id')),
-            // 'segment' => $this->request->uri->getSegments(),
-            'admin'   => $this->admin->find(session()->get('id')),
-            'nama'    => $this->manufacture->orderBy('nama', 'asc')->findAll(),
-            //'namax'    => $this->manufacture->orderBy('nama', 'asc')->findAll(),            
-            'namax'    => $this->manufacture->find($id),
 
-            'type'    => $this->type->orderBy('nama', 'asc')->findAll(),
-            'prosesor'    => $this->prosesor->orderBy('nama', 'asc')->findAll(),
-            'generasi'    => $this->generasi->orderBy('nama', 'asc')->findAll(),
-            'hdd'    => $this->hdd->orderBy('nama', 'asc')->findAll(),
-            'ram'    => $this->ram->orderBy('nama', 'asc')->findAll(),
-            'rincian'    => $this->rincian->orderBy('nama', 'asc')->findAll(),
-            'status'    => $this->status->orderBy('nama', 'asc')->findAll(),
-            'kondisi'    => $this->kondisi->orderBy('nama', 'asc')->findAll(),
-            'stock'    => $this->stok->orderBy('nama', 'asc')->findAll(),
-            'port'    => $this->port->orderBy('port', 'asc')->findAll(),
-            'aktiv'   => 'ALL',
-            // 'aset' => $this->aset->getAllkeyboard($id),
-
-            //'aset'    => $this->aset->find($id),
+            'aset'    => $this->aset->find($id),
             'nama'   => $this->aset->select('nama'),
         ];
 
-        return view('admin/keyboardadd', $data);
+        return view('admin/aset', $data);
     }
 
     public function save()
@@ -332,16 +307,21 @@ class Keyboard extends BaseController
 
             if ($this->aset->save($post)) {
                 session()->setFlashdata('success', 'Data berhasil di edit.');
-                return redirect()->to(base_url('admin/keyboard'));
+                return redirect()->to(base_url('admin/aset'));
             } else {
                 session()->setFlashdata('error', 'Data Gagal di simpan.');
-                return redirect()->to(base_url('admin/keyboard'));
+                return redirect()->to(base_url('admin/aset'));
             }
         } else {
             // $tgl= date("Y-m-d");
             $post = [
                 'manufacture'            => $this->request->getVar('manufacture'),
                 'type'            => $this->request->getVar('type'),
+                'prosesor'            => $this->request->getVar('prosesor'),
+                'generasi'            => $this->request->getVar('generasi'),
+                'hdd'            => $this->request->getVar('hdd'),
+                'ram'            => $this->request->getVar('ram'),
+                'rincian'            => $this->request->getVar('rincian'),
                 'status'            => $this->request->getVar('status'),
                 'stock'            => $this->request->getVar('stock'),
                 'kondisi'            => $this->request->getVar('kondisi'),
@@ -355,10 +335,10 @@ class Keyboard extends BaseController
 
             if ($this->aset->save($post)) {
                 session()->setFlashdata('success', 'Data berhasil di simpan.');
-                return redirect()->to(base_url('admin/keyboard'));
+                return redirect()->to(base_url('admin/aset'));
             } else {
                 session()->setFlashdata('error', 'Data Sudah Terdaftar !');
-                return redirect()->to(base_url('admin/keyboard'));
+                return redirect()->to(base_url('admin/aset'));
             }
         }
     }
@@ -388,10 +368,10 @@ class Keyboard extends BaseController
     {
         if ($this->aset->delete($id)) {
             session()->setFlashdata('success', 'Data berhasil di hapus.');
-            return redirect()->to(base_url('admin/keyboard'));
+            return redirect()->to(base_url('admin/aset'));
         } else {
             session()->setFlashdata('danger', 'Data berhasil di hapus.');
-            return redirect()->to(base_url('admin/keyboard'));
+            return redirect()->to(base_url('admin/aset'));
         }
     }
 }

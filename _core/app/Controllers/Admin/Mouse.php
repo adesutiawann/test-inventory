@@ -23,7 +23,7 @@ use App\Models\KondisiModel;
 use App\Models\PortModel;
 //use App\Models\PelajaranModel;
 
-class Keyboard extends BaseController
+class Mouse extends BaseController
 {
     protected $admin;
     protected $aset;
@@ -68,7 +68,7 @@ class Keyboard extends BaseController
         }
 
         $data = [
-            'title'   => 'Data Keyboard',
+            'title'   => 'Data Mouse',
             'segment' => $this->request->uri->getSegments(),
             'admin'   => $this->admin->find(session()->get('id')),
             'nama'    => $this->manufacture->orderBy('nama', 'asc')->findAll(),
@@ -83,11 +83,11 @@ class Keyboard extends BaseController
             'stock'    => $this->stok->orderBy('nama', 'asc')->findAll(),
             'port'    => $this->port->orderBy('port', 'asc')->findAll(),
             'aktiv'   => 'ALL',
-            'aset' => $this->aset->getAllkeyboard(),
+            'aset' => $this->aset->getAllmouse(),
             //'aset' =>  $this->aset->where('tb_type.nama', 'Destop')->getAll(),
         ];
 
-        return view('admin/keyboard', $data);
+        return view('admin/mouse', $data);
     }
     public function ok($id)
     {
@@ -109,14 +109,14 @@ class Keyboard extends BaseController
         }
 
         $data = [
-            'title'   => 'Add keyboard',
+            'title'   => 'Add Mouse',
             'segment' => $this->request->uri->getSegments(),
             'admin'   => $this->admin->find(session()->get('id')),
-            'nama'    => $this->manufacture->orderBy('nama', 'asc')->findAll(),
+            'manufacture'    => $this->manufacture->orderBy('nama', 'asc')->findAll(),
             'namax'    => $this->manufacture->orderBy('nama', 'asc')->findAll(),
             //'type'    => $this->type->orderBy('nama', 'asc')->findAll(),
-            'type' => $this->type->where('nama', 'keyboard')->orderBy('nama', 'asc')->findAll(),
-
+            'type' => $this->type->where('nama', 'mouse')->orderBy('nama', 'asc')->findAll(),
+            // 'type' => $this->type->where('nama', 'keyboard')->orderBy('nama', 'asc')->findAll(),
             'prosesor'    => $this->prosesor->orderBy('nama', 'asc')->findAll(),
             'generasi'    => $this->generasi->orderBy('nama', 'asc')->findAll(),
             'hdd'    => $this->hdd->orderBy('nama', 'asc')->findAll(),
@@ -130,148 +130,10 @@ class Keyboard extends BaseController
 
         ];
 
-        return view('admin/keyboardadd', $data);
+        return view('admin/mouseadd', $data);
     }
 
-    public function data()
-    {
-        $db = db_connect();
-        if ($this->request->getVar('id')) {
-            // Menghubungkan ke database
 
-            // Membuat instance query builder untuk tabel 'tb_aset'      
-            $builder = $db->table('tb_aset')
-                ->select(
-                    'tb_aset.id,tb_aset.tgl_masuk,tb_aset.tgl_keluar,tb_aset.serial,tb_aset.ket,
-                tb_hdd.nama as hdd ,
-                tb_manufacture.nama as manufacture,
-                tb_prosesor.nama as prosesor,
-                tb_type.nama as type,
-                tb_generasi.nama as generasi,
-                tb_ram.nama as ram,
-                tb_rincian.nama as rincian,
-                tb_status.nama as status,
-                tb_stok.nama as stok,
-                tb_kondisi.nama as kondisi',
-
-                )
-
-                ->join('tb_hdd', 'tb_hdd.id = tb_aset.hdd')
-                ->join('tb_manufacture', 'tb_manufacture.id = tb_aset.manufacture')
-                ->join('tb_type', 'tb_type.id = tb_aset.type')
-                ->join('tb_prosesor', 'tb_prosesor.id = tb_aset.prosesor')
-                ->join('tb_generasi', 'tb_generasi.id = tb_aset.generasi')
-                ->join('tb_ram', 'tb_ram.id = tb_aset.ram')
-                ->join('tb_rincian', 'tb_rincian.id = tb_aset.rincian')
-                ->join('tb_status', 'tb_status.id = tb_aset.status')
-                ->join('tb_stok', 'tb_stok.id = tb_aset.stock')
-                ->join('tb_kondisi', 'tb_kondisi.id = tb_aset.kondisi')
-
-                //->where('tb_aset.kondisi',$id)
-
-                ->orderBy('tb_aset.id', 'desc');
-        } else {
-            $builder = $db->table('tb_aset')
-                ->select(
-                    'tb_aset.id,tb_aset.tgl_masuk,tb_aset.tgl_keluar,tb_aset.serial,tb_aset.ket,
-                    tb_hdd.nama as hdd ,
-                    tb_manufacture.nama as manufacture,
-                    tb_prosesor.nama as prosesor,
-                    tb_type.nama as type,
-                    tb_generasi.nama as generasi,
-                    tb_ram.nama as ram,
-                    tb_rincian.nama as rincian,
-                    tb_status.nama as status,
-                    tb_stok.nama as stok,
-                    tb_kondisi.nama as kondisi',
-
-                )
-
-                ->join('tb_hdd', 'tb_hdd.id = tb_aset.hdd')
-                ->join('tb_manufacture', 'tb_manufacture.id = tb_aset.manufacture')
-                ->join('tb_type', 'tb_type.id = tb_aset.type')
-                ->join('tb_prosesor', 'tb_prosesor.id = tb_aset.prosesor')
-                ->join('tb_generasi', 'tb_generasi.id = tb_aset.generasi')
-                ->join('tb_ram', 'tb_ram.id = tb_aset.ram')
-                ->join('tb_rincian', 'tb_rincian.id = tb_aset.rincian')
-                ->join('tb_status', 'tb_status.id = tb_aset.status')
-                ->join('tb_stok', 'tb_stok.id = tb_aset.stock')
-                ->join('tb_kondisi', 'tb_kondisi.id = tb_aset.kondisi')
-
-                // ->where('tb_aset.kondisi',$id)
-
-                ->orderBy('tb_aset.id', 'desc');
-        }
-
-        return DataTable::of($builder)
-            ->add('action', function ($row) {
-                return '<a href="' . base_url('admin/aset/edit/' . $row->id) .
-                    '" class="btn btn-sm btn-info text-white">
-                <i class="fa-solid fa-pen-to-square"></i></a> 
-                <a href="' . base_url('admin/aset/delete/' . $row->id) .
-                    '" class="btn btn-sm btn-danger text-white" onclick="return confirm(\'Yakin?\')"><i class="fa-solid fa-trash-can"></i></a>';
-            })
-            ->addNumbering('no')->toJson(true);
-    }
-
-    public function datab($id)
-    {
-
-        // $tgl= date("Y-m-d");
-        if (session()->get('logged_admin') != true) {
-            return redirect()->to(base_url());
-        }
-
-
-
-        // Menghubungkan ke database
-        $db = db_connect();
-        // Membuat instance query builder untuk tabel 'tb_aset'      
-        $builder = $db->table('tb_aset')
-            ->select(
-                'tb_aset.id,tb_aset.tgl_masuk,tb_aset.tgl_keluar,tb_aset.serial,tb_aset.ket,
-                tb_hdd.nama as hdd ,
-                tb_manufacture.nama as manufacture,
-                tb_prosesor.nama as prosesor,
-                tb_type.nama as type,
-                tb_generasi.nama as generasi,
-                tb_ram.nama as ram,
-                tb_rincian.nama as rincian,
-                tb_status.nama as status,
-                tb_stok.nama as stok,
-                tb_kondisi.nama as kondisi',
-
-            )
-
-            ->join('tb_hdd', 'tb_hdd.id = tb_aset.hdd')
-            ->join('tb_manufacture', 'tb_manufacture.id = tb_aset.manufacture')
-            ->join('tb_type', 'tb_type.id = tb_aset.type')
-            ->join('tb_prosesor', 'tb_prosesor.id = tb_aset.prosesor')
-            ->join('tb_generasi', 'tb_generasi.id = tb_aset.generasi')
-            ->join('tb_ram', 'tb_ram.id = tb_aset.ram')
-            ->join('tb_rincian', 'tb_rincian.id = tb_aset.rincian')
-            ->join('tb_status', 'tb_status.id = tb_aset.status')
-            ->join('tb_stok', 'tb_stok.id = tb_aset.stock')
-            ->join('tb_kondisi', 'tb_kondisi.id = tb_aset.kondisi')
-
-            ->where('tb_aset.kondisi', $id)
-
-            ->orderBy('tb_aset.id', 'desc');
-
-
-        return DataTable::of($builder)
-            ->add('action', function ($row) {
-                return '<a href="' . base_url('admin/aset/edit/' . $row->id) .
-                    '" class="btn btn-sm btn-info text-white">
-                <i class="fa-solid fa-pen-to-square"></i></a> 
-                <a href="' . base_url('admin/aset/delete/' . $row->id) .
-                    '" class="btn btn-sm btn-danger text-white" onclick="return confirm(\'Yakin?\')"><i class="fa-solid fa-trash-can"></i></a>';
-            })
-            ->addNumbering('no')->toJson(true);
-
-
-        return view('admin/aset');
-    }
 
     public function edit($id)
     {
@@ -281,8 +143,6 @@ class Keyboard extends BaseController
             return redirect()->to(base_url());
         }
 
-
-
         $data = [
 
             'title'   => 'Edit aset',
@@ -290,14 +150,26 @@ class Keyboard extends BaseController
             'input'   => 'hidden',
             'edit'   => '',
             'segment' => $this->request->uri->getSegments(),
+
+            // 'aset' => $this->aset->where('id', $id)->getAll(),
+            'aset'    => $this->aset->find($id),
+            //'manufactureid' => $this->manufacture->where('id', 'aset.id')->orderBy('nama', 'asc')->findAll(),
+            'manufacture'   => $this->aset->select('manufacture')->groupBy('manufacture')->findAll(),
+            //'aset' => $this->aset->where('id', $id)->findAll(),
+            // 'manufacture' => $this->manufacture->join('aset', 'manufacture.id = aset.id')->orderBy('manufacture.nama', 'asc')->findAll(),
+
             //'pel'   => $this->admin->find(session()->get('id')),
             // 'segment' => $this->request->uri->getSegments(),
             'admin'   => $this->admin->find(session()->get('id')),
-            'nama'    => $this->manufacture->orderBy('nama', 'asc')->findAll(),
-            //'namax'    => $this->manufacture->orderBy('nama', 'asc')->findAll(),            
-            'namax'    => $this->manufacture->find($id),
+            //'nama'    => $this->manufacture->orderBy('nama', 'asc')->findAll(),
 
-            'type'    => $this->type->orderBy('nama', 'asc')->findAll(),
+            'manufacture'    => $this->manufacture->orderBy('nama', 'asc')->findAll(),
+            //'namax'    => $this->manufacture->orderBy('nama', 'asc')->findAll(),            
+            //'namax'    => $this->manufacture->find($id),
+
+            //'type'    => $this->type->orderBy('nama', 'asc')->findAll(),
+            'type' => $this->type->where('nama', 'mouse')->orderBy('nama', 'asc')->findAll(),
+
             'prosesor'    => $this->prosesor->orderBy('nama', 'asc')->findAll(),
             'generasi'    => $this->generasi->orderBy('nama', 'asc')->findAll(),
             'hdd'    => $this->hdd->orderBy('nama', 'asc')->findAll(),
@@ -314,7 +186,7 @@ class Keyboard extends BaseController
             'nama'   => $this->aset->select('nama'),
         ];
 
-        return view('admin/keyboardadd', $data);
+        return view('admin/mouseedit', $data);
     }
 
     public function save()

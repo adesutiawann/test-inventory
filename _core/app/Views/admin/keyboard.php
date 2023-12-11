@@ -81,7 +81,7 @@ $menu = $aktiv;
     <div class="app-card-body p-4">
 
         <div class="table-responsive">
-            <?//= print_r($aset)
+            <? //= print_r($aset)
             ?>
             <table id="tabel1" class="table table-striped">
                 <thead>
@@ -136,10 +136,10 @@ $menu = $aktiv;
                                 </span>
                             </td>
                             <td>
-                                <a href="<?= base_url('admin/aset/edit/' . $value->id) ?>" class="btn btn-sm btn-info text-white mt-2 mr-2">
+                                <a href="<?= base_url('admin/keyboard/edit/' . $value->id) ?>" class="btn btn-sm btn-info text-white mt-2 mr-2">
                                     <i class="fa-solid fa-pen-to-square"></i>
                                 </a>
-                                <a href="<?= base_url("admin/aset/delete/{$value->id}") ?>" class="btn btn-sm btn-danger text-white" onclick="return confirm('Yakin ingin menghapus?')">
+                                <a href="<?= base_url("admin/keyboard/delete/{$value->id}") ?>" class="btn btn-sm btn-danger text-white" onclick="return confirm('Yakin ingin menghapus?')">
                                     <i class="fa-solid fa-trash-can"></i>
                                 </a>
 

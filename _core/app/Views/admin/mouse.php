@@ -37,12 +37,12 @@ $menu = $aktiv;
         <?php endif ?>
 
         <div class="row ">
-            <div class="col-4 ">
-                <a href="<?= base_url('admin/aset/add') ?>" class="btn app-btn-primary mb-3 text-white"><i class="fas fa-plus"></i> Tambah Asets</a>
+            <div class="col-6 ml-4">
+                <a href="<?= base_url('admin/mouse/add') ?>" class="btn app-btn-primary mb-3 text-white"><i class="fas fa-plus"></i> Tambah Asets</a>
 
             </div>
-            <div class="col-6">
-                <form class="row  ">
+            <div class="col-3">
+                <form class="row g-3 ">
 
                     <div class="col">
                         <input type="file" class="form-control" id="inputPassword2" placeholder="Password">
@@ -53,7 +53,7 @@ $menu = $aktiv;
             </div>
 
 
-            <div class="col-2">
+            <div class="col-3">
                 <a class="btn app-btn-secondary" href="#">
                     <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-download me-1" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                         <path fill-rule="evenodd" d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"></path>
@@ -81,7 +81,7 @@ $menu = $aktiv;
     <div class="app-card-body p-4">
 
         <div class="table-responsive">
-            <? //= print_r($aset) 
+            <? //= print_r($aset)
             ?>
             <table id="tabel1" class="table table-striped">
                 <thead>
@@ -89,7 +89,6 @@ $menu = $aktiv;
                         <th>NO.</th>
                         <th>Serial</th>
                         <th>Manufacture</th>
-                        <th>Spesifikasi</th>
 
                         <th>Status</th>
                         <th>Tanggal</th>
@@ -112,15 +111,10 @@ $menu = $aktiv;
                                 <b> <?= $value->manufacture ?></b><br>
                                 Type : <?= $value->type ?>
                             </td>
-                            <td>
-                                Prosesor : <?= $value->prosesor ?> <br>
-                                Generasi : <?= $value->generasi ?> <br>
-                                Hdd/SSD : <?= $value->hdd ?><br>
-                                Ram :<?= $value->ram ?>/<?= $value->rincian ?><br>
-                            </td>
+
                             <td>
                                 Status :<?= $value->status ?><br>
-                                Stock :<?= $value->stock ?><br>
+                                Stock :<?= $value->stok ?><br>
                                 Kondisi:
                                 <span class="badge bg-<?= ($value->kondisi == 'OK') ? 'success' : (($value->kondisi == 'RUSAK') ? 'warning' : 'danger') ?>">
                                     <?= $value->kondisi ?>
@@ -142,10 +136,10 @@ $menu = $aktiv;
                                 </span>
                             </td>
                             <td>
-                                <a href="<?= base_url('admin/aset/edit/' . $value->id) ?>" class="btn btn-sm btn-info text-white mt-2 mr-2">
+                                <a href="<?= base_url('admin/mouse/edit/' . $value->id) ?>" class="btn btn-sm btn-info text-white mt-2 mr-2">
                                     <i class="fa-solid fa-pen-to-square"></i>
                                 </a>
-                                <a href="<?= base_url("admin/aset/delete/{$value->id}") ?>" class="btn btn-sm btn-danger text-white" onclick="return confirm('Yakin ingin menghapus?')">
+                                <a href="<?= base_url("admin/mouse/delete/{$value->id}") ?>" class="btn btn-sm btn-danger text-white" onclick="return confirm('Yakin ingin menghapus?')">
                                     <i class="fa-solid fa-trash-can"></i>
                                 </a>
 

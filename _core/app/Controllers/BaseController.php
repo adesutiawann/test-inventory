@@ -18,7 +18,7 @@ use App\Models\BpModel;
 use App\Models\Absensi_telatModel;
 use App\Models\PoinModel;
 use App\Models\Pelanggaran_siswaModel;
-use App\Models\Absensi_dhuhaModel;
+use App\Models\AsetModel;
 use App\Models\Absensi_dhuhurModel;
 
 /**
@@ -43,14 +43,15 @@ class BaseController extends Controller
     protected $setting;
     protected $pembina;
     protected $siswa;
-    protected $walikelas        ; 
-    protected $piket            ;
-    protected $bp               ; 
-    protected $absensi_telat    ; 
-    protected $poin             ;
-    protected $pelanggaran_siswa; 
-    protected $absensi_dhuha    ; 
-    protected $absensi_dhuhur ;
+    protected $walikelas;
+    protected $piket;
+    protected $bp;
+    protected $absensi_telat;
+    protected $poin;
+    protected $pelanggaran_siswa;
+
+    protected $aset;
+    protected $absensi_dhuhur;
 
     /**
      * An array of helpers to be loaded automatically upon
@@ -80,15 +81,16 @@ class BaseController extends Controller
         $this->setting   = $this->setting->find(1);
 
         $this->pembina           = new PembinaModel();
-        
-       // $this->walikelas         = new WalikelasModel();
+
+        // $this->walikelas         = new WalikelasModel();
         $this->walikelas         = new WalikelasModel();
         $this->piket             = new PiketModel();
         $this->bp                = new BpModel();
         $this->absensi_telat     = new Absensi_telatModel();
         $this->poin              = new PoinModel();
         $this->pelanggaran_siswa = new Pelanggaran_siswaModel();
-        $this->absensi_dhuha     = new Absensi_dhuhaModel();
+
+        $this->aset     = new AsetModel();
         $this->absensi_dhuhur    = new Absensi_dhuhurModel();
     }
 }

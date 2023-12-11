@@ -279,8 +279,6 @@ class Monitor extends BaseController
             return redirect()->to(base_url());
         }
 
-
-
         $data = [
 
             'title'   => 'Edit aset',

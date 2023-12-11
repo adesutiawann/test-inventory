@@ -20,7 +20,11 @@
 
 <div class="app-card app-card-accordion shadow-sm mb-4">
     <div class="app-card-body p-4">
-        <?php if (session()->getFlashData('error')) : ?>
+        <?php
+
+        use PhpParser\Node\Stmt\Else_;
+
+        if (session()->getFlashData('error')) : ?>
             <div class="alert alert-danger">
                 <?= session()->getFlashData('error') ?>
             </div>
@@ -31,99 +35,56 @@
             </div>
         <?php endif ?>
 
-        <form action="<?= base_url('admin/aset/save') ?>" method="POST">
+        <form action="<?= base_url('admin/mouse/save') ?>" method="POST">
             <div class="row">
                 <div class="col-md-12 mb-4">
                     <strong>Form Data :</strong>
                 </div>
                 <hr>
-                <div class="col-md-8">
+                <div class="col-md-3">
                     Manufacture
                     <select name="manufacture" class="form-select" required>
-                        <option value="">Pilih Manufacture</option>
-                        <?php foreach ($nama as $gr) : ?>
-                            <option value="<?= $gr->nama ?>"><?= $gr->nama ?></option>
+                        <option value="">Pilih Manufaktur</option>
+                        <?php foreach ($manufacture as $gr) : ?>
+                            <option value="<?= $gr->id ?>"><?= $gr->nama ?></option>
                         <?php endforeach ?>
                     </select>
                 </div>
-                <div class="col-md-4" hidden>
+                <div class="col-md-3">
                     Type
-                    <select name="type" class="form-select">
+                    <select name="type" class="form-select" required>
+
                         <?php foreach ($type as $gr) : ?>
-                            <option value="<?= $gr->nama ?>"><?= $gr->nama ?></option>
+                            <option value="<?= $gr->id ?>"><?= $gr->nama ?></option>
                         <?php endforeach ?>
                     </select>
                 </div>
-                <div class="col-md-4">
-                    Prosesor
-                    <select name="prosesor" class="form-select" required>
-                        <option value="">Pilih Prosesor</option>
-                        <?php foreach ($prosesor as $gr) : ?>
-                            <option value="<?= $gr->nama ?>"><?= $gr->nama ?></option>
-                        <?php endforeach ?>
-                    </select>
-                </div>
-                <div class="col-md-4">
-                    Generasi
-                    <select name="generasi" class="form-select" required>
-                        <option value="">Pilih Generasi</option>
-                        <?php foreach ($generasi as $gr) : ?>
-                            <option value="<?= $gr->nama ?>"><?= $gr->nama ?></option>
-                        <?php endforeach ?>
-                    </select>
-                </div>
-                <div class="col-md-4">
-                    HDD/SSD
-                    <select name="hdd" class="form-select" required>
-                        <option value="">Pilih HDD/SSD</option>
-                        <?php foreach ($hdd as $gr) : ?>
-                            <option value="<?= $gr->nama ?>"><?= $gr->nama ?></option>
-                        <?php endforeach ?>
-                    </select>
-                </div>
-                <div class="col-md-2">
-                    RAM
-                    <select name="ram" class="form-select" required>
-                        <option value="">Pilih RAM</option>
-                        <?php foreach ($ram as $gr) : ?>
-                            <option value="<?= $gr->nama ?>"><?= $gr->nama ?></option>
-                        <?php endforeach ?>
-                    </select>
-                </div>
-                <div class="col-md-2">
-                    Rincian
-                    <select name="rincian" class="form-select" required>
-                        <option value="">Pilih Rincian</option>
-                        <?php foreach ($rincian as $gr) : ?>
-                            <option value="<?= $gr->nama ?>"><?= $gr->nama ?></option>
-                        <?php endforeach ?>
-                    </select>
-                </div>
-                <div class="col-md-4">
+
+
+                <div class="col-md-3">
                     Status
                     <select name="status" class="form-select" required>
-                        <option value="">Pilih Setatus</option>
+                        <option value="">Pilih Status</option>
                         <?php foreach ($status as $gr) : ?>
-                            <option value="<?= $gr->nama ?>"><?= $gr->nama ?></option>
+                            <option value="<?= $gr->id ?>"><?= $gr->nama ?></option>
                         <?php endforeach ?>
                     </select>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-3">
                     Stok
                     <select name="stock" class="form-select" required>
-                        <option value="">Pilih Stock</option>
+                        <option value="">Pilih Stok</option>
                         <?php foreach ($stock as $gr) : ?>
-                            <option value="<?= $gr->nama ?>"><?= $gr->nama ?></option>
+                            <option value="<?= $gr->id ?>"><?= $gr->nama ?></option>
                         <?php endforeach ?>
                     </select>
                 </div>
-                <div class="col-md-4 mb-4">
+                <div class="col-md-3 mb-4">
                     Kondisi
                     <select name="kondisi" class="form-select" required>
                         <option value="">Pilih Kondisi</option>
                         <?php foreach ($kondisi as $gr) : ?>
-                            <option value="<?= $gr->nama ?>"><?= $gr->nama ?></option>
-
+                            <option value="<?= $gr->id ?>"><?= $gr->nama ?></option>
                         <?php endforeach ?>
                     </select>
                 </div>
@@ -157,7 +118,6 @@
                 </div>
             </div>
         </form>
-
 
     </div>
 </div>

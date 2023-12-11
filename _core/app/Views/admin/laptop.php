@@ -37,12 +37,12 @@ $menu = $aktiv;
         <?php endif ?>
 
         <div class="row ">
-            <div class="col-4 ">
-                <a href="<?= base_url('admin/aset/add') ?>" class="btn app-btn-primary mb-3 text-white"><i class="fas fa-plus"></i> Tambah Asets</a>
+            <div class="col-6 ml-4">
+                <a href="<?= base_url('admin/laptop/add') ?>" class="btn app-btn-primary mb-3 text-white"><i class="fas fa-plus"></i> Tambah Asets</a>
 
             </div>
-            <div class="col-6">
-                <form class="row  ">
+            <div class="col-3">
+                <form class="row g-3 ">
 
                     <div class="col">
                         <input type="file" class="form-control" id="inputPassword2" placeholder="Password">
@@ -53,7 +53,7 @@ $menu = $aktiv;
             </div>
 
 
-            <div class="col-2">
+            <div class="col-3">
                 <a class="btn app-btn-secondary" href="#">
                     <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-download me-1" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                         <path fill-rule="evenodd" d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"></path>
@@ -120,7 +120,7 @@ $menu = $aktiv;
                             </td>
                             <td>
                                 Status :<?= $value->status ?><br>
-                                Stock :<?= $value->stock ?><br>
+                                Stock :<?= $value->stok ?><br>
                                 Kondisi:
                                 <span class="badge bg-<?= ($value->kondisi == 'OK') ? 'success' : (($value->kondisi == 'RUSAK') ? 'warning' : 'danger') ?>">
                                     <?= $value->kondisi ?>

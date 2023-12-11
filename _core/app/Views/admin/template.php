@@ -143,7 +143,7 @@
 
 
                             <!--//nav-link-->
-                            <div id="submenu-1" class="collapse submenu submenu-1 <?= ($menu == 'aset' || $menu == 'monitor' || $menu == 'keyboard') ? 'show' : '' ?>"" data-bs-parent=" #menu-accordion">
+                            <div id="submenu-1" class="collapse submenu submenu-1 <?= ($menu == 'aset' || $menu == 'monitor' || $menu == 'keyboard' || $menu == 'mouse' || $menu == 'laptop') ? 'show' : '' ?>"" data-bs-parent=" #menu-accordion">
                                 <ul class="submenu-list list-unstyled">
 
 
@@ -177,7 +177,7 @@
 
                                     <li class="submenu-item">
                                         <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-                                        <a class="submenu-link <?= ($menu == 'suratkeluar') ? 'active' : '' ?>"" href=" <?= base_url('admin/suratkeluar') ?>">
+                                        <a class="submenu-link <?= ($menu == 'mouse') ? 'active' : '' ?>"" href=" <?= base_url('admin/mouse') ?>">
 
                                             <span class="nav-link-text">Mouse</span>
                                         </a>
@@ -185,7 +185,7 @@
                                     </li>
                                     <li class="submenu-item">
                                         <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-                                        <a class="submenu-link <?= ($menu == 'suratkeluar') ? 'active' : '' ?>"" href=" <?= base_url('admin/suratkeluar') ?>">
+                                        <a class="submenu-link <?= ($menu == 'laptop') ? 'active' : '' ?>"" href=" <?= base_url('admin/laptop') ?>">
 
                                             <span class="nav-link-text">Laptop</span>
                                         </a>
@@ -525,6 +525,7 @@
 
         })
     </script>
+
 
     <!-- Charts JS -->
     <!-- <script src="<?= base_url() ?>/assets/plugins/chart.js/chart.min.js"></script> -->
