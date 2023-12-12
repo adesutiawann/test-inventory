@@ -1,0 +1,7 @@
+id;tgl_masuk;tgl_keluar;manufacture;type;prosesor;generasi;port;serial;hdd;ram;rincian;status;stock;kondisi;ket
+1;11/12/2023;0000-00-00;Dell Vostro;PC;Intel Inside;M560;;AA1111222;SSD 512 GB;8;2x8;Ex.Projek KTI;Tersedia;RUSAK;"PC MASUK PERTAMA
+update 2"
+2;12/12/2023;0000-00-00;Dell Inspiron N3010;PC;Intel Core 2 Duo;7Y754;;1234;HDD 350 GB;2;1x4;Ex.Projek KDL;Disitribusikan;BLANKS;pc kedua masuk
+3;12/12/2023;0000-00-00;Dell Latitude 3330;PC;Intel Core i3;72000;;123232;HDD 320 GB;2;1x2;Ex.Projek KJS;CSR;RUSAK;masuk data pada hari ini
+4;12/12/2023;0000-00-00;Dell Latitude 3330;PC;Intel Core i7;9100;;1T74GR3;HDD 40 GB;12;1x2;Ex.Projek KSP;Rusak;OK;"masuk kae tiga
+"

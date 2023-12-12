@@ -45,13 +45,17 @@ class Dashboard extends BaseController
             'admin'       => $this->admin->find(session()->get('id')),
 
             //'total_destop' => $this->aset->where(['type' => "Destop"])->countAllResults(),
-            'total_m' => $this->aset->where('type', '6')->countAllResults(),
-            'total_pc' => $this->aset->where('type', '2')->countAllResults(),
-            'total_l' => $this->aset->where('type', '7')->countAllResults(),
-            'total_p' => $this->aset->where('type', '3')->countAllResults(),
+            'total_m' => $this->aset->where('type', 'monitor')->countAllResults(),
+            // perhitungan pc
+            'total_pc' => $this->aset->where('type', 'pc')->countAllResults(),
+            'total_pc_ok' => $this->aset->where('kondisi', 'OK')->countAllResults(),
+            'total_pc_rusak' => $this->aset->where('kondisi', 'rusak')->countAllResults(),
+            'total_pc_blanks' => $this->aset->where('kondisi', 'blanks')->countAllResults(),
 
-            'total_k' => $this->aset->where('type', '8')->countAllResults(),
-            'total_m' => $this->aset->where('type', '9')->countAllResults(),
+            'total_l' => $this->aset->where('type', 'laptop')->countAllResults(),
+            'total_p' => $this->aset->where('type', 'printer')->countAllResults(),
+            'total_k' => $this->aset->where('type', 'keyboard')->countAllResults(),
+            'total_m' => $this->aset->where('type', 'mouse')->countAllResults(),
 
 
             'total_siswa' => $this->siswa->where(['tahun_pelajaran' => $ta->tahun])->countAllResults(),

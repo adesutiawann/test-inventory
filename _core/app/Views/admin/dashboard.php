@@ -275,8 +275,8 @@
                             <tr>
                                 <th class="meta">Kondisi</th>
                                 <th class="meta w-100">Progressbar</th>
-                                <th class="meta stat-cell">Jumlah</th>
                                 <th class="meta stat-cell">Persentasi</th>
+                                <th class="meta stat-cell">Jumlah</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -287,16 +287,13 @@
                                 <td>
 
                                     <div class="progress">
-                                        <div class="progress-bar bg-success" role="progressbar" style="width: 72%;" aria-valuenow="52" aria-valuemin="0" aria-valuemax="100"></div>
+                                        <div class="progress-bar bg-success" role="progressbar" style="width: <?= $pc_ok = ($total_pc_ok / $total_pc) * 100 ?>%;" aria-valuenow="52" aria-valuemin="0" aria-valuemax="100"></div>
 
                                     </div>
 
                                 </td>
-                                <td class="stat-cell">67</td>
-                                <td class="stat-cell">
-
-                                    30%
-                                </td>
+                                <td class="stat-cell"> <?= number_format($pc_ok) ?>% </td>
+                                <td class="stat-cell"><?= $total_pc_ok ?></td>
                             </tr>
 
                             <tr class="text-warning">
@@ -306,16 +303,13 @@
                                 <td>
 
                                     <div class="progress">
-                                        <div class="progress-bar bg-warning" role="progressbar" style="width: 22%;" aria-valuenow="52" aria-valuemin="0" aria-valuemax="100"></div>
+                                        <div class="progress-bar bg-warning" role="progressbar" style="width:  <?= $pc_r = ($total_pc_rusak / $total_pc) * 100 ?>%;" aria-valuenow="52" aria-valuemin="0" aria-valuemax="100"></div>
 
                                     </div>
 
                                 </td>
-                                <td class="stat-cell">67</td>
-                                <td class="stat-cell">
-
-                                    30%
-                                </td>
+                                <td class="stat-cell"> <?= number_format($pc_r) ?>% </td>
+                                <td class="stat-cell"><?= $total_pc_rusak ?></td>
                             </tr>
 
                             <tr class="text-danger">
@@ -325,20 +319,17 @@
                                 <td>
 
                                     <div class="progress">
-                                        <div class="progress-bar bg-danger" role="progressbar" style="width: 52%;" aria-valuenow="52" aria-valuemin="0" aria-valuemax="100"></div>
+                                        <div class="progress-bar bg-danger" role="progressbar" style="width: <?= $p = ($total_pc_blanks / $total_pc) * 100 ?>%;" aria-valuenow="52" aria-valuemin="0" aria-valuemax="100"></div>
 
                                     </div>
 
                                 </td>
-                                <td class="stat-cell">67</td>
-                                <td class="stat-cell">
-
-                                    30%
-                                </td>
+                                <td class="stat-cell"><?= number_format($p) ?>%</td>
+                                <td class="stat-cell"><?= $total_pc_blanks ?> </td>
                             </tr>
                             <tr>
-                                <th colspan="2" class="meta text-end">Jumlah :</th>
-                                <th colspan="2" class="meta ">9800 </th>
+                                <th colspan="3" class="meta text-end">Total :</th>
+                                <th colspan="2" class="meta stat-cell text-and"><?= $total_pc ?> </th>
                             </tr>
                         </tbody>
                     </table>

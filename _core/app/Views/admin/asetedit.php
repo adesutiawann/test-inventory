@@ -39,10 +39,12 @@
                 <hr>
                 <div class="col-md-8">
                     Manufacture
+                    <input type="text" name="id" hidden class="form-control" value="<?= $aset->id ?>" required>
+
                     <select name="manufacture" class="form-select" required>
                         <option value="">Pilih Manufacture</option>
                         <?php foreach ($nama as $gr) : ?>
-                            <option value="<?= $gr->id ?>"><?= $gr->nama ?></option>
+                            <option value="<?= $gr->nama ?>" <?= ($gr->nama == $aset->manufacture) ? 'selected' : '' ?>><?= $gr->nama ?></option>
                         <?php endforeach ?>
                     </select>
                 </div>
@@ -50,7 +52,7 @@
                     Type
                     <select name="type" class="form-select">
                         <?php foreach ($type as $gr) : ?>
-                            <option value="<?= $gr->id ?>"><?= $gr->nama ?></option>
+                            <option value="<?= $gr->nama ?>"><?= $gr->nama ?></option>
                         <?php endforeach ?>
                     </select>
                 </div>
@@ -59,7 +61,7 @@
                     <select name="prosesor" class="form-select" required>
                         <option value="">Pilih Prosesor</option>
                         <?php foreach ($prosesor as $gr) : ?>
-                            <option value="<?= $gr->id ?>"><?= $gr->nama ?></option>
+                            <option value="<?= $gr->nama ?>" <?= ($gr->nama == $aset->prosesor) ? 'selected' : '' ?>><?= $gr->nama ?></option>
                         <?php endforeach ?>
                     </select>
                 </div>
@@ -68,7 +70,7 @@
                     <select name="generasi" class="form-select" required>
                         <option value="">Pilih Generasi</option>
                         <?php foreach ($generasi as $gr) : ?>
-                            <option value="<?= $gr->id ?>"><?= $gr->nama ?></option>
+                            <option value="<?= $gr->nama ?>" <?= ($gr->nama == $aset->generasi) ? 'selected' : '' ?>><?= $gr->nama ?></option>
                         <?php endforeach ?>
                     </select>
                 </div>
@@ -77,7 +79,7 @@
                     <select name="hdd" class="form-select" required>
                         <option value="">Pilih HDD/SSD</option>
                         <?php foreach ($hdd as $gr) : ?>
-                            <option value="<?= $gr->id ?>"><?= $gr->nama ?></option>
+                            <option value="<?= $gr->nama ?>" <?= ($gr->nama == $aset->hdd) ? 'selected' : '' ?>><?= $gr->nama ?></option>
                         <?php endforeach ?>
                     </select>
                 </div>
@@ -86,7 +88,7 @@
                     <select name="ram" class="form-select" required>
                         <option value="">Pilih RAM</option>
                         <?php foreach ($ram as $gr) : ?>
-                            <option value="<?= $gr->id ?>"><?= $gr->nama ?></option>
+                            <option value="<?= $gr->nama ?>" <?= ($gr->nama == $aset->ram) ? 'selected' : '' ?>><?= $gr->nama ?></option>
                         <?php endforeach ?>
                     </select>
                 </div>
@@ -95,7 +97,7 @@
                     <select name="rincian" class="form-select" required>
                         <option value="">Pilih Rincian</option>
                         <?php foreach ($rincian as $gr) : ?>
-                            <option value="<?= $gr->id ?>"><?= $gr->nama ?></option>
+                            <option value="<?= $gr->nama ?>" <?= ($gr->nama == $aset->rincian) ? 'selected' : '' ?>><?= $gr->nama ?></option>
                         <?php endforeach ?>
                     </select>
                 </div>
@@ -104,7 +106,7 @@
                     <select name="status" class="form-select" required>
                         <option value="">Pilih Setatus</option>
                         <?php foreach ($status as $gr) : ?>
-                            <option value="<?= $gr->id ?>"><?= $gr->nama ?></option>
+                            <option value="<?= $gr->nama ?>" <?= ($gr->nama == $aset->status) ? 'selected' : '' ?>><?= $gr->nama ?></option>
                         <?php endforeach ?>
                     </select>
                 </div>
@@ -113,13 +115,14 @@
                     <select name="stock" class="form-select" required>
                         <option value="">Pilih Stock</option>
                         <?php foreach ($stock as $gr) : ?>
-                            <option value="<?= $gr->id ?>"><?= $gr->nama ?></option>
+                            <option value="<?= $gr->nama ?>" <?= ($gr->nama == $aset->stock) ? 'selected' : '' ?>><?= $gr->nama ?></option>
                         <?php endforeach ?>
                     </select>
                 </div>
                 <div class="col-md-4 mb-4">
                     Kondisi
                     <select name="kondisi" class="form-select" required>
+                        <option value="">Pilih Stock</option>
                         <?php foreach ($kondisi as $gr) : ?>
                             <option value="<?= $gr->nama ?>" <?= ($gr->nama == $aset->kondisi) ? 'selected' : '' ?>><?= $gr->nama ?></option>
 
