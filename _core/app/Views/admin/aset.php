@@ -38,35 +38,31 @@ $menu = $aktiv;
 
         <div class="row ">
 
-            <div class="col-4 col-xs-12">
-                <a href="<?= base_url('admin/aset/add') ?>" class="btn app-btn-primary mb-3 text-white"><i class="fas fa-plus"></i> Tambah Asets</a>
-
+            <div class="col-md-4 col-sm-6 col-xs-12 mb-3 ">
+                <a href="<?= base_url('admin/aset/add') ?>" class="btn app-btn-primary text-white w-50">
+                    <i class="fas fa-plus"></i> Tambah Asets
+                </a>
             </div>
-            <div class="col-6 col-xs-12 m-0">
 
-
-                <form class="row  " action="<?= base_url('admin/aset/import') ?>" method="post" enctype="multipart/form-data">
-
-                    <div class="col-3  text-end">
-                        <a href="<?= base_url('admin/aset/downloadExcel') ?>" class="btn app-btn-primary mb-3 text-white"><i class="fa-solid fa-download"></i> Example</a>
-
+            <div class="col-md-6 col-sm-2 col-xs-2 ">
+                <form class="row" action="<?= base_url('admin/aset/import') ?>" method="post" enctype="multipart/form-data">
+                    <div class="col-md-3 col-sm-3 text-end mb-2 ">
+                        <a href="<?= base_url('admin/aset/downloadExcel') ?>" class="text-info">
+                            <i class="fa-solid fa-file-circle-question"></i>
+                        </a>
                     </div>
-                    <div class="col-6 col-xs-12">
-
+                    <div class="col-md-6 col-sm-6 col-xs-10 mb-2">
                         <input type="file" class="form-control" name="file_excel" required>
                     </div>
-                    <div class="col-3 ">
-                        <button type="submit" class="btn app-btn-secondary"><i class="fa-solid fa-arrow-up-from-bracket"></i> Upload</button>
-
+                    <div class="col-md-3 col-sm-3 col-xs-2 mb-3">
+                        <button type="submit" class="btn app-btn-secondary ">
+                            <i class="fa-solid fa-file-import"></i> Import</button>
                     </div>
-
                 </form>
             </div>
-
-
-            <div class="col-2">
-                <a class="btn app-btn- bg-success text-white" href="<?= base_url('admin/aset/export') ?>">
-                    <i class="fa-solid fa-download"></i>
+            <div class="col-md-2 col-sm-6 col-xs-1 ">
+                <a class="btn app-btn- bg-success text-white w-100" href="<?= base_url('admin/aset/export') ?>">
+                    <i class="fa-solid fa-file-excel"></i>
                     Export Excel
                 </a>
             </div>
@@ -76,16 +72,14 @@ $menu = $aktiv;
 
 
 
-<nav id="orders-table-tab" class="orders-table-tab app-nav-tabs nav shadow-sm flex-column flex-sm-row mb-1" role="tablist">
-
-    <a class="flex-sm-fill text-sm-center nav-link <?= ($menu == 'ALL') ? 'active' : '' ?>" href="<?= base_url('admin/aset') ?>" aria-controls="orders-all" aria-selected="false">All <?= $total_pc ?></a>
-    <a class="flex-sm-fill text-sm-center nav-link <?= ($menu == 'OK') ? 'active' : '' ?>" href="<?= base_url('admin/aset/ok/OK') ?>" aria-controls="orders-paid" aria-selected="false">Oke <?= $total_pc_ok ?></a>
-    <a class="flex-sm-fill text-sm-center nav-link <?= ($menu == 'RUSAK') ? 'active' : '' ?>" href="<?= base_url('admin/aset/ok/RUSAK') ?>" role="tab" aria-controls="orders-pending" aria-selected="true">Rusak <?= $total_pc_rusak ?></a>
-    <a class="flex-sm-fill text-sm-center nav-link <?= ($menu == 'BLANKS') ? 'active' : '' ?>" href="<?= base_url('admin/aset/ok/BLANKS') ?>" role="tab" aria-controls="orders-cancelled" aria-selected="true" tabindex="-1">Blank <?= $total_pc_blanks ?></a>
-
-
-
+<nav id="orders-table-tab" class="orders-table-tab app-nav-tabs nav shadow-sm d-flex mb-1" role="tablist">
+    <a class="flex-fill text-center nav-link <?= ($menu == 'ALL') ? 'active' : '' ?>" href="<?= base_url('admin/aset') ?>" aria-controls="orders-all" aria-selected="false">All <?= $total_pc ?></a>
+    <a class="flex-fill text-center nav-link <?= ($menu == 'OK') ? 'active' : '' ?>" href="<?= base_url('admin/aset/search/OK') ?>" aria-controls="orders-paid" aria-selected="false">Oke <?= $total_pc_ok ?></a>
+    <a class="flex-fill text-center nav-link <?= ($menu == 'RUSAK') ? 'active' : '' ?>" href="<?= base_url('admin/aset/search/RUSAK') ?>" role="tab" aria-controls="orders-pending" aria-selected="true">Rusak <?= $total_pc_rusak ?></a>
+    <a class="flex-fill text-center nav-link <?= ($menu == 'BLANKS') ? 'active' : '' ?>" href="<?= base_url('admin/aset/search/BLANKS') ?>" role="tab" aria-controls="orders-cancelled" aria-selected="true">Blank <?= $total_pc_blanks ?></a>
 </nav>
+
+
 
 <div class="app-card app-card-accordion shadow-sm mb-4">
 
@@ -94,7 +88,7 @@ $menu = $aktiv;
         <div class="table-responsive">
             <? //= print_r($aset) 
             ?>
-            <table id="tabel1" class="table table-striped">
+            <table id="tabel1" class="table responsive-table">
                 <thead>
                     <tr>
                         <th>NO.</th>

@@ -132,7 +132,7 @@
                 <hr>
                 <div class="col-md-4">
                     Serial
-                    <input type="text" name="serial" class="form-control" value="<?= $aset->serial ?>" required>
+                    <input type="text" name="serial" oninput="convertToUppercase(this)" class="form-control" value="<?= $aset->serial ?>" required>
 
                 </div>
                 <div class="col-md-4">
@@ -148,7 +148,7 @@
                 <div class="col-md-12 mb-5">
                     Keterangan
                     <div class="form-floating">
-                        <textarea name="ket" class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px"><?= $aset->ket ?></textarea>
+                        <textarea name="ket" id="sentenceCaseInput" class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px"><?= $aset->ket ?></textarea>
                         <label for="floatingTextarea2">Comments</label>
                     </div>
 

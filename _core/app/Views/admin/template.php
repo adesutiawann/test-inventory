@@ -526,6 +526,26 @@
         })
     </script>
 
+    <script>
+        function convertToUppercase(input) {
+            input.value = input.value.toUpperCase();
+        }
+    </script>
+    <script>
+        document.getElementById('capitalizeInput').addEventListener('input', function() {
+            this.value = this.value.replace(/\b\w/g, function(match) {
+                return match.toUpperCase();
+            });
+        });
+    </script>
+    <script>
+        document.getElementById('sentenceCaseInput').addEventListener('input', function() {
+            this.value = this.value.replace(/(^|\.\s+|\!\s+|\?\s+)([a-z])/g, function(match) {
+                return match.toUpperCase();
+            });
+        });
+    </script>
+
 
     <!-- Charts JS -->
     <!-- <script src="<?= base_url() ?>/assets/plugins/chart.js/chart.min.js"></script> -->

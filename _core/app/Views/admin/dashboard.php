@@ -39,7 +39,7 @@
 
                     </div><!--//col monitor-->
                     <div class="col-auto">
-                        <h4 class="app-card-title"><?= $total_m ?></h4>.Unit
+                        <h4 class="app-card-title"><?= $total_mo ?></h4>.Unit
                     </div><!--//col-->
                 </div><!--//row-->
             </div><!--//app-card-header-->
@@ -146,105 +146,6 @@
 <!--//row-->
 <div class="row g-4 mb-4">
 
-    <div class="col-12 col-lg-6">
-
-        <div class="app-card app-card-stats-table h-100 shadow-sm">
-            <div class="app-card-header p-3">
-                <div class="app-card-header p-1 border-bottom-0">
-                    <div class="row align-items-center gx-3">
-                        <div class="col-auto">
-                            <div class="app-icon-holder">
-                                <i class="fa-solid fa-desktop"></i>
-                            </div><!--//icon-holder-->
-
-                        </div><!--//col-->
-                        <div class="col-auto">
-                            <h4 class="app-card-title">Monitor</h4>
-                        </div><!--//col-->
-                    </div><!--//row-->
-
-                </div>
-
-            </div><!--//app-card-header-->
-            <div class="app-card-body p-3 p-lg-4">
-                <div class="table-responsive">
-                    <table class="table table-borderless mb-0">
-                        <thead>
-                            <tr>
-                                <th class="meta">Kondisi</th>
-                                <th class="meta w-100">Progressbar</th>
-                                <th class="meta stat-cell">Jumlah</th>
-                                <th class="meta stat-cell">Persentasi</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr class="text-success">
-                                <td><b>Redy</b>
-
-                                </td>
-                                <td>
-
-                                    <div class="progress">
-                                        <div class="progress-bar bg-success" role="progressbar" style="width: 72%;" aria-valuenow="52" aria-valuemin="0" aria-valuemax="100"></div>
-
-                                    </div>
-
-                                </td>
-                                <td class="stat-cell">67</td>
-                                <td class="stat-cell">
-
-                                    30%
-                                </td>
-                            </tr>
-
-                            <tr class="text-warning">
-                                <td><b>Risk</b>
-
-                                </td>
-                                <td>
-
-                                    <div class="progress">
-                                        <div class="progress-bar bg-warning" role="progressbar" style="width: 22%;" aria-valuenow="52" aria-valuemin="0" aria-valuemax="100"></div>
-
-                                    </div>
-
-                                </td>
-                                <td class="stat-cell">67</td>
-                                <td class="stat-cell">
-
-                                    30%
-                                </td>
-                            </tr>
-
-                            <tr class="text-danger" class="text-end">
-                                <td><b>Blanks</b>
-
-                                </td>
-                                <td>
-
-                                    <div class="progress">
-                                        <div class="progress-bar bg-danger" role="progressbar" style="width: 52%;" aria-valuenow="52" aria-valuemin="0" aria-valuemax="100"></div>
-
-                                    </div>
-
-                                </td>
-                                <td class="stat-cell">67</td>
-                                <td class="stat-cell">
-
-                                    30%
-                                </td>
-                            </tr>
-                            <tr>
-                                <th colspan="2" class="meta text-end">Jumlah :</th>
-                                <th colspan="2" class="meta ">9800 </th>
-                            </tr>
-
-                        </tbody>
-                    </table>
-                </div><!--//table-responsive-->
-            </div><!--//app-card-body-->
-        </div><!--//app-card-->
-    </div><!--//col-->
 
     <div class="col-12 col-lg-6">
 
@@ -336,27 +237,30 @@
                 </div><!--//table-responsive-->
             </div><!--//app-card-body-->
         </div><!--//app-card-->
-    </div><!--//col-->
+    </div><!--// KALKULASI PC-->
 
     <div class="col-12 col-lg-6">
 
         <div class="app-card app-card-stats-table h-100 shadow-sm">
             <div class="app-card-header p-3">
+
                 <div class="app-card-header p-1 border-bottom-0">
                     <div class="row align-items-center gx-3">
                         <div class="col-auto">
                             <div class="app-icon-holder">
-                                <i class="fa-solid fa-laptop"></i>
+                                <i class="fa-solid fa-desktop"></i>
                             </div><!--//icon-holder-->
 
                         </div><!--//col-->
                         <div class="col-auto">
-                            <h4 class="app-card-title">Laptop</h4>
+                            <h4 class="app-card-title">Monitor</h4>
                         </div><!--//col-->
                     </div><!--//row-->
 
                 </div>
+
             </div><!--//app-card-header-->
+
             <div class="app-card-body p-3 p-lg-4">
                 <div class="table-responsive">
                     <table class="table table-borderless mb-0">
@@ -364,8 +268,8 @@
                             <tr>
                                 <th class="meta">Kondisi</th>
                                 <th class="meta w-100">Progressbar</th>
-                                <th class="meta stat-cell">Jumlah</th>
                                 <th class="meta stat-cell">Persentasi</th>
+                                <th class="meta stat-cell">Jumlah</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -376,16 +280,13 @@
                                 <td>
 
                                     <div class="progress">
-                                        <div class="progress-bar bg-success" role="progressbar" style="width: 72%;" aria-valuenow="52" aria-valuemin="0" aria-valuemax="100"></div>
+                                        <div class="progress-bar bg-success" role="progressbar" style="width: <?= $mo_ok = ($total_mo_ok / $total_mo) * 100 ?>%;" aria-valuenow="52" aria-valuemin="0" aria-valuemax="100"></div>
 
                                     </div>
 
                                 </td>
-                                <td class="stat-cell">67</td>
-                                <td class="stat-cell">
-
-                                    30%
-                                </td>
+                                <td class="stat-cell"> <?= number_format($mo_ok) ?>% </td>
+                                <td class="stat-cell"><?= $total_mo_ok ?></td>
                             </tr>
 
                             <tr class="text-warning">
@@ -395,16 +296,13 @@
                                 <td>
 
                                     <div class="progress">
-                                        <div class="progress-bar bg-warning" role="progressbar" style="width: 22%;" aria-valuenow="52" aria-valuemin="0" aria-valuemax="100"></div>
+                                        <div class="progress-bar bg-warning" role="progressbar" style="width:  <?= $mo_r = ($total_mo_rusak / $total_mo) * 100 ?>%;" aria-valuenow="52" aria-valuemin="0" aria-valuemax="100"></div>
 
                                     </div>
 
                                 </td>
-                                <td class="stat-cell">67</td>
-                                <td class="stat-cell">
-
-                                    30%
-                                </td>
+                                <td class="stat-cell"> <?= number_format($mo_r) ?>% </td>
+                                <td class="stat-cell"><?= $total_mo_rusak ?></td>
                             </tr>
 
                             <tr class="text-danger">
@@ -414,44 +312,47 @@
                                 <td>
 
                                     <div class="progress">
-                                        <div class="progress-bar bg-danger" role="progressbar" style="width: 52%;" aria-valuenow="52" aria-valuemin="0" aria-valuemax="100"></div>
+                                        <div class="progress-bar bg-danger" role="progressbar" style="width: <?= $p = ($total_mo_blanks / $total_mo) * 100 ?>%;" aria-valuenow="52" aria-valuemin="0" aria-valuemax="100"></div>
 
                                     </div>
 
                                 </td>
-                                <td class="stat-cell">67</td>
-                                <td class="stat-cell">
-
-                                    30%
-                                </td>
+                                <td class="stat-cell"><?= number_format($p) ?>%</td>
+                                <td class="stat-cell"><?= $total_mo_blanks ?> </td>
                             </tr>
-
+                            <tr>
+                                <th colspan="3" class="meta text-end">Total :</th>
+                                <th colspan="2" class="meta stat-cell text-and"><?= $total_mo ?> </th>
+                            </tr>
                         </tbody>
                     </table>
                 </div><!--//table-responsive-->
             </div><!--//app-card-body-->
         </div><!--//app-card-->
-    </div><!--//col-->
+    </div><!--//KALKULASI MONITOR-->
 
     <div class="col-12 col-lg-6">
 
         <div class="app-card app-card-stats-table h-100 shadow-sm">
             <div class="app-card-header p-3">
+
                 <div class="app-card-header p-1 border-bottom-0">
                     <div class="row align-items-center gx-3">
                         <div class="col-auto">
                             <div class="app-icon-holder">
-                                <i class="fa-solid fa-print"></i>
+                                <i class="fa-solid fa-keyboard"></i>
                             </div><!--//icon-holder-->
 
                         </div><!--//col-->
                         <div class="col-auto">
-                            <h4 class="app-card-title">Laptop</h4>
+                            <h4 class="app-card-title">Keyboard</h4>
                         </div><!--//col-->
                     </div><!--//row-->
 
                 </div>
+
             </div><!--//app-card-header-->
+
             <div class="app-card-body p-3 p-lg-4">
                 <div class="table-responsive">
                     <table class="table table-borderless mb-0">
@@ -459,8 +360,8 @@
                             <tr>
                                 <th class="meta">Kondisi</th>
                                 <th class="meta w-100">Progressbar</th>
-                                <th class="meta stat-cell">Jumlah</th>
                                 <th class="meta stat-cell">Persentasi</th>
+                                <th class="meta stat-cell">Jumlah</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -471,16 +372,13 @@
                                 <td>
 
                                     <div class="progress">
-                                        <div class="progress-bar bg-success" role="progressbar" style="width: 72%;" aria-valuenow="52" aria-valuemin="0" aria-valuemax="100"></div>
+                                        <div class="progress-bar bg-success" role="progressbar" style="width: <?= $ky_ok = ($total_ky_ok / $total_ky) * 100 ?>%;" aria-valuenow="52" aria-valuemin="0" aria-valuemax="100"></div>
 
                                     </div>
 
                                 </td>
-                                <td class="stat-cell">67</td>
-                                <td class="stat-cell">
-
-                                    30%
-                                </td>
+                                <td class="stat-cell"> <?= number_format($ky_ok) ?>% </td>
+                                <td class="stat-cell"><?= $total_ky_ok ?></td>
                             </tr>
 
                             <tr class="text-warning">
@@ -490,16 +388,13 @@
                                 <td>
 
                                     <div class="progress">
-                                        <div class="progress-bar bg-warning" role="progressbar" style="width: 22%;" aria-valuenow="52" aria-valuemin="0" aria-valuemax="100"></div>
+                                        <div class="progress-bar bg-warning" role="progressbar" style="width:  <?= $ky_r = ($total_ky_rusak / $total_ky) * 100 ?>%;" aria-valuenow="52" aria-valuemin="0" aria-valuemax="100"></div>
 
                                     </div>
 
                                 </td>
-                                <td class="stat-cell">67</td>
-                                <td class="stat-cell">
-
-                                    30%
-                                </td>
+                                <td class="stat-cell"> <?= number_format($ky_r) ?>% </td>
+                                <td class="stat-cell"><?= $total_ky_rusak ?></td>
                             </tr>
 
                             <tr class="text-danger">
@@ -509,206 +404,26 @@
                                 <td>
 
                                     <div class="progress">
-                                        <div class="progress-bar bg-danger" role="progressbar" style="width: 52%;" aria-valuenow="52" aria-valuemin="0" aria-valuemax="100"></div>
+                                        <div class="progress-bar bg-danger" role="progressbar" style="width: <?= $p = ($total_ky_blanks / $total_ky) * 100 ?>%;" aria-valuenow="52" aria-valuemin="0" aria-valuemax="100"></div>
 
                                     </div>
 
                                 </td>
-                                <td class="stat-cell">67</td>
-                                <td class="stat-cell">
-
-                                    30%
-                                </td>
+                                <td class="stat-cell"><?= number_format($p) ?>%</td>
+                                <td class="stat-cell"><?= $total_ky_blanks ?> </td>
                             </tr>
-
-                        </tbody>
-                    </table>
-                </div><!--//table-responsive-->
-            </div><!--//app-card-body-->
-        </div><!--//app-card-->
-    </div><!--//col-->
-
-    <div class="col-12 col-lg-6">
-
-        <div class="app-card app-card-stats-table h-100 shadow-sm">
-            <div class="app-card-header p-3">
-                <div class="row justify-content-between align-items-center">
-                    <div class="col-auto">
-                        <h4 class="app-card-title">Statistik PC</h4>
-                    </div><!--//col-->
-                    <div class="col-auto">
-                        <div class="card-header-action">
-                            <a href="#">25900 Unit</a>
-                        </div><!--//card-header-actions-->
-                    </div><!--//col-->
-                </div><!--//row-->
-            </div><!--//app-card-header-->
-            <div class="app-card-body p-3 p-lg-4">
-                <div class="table-responsive">
-                    <table class="table table-borderless mb-0">
-                        <thead>
                             <tr>
-                                <th class="meta">Kondisi</th>
-                                <th class="meta w-100">Progressbar</th>
-                                <th class="meta stat-cell">Jumlah</th>
-                                <th class="meta stat-cell">Persentasi</th>
+                                <th colspan="3" class="meta text-end">Total :</th>
+                                <th colspan="2" class="meta stat-cell text-and"><?= $total_ky ?> </th>
                             </tr>
-                        </thead>
-                        <tbody>
-                            <tr class="text-success">
-                                <td><b>Redy</b>
-
-                                </td>
-                                <td>
-
-                                    <div class="progress">
-                                        <div class="progress-bar bg-success" role="progressbar" style="width: 72%;" aria-valuenow="52" aria-valuemin="0" aria-valuemax="100"></div>
-
-                                    </div>
-
-                                </td>
-                                <td class="stat-cell">67</td>
-                                <td class="stat-cell">
-
-                                    30%
-                                </td>
-                            </tr>
-
-                            <tr class="text-warning">
-                                <td><b>Risk</b>
-
-                                </td>
-                                <td>
-
-                                    <div class="progress">
-                                        <div class="progress-bar bg-warning" role="progressbar" style="width: 22%;" aria-valuenow="52" aria-valuemin="0" aria-valuemax="100"></div>
-
-                                    </div>
-
-                                </td>
-                                <td class="stat-cell">67</td>
-                                <td class="stat-cell">
-
-                                    30%
-                                </td>
-                            </tr>
-
-                            <tr class="text-danger">
-                                <td><b>Blanks</b>
-
-                                </td>
-                                <td>
-
-                                    <div class="progress">
-                                        <div class="progress-bar bg-danger" role="progressbar" style="width: 52%;" aria-valuenow="52" aria-valuemin="0" aria-valuemax="100"></div>
-
-                                    </div>
-
-                                </td>
-                                <td class="stat-cell">67</td>
-                                <td class="stat-cell">
-
-                                    30%
-                                </td>
-                            </tr>
-
                         </tbody>
                     </table>
                 </div><!--//table-responsive-->
             </div><!--//app-card-body-->
         </div><!--//app-card-->
-    </div><!--//col-->
+    </div><!--//KALKULASI KEYBOARD-->
 
-    <div class="col-12 col-lg-6">
 
-        <div class="app-card app-card-stats-table h-100 shadow-sm">
-            <div class="app-card-header p-3">
-                <div class="row justify-content-between align-items-center">
-                    <div class="col-auto">
-                        <h4 class="app-card-title">Statistik PC</h4>
-                    </div><!--//col-->
-                    <div class="col-auto">
-                        <div class="card-header-action">
-                            <a href="#">25900 Unit</a>
-                        </div><!--//card-header-actions-->
-                    </div><!--//col-->
-                </div><!--//row-->
-            </div><!--//app-card-header-->
-            <div class="app-card-body p-3 p-lg-4">
-                <div class="table-responsive">
-                    <table class="table table-borderless mb-0">
-                        <thead>
-                            <tr>
-                                <th class="meta">Kondisi</th>
-                                <th class="meta w-100">Progressbar</th>
-                                <th class="meta stat-cell">Jumlah</th>
-                                <th class="meta stat-cell">Persentasi</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr class="text-success">
-                                <td><b>Redy</b>
-
-                                </td>
-                                <td>
-
-                                    <div class="progress">
-                                        <div class="progress-bar bg-success" role="progressbar" style="width: 72%;" aria-valuenow="52" aria-valuemin="0" aria-valuemax="100"></div>
-
-                                    </div>
-
-                                </td>
-                                <td class="stat-cell">67</td>
-                                <td class="stat-cell">
-
-                                    30%
-                                </td>
-                            </tr>
-
-                            <tr class="text-warning">
-                                <td><b>Risk</b>
-
-                                </td>
-                                <td>
-
-                                    <div class="progress">
-                                        <div class="progress-bar bg-warning" role="progressbar" style="width: 22%;" aria-valuenow="52" aria-valuemin="0" aria-valuemax="100"></div>
-
-                                    </div>
-
-                                </td>
-                                <td class="stat-cell">67</td>
-                                <td class="stat-cell">
-
-                                    30%
-                                </td>
-                            </tr>
-
-                            <tr class="text-danger">
-                                <td><b>Blanks</b>
-
-                                </td>
-                                <td>
-
-                                    <div class="progress">
-                                        <div class="progress-bar bg-danger" role="progressbar" style="width: 52%;" aria-valuenow="52" aria-valuemin="0" aria-valuemax="100"></div>
-
-                                    </div>
-
-                                </td>
-                                <td class="stat-cell">67</td>
-                                <td class="stat-cell">
-
-                                    30%
-                                </td>
-                            </tr>
-
-                        </tbody>
-                    </table>
-                </div><!--//table-responsive-->
-            </div><!--//app-card-body-->
-        </div><!--//app-card-->
-    </div><!--//col-->
 
 
 </div>

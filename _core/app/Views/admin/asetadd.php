@@ -130,7 +130,7 @@
                 <hr>
                 <div class="col-md-4">
                     Serial
-                    <input type="text" name="serial" class="form-control" required>
+                    <input type="text" name="serial" oninput="convertToUppercase(this)" class="form-control" required>
 
                 </div>
                 <div class="col-md-4">
@@ -145,7 +145,7 @@
                 <div class="col-md-12 mb-5">
                     Keterangan
                     <div class="form-floating">
-                        <textarea name="ket" class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px"></textarea>
+                        <textarea name="ket" id="sentenceCaseInput" class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px"></textarea>
                         <label for="floatingTextarea2">Comments</label>
                     </div>
 

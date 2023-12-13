@@ -69,39 +69,34 @@ class aset extends BaseController
             'title'   => 'Personal Computer',
             'segment' => $this->request->uri->getSegments(),
             'admin'   => $this->admin->find(session()->get('id')),
-            'nama'    => $this->manufacture->orderBy('nama', 'asc')->findAll(),
-            'type'    => $this->type->orderBy('nama', 'asc')->findAll(),
-            'prosesor'    => $this->prosesor->orderBy('nama', 'asc')->findAll(),
-            'generasi'    => $this->generasi->orderBy('nama', 'asc')->findAll(),
-            'hdd'    => $this->hdd->orderBy('nama', 'asc')->findAll(),
-            'ram'    => $this->ram->orderBy('nama', 'asc')->findAll(),
-            'rincian'    => $this->rincian->orderBy('nama', 'asc')->findAll(),
-            'status'    => $this->status->orderBy('nama', 'asc')->findAll(),
-            'kondisi'    => $this->kondisi->orderBy('nama', 'asc')->findAll(),
-            'stock'    => $this->stok->orderBy('nama', 'asc')->findAll(),
+
             'aktiv'   => 'ALL',
-            'aset' => $this->aset->orderBy('id', 'desc')->findAll(),
+            'aset' => $this->aset->where('type', 'pc')->orderBy('id', 'desc')->findAll(),
+
+            // 'aset' => $this->aset->where('type', 'pc')->where('kondisi', $id)->orderBy('id', 'desc')->findAll(),
 
             'total_pc' => $this->aset->where('type', 'pc')->countAllResults(),
-            'total_pc_ok' => $this->aset->where('kondisi', 'OK')->countAllResults(),
-            'total_pc_rusak' => $this->aset->where('kondisi', 'rusak')->countAllResults(),
-            'total_pc_blanks' => $this->aset->where('kondisi', 'blanks')->countAllResults(),
+            'total_pc_ok' => $this->aset->where('type', 'pc')->where('kondisi', 'OK')->countAllResults(),
+            'total_pc_rusak' => $this->aset->where('type', 'pc')->where('kondisi', 'rusak')->countAllResults(),
+            'total_pc_blanks' => $this->aset->where('type', 'pc')->where('kondisi', 'blanks')->countAllResults(),
+
         ];
 
         return view('admin/aset', $data);
     }
-    public function ok($id)
+    public function search($id)
     {
         $data = [
-            'title'   => 'Data Aset',
+            'title'   => 'Data Personal Computer',
             'aktiv'   => $id,
             'segment' => $this->request->uri->getSegments(),
-            'aset' => $this->aset->where('kondisi', $id)->orderBy('id', 'desc')->findAll(),
+
+            'aset' => $this->aset->where('type', 'pc')->where('kondisi', $id)->orderBy('id', 'desc')->findAll(),
 
             'total_pc' => $this->aset->where('type', 'pc')->countAllResults(),
-            'total_pc_ok' => $this->aset->where('kondisi', 'OK')->countAllResults(),
-            'total_pc_rusak' => $this->aset->where('kondisi', 'rusak')->countAllResults(),
-            'total_pc_blanks' => $this->aset->where('kondisi', 'blanks')->countAllResults(),
+            'total_pc_ok' => $this->aset->where('type', 'pc')->where('kondisi', 'OK')->countAllResults(),
+            'total_pc_rusak' => $this->aset->where('type', 'pc')->where('kondisi', 'rusak')->countAllResults(),
+            'total_pc_blanks' => $this->aset->where('type', 'pc')->where('kondisi', 'blanks')->countAllResults(),
             //'aset'    => $this->aset->getId($id),
 
         ];
@@ -119,9 +114,7 @@ class aset extends BaseController
             'segment' => $this->request->uri->getSegments(),
             'admin'   => $this->admin->find(session()->get('id')),
             'nama'    => $this->manufacture->orderBy('nama', 'asc')->findAll(),
-            // 'type'    => $this->type->orderBy('nama', 'asc')->findAll(),
             'type' => $this->type->where('nama', 'pc')->orderBy('nama', 'asc')->findAll(),
-
             'prosesor'    => $this->prosesor->orderBy('nama', 'asc')->findAll(),
             'generasi'    => $this->generasi->orderBy('nama', 'asc')->findAll(),
             'hdd'    => $this->hdd->orderBy('nama', 'asc')->findAll(),
@@ -130,17 +123,11 @@ class aset extends BaseController
             'status'    => $this->status->orderBy('nama', 'asc')->findAll(),
             'kondisi'    => $this->kondisi->orderBy('nama', 'asc')->findAll(),
             'stock'    => $this->stok->orderBy('nama', 'asc')->findAll(),
-
-
         ];
-
         return view('admin/asetadd', $data);
     }
-
-
     public function edit($id)
     {
-
         // $tgl= date("Y-m-d");
         if (session()->get('logged_admin') != true) {
             return redirect()->to(base_url());
@@ -151,9 +138,7 @@ class aset extends BaseController
             'segment' => $this->request->uri->getSegments(),
             'admin'   => $this->admin->find(session()->get('id')),
             'nama'    => $this->manufacture->orderBy('nama', 'asc')->findAll(),
-            // 'type'    => $this->type->orderBy('nama', 'asc')->findAll(),
             'type' => $this->type->where('nama', 'pc')->orderBy('nama', 'asc')->findAll(),
-
             'prosesor'    => $this->prosesor->orderBy('nama', 'asc')->findAll(),
             'generasi'    => $this->generasi->orderBy('nama', 'asc')->findAll(),
             'hdd'    => $this->hdd->orderBy('nama', 'asc')->findAll(),
@@ -162,17 +147,14 @@ class aset extends BaseController
             'status'    => $this->status->orderBy('nama', 'asc')->findAll(),
             'kondisi'    => $this->kondisi->orderBy('nama', 'asc')->findAll(),
             'stock'    => $this->stok->orderBy('nama', 'asc')->findAll(),
-            //'aset' => $this->aset->getAll(),
             'aset'    => $this->aset->find($id),
         ];
-
         return view('admin/asetedit', $data);
     }
 
     public function save()
     {
-
-        $tgl = date("Y-m-d");
+        // $tgl = date("Y-m-d");
         if ($this->request->getVar('id')) {
 
             $post = [
@@ -217,8 +199,7 @@ class aset extends BaseController
                 'tgl_masuk'            => $this->request->getVar('masuk'),
                 'tgl_keluar'            => $this->request->getVar('keluar'),
                 'serial'            => $this->request->getVar('serial'),
-                //'kelas'           => $this->request->getVar('kelas'),
-                //'tahun_aset' => $this->tp->tahun,
+
             ];
 
             if ($this->aset->save($post)) {
@@ -255,17 +236,17 @@ class aset extends BaseController
                     'tgl_masuk' => $value[1],
                     'tgl_keluar' => $value[2],
                     'manufacture'    => $value[3],
-                    'type'    => $value[4],
-                    'prosesor'    => $value[5],
-                    'generasi'    => $value[6],
-                    'serial' => $value[7],
-                    'hdd' => $value[8],
-                    'ram'    => $value[9],
-                    'rincian'    => $value[10],
-                    'status' => $value[11],
-                    'stock'    => $value[12],
-                    'kondisi' => $value[13],
-                    'ket' => $value[14],
+                    'type'    => 'PC',
+                    'prosesor'    => $value[4],
+                    'generasi'    => $value[5],
+                    'serial' => $value[6],
+                    'hdd' => $value[7],
+                    'ram'    => $value[8],
+                    'rincian'    => $value[9],
+                    'status' => $value[10],
+                    'stock'    => $value[11],
+                    'kondisi' => $value[12],
+                    'ket' => $value[13],
                 ];
                 $this->aset->insert($data);
             }
@@ -310,7 +291,7 @@ class aset extends BaseController
     public function downloadExcel()
     {
         // $file = 'public/Ex_pc.csv';
-        $file = 'assets/Exel/Ex_pc.csv';
+        $file = 'assets/Exel/Ex.Import file data pc .xlsx';
 
         $response = $this->response
             ->download($file, null)
@@ -321,7 +302,7 @@ class aset extends BaseController
     public function export()
     {
 
-        $contacts = $this->aset->findAll();
+        $contacts = $this->aset->where('type', 'PC')->orderBy('id', 'desc')->findAll();
 
         $spreadsheet = new Spreadsheet();
 
@@ -331,18 +312,17 @@ class aset extends BaseController
         $sheet->setCellValue('B1', 'Tgl Masuk');
         $sheet->setCellValue('C1', 'Tgl Keluar');
         $sheet->setCellValue('D1', 'Manufacture');
-        $sheet->setCellValue('E1', 'Type');
-        $sheet->setCellValue('F1', 'Prosessor');
-        $sheet->setCellValue('G1', 'Generasi');
+        $sheet->setCellValue('E1', 'Prosessor');
+        $sheet->setCellValue('F1', 'Generasi');
 
-        $sheet->setCellValue('H1', 'Serial');
-        $sheet->setCellValue('I1', 'HDD/SSD');
-        $sheet->setCellValue('J1', 'RAM');
-        $sheet->setCellValue('K1', 'Rincian');
-        $sheet->setCellValue('L1', 'Status');
-        $sheet->setCellValue('M1', 'Stock');
-        $sheet->setCellValue('N1', 'Kondisi');
-        $sheet->setCellValue('O1', 'Keterangan');
+        $sheet->setCellValue('G1', 'Serial');
+        $sheet->setCellValue('H1', 'HDD/SSD');
+        $sheet->setCellValue('I1', 'RAM');
+        $sheet->setCellValue('J1', 'Rincian');
+        $sheet->setCellValue('K1', 'Status');
+        $sheet->setCellValue('L1', 'Stock');
+        $sheet->setCellValue('M1', 'Kondisi');
+        $sheet->setCellValue('N1', 'Keterangan');
 
         $column = 2; // kolom start
 
@@ -351,22 +331,21 @@ class aset extends BaseController
             $sheet->setCellValue('B' . $column, $value->tgl_masuk);
             $sheet->setCellValue('C' . $column, $value->tgl_keluar);
             $sheet->setCellValue('D' . $column, $value->manufacture);
-            $sheet->setCellValue('E' . $column, $value->type);
-            $sheet->setCellValue('F' . $column, $value->prosesor);
-            $sheet->setCellValue('G' . $column, $value->generasi);
-            $sheet->setCellValue('H' . $column, $value->serial);
-            $sheet->setCellValue('I' . $column, $value->hdd);
-            $sheet->setCellValue('J' . $column, $value->ram);
-            $sheet->setCellValue('K' . $column, $value->rincian);
-            $sheet->setCellValue('L' . $column, $value->status);
-            $sheet->setCellValue('M' . $column, $value->stock);
-            $sheet->setCellValue('N' . $column, $value->kondisi);
-            $sheet->setCellValue('O' . $column, $value->ket);
+            $sheet->setCellValue('E' . $column, $value->prosesor);
+            $sheet->setCellValue('F' . $column, $value->generasi);
+            $sheet->setCellValue('G' . $column, $value->serial);
+            $sheet->setCellValue('H' . $column, $value->hdd);
+            $sheet->setCellValue('I' . $column, $value->ram);
+            $sheet->setCellValue('J' . $column, $value->rincian);
+            $sheet->setCellValue('K' . $column, $value->status);
+            $sheet->setCellValue('L' . $column, $value->stock);
+            $sheet->setCellValue('M' . $column, $value->kondisi);
+            $sheet->setCellValue('N' . $column, $value->ket);
             $column++;
         }
 
-        $sheet->getStyle('A1:O1')->getFont()->setBold(true);
-        $sheet->getStyle('A1:O1')->getFill()
+        $sheet->getStyle('A1:N1')->getFont()->setBold(true);
+        $sheet->getStyle('A1:N1')->getFill()
             ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
             ->getStartColor()->setARGB('FFFFFF00');
         $styleArray = [
@@ -384,7 +363,7 @@ class aset extends BaseController
 
         ];
 
-        $sheet->getStyle('A1:O' . ($column - 1))->applyFromArray($styleArray);
+        $sheet->getStyle('A1:N' . ($column - 1))->applyFromArray($styleArray);
 
         $sheet->getColumnDimension('A')->setAutoSize(true);
         $sheet->getColumnDimension('B')->setAutoSize(true);
@@ -400,11 +379,10 @@ class aset extends BaseController
         $sheet->getColumnDimension('L')->setAutoSize(true);
         $sheet->getColumnDimension('M')->setAutoSize(true);
         $sheet->getColumnDimension('N')->setAutoSize(true);
-        $sheet->getColumnDimension('O')->setAutoSize(true);
 
         $writer = new Xlsx($spreadsheet);
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-        header('Content-Disposition: attachment;filename=Data-PC.xlsx');
+        header('Content-Disposition: attachment;filename=Export Data PC.xlsx');
         header('Cache-Control: max-age=0');
         $writer->save('php://output');
 

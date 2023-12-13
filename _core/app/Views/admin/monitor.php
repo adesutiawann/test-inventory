@@ -37,29 +37,33 @@ $menu = $aktiv;
         <?php endif ?>
 
         <div class="row ">
-            <div class="col-6 ml-4">
-                <a href="<?= base_url('admin/monitor/add') ?>" class="btn app-btn-primary mb-3 text-white"><i class="fas fa-plus"></i> Tambah Asets</a>
 
+            <div class="col-md-4 col-sm-6 col-xs-12 mb-3 ">
+                <a href="<?= base_url('admin/monitor/add') ?>" class="btn app-btn-primary text-white w-50">
+                    <i class="fas fa-plus"></i> Tambah Asets
+                </a>
             </div>
-            <div class="col-3">
-                <form class="row g-3 ">
 
-                    <div class="col">
-                        <input type="file" class="form-control" id="inputPassword2" placeholder="Password">
+            <div class="col-md-6 col-sm-2 col-xs-2 ">
+                <form class="row" action="<?= base_url('admin/monitor/import') ?>" method="post" enctype="multipart/form-data">
+                    <div class="col-md-3 col-sm-3 text-end mb-2 ">
+                        <a href="<?= base_url('admin/monitor/downloadExcel') ?>" class="text-info">
+                            <i class="fa-solid fa-file-circle-question"></i>
+                        </a>
                     </div>
-                    <div class="col "> <button type="submit" class="btn app-btn-secondary"><i class="fa-solid fa-arrow-up-from-bracket"></i> Upload</button>
+                    <div class="col-md-6 col-sm-6 col-xs-10 mb-2">
+                        <input type="file" class="form-control" name="file_excel" required>
+                    </div>
+                    <div class="col-md-3 col-sm-3 col-xs-2 mb-3">
+                        <button type="submit" class="btn app-btn-secondary ">
+                            <i class="fa-solid fa-file-import"></i> Import</button>
                     </div>
                 </form>
             </div>
-
-
-            <div class="col-3">
-                <a class="btn app-btn-secondary" href="#">
-                    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-download me-1" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                        <path fill-rule="evenodd" d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"></path>
-                        <path fill-rule="evenodd" d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"></path>
-                    </svg>
-                    Download CSV
+            <div class="col-md-2 col-sm-6 col-xs-1 ">
+                <a class="btn app-btn- bg-success text-white w-100" href="<?= base_url('admin/monitor/export') ?>">
+                    <i class="fa-solid fa-file-excel"></i>
+                    Export Excel
                 </a>
             </div>
         </div>
@@ -68,13 +72,14 @@ $menu = $aktiv;
 
 
 
-<nav id="orders-table-tab" class="orders-table-tab app-nav-tabs nav shadow-sm flex-column flex-sm-row mb-1" role="tablist">
-
-    <a class="flex-sm-fill text-sm-center nav-link <?= ($menu == 'ALL') ? 'active' : '' ?>" href="<?= base_url('admin/aset') ?>" aria-controls="orders-all" aria-selected="false">All</a>
-    <a class="flex-sm-fill text-sm-center nav-link <?= ($menu == 'OK') ? 'active' : '' ?>" href="<?= base_url('admin/aset/ok/OK') ?>" aria-controls="orders-paid" aria-selected="false">Oke</a>
-    <a class="flex-sm-fill text-sm-center nav-link <?= ($menu == 'RUSAK') ? 'active' : '' ?>" href="<?= base_url('admin/aset/ok/RUSAK') ?>" role="tab" aria-controls="orders-pending" aria-selected="true">Rusak</a>
-    <a class="flex-sm-fill text-sm-center nav-link <?= ($menu == 'BLANKS') ? 'active' : '' ?>" href="<?= base_url('admin/aset/ok/BLANKS') ?>" role="tab" aria-controls="orders-cancelled" aria-selected="true" tabindex="-1">Blank</a>
+<nav id="orders-table-tab" class="orders-table-tab app-nav-tabs nav shadow-sm d-flex mb-1" role="tablist">
+    <a class="flex-fill text-center nav-link <?= ($menu == 'ALL') ? 'active' : '' ?>" href="<?= base_url('admin/monitor') ?>" aria-controls="orders-all" aria-selected="false">All <?= $total_mo ?></a>
+    <a class="flex-fill text-center nav-link <?= ($menu == 'OK') ? 'active' : '' ?>" href="<?= base_url('admin/monitor/search/OK') ?>" aria-controls="orders-paid" aria-selected="false">Oke <?= $total_mo_ok ?></a>
+    <a class="flex-fill text-center nav-link <?= ($menu == 'RUSAK') ? 'active' : '' ?>" href="<?= base_url('admin/monitor/search/RUSAK') ?>" role="tab" aria-controls="orders-pending" aria-selected="true">Rusak <?= $total_mo_rusak ?></a>
+    <a class="flex-fill text-center nav-link <?= ($menu == 'BLANKS') ? 'active' : '' ?>" href="<?= base_url('admin/monitor/search/BLANKS') ?>" role="tab" aria-controls="orders-cancelled" aria-selected="true">Blank <?= $total_mo_blanks ?></a>
 </nav>
+
+
 
 <div class="app-card app-card-accordion shadow-sm mb-4">
 
@@ -83,7 +88,7 @@ $menu = $aktiv;
         <div class="table-responsive">
             <? //= print_r($aset) 
             ?>
-            <table id="tabel1" class="table table-striped">
+            <table id="tabel1" class="table responsive-table">
                 <thead>
                     <tr>
                         <th>NO.</th>
@@ -105,7 +110,7 @@ $menu = $aktiv;
                     foreach ($aset as $key => $value) :
 
                     ?>
-                        <tr>
+                        <tr class="table-<?= ($value->kondisi == 'OK') ? 'success ' : (($value->kondisi == 'RUSAK') ? 'warning' : 'danger') ?>">
                             <td><?= $no++ ?></td>
                             <td><b><?= $value->serial ?></b></td>
                             <td>
@@ -117,7 +122,7 @@ $menu = $aktiv;
                             </td>
                             <td>
                                 Status :<?= $value->status ?><br>
-                                Stock :<?= $value->stok ?><br>
+                                Stock :<?= $value->stock ?><br>
                                 Kondisi:
                                 <span class="badge bg-<?= ($value->kondisi == 'OK') ? 'success' : (($value->kondisi == 'RUSAK') ? 'warning' : 'danger') ?>">
                                     <?= $value->kondisi ?>
@@ -139,10 +144,10 @@ $menu = $aktiv;
                                 </span>
                             </td>
                             <td>
-                                <a href="<?= base_url('admin/aset/edit/' . $value->id) ?>" class="btn btn-sm btn-info text-white mt-2 mr-2">
+                                <a href="<?= base_url('admin/monitor/edit/' . $value->id) ?>" class="btn btn-sm btn-info text-white ">
                                     <i class="fa-solid fa-pen-to-square"></i>
                                 </a>
-                                <a href="<?= base_url("admin/aset/delete/{$value->id}") ?>" class="btn btn-sm btn-danger text-white" onclick="return confirm('Yakin ingin menghapus?')">
+                                <a href="<?= base_url("admin/monitor/delete/{$value->id}") ?>" class="btn btn-sm btn-danger text-white" onclick="return confirm('Yakin ingin menghapus?')">
                                     <i class="fa-solid fa-trash-can"></i>
                                 </a>
 
@@ -186,7 +191,7 @@ $menu = $aktiv;
             $('#table').DataTable({
                 processing: true,
                 serverSide: true,
-                ajax: '<?= base_url('admin/aset/data') ?>',
+                ajax: '<?= base_url('admin/monitor/data') ?>',
                 order: [],
                 columns: [{
                         data: 'no',

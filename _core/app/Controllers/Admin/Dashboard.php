@@ -52,6 +52,17 @@ class Dashboard extends BaseController
             'total_pc_rusak' => $this->aset->where('kondisi', 'rusak')->countAllResults(),
             'total_pc_blanks' => $this->aset->where('kondisi', 'blanks')->countAllResults(),
 
+            'total_mo' => $this->aset->where('type', 'monitor')->countAllResults(),
+            'total_mo_ok' => $this->aset->where('type', 'monitor')->where('kondisi', 'OK')->countAllResults(),
+            'total_mo_rusak' => $this->aset->where('type', 'monitor')->where('kondisi', 'rusak')->countAllResults(),
+            'total_mo_blanks' => $this->aset->where('type', 'monitor')->where('kondisi', 'blanks')->countAllResults(),
+
+            'total_ky' => $this->aset->where('type', 'keyboard')->countAllResults(),
+            'total_ky_ok' => $this->aset->where('type', 'keyboard')->where('kondisi', 'OK')->countAllResults(),
+            'total_ky_rusak' => $this->aset->where('type', 'keyboard')->where('kondisi', 'rusak')->countAllResults(),
+            'total_ky_blanks' => $this->aset->where('type', 'keyboard')->where('kondisi', 'blanks')->countAllResults(),
+
+
             'total_l' => $this->aset->where('type', 'laptop')->countAllResults(),
             'total_p' => $this->aset->where('type', 'printer')->countAllResults(),
             'total_k' => $this->aset->where('type', 'keyboard')->countAllResults(),
