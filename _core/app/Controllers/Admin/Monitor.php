@@ -233,15 +233,11 @@ class Monitor extends BaseController
                     'manufacture'    => $value[3],
 
                     'type'    => 'Monitor',
-                    'prosesor'    => '',
-                    'generasi'    => '',
-                    'hdd' => '',
-                    'ram'    => '',
-                    'rincian'    => '',
 
 
-                    'serial' => $value[4],
-                    'port'    => $value[5],
+                    'port'    => $value[4],
+                    'serial' => $value[5],
+
 
                     'status' => $value[6],
                     'stock'    => $value[7],

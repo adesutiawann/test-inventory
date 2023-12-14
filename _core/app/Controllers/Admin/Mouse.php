@@ -11,17 +11,19 @@ use App\Models\SiswaModel;
 
 use App\Models\ManufactureModel;
 use App\Models\TypeModel;
-use App\Models\ProsesorModel;
+
+use App\Models\PortModel;
 use App\Models\GenerasiModel;
 use App\Models\HddModel;
 use App\Models\RamModel;
 use App\Models\RincianModel;
+
 use App\Models\StatusModel;
 use App\Models\StokModel;
 use App\Models\KondisiModel;
-
-use App\Models\PortModel;
 //use App\Models\PelajaranModel;
+use PhpOffice\PhpSpreadsheet\Spreadsheet;
+use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 class Mouse extends BaseController
 {
@@ -30,14 +32,15 @@ class Mouse extends BaseController
 
     protected $manufacture;
     protected $type;
-    protected $prosesor;
+
+    protected $port;
     protected $generasi;
     protected $hdd;
     protected $ram;
     protected $rincian;
+
     protected $status;
     protected $stok;
-    protected $port;
     protected $kondisi;
 
     public function __construct()
@@ -50,7 +53,8 @@ class Mouse extends BaseController
 
         $this->manufacture = new ManufactureModel;
         $this->type = new TypeModel;
-        $this->prosesor = new ProsesorModel;
+
+        $this->port = new PortModel;
         $this->generasi = new GenerasiModel;
         $this->hdd = new HddModel;
         $this->ram = new RamModel;
@@ -58,7 +62,6 @@ class Mouse extends BaseController
         $this->status = new StatusModel;
         $this->stok = new StokModel;
         $this->kondisi = new KondisiModel;
-        $this->port = new PortModel;
     }
 
     public function index()
@@ -68,38 +71,40 @@ class Mouse extends BaseController
         }
 
         $data = [
-            'title'   => 'Data Mouse',
+            'title'   => 'mouse',
             'segment' => $this->request->uri->getSegments(),
             'admin'   => $this->admin->find(session()->get('id')),
-            'nama'    => $this->manufacture->orderBy('nama', 'asc')->findAll(),
-            'type'    => $this->type->orderBy('nama', 'asc')->findAll(),
-            'prosesor'    => $this->prosesor->orderBy('nama', 'asc')->findAll(),
-            'generasi'    => $this->generasi->orderBy('nama', 'asc')->findAll(),
-            'hdd'    => $this->hdd->orderBy('nama', 'asc')->findAll(),
-            'ram'    => $this->ram->orderBy('nama', 'asc')->findAll(),
-            'rincian'    => $this->rincian->orderBy('nama', 'asc')->findAll(),
-            'status'    => $this->status->orderBy('nama', 'asc')->findAll(),
-            'kondisi'    => $this->kondisi->orderBy('nama', 'asc')->findAll(),
-            'stock'    => $this->stok->orderBy('nama', 'asc')->findAll(),
-            'port'    => $this->port->orderBy('port', 'asc')->findAll(),
+
             'aktiv'   => 'ALL',
-            'aset' => $this->aset->getAllmouse(),
-            //'aset' =>  $this->aset->where('tb_type.nama', 'Destop')->getAll(),
+            //'aset' => $this->aset->orderBy('id', 'desc')->findAll(),
+            'aset' => $this->aset->where('type', 'mouse')->orderBy('id', 'desc')->findAll(),
+
+
+            'total_mo' => $this->aset->where('type', 'mouse')->countAllResults(),
+            'total_mo_ok' => $this->aset->where('type', 'mouse')->where('kondisi', 'OK')->countAllResults(),
+            'total_mo_rusak' => $this->aset->where('type', 'mouse')->where('kondisi', 'rusak')->countAllResults(),
+            'total_mo_blanks' => $this->aset->where('type', 'mouse')->where('kondisi', 'blanks')->countAllResults(),
         ];
 
         return view('admin/mouse', $data);
     }
-    public function ok($id)
+    public function search($id)
     {
         $data = [
-            'title'   => 'Data keyboard',
+            'title'   => 'mouse',
             'aktiv'   => $id,
             'segment' => $this->request->uri->getSegments(),
-            //'aset' =>  $this->suratkeluar->where('kondisi', 'OK')->getAll(),
-            'aset'    => $this->aset->getId($id),
+
+            'aset' => $this->aset->where('type', 'mouse')->where('kondisi', $id)->orderBy('id', 'desc')->findAll(),
+
+            'total_mo' => $this->aset->where('type', 'mouse')->countAllResults(),
+            'total_mo_ok' => $this->aset->where('type', 'mouse')->where('kondisi', 'OK')->countAllResults(),
+            'total_mo_rusak' => $this->aset->where('type', 'mouse')->where('kondisi', 'rusak')->countAllResults(),
+            'total_mo_blanks' => $this->aset->where('type', 'mouse')->where('kondisi', 'blanks')->countAllResults(),
+
 
         ];
-        return view('admin/keyboard', $data);
+        return view('admin/mouse', $data);
     }
 
     public function add()
@@ -109,111 +114,53 @@ class Mouse extends BaseController
         }
 
         $data = [
-            'title'   => 'Add Mouse',
+            'title'   => 'Add mouse',
             'segment' => $this->request->uri->getSegments(),
             'admin'   => $this->admin->find(session()->get('id')),
-            'manufacture'    => $this->manufacture->orderBy('nama', 'asc')->findAll(),
-            'namax'    => $this->manufacture->orderBy('nama', 'asc')->findAll(),
-            //'type'    => $this->type->orderBy('nama', 'asc')->findAll(),
+            'nama'    => $this->manufacture->orderBy('nama', 'asc')->findAll(),
             'type' => $this->type->where('nama', 'mouse')->orderBy('nama', 'asc')->findAll(),
-            // 'type' => $this->type->where('nama', 'keyboard')->orderBy('nama', 'asc')->findAll(),
-            'prosesor'    => $this->prosesor->orderBy('nama', 'asc')->findAll(),
-            'generasi'    => $this->generasi->orderBy('nama', 'asc')->findAll(),
-            'hdd'    => $this->hdd->orderBy('nama', 'asc')->findAll(),
-            'ram'    => $this->ram->orderBy('nama', 'asc')->findAll(),
-            'rincian'    => $this->rincian->orderBy('nama', 'asc')->findAll(),
+
             'status'    => $this->status->orderBy('nama', 'asc')->findAll(),
             'kondisi'    => $this->kondisi->orderBy('nama', 'asc')->findAll(),
             'stock'    => $this->stok->orderBy('nama', 'asc')->findAll(),
+
             'port'    => $this->port->orderBy('port', 'asc')->findAll(),
-
-
         ];
-
         return view('admin/mouseadd', $data);
     }
-
-
-
     public function edit($id)
     {
-
         // $tgl= date("Y-m-d");
         if (session()->get('logged_admin') != true) {
             return redirect()->to(base_url());
         }
-
         $data = [
-
-            'title'   => 'Edit aset',
-            'menu'   => 'Edit aset',
-            'input'   => 'hidden',
-            'edit'   => '',
+            'title'   => 'Edit mouse',
+            'edit'   => 'redy',
             'segment' => $this->request->uri->getSegments(),
-
-            // 'aset' => $this->aset->where('id', $id)->getAll(),
-            'aset'    => $this->aset->find($id),
-            //'manufactureid' => $this->manufacture->where('id', 'aset.id')->orderBy('nama', 'asc')->findAll(),
-            'manufacture'   => $this->aset->select('manufacture')->groupBy('manufacture')->findAll(),
-            //'aset' => $this->aset->where('id', $id)->findAll(),
-            // 'manufacture' => $this->manufacture->join('aset', 'manufacture.id = aset.id')->orderBy('manufacture.nama', 'asc')->findAll(),
-
-            //'pel'   => $this->admin->find(session()->get('id')),
-            // 'segment' => $this->request->uri->getSegments(),
             'admin'   => $this->admin->find(session()->get('id')),
-            //'nama'    => $this->manufacture->orderBy('nama', 'asc')->findAll(),
 
-            'manufacture'    => $this->manufacture->orderBy('nama', 'asc')->findAll(),
-            //'namax'    => $this->manufacture->orderBy('nama', 'asc')->findAll(),            
-            //'namax'    => $this->manufacture->find($id),
-
-            //'type'    => $this->type->orderBy('nama', 'asc')->findAll(),
+            'nama'    => $this->manufacture->orderBy('nama', 'asc')->findAll(),
             'type' => $this->type->where('nama', 'mouse')->orderBy('nama', 'asc')->findAll(),
 
-            'prosesor'    => $this->prosesor->orderBy('nama', 'asc')->findAll(),
-            'generasi'    => $this->generasi->orderBy('nama', 'asc')->findAll(),
-            'hdd'    => $this->hdd->orderBy('nama', 'asc')->findAll(),
-            'ram'    => $this->ram->orderBy('nama', 'asc')->findAll(),
-            'rincian'    => $this->rincian->orderBy('nama', 'asc')->findAll(),
+
             'status'    => $this->status->orderBy('nama', 'asc')->findAll(),
             'kondisi'    => $this->kondisi->orderBy('nama', 'asc')->findAll(),
             'stock'    => $this->stok->orderBy('nama', 'asc')->findAll(),
-            'port'    => $this->port->orderBy('port', 'asc')->findAll(),
-            'aktiv'   => 'ALL',
-            // 'aset' => $this->aset->getAllkeyboard($id),
-
-            //'aset'    => $this->aset->find($id),
-            'nama'   => $this->aset->select('nama'),
+            'aset'    => $this->aset->find($id),
         ];
-
         return view('admin/mouseedit', $data);
     }
 
     public function save()
     {
-
-        $tgl = date("Y-m-d");
+        // $tgl = date("Y-m-d");
         if ($this->request->getVar('id')) {
 
             $post = [
                 'id'       => $this->request->getVar('id'),
-                'nama'            => $this->request->getVar('nama'),
-                'tgl'           => $tgl,
-                //'tahun_pelajaran' => $this->tp->tahun,
-            ];
-
-            if ($this->aset->save($post)) {
-                session()->setFlashdata('success', 'Data berhasil di edit.');
-                return redirect()->to(base_url('admin/keyboard'));
-            } else {
-                session()->setFlashdata('error', 'Data Gagal di simpan.');
-                return redirect()->to(base_url('admin/keyboard'));
-            }
-        } else {
-            // $tgl= date("Y-m-d");
-            $post = [
                 'manufacture'            => $this->request->getVar('manufacture'),
-                'type'            => $this->request->getVar('type'),
+                'type'            => 'mouse',
                 'status'            => $this->request->getVar('status'),
                 'stock'            => $this->request->getVar('stock'),
                 'kondisi'            => $this->request->getVar('kondisi'),
@@ -221,49 +168,183 @@ class Mouse extends BaseController
                 'tgl_masuk'            => $this->request->getVar('masuk'),
                 'tgl_keluar'            => $this->request->getVar('keluar'),
                 'serial'            => $this->request->getVar('serial'),
-                //'kelas'           => $this->request->getVar('kelas'),
-                //'tahun_aset' => $this->tp->tahun,
+            ];
+
+            if ($this->aset->save($post)) {
+                session()->setFlashdata('success', 'Data berhasil di edit.');
+                return redirect()->to(base_url('admin/mouse'));
+            } else {
+                session()->setFlashdata('error', 'Data Gagal di simpan.');
+                return redirect()->to(base_url('admin/mouse'));
+            }
+        } else {
+            // $tgl= date("Y-m-d");
+            $post = [
+                'manufacture'            => $this->request->getVar('manufacture'),
+                'type'            => 'mouse',
+
+                'status'            => $this->request->getVar('status'),
+                'stock'            => $this->request->getVar('stock'),
+                'kondisi'            => $this->request->getVar('kondisi'),
+                'ket'            => $this->request->getVar('ket'),
+                'tgl_masuk'            => $this->request->getVar('masuk'),
+                'tgl_keluar'            => $this->request->getVar('keluar'),
+                'serial'            => $this->request->getVar('serial'),
+
             ];
 
             if ($this->aset->save($post)) {
                 session()->setFlashdata('success', 'Data berhasil di simpan.');
-                return redirect()->to(base_url('admin/keyboard'));
+                return redirect()->to(base_url('admin/mouse'));
             } else {
                 session()->setFlashdata('error', 'Data Sudah Terdaftar !');
-                return redirect()->to(base_url('admin/keyboard'));
+                return redirect()->to(base_url('admin/mouse'));
             }
         }
     }
 
-
-    public function saveedit()
+    public function import()
     {
+        $file = $this->request->getFile('file_excel');
+        $extension = $file->getClientExtension();
 
-        $tgl = date("Y-m-d");
+        if ($extension == 'xlsx' || $extension == 'xls') {
 
-        $post = [
-            'id'       => $this->request->getVar('id'),
-            'nama'            => $this->request->getVar('nama'),
-            'tgl'           => $tgl,
-            //'tahun_pelajaran' => $this->tp->tahun,
-        ];
+            if ($extension == 'xls') {
+                $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xls();
+            } else {
+                $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
+            }
+            $spreadsheed = $reader->load($file);
+            $contak = $spreadsheed->getActiveSheet()->toArray();
+            //print_r($contak);
+            foreach ($contak as $key => $value) {
+                if ($key == 0) {
+                    continue;
+                }
+                $data = [
 
-        if ($this->aset->save($post)) {
-            session()->setFlashdata('success', 'Data berhasil di edit.');
-            return redirect()->to(base_url('admin/aset'));
+                    'tgl_masuk' => $value[1],
+                    'tgl_keluar' => $value[2],
+                    'manufacture'    => $value[3],
+                    'type'    => 'mouse',
+                    'serial' => $value[4],
+                    'status' => $value[5],
+                    'stock'    => $value[6],
+                    'kondisi' => $value[7],
+                    'ket' => $value[8],
+                ];
+                $this->aset->insert($data);
+            }
+            session()->setFlashdata('success', 'Data Berhasil di Import.');
+            return redirect()->to(base_url('admin/mouse'));
         } else {
-            session()->setFlashdata('error', 'Data Gagal di simpan.');
-            return redirect()->to(base_url('admin/aset'));
+            session()->setFlashdata('error', 'Format file tidak didukung; hanya format file <b>.xls</b> dan <b>.xlsx</b> yang diizinkan.');
+            return redirect()->to(base_url('admin/mouse'));
         }
     }
+
     public function delete($id)
     {
         if ($this->aset->delete($id)) {
             session()->setFlashdata('success', 'Data berhasil di hapus.');
-            return redirect()->to(base_url('admin/keyboard'));
+            return redirect()->to(base_url('admin/mouse'));
         } else {
             session()->setFlashdata('danger', 'Data berhasil di hapus.');
-            return redirect()->to(base_url('admin/keyboard'));
+            return redirect()->to(base_url('admin/mouse'));
         }
+    }
+
+    public function downloadExcel()
+    {
+        // $file = 'public/Ex_pc.csv';
+        $file = 'assets/Exel/Ex.Import file data mouse.xlsx';
+
+        $response = $this->response
+            ->download($file, null)
+            ->setContentType('application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+
+        return $response;
+    }
+    public function export()
+    {
+
+        $contacts =  $this->aset->where('type', 'mouse')->orderBy('id', 'desc')->findAll();
+
+
+        $spreadsheet = new Spreadsheet();
+
+        $sheet = $spreadsheet->getActiveSheet();
+
+        $sheet->setCellValue('A1', 'No');
+        $sheet->setCellValue('B1', 'Tgl Masuk');
+        $sheet->setCellValue('C1', 'Tgl Keluar');
+        $sheet->setCellValue('D1', 'Manufacture');
+
+        $sheet->setCellValue('E1', 'Serial');
+        $sheet->setCellValue('F1', 'Port');
+
+        $sheet->setCellValue('G1', 'Status');
+        $sheet->setCellValue('H1', 'Stock');
+        $sheet->setCellValue('I1', 'Kondisi');
+        $sheet->setCellValue('J1', 'Keterangan');
+
+        $column = 2; // kolom start
+
+        foreach ($contacts as $key => $value) {
+            $sheet->setCellValue('A' . $column, ($column - 1));
+            $sheet->setCellValue('B' . $column, $value->tgl_masuk);
+            $sheet->setCellValue('C' . $column, $value->tgl_keluar);
+            $sheet->setCellValue('D' . $column, $value->manufacture);
+
+            $sheet->setCellValue('E' . $column, $value->serial);
+            $sheet->setCellValue('F' . $column, $value->port);
+
+            $sheet->setCellValue('G' . $column, $value->status);
+            $sheet->setCellValue('H' . $column, $value->stock);
+            $sheet->setCellValue('I' . $column, $value->kondisi);
+            $sheet->setCellValue('J' . $column, $value->ket);
+            $column++;
+        }
+
+        $sheet->getStyle('A1:J1')->getFont()->setBold(true);
+        $sheet->getStyle('A1:J1')->getFill()
+            ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
+            ->getStartColor()->setARGB('FFFFFF00');
+        $styleArray = [
+            'borders' => [
+
+                'allBorders' => [
+
+                    'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN,
+
+                    ' color' => ['argb' => 'FF000000'],
+
+                ],
+
+            ],
+
+        ];
+
+        $sheet->getStyle('A1:J' . ($column - 1))->applyFromArray($styleArray);
+
+        $sheet->getColumnDimension('A')->setAutoSize(true);
+        $sheet->getColumnDimension('B')->setAutoSize(true);
+        $sheet->getColumnDimension('C')->setAutoSize(true);
+        $sheet->getColumnDimension('D')->setAutoSize(true);
+        $sheet->getColumnDimension('E')->setAutoSize(true);
+        $sheet->getColumnDimension('F')->setAutoSize(true);
+        $sheet->getColumnDimension('G')->setAutoSize(true);
+        $sheet->getColumnDimension('H')->setAutoSize(true);
+        $sheet->getColumnDimension('I')->setAutoSize(true);
+        $sheet->getColumnDimension('J')->setAutoSize(true);
+
+        $writer = new Xlsx($spreadsheet);
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment;filename=Export Data mouse.xlsx');
+        header('Cache-Control: max-age=0');
+        $writer->save('php://output');
+
+        exit();
     }
 }

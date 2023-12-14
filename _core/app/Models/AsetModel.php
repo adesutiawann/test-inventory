@@ -62,6 +62,7 @@ class AsetModel extends Model
   }
   function getAllmonitor()
   {
+    
     // Membuat instance query builder untuk tabel 'tb_aset'      
     $builder = $this->db->table('tb_aset')
       ->select(

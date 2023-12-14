@@ -227,9 +227,7 @@ class Keyboard extends BaseController
                     'tgl_masuk' => $value[1],
                     'tgl_keluar' => $value[2],
                     'manufacture'    => $value[3],
-
                     'type'    => 'Keyboard',
-
                     'serial' => $value[4],
                     'status' => $value[5],
                     'stock'    => $value[6],

@@ -20,11 +20,7 @@
 
 <div class="app-card app-card-accordion shadow-sm mb-4">
     <div class="app-card-body p-4">
-        <?php
-
-        use PhpParser\Node\Stmt\Else_;
-
-        if (session()->getFlashData('error')) : ?>
+        <?php if (session()->getFlashData('error')) : ?>
             <div class="alert alert-danger">
                 <?= session()->getFlashData('error') ?>
             </div>
@@ -38,60 +34,54 @@
         <form action="<?= base_url('admin/mouse/save') ?>" method="POST">
             <div class="row">
                 <div class="col-md-12 mb-4">
-                    <strong>Form Data edit:</strong>
+                    <strong>Form Data Edit:</strong>
                 </div>
                 <hr>
-                <div class="col-md-3">
+                <div class="col-md-8">
                     Manufacture
+                    <input type="text" name="id" hidden class="form-control" value="<?= $aset->id ?>" required>
+
                     <select name="manufacture" class="form-select" required>
-                        <option value=""><?= $aset->manufacture ?></option>
-                        <?php foreach ($manufacture as $gr) : ?>
-                            <option value="<?= $gr->id ?>"><?= $gr->nama ?></option>
-                        <?php endforeach ?>
-                    </select>
-                </div>
-                <div class="col-md-3" hidden>
-                    Type
-                    <select name="type" class="form-select" required>
-
-                        <?php foreach ($type as $gr) : ?>
-                            <option value="<?= $gr->id ?>"><?= $gr->nama ?></option>
+                        <option value="">Pilih Manufacture</option>
+                        <?php foreach ($nama as $gr) : ?>
+                            <option value="<?= $gr->nama ?>" <?= ($gr->nama == $aset->manufacture) ? 'selected' : '' ?>><?= $gr->nama ?></option>
                         <?php endforeach ?>
                     </select>
                 </div>
 
 
-                <div class="col-md-3">
+                <div class="col-md-4">
                     Status
                     <select name="status" class="form-select" required>
-                        <option value="">Pilih Status</option>
+                        <option value="">Pilih Setatus</option>
                         <?php foreach ($status as $gr) : ?>
-                            <option value="<?= $gr->id ?>"><?= $gr->nama ?></option>
+                            <option value="<?= $gr->nama ?>" <?= ($gr->nama == $aset->status) ? 'selected' : '' ?>><?= $gr->nama ?></option>
                         <?php endforeach ?>
                     </select>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-4">
                     Stok
                     <select name="stock" class="form-select" required>
-                        <option value="">Pilih Stok</option>
+                        <option value="">Pilih Stock</option>
                         <?php foreach ($stock as $gr) : ?>
-                            <option value="<?= $gr->id ?>"><?= $gr->nama ?></option>
+                            <option value="<?= $gr->nama ?>" <?= ($gr->nama == $aset->stock) ? 'selected' : '' ?>><?= $gr->nama ?></option>
                         <?php endforeach ?>
                     </select>
                 </div>
-                <div class="col-md-3 mb-4">
+                <div class="col-md-4 mb-4">
                     Kondisi
                     <select name="kondisi" class="form-select" required>
-                        <option value=""><?= $aset->kondisi ?></option>
+                        <option value="">Pilih Stock</option>
                         <?php foreach ($kondisi as $gr) : ?>
-                            <option value="<?= $gr->id ?>"><?= $gr->nama ?></option>
+                            <option value="<?= $gr->nama ?>" <?= ($gr->nama == $aset->kondisi) ? 'selected' : '' ?>><?= $gr->nama ?></option>
+
                         <?php endforeach ?>
                     </select>
                 </div>
                 <hr>
                 <div class="col-md-4">
                     Serial
-                    <input type="text" name="serial" class="form-control" value=" <?= $aset->serial ?>" required>
+                    <input type="text" oninput="convertToUppercase(this)" name="serial" class="form-control" value="<?= $aset->serial ?>" required>
 
                 </div>
                 <div class="col-md-4">
@@ -107,9 +97,8 @@
                 <div class="col-md-12 mb-5">
                     Keterangan
                     <div class="form-floating">
-                        <textarea name="ket" class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px"> <?= $aset->ket ?></textarea>
+                        <textarea name="ket" id="sentenceCaseInput" class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px"><?= $aset->ket ?></textarea>
                         <label for="floatingTextarea2">Comments</label>
-
                     </div>
 
                 </div>
@@ -120,7 +109,6 @@
                 </div>
             </div>
         </form>
-
 
     </div>
 </div>
