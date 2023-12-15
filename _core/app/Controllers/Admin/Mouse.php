@@ -71,7 +71,7 @@ class Mouse extends BaseController
         }
 
         $data = [
-            'title'   => 'mouse',
+            'title'   => 'Mouse',
             'segment' => $this->request->uri->getSegments(),
             'admin'   => $this->admin->find(session()->get('id')),
 
@@ -91,7 +91,7 @@ class Mouse extends BaseController
     public function search($id)
     {
         $data = [
-            'title'   => 'mouse',
+            'title'   => 'Mouse',
             'aktiv'   => $id,
             'segment' => $this->request->uri->getSegments(),
 
@@ -114,7 +114,7 @@ class Mouse extends BaseController
         }
 
         $data = [
-            'title'   => 'Add mouse',
+            'title'   => 'Add Mouse',
             'segment' => $this->request->uri->getSegments(),
             'admin'   => $this->admin->find(session()->get('id')),
             'nama'    => $this->manufacture->orderBy('nama', 'asc')->findAll(),
@@ -135,7 +135,7 @@ class Mouse extends BaseController
             return redirect()->to(base_url());
         }
         $data = [
-            'title'   => 'Edit mouse',
+            'title'   => 'Edit Mouse',
             'edit'   => 'redy',
             'segment' => $this->request->uri->getSegments(),
             'admin'   => $this->admin->find(session()->get('id')),
@@ -160,7 +160,7 @@ class Mouse extends BaseController
             $post = [
                 'id'       => $this->request->getVar('id'),
                 'manufacture'            => $this->request->getVar('manufacture'),
-                'type'            => 'mouse',
+                'type'            => 'Mouse',
                 'status'            => $this->request->getVar('status'),
                 'stock'            => $this->request->getVar('stock'),
                 'kondisi'            => $this->request->getVar('kondisi'),
@@ -181,7 +181,7 @@ class Mouse extends BaseController
             // $tgl= date("Y-m-d");
             $post = [
                 'manufacture'            => $this->request->getVar('manufacture'),
-                'type'            => 'mouse',
+                'type'            => 'Mouse',
 
                 'status'            => $this->request->getVar('status'),
                 'stock'            => $this->request->getVar('stock'),
@@ -203,7 +203,7 @@ class Mouse extends BaseController
         }
     }
 
-    public function import()
+    public function importXX()
     {
         $file = $this->request->getFile('file_excel');
         $extension = $file->getClientExtension();
@@ -227,22 +227,146 @@ class Mouse extends BaseController
                     'tgl_masuk' => $value[1],
                     'tgl_keluar' => $value[2],
                     'manufacture'    => $value[3],
-                    'type'    => 'mouse',
+                    'type'    => 'Mouse',
                     'serial' => $value[4],
                     'status' => $value[5],
                     'stock'    => $value[6],
                     'kondisi' => $value[7],
                     'ket' => $value[8],
                 ];
-                $this->aset->insert($data);
+                //$this->aset->insert($data);
+                if ($this->aset->insert($data)) {
+                    $data = true;
+                }
+                if ($data) {
+                    session()->setFlashdata('success', 'Data Berhasil di Import.');
+                } else {
+                    session()->setFlashdata('danger', 'Data gagal di import.');
+                }
             }
-            session()->setFlashdata('success', 'Data Berhasil di Import.');
-            return redirect()->to(base_url('admin/mouse'));
         } else {
             session()->setFlashdata('error', 'Format file tidak didukung; hanya format file <b>.xls</b> dan <b>.xlsx</b> yang diizinkan.');
             return redirect()->to(base_url('admin/mouse'));
         }
     }
+    public function importxzzz()
+    {
+        $file = $this->request->getFile('file_excel');
+        $extension = $file->getClientExtension();
+
+        if ($extension == 'xlsx' || $extension == 'xls') {
+
+            if ($extension == 'xls') {
+                $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xls();
+            } else {
+                $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
+            }
+
+            $spreadsheet = $reader->load($file);
+            $data = $spreadsheet->getActiveSheet()->toArray();
+
+            foreach ($data as $key => $value) {
+                if ($key == 0) {
+                    continue;
+                }
+                $rowData = [
+                    'tgl_masuk' => $value[1],
+                    'tgl_keluar' => $value[2],
+                    'manufacture' => $value[3],
+                    'type' => 'Mouse',
+                    'serial' => $value[4],
+                    'status' => $value[5],
+                    'stock' => $value[6],
+                    'kondisi' => $value[7],
+                    'ket' => $value[8],
+                ];
+
+                // Insert data and check for success
+                $insertSuccess = $this->aset->insert($rowData);
+
+                if ($insertSuccess) {
+                    $importSuccess = true;
+                } else {
+                    $importSuccess = false;
+                    break; // Exit the loop if any insertion fails
+                }
+            }
+
+            if ($importSuccess) {
+                session()->setFlashdata('success', '<strong>Berhasil!</strong> Data tabel berhasil masuk kedalam database di bawah tabel ini.');
+                return redirect()->to(base_url('admin/mouse'));
+            } else {
+                session()->setFlashdata('warning', 'Data Sudah Terdaftar !.');
+                // return redirect()->to(base_url('admin/mouse'));
+            }
+        } else {
+            session()->setFlashdata('error', 'Format file tidak didukung; hanya format file <b>.xls</b> dan <b>.xlsx</b> yang diizinkan.');
+        }
+
+        return redirect()->to(base_url('admin/mouse'));
+    }
+    public function import()
+    {
+        $file = $this->request->getFile('file_excel');
+        $extension = $file->getClientExtension();
+
+        if ($extension == 'xlsx' || $extension == 'xls') {
+
+            if ($extension == 'xls') {
+                $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xls();
+            } else {
+                $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
+            }
+
+            $spreadsheet = $reader->load($file);
+            $data = $spreadsheet->getActiveSheet()->toArray();
+
+            $importSuccess = true; // Assume success until proven otherwise
+
+            foreach ($data as $key => $value) {
+                if ($key == 0) {
+                    continue;
+                }
+
+                $rowData = [
+                    'tgl_masuk' => $value[1],
+                    'tgl_keluar' => $value[2],
+                    'manufacture' => $value[3],
+                    'type' => 'Mouse',
+                    'serial' => $value[4],
+                    'status' => $value[5],
+                    'stock' => $value[6],
+                    'kondisi' => $value[7],
+                    'ket' => $value[8],
+                ];
+
+                // Check if the data already exists in the database
+                $existingData = $this->aset->where('serial', $rowData['serial'])->first();
+
+                if (!$existingData) {
+                    // Data doesn't exist, proceed with insertion
+                    $insertSuccess = $this->aset->insert($rowData);
+                } else {
+                    // Data already exists, set importSuccess to false
+                    $importSuccess = false;
+                    session()->setFlashdata('warning', '<strong>Peringatan!</strong> Data dengan nomor serial <b>' . $rowData['serial'] . '</b> sudah terdaftar.');
+                    break; // Exit the loop if any data already exists
+                }
+            }
+
+            if ($importSuccess) {
+                session()->setFlashdata('success', 'Data Berhasil di Import.');
+            } else {
+                session()->setFlashdata('danger', 'Data gagal di import.');
+            }
+        } else {
+            session()->setFlashdata('error', 'Format file tidak didukung; hanya format file <b>.xls</b> dan <b>.xlsx</b> yang diizinkan.');
+        }
+
+        return redirect()->to(base_url('admin/mouse'));
+    }
+
+
 
     public function delete($id)
     {
@@ -298,17 +422,16 @@ class Mouse extends BaseController
             $sheet->setCellValue('D' . $column, $value->manufacture);
 
             $sheet->setCellValue('E' . $column, $value->serial);
-            $sheet->setCellValue('F' . $column, $value->port);
 
-            $sheet->setCellValue('G' . $column, $value->status);
-            $sheet->setCellValue('H' . $column, $value->stock);
-            $sheet->setCellValue('I' . $column, $value->kondisi);
-            $sheet->setCellValue('J' . $column, $value->ket);
+            $sheet->setCellValue('F' . $column, $value->status);
+            $sheet->setCellValue('G' . $column, $value->stock);
+            $sheet->setCellValue('H' . $column, $value->kondisi);
+            $sheet->setCellValue('I' . $column, $value->ket);
             $column++;
         }
 
-        $sheet->getStyle('A1:J1')->getFont()->setBold(true);
-        $sheet->getStyle('A1:J1')->getFill()
+        $sheet->getStyle('A1:I1')->getFont()->setBold(true);
+        $sheet->getStyle('A1:I1')->getFill()
             ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
             ->getStartColor()->setARGB('FFFFFF00');
         $styleArray = [
@@ -326,7 +449,7 @@ class Mouse extends BaseController
 
         ];
 
-        $sheet->getStyle('A1:J' . ($column - 1))->applyFromArray($styleArray);
+        $sheet->getStyle('A1:I' . ($column - 1))->applyFromArray($styleArray);
 
         $sheet->getColumnDimension('A')->setAutoSize(true);
         $sheet->getColumnDimension('B')->setAutoSize(true);
@@ -337,7 +460,6 @@ class Mouse extends BaseController
         $sheet->getColumnDimension('G')->setAutoSize(true);
         $sheet->getColumnDimension('H')->setAutoSize(true);
         $sheet->getColumnDimension('I')->setAutoSize(true);
-        $sheet->getColumnDimension('J')->setAutoSize(true);
 
         $writer = new Xlsx($spreadsheet);
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');

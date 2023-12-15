@@ -27,14 +27,14 @@
 </div>
 <!--//app-card-->
 
-<div class="row g-4 mb-4">
-    <div class="col-12 col-lg-2">
+<div class="row g-4 mb-3">
+    <div class="col-12 col-lg-5">
         <div class="app-card app-card-basic d-flex flex-column align-items-start shadow-sm">
             <div class="app-card-header p-3 border-bottom-0">
                 <div class="row align-items-center gx-3">
                     <div class="col-auto">
                         <div class="app-icon-holder">
-                            <i class="fa-solid fa-desktop"></i>
+                            <i class="fa-solid fa-boxes-stacked"></i>
                         </div><!--//icon-holder-->
 
                     </div><!--//col monitor-->
@@ -47,18 +47,18 @@
 
         </div><!--//app-card-->
     </div><!--//col-->
-    <div class="col-12 col-lg-2">
+    <div class="col-12 col-lg-5">
         <div class="app-card app-card-basic d-flex flex-column align-items-start shadow-sm">
             <div class="app-card-header p-3 border-bottom-0">
                 <div class="row align-items-center gx-3">
                     <div class="col-auto">
                         <div class="app-icon-holder">
-                            <i class="fa-solid fa-server "></i>
+                            <i class="fa-solid fa-file-pen"></i>
                         </div><!--//icon-holder-->
 
                     </div><!--//col pc-->
                     <div class="col-auto">
-                        <h4 class="app-card-title"><?= $total_pc ?></h4>.Unit
+                        <h4 class="app-card-title"><?= $total_pc ?></h4>Surat
                     </div><!--//col-->
                 </div><!--//row-->
             </div><!--//app-card-header-->
@@ -67,12 +67,12 @@
         </div><!--//app-card-->
     </div><!--//col-->
     <div class="col-12 col-lg-2">
-        <div class="app-card app-card-basic d-flex flex-column align-items-start shadow-sm">
+        <div class="app-card app-card-basic d-flex flex-column align-items-start shadow-md">
             <div class="app-card-header p-3 border-bottom-0">
                 <div class="row align-items-center gx-3">
                     <div class="col-auto">
                         <div class="app-icon-holder">
-                            <i class="fa-solid fa-laptop"></i>
+                            <i class="fa-solid fa-user"></i>
                         </div><!--//icon-holder-->
 
                     </div><!--//col-->
@@ -85,63 +85,7 @@
 
         </div><!--//app-card-->
     </div><!--//col-->
-    <div class="col-12 col-lg-2">
-        <div class="app-card app-card-basic d-flex flex-column align-items-start shadow-sm">
-            <div class="app-card-header p-3 border-bottom-0">
-                <div class="row align-items-center gx-3">
-                    <div class="col-auto">
-                        <div class="app-icon-holder">
-                            <i class="fa-solid fa-print"></i>
-                        </div><!--//icon-holder prnint-->
 
-                    </div><!--//col-->
-                    <div class="col-auto">
-                        <h4 class="app-card-title"><?= $total_pr ?></h4>.Unit
-                    </div><!--//col-->
-                </div><!--//row-->
-            </div><!--//app-card-header-->
-
-
-        </div><!--//app-card-->
-    </div><!--//col-->
-    <div class="col-12 col-lg-2">
-        <div class="app-card app-card-basic d-flex flex-column align-items-start shadow-sm">
-            <div class="app-card-header p-3 border-bottom-0">
-                <div class="row align-items-center gx-3">
-                    <div class="col-auto">
-                        <div class="app-icon-holder">
-                            <i class="fa-solid fa-keyboard"></i>
-                        </div><!--//icon-holder keyboard-->
-
-                    </div><!--//col KEYBOARD-->
-                    <div class="col-auto">
-                        <h4 class="app-card-title"><?= $total_ky ?></h4>.Unit
-                    </div><!--//col-->
-                </div><!--//row-->
-            </div><!--//app-card-header-->
-
-
-        </div><!--//app-card-->
-    </div><!--//col-->
-    <div class="col-12 col-lg-2">
-        <div class="app-card app-card-basic d-flex flex-column align-items-start shadow-sm">
-            <div class="app-card-header p-3 border-bottom-0">
-                <div class="row align-items-center gx-3">
-                    <div class="col-auto">
-                        <div class="app-icon-holder">
-                            <i class="fa-solid fa-computer-mouse"></i>
-                        </div><!--//icon-holder mouse-->
-
-                    </div><!--//col MOUSE -->
-                    <div class="col-auto">
-                        <h4 class="app-card-title"><?= $total_ms ?></h4>.Unit
-                    </div><!--//col-->
-                </div><!--//row-->
-            </div><!--//app-card-header-->
-
-
-        </div><!--//app-card-->
-    </div><!--//col-->
 </div>
 <!--//row-->
 <div class="row g-4 mb-4">
@@ -157,12 +101,13 @@
                     <div class="row align-items-center gx-3">
                         <div class="col-auto">
                             <div class="app-icon-holder">
-                                <i class="fa-solid fa-dashboard"></i>
+                                <i class="fa-solid fa-chart-simple"></i>
                             </div><!--//icon-holder-->
 
                         </div><!--//col-->
                         <div class="col-auto">
-                            <h4 class="app-card-title">Dashboard</h4>
+                            <i class="fa-solid fa-chart-simple"></i>
+                            <h3 class="app-card-title">INVENTORY</h3>
                         </div><!--//col-->
                     </div><!--//row-->
 
@@ -185,12 +130,13 @@
                         </thead>
                         <tbody>
                             <!--//keyboard-->
-                            <tr class="">
+
+                            <tr class="shadow-lg">
                                 <td>
                                     <div class="row align-items-center gx-3">
                                         <div class="col-auto">
                                             <div class="app-icon-holder">
-                                                <i class="fa-solid fa-desktop text-black"></i>
+                                                <i class="fa-solid fa-desktop text-danger"></i>
                                             </div><!--//icon-holder-->
 
                                         </div><!--//col-->
@@ -228,12 +174,12 @@
 
                             </tr>
                             <!--//mouse-->
-                            <tr class=" ">
+                            <tr class="shadow-lg">
                                 <td>
                                     <div class="row align-items-center gx-3">
                                         <div class="col-auto">
-                                            <div class="app-icon-holder">
-                                                <i class="fa-solid fa-server text-info"></i>
+                                            <div class="app-icon-holder text-danger">
+                                                <i class="fa-solid fa-server text-server"></i>
                                             </div><!--//icon-holder-->
 
                                         </div><!--//col-->
@@ -269,7 +215,7 @@
                                 </div>
                             </tr>
                             <!--//mouse-->
-                            <tr class="">
+                            <tr class="shadow-lg">
                                 <td>
                                     <div class="row align-items-center gx-3">
                                         <div class="col-auto">
@@ -311,12 +257,12 @@
                             </tr>
 
                             <!--//mouse-->
-                            <tr class="">
+                            <tr class="shadow-lg">
                                 <td>
                                     <div class="row align-items-center gx-3">
                                         <div class="col-auto">
                                             <div class="app-icon-holder">
-                                                <i class="fa-solid fa-mouse"></i>
+                                                <i class="fa-solid fa-mouse text-danger"></i>
                                             </div><!--//icon-holder-->
 
                                         </div><!--//col-->
@@ -353,7 +299,7 @@
                             </tr>
 
                             <!--//mouse-->
-                            <tr class="">
+                            <tr class="shadow-lg">
                                 <td>
                                     <div class="row align-items-center gx-3">
                                         <div class="col-auto">
@@ -394,7 +340,7 @@
                                 </div>
                             </tr>
                             <!--//mouse-->
-                            <tr class="">
+                            <tr class="shadow">
                                 <td>
                                     <div class="row align-items-center gx-3">
                                         <div class="col-auto">

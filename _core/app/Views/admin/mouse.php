@@ -31,8 +31,18 @@ $menu = $aktiv;
             </div>
         <?php endif ?>
         <?php if (session()->getFlashData('success')) : ?>
-            <div class="alert alert-success">
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <i class="fa-solid fa-diagram-next"></i>
                 <?= session()->getFlashData('success') ?>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        <?php endif ?>
+        <?php if (session()->getFlashData('warning')) : ?>
+
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                <i class="fa-solid fa-triangle-exclamation mr-3"></i>
+                <?= session()->getFlashData('warning') ?>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         <?php endif ?>
 

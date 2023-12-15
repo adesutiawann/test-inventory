@@ -282,12 +282,11 @@ class Keyboard extends BaseController
         $sheet->setCellValue('D1', 'Manufacture');
 
         $sheet->setCellValue('E1', 'Serial');
-        $sheet->setCellValue('F1', 'Port');
 
-        $sheet->setCellValue('G1', 'Status');
-        $sheet->setCellValue('H1', 'Stock');
-        $sheet->setCellValue('I1', 'Kondisi');
-        $sheet->setCellValue('J1', 'Keterangan');
+        $sheet->setCellValue('F1', 'Status');
+        $sheet->setCellValue('G1', 'Stock');
+        $sheet->setCellValue('H1', 'Kondisi');
+        $sheet->setCellValue('I1', 'Keterangan');
 
         $column = 2; // kolom start
 
@@ -298,17 +297,16 @@ class Keyboard extends BaseController
             $sheet->setCellValue('D' . $column, $value->manufacture);
 
             $sheet->setCellValue('E' . $column, $value->serial);
-            $sheet->setCellValue('F' . $column, $value->port);
 
-            $sheet->setCellValue('G' . $column, $value->status);
-            $sheet->setCellValue('H' . $column, $value->stock);
-            $sheet->setCellValue('I' . $column, $value->kondisi);
-            $sheet->setCellValue('J' . $column, $value->ket);
+            $sheet->setCellValue('F' . $column, $value->status);
+            $sheet->setCellValue('G' . $column, $value->stock);
+            $sheet->setCellValue('H' . $column, $value->kondisi);
+            $sheet->setCellValue('I' . $column, $value->ket);
             $column++;
         }
 
-        $sheet->getStyle('A1:J1')->getFont()->setBold(true);
-        $sheet->getStyle('A1:J1')->getFill()
+        $sheet->getStyle('A1:I1')->getFont()->setBold(true);
+        $sheet->getStyle('A1:I1')->getFill()
             ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
             ->getStartColor()->setARGB('FFFFFF00');
         $styleArray = [
@@ -337,7 +335,6 @@ class Keyboard extends BaseController
         $sheet->getColumnDimension('G')->setAutoSize(true);
         $sheet->getColumnDimension('H')->setAutoSize(true);
         $sheet->getColumnDimension('I')->setAutoSize(true);
-        $sheet->getColumnDimension('J')->setAutoSize(true);
 
         $writer = new Xlsx($spreadsheet);
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
