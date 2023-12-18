@@ -26,13 +26,15 @@ $menu = $aktiv;
 <div class="app-card app-card-accordion shadow-sm mb-4">
     <div class="app-card-body p-4">
         <?php if (session()->getFlashData('error')) : ?>
-            <div class="alert alert-danger">
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <i class="fa-solid fa-circle-exclamation"></i>
                 <?= session()->getFlashData('error') ?>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         <?php endif ?>
         <?php if (session()->getFlashData('success')) : ?>
             <div class="alert alert-success alert-dismissible fade show" role="alert">
-                <i class="fa-solid fa-diagram-next"></i>
+                <i class="fa-solid fa-diagram-next mr-3"></i>
                 <?= session()->getFlashData('success') ?>
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>

@@ -171,10 +171,10 @@ class Mouse extends BaseController
             ];
 
             if ($this->aset->save($post)) {
-                session()->setFlashdata('success', 'Data berhasil di edit.');
+                session()->setFlashdata('success', '<strong>Berhasil !</strong> Data berhasil di edit.');
                 return redirect()->to(base_url('admin/mouse'));
             } else {
-                session()->setFlashdata('error', 'Data Gagal di simpan.');
+                session()->setFlashdata('error', '<strong>Gagal !</strong> Data Gagal di edit.');
                 return redirect()->to(base_url('admin/mouse'));
             }
         } else {
@@ -194,117 +194,16 @@ class Mouse extends BaseController
             ];
 
             if ($this->aset->save($post)) {
-                session()->setFlashdata('success', 'Data berhasil di simpan.');
+                session()->setFlashdata('success', '<strong>Berhasil !</strong> Data berhasil di simpan kedalam database.');
                 return redirect()->to(base_url('admin/mouse'));
             } else {
-                session()->setFlashdata('error', 'Data Sudah Terdaftar !');
+                session()->setFlashdata('error', '<strong>Pringatan !</strong> Data sudah terdaftar kedalam database !');
                 return redirect()->to(base_url('admin/mouse'));
             }
         }
     }
 
-    public function importXX()
-    {
-        $file = $this->request->getFile('file_excel');
-        $extension = $file->getClientExtension();
 
-        if ($extension == 'xlsx' || $extension == 'xls') {
-
-            if ($extension == 'xls') {
-                $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xls();
-            } else {
-                $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
-            }
-            $spreadsheed = $reader->load($file);
-            $contak = $spreadsheed->getActiveSheet()->toArray();
-            //print_r($contak);
-            foreach ($contak as $key => $value) {
-                if ($key == 0) {
-                    continue;
-                }
-                $data = [
-
-                    'tgl_masuk' => $value[1],
-                    'tgl_keluar' => $value[2],
-                    'manufacture'    => $value[3],
-                    'type'    => 'Mouse',
-                    'serial' => $value[4],
-                    'status' => $value[5],
-                    'stock'    => $value[6],
-                    'kondisi' => $value[7],
-                    'ket' => $value[8],
-                ];
-                //$this->aset->insert($data);
-                if ($this->aset->insert($data)) {
-                    $data = true;
-                }
-                if ($data) {
-                    session()->setFlashdata('success', 'Data Berhasil di Import.');
-                } else {
-                    session()->setFlashdata('danger', 'Data gagal di import.');
-                }
-            }
-        } else {
-            session()->setFlashdata('error', 'Format file tidak didukung; hanya format file <b>.xls</b> dan <b>.xlsx</b> yang diizinkan.');
-            return redirect()->to(base_url('admin/mouse'));
-        }
-    }
-    public function importxzzz()
-    {
-        $file = $this->request->getFile('file_excel');
-        $extension = $file->getClientExtension();
-
-        if ($extension == 'xlsx' || $extension == 'xls') {
-
-            if ($extension == 'xls') {
-                $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xls();
-            } else {
-                $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
-            }
-
-            $spreadsheet = $reader->load($file);
-            $data = $spreadsheet->getActiveSheet()->toArray();
-
-            foreach ($data as $key => $value) {
-                if ($key == 0) {
-                    continue;
-                }
-                $rowData = [
-                    'tgl_masuk' => $value[1],
-                    'tgl_keluar' => $value[2],
-                    'manufacture' => $value[3],
-                    'type' => 'Mouse',
-                    'serial' => $value[4],
-                    'status' => $value[5],
-                    'stock' => $value[6],
-                    'kondisi' => $value[7],
-                    'ket' => $value[8],
-                ];
-
-                // Insert data and check for success
-                $insertSuccess = $this->aset->insert($rowData);
-
-                if ($insertSuccess) {
-                    $importSuccess = true;
-                } else {
-                    $importSuccess = false;
-                    break; // Exit the loop if any insertion fails
-                }
-            }
-
-            if ($importSuccess) {
-                session()->setFlashdata('success', '<strong>Berhasil!</strong> Data tabel berhasil masuk kedalam database di bawah tabel ini.');
-                return redirect()->to(base_url('admin/mouse'));
-            } else {
-                session()->setFlashdata('warning', 'Data Sudah Terdaftar !.');
-                // return redirect()->to(base_url('admin/mouse'));
-            }
-        } else {
-            session()->setFlashdata('error', 'Format file tidak didukung; hanya format file <b>.xls</b> dan <b>.xlsx</b> yang diizinkan.');
-        }
-
-        return redirect()->to(base_url('admin/mouse'));
-    }
     public function import()
     {
         $file = $this->request->getFile('file_excel');
@@ -355,9 +254,9 @@ class Mouse extends BaseController
             }
 
             if ($importSuccess) {
-                session()->setFlashdata('success', 'Data Berhasil di Import.');
+                session()->setFlashdata('success', '<strong>Berhasil !</strong>Data Berhasil di Import.');
             } else {
-                session()->setFlashdata('danger', 'Data gagal di import.');
+                session()->setFlashdata('danger', '<strong>Gagal !</strong>Data gagal di import.');
             }
         } else {
             session()->setFlashdata('error', 'Format file tidak didukung; hanya format file <b>.xls</b> dan <b>.xlsx</b> yang diizinkan.');
@@ -371,10 +270,12 @@ class Mouse extends BaseController
     public function delete($id)
     {
         if ($this->aset->delete($id)) {
-            session()->setFlashdata('success', 'Data berhasil di hapus.');
+            session()->setFlashdata('warning', '<strong>Berhasil !</strong> Data berhasil terhapus.');
+
             return redirect()->to(base_url('admin/mouse'));
         } else {
-            session()->setFlashdata('danger', 'Data berhasil di hapus.');
+            session()->setFlashdata('danger', '<strong>Gagal !</strong> Data gagal di hapus !');
+
             return redirect()->to(base_url('admin/mouse'));
         }
     }

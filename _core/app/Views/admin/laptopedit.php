@@ -34,15 +34,17 @@
         <form action="<?= base_url('admin/laptop/save') ?>" method="POST">
             <div class="row">
                 <div class="col-md-12 mb-4">
-                    <strong>Form Data :</strong>
+                    <strong>Form Data Edit:</strong>
                 </div>
                 <hr>
                 <div class="col-md-8">
                     Manufacture
+                    <input type="text" name="id" hidden class="form-control" value="<?= $laptop->id ?>" required>
+
                     <select name="manufacture" class="form-select" required>
                         <option value="">Pilih Manufacture</option>
                         <?php foreach ($nama as $gr) : ?>
-                            <option value="<?= $gr->nama ?>"><?= $gr->nama ?></option>
+                            <option value="<?= $gr->nama ?>" <?= ($gr->nama == $laptop->manufacture) ? 'selected' : '' ?>><?= $gr->nama ?></option>
                         <?php endforeach ?>
                     </select>
                 </div>
@@ -59,7 +61,7 @@
                     <select name="prosesor" class="form-select" required>
                         <option value="">Pilih Prosesor</option>
                         <?php foreach ($prosesor as $gr) : ?>
-                            <option value="<?= $gr->nama ?>"><?= $gr->nama ?></option>
+                            <option value="<?= $gr->nama ?>" <?= ($gr->nama == $laptop->prosesor) ? 'selected' : '' ?>><?= $gr->nama ?></option>
                         <?php endforeach ?>
                     </select>
                 </div>
@@ -68,7 +70,7 @@
                     <select name="generasi" class="form-select" required>
                         <option value="">Pilih Generasi</option>
                         <?php foreach ($generasi as $gr) : ?>
-                            <option value="<?= $gr->nama ?>"><?= $gr->nama ?></option>
+                            <option value="<?= $gr->nama ?>" <?= ($gr->nama == $laptop->generasi) ? 'selected' : '' ?>><?= $gr->nama ?></option>
                         <?php endforeach ?>
                     </select>
                 </div>
@@ -77,7 +79,7 @@
                     <select name="hdd" class="form-select" required>
                         <option value="">Pilih HDD/SSD</option>
                         <?php foreach ($hdd as $gr) : ?>
-                            <option value="<?= $gr->nama ?>"><?= $gr->nama ?></option>
+                            <option value="<?= $gr->nama ?>" <?= ($gr->nama == $laptop->hdd) ? 'selected' : '' ?>><?= $gr->nama ?></option>
                         <?php endforeach ?>
                     </select>
                 </div>
@@ -86,7 +88,7 @@
                     <select name="ram" class="form-select" required>
                         <option value="">Pilih RAM</option>
                         <?php foreach ($ram as $gr) : ?>
-                            <option value="<?= $gr->nama ?>"><?= $gr->nama ?></option>
+                            <option value="<?= $gr->nama ?>" <?= ($gr->nama == $laptop->ram) ? 'selected' : '' ?>><?= $gr->nama ?></option>
                         <?php endforeach ?>
                     </select>
                 </div>
@@ -95,7 +97,7 @@
                     <select name="rincian" class="form-select" required>
                         <option value="">Pilih Rincian</option>
                         <?php foreach ($rincian as $gr) : ?>
-                            <option value="<?= $gr->nama ?>"><?= $gr->nama ?></option>
+                            <option value="<?= $gr->nama ?>" <?= ($gr->nama == $laptop->rincian) ? 'selected' : '' ?>><?= $gr->nama ?></option>
                         <?php endforeach ?>
                     </select>
                 </div>
@@ -104,7 +106,7 @@
                     <select name="status" class="form-select" required>
                         <option value="">Pilih Setatus</option>
                         <?php foreach ($status as $gr) : ?>
-                            <option value="<?= $gr->nama ?>"><?= $gr->nama ?></option>
+                            <option value="<?= $gr->nama ?>" <?= ($gr->nama == $laptop->status) ? 'selected' : '' ?>><?= $gr->nama ?></option>
                         <?php endforeach ?>
                     </select>
                 </div>
@@ -113,16 +115,16 @@
                     <select name="stock" class="form-select" required>
                         <option value="">Pilih Stock</option>
                         <?php foreach ($stock as $gr) : ?>
-                            <option value="<?= $gr->nama ?>"><?= $gr->nama ?></option>
+                            <option value="<?= $gr->nama ?>" <?= ($gr->nama == $laptop->stock) ? 'selected' : '' ?>><?= $gr->nama ?></option>
                         <?php endforeach ?>
                     </select>
                 </div>
                 <div class="col-md-4 mb-4">
                     Kondisi
                     <select name="kondisi" class="form-select" required>
-                        <option value="">Pilih Kondisi</option>
+                        <option value="">Pilih Stock</option>
                         <?php foreach ($kondisi as $gr) : ?>
-                            <option value="<?= $gr->nama ?>"><?= $gr->nama ?></option>
+                            <option value="<?= $gr->nama ?>" <?= ($gr->nama == $laptop->kondisi) ? 'selected' : '' ?>><?= $gr->nama ?></option>
 
                         <?php endforeach ?>
                     </select>
@@ -130,12 +132,13 @@
                 <hr>
                 <div class="col-md-4">
                     Serial
-                    <input type="text" name="serial" oninput="convertToUppercase(this)" class="form-control" required>
+                    <input type="text" name="serial" oninput="convertToUppercase(this)" class="form-control" value="<?= $laptop->serial ?>" required>
 
                 </div>
                 <div class="col-md-4">
                     Tanggal Masuk
-                    <input type="date" name="masuk" class="form-control" required>
+                    <input type="date" id="tglMasuk" name="masuk" class="form-control" value="<?= htmlspecialchars($laptop->tgl_masuk) ?>" required>
+
                 </div>
                 <div class="col-md-4">
                     Tanggal Keluar
@@ -145,7 +148,7 @@
                 <div class="col-md-12 mb-5">
                     Keterangan
                     <div class="form-floating">
-                        <textarea name="ket" id="sentenceCaseInput" class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px"></textarea>
+                        <textarea name="ket" id="sentenceCaseInput" class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px"><?= $laptop->ket ?></textarea>
                         <label for="floatingTextarea2">Comments</label>
                     </div>
 
@@ -157,7 +160,6 @@
                 </div>
             </div>
         </form>
-
 
     </div>
 </div>

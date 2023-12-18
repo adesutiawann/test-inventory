@@ -39,7 +39,7 @@
 
                     </div><!--//col monitor-->
                     <div class="col-auto">
-                        <h4 class="app-card-title"><?= $total_mo ?></h4>.Unit
+                        <h4 class="app-card-title"><?= $total_aset ?></h4>.Unit
                     </div><!--//col-->
                 </div><!--//row-->
             </div><!--//app-card-header-->
@@ -77,7 +77,7 @@
 
                     </div><!--//col-->
                     <div class="col-auto">
-                        <h4 class="app-card-title"><?= $total_la ?></h4>.Unit
+                        <h4 class="app-card-title"><?= $total_la ?></h4>User
                     </div><!--//col-->
                 </div><!--//row-->
             </div><!--//app-card-header-->
@@ -256,7 +256,7 @@
                                 </div>
                             </tr>
 
-                            <!--//mouse-->
+                            <!--//KEYBOARD-->
                             <tr class="shadow-lg">
                                 <td>
                                     <div class="row align-items-center gx-3">
@@ -298,7 +298,7 @@
                                 </div>
                             </tr>
 
-                            <!--//mouse-->
+                            <!--//LAPTOP-->
                             <tr class="shadow-lg">
                                 <td>
                                     <div class="row align-items-center gx-3">
@@ -314,32 +314,32 @@
                                 <td class=" ">
                                     <h5 class="meta">Laptop</h5>
                                     <div class="progress h-50 ">
-                                        <div class="progress-bar bg-danger" role="progressbar" style="width: <?= $ky_d = ($total_ky_blanks / $total_ky) * 100 ?>%;" aria-valuenow="52" aria-valuemin="0" aria-valuemax="100"><?= number_format($ky_d) ?>%</div>
-                                        <div class="progress-bar bg-warning" role="progressbar" style="width:  <?= $ky_w = ($total_ky_rusak / $total_ky) * 100 ?>%;" aria-valuenow="52" aria-valuemin="0" aria-valuemax="100"><?= number_format($ky_w) ?>%</div>
-                                        <div class="progress-bar bg-success" role="progressbar" style="width: <?= $ky_s = ($total_ky_ok / $total_ky) * 100 ?>%;" aria-valuenow="52" aria-valuemin="0" aria-valuemax="100"><?= number_format($ky_s) ?>%</div>
+                                        <div class="progress-bar bg-danger" role="progressbar" style="width: <?= $la_d = ($total_la_blanks / $total_la) * 100 ?>%;" aria-valuenow="52" aria-valuemin="0" aria-valuemax="100"><?= number_format($la_d) ?>%</div>
+                                        <div class="progress-bar bg-warning" role="progressbar" style="width:  <?= $la_w = ($total_la_rusak / $total_la) * 100 ?>%;" aria-valuenow="52" aria-valuemin="0" aria-valuemax="100"><?= number_format($la_w) ?>%</div>
+                                        <div class="progress-bar bg-success" role="progressbar" style="width: <?= $la_s = ($total_la_ok / $total_la) * 100 ?>%;" aria-valuenow="52" aria-valuemin="0" aria-valuemax="100"><?= number_format($la_s) ?>%</div>
                                     </div>
 
 
                                 </td>
                                 <div class="">
                                     <td class="stat-cell text-danger  ">
-                                        <div class="mt-2"><b><?= $total_ky_blanks ?></b></div>
+                                        <div class="mt-2"><b><?= $total_la_blanks ?></b></div>
                                     </td>
                                     <td class="stat-cell text-warning">
-                                        <div class="mt-2"><b><?= $total_ky_rusak ?></b>
+                                        <div class="mt-2"><b><?= $total_la_rusak ?></b>
                                         </div>
                                     </td>
                                     <td class="stat-cell text-success">
-                                        <div class="mt-2"><b><?= $total_ky_ok ?></b>
+                                        <div class="mt-2"><b><?= $total_la_ok ?></b>
                                         </div>
                                     </td>
                                     <td class="stat-cell ">
-                                        <div class="mt-2"><b><?= $total_ky ?></b>
+                                        <div class="mt-2"><b><?= $total_la ?></b>
                                         </div>
                                     </td>
                                 </div>
                             </tr>
-                            <!--//mouse-->
+                            <!--//PRINTER-->
                             <tr class="shadow">
                                 <td>
                                     <div class="row align-items-center gx-3">
@@ -384,7 +384,7 @@
                             <tr>
                                 <th colspan="2" class="meta text-end">Total Aset :</th>
                                 <th colspan="4" class="meta stat-cell text-and">
-                                    <h2>17800092/<?= $total_aset ?></h2>
+                                    <h2><?= $total_aset ?></h2>
                                 </th>
                             </tr>
                         </tbody>
