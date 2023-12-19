@@ -11,11 +11,13 @@ use App\Models\SiswaModel;
 
 use App\Models\ManufactureModel;
 use App\Models\TypeModel;
-use App\Models\ProsesorModel;
+
+use App\Models\PortModel;
 use App\Models\GenerasiModel;
 use App\Models\HddModel;
 use App\Models\RamModel;
 use App\Models\RincianModel;
+
 use App\Models\StatusModel;
 use App\Models\StokModel;
 use App\Models\KondisiModel;
@@ -23,18 +25,20 @@ use App\Models\KondisiModel;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
-class laptop extends BaseController
+class Printer extends BaseController
 {
     protected $admin;
-    protected $laptop;
+    protected $aset;
 
     protected $manufacture;
     protected $type;
-    protected $prosesor;
+
+    protected $port;
     protected $generasi;
     protected $hdd;
     protected $ram;
     protected $rincian;
+
     protected $status;
     protected $stok;
     protected $kondisi;
@@ -42,14 +46,15 @@ class laptop extends BaseController
     public function __construct()
     {
         $this->admin     = new AdminModel();
-        $this->laptop = new AsetModel();
+        $this->aset = new AsetModel();
         $this->siswa     = new SiswaModel();
 
         // $this->pelajaran     = new PelajaranModel();
 
         $this->manufacture = new ManufactureModel;
         $this->type = new TypeModel;
-        $this->prosesor = new ProsesorModel;
+
+        $this->port = new PortModel;
         $this->generasi = new GenerasiModel;
         $this->hdd = new HddModel;
         $this->ram = new RamModel;
@@ -66,41 +71,40 @@ class laptop extends BaseController
         }
 
         $data = [
-            'title'   => 'Laptop',
+            'title'   => 'Printer',
             'segment' => $this->request->uri->getSegments(),
             'admin'   => $this->admin->find(session()->get('id')),
 
             'aktiv'   => 'ALL',
-            'laptop' => $this->laptop->where('type', 'laptop')->orderBy('id', 'desc')->findAll(),
+            //'aset' => $this->aset->orderBy('id', 'desc')->findAll(),
+            'aset' => $this->aset->where('type', 'printer')->orderBy('id', 'desc')->findAll(),
 
-            // 'laptop' => $this->laptop->where('type', 'laptop')->where('kondisi', $id)->orderBy('id', 'desc')->findAll(),
 
-            'total_laptop' => $this->laptop->where('type', 'laptop')->countAllResults(),
-            'total_laptop_ok' => $this->laptop->where('type', 'laptop')->where('kondisi', 'OK')->countAllResults(),
-            'total_laptop_rusak' => $this->laptop->where('type', 'laptop')->where('kondisi', 'rusak')->countAllResults(),
-            'total_laptop_blanks' => $this->laptop->where('type', 'laptop')->where('kondisi', 'blanks')->countAllResults(),
-
+            'total_mo' => $this->aset->where('type', 'printer')->countAllResults(),
+            'total_mo_ok' => $this->aset->where('type', 'printer')->where('kondisi', 'OK')->countAllResults(),
+            'total_mo_rusak' => $this->aset->where('type', 'printer')->where('kondisi', 'rusak')->countAllResults(),
+            'total_mo_blanks' => $this->aset->where('type', 'printer')->where('kondisi', 'blanks')->countAllResults(),
         ];
 
-        return view('admin/laptop', $data);
+        return view('admin/printer', $data);
     }
     public function search($id)
     {
         $data = [
-            'title'   => 'Data Personal Computer',
+            'title'   => 'printer',
             'aktiv'   => $id,
             'segment' => $this->request->uri->getSegments(),
 
-            'laptop' => $this->laptop->where('type', 'laptop')->where('kondisi', $id)->orderBy('id', 'desc')->findAll(),
+            'aset' => $this->aset->where('type', 'printer')->where('kondisi', $id)->orderBy('id', 'desc')->findAll(),
 
-            'total_laptop' => $this->laptop->where('type', 'laptop')->countAllResults(),
-            'total_laptop_ok' => $this->laptop->where('type', 'laptop')->where('kondisi', 'OK')->countAllResults(),
-            'total_laptop_rusak' => $this->laptop->where('type', 'laptop')->where('kondisi', 'rusak')->countAllResults(),
-            'total_laptop_blanks' => $this->laptop->where('type', 'laptop')->where('kondisi', 'blanks')->countAllResults(),
-            //'laptop'    => $this->laptop->getId($id),
+            'total_mo' => $this->aset->where('type', 'printer')->countAllResults(),
+            'total_mo_ok' => $this->aset->where('type', 'printer')->where('kondisi', 'OK')->countAllResults(),
+            'total_mo_rusak' => $this->aset->where('type', 'printer')->where('kondisi', 'rusak')->countAllResults(),
+            'total_mo_blanks' => $this->aset->where('type', 'printer')->where('kondisi', 'blanks')->countAllResults(),
+
 
         ];
-        return view('admin/laptop', $data);
+        return view('admin/printer', $data);
     }
 
     public function add()
@@ -110,21 +114,20 @@ class laptop extends BaseController
         }
 
         $data = [
-            'title'   => 'Add Laptop',
+            'title'   => 'Add printer',
             'segment' => $this->request->uri->getSegments(),
             'admin'   => $this->admin->find(session()->get('id')),
             'nama'    => $this->manufacture->orderBy('nama', 'asc')->findAll(),
-            'type' => $this->type->where('nama', 'laptop')->orderBy('nama', 'asc')->findAll(),
-            'prosesor'    => $this->prosesor->orderBy('nama', 'asc')->findAll(),
-            'generasi'    => $this->generasi->orderBy('nama', 'asc')->findAll(),
-            'hdd'    => $this->hdd->orderBy('nama', 'asc')->findAll(),
-            'ram'    => $this->ram->orderBy('nama', 'asc')->findAll(),
-            'rincian'    => $this->rincian->orderBy('nama', 'asc')->findAll(),
+            // 'type' => $this->type->where('nama', 'printer')->orderBy('nama', 'asc')->findAll(),
+            'type' => $this->type->orderBy('nama', 'asc')->findAll(),
+
             'status'    => $this->status->orderBy('nama', 'asc')->findAll(),
             'kondisi'    => $this->kondisi->orderBy('nama', 'asc')->findAll(),
             'stock'    => $this->stok->orderBy('nama', 'asc')->findAll(),
+
+            'port'    => $this->port->orderBy('port', 'asc')->findAll(),
         ];
-        return view('admin/laptopadd', $data);
+        return view('admin/printeradd', $data);
     }
     public function edit($id)
     {
@@ -133,23 +136,21 @@ class laptop extends BaseController
             return redirect()->to(base_url());
         }
         $data = [
-            'title'   => 'Edit Laptop',
+            'title'   => 'Edit printer',
             'edit'   => 'redy',
             'segment' => $this->request->uri->getSegments(),
             'admin'   => $this->admin->find(session()->get('id')),
+
             'nama'    => $this->manufacture->orderBy('nama', 'asc')->findAll(),
-            'type' => $this->type->where('nama', 'laptop')->orderBy('nama', 'asc')->findAll(),
-            'prosesor'    => $this->prosesor->orderBy('nama', 'asc')->findAll(),
-            'generasi'    => $this->generasi->orderBy('nama', 'asc')->findAll(),
-            'hdd'    => $this->hdd->orderBy('nama', 'asc')->findAll(),
-            'ram'    => $this->ram->orderBy('nama', 'asc')->findAll(),
-            'rincian'    => $this->rincian->orderBy('nama', 'asc')->findAll(),
+            'port' => $this->type->orderBy('nama', 'asc')->findAll(),
+
+
             'status'    => $this->status->orderBy('nama', 'asc')->findAll(),
             'kondisi'    => $this->kondisi->orderBy('nama', 'asc')->findAll(),
             'stock'    => $this->stok->orderBy('nama', 'asc')->findAll(),
-            'laptop'    => $this->laptop->find($id),
+            'aset'    => $this->aset->find($id),
         ];
-        return view('admin/laptopedit', $data);
+        return view('admin/printeredit', $data);
     }
 
     public function save()
@@ -160,12 +161,9 @@ class laptop extends BaseController
             $post = [
                 'id'       => $this->request->getVar('id'),
                 'manufacture'            => $this->request->getVar('manufacture'),
-                'type'            => $this->request->getVar('type'),
-                'prosesor'            => $this->request->getVar('prosesor'),
-                'generasi'            => $this->request->getVar('generasi'),
-                'hdd'            => $this->request->getVar('hdd'),
-                'ram'            => $this->request->getVar('ram'),
-                'rincian'            => $this->request->getVar('rincian'),
+                'type'            => 'Printer',
+                'port' => $this->request->getVar('type'),
+
                 'status'            => $this->request->getVar('status'),
                 'stock'            => $this->request->getVar('stock'),
                 'kondisi'            => $this->request->getVar('kondisi'),
@@ -175,23 +173,20 @@ class laptop extends BaseController
                 'serial'            => $this->request->getVar('serial'),
             ];
 
-            if ($this->laptop->save($post)) {
-                session()->setFlashdata('success', 'Data berhasil di edit.');
-                return redirect()->to(base_url('admin/laptop'));
+            if ($this->aset->save($post)) {
+                session()->setFlashdata('success', '<strong>Berhasil !</strong> Data berhasil di edit.');
+                return redirect()->to(base_url('admin/printer'));
             } else {
-                session()->setFlashdata('error', 'Data Gagal di simpan.');
-                return redirect()->to(base_url('admin/laptop'));
+                session()->setFlashdata('error', '<strong>Gagal !</strong> Data Gagal di edit.');
+                return redirect()->to(base_url('admin/printer'));
             }
         } else {
             // $tgl= date("Y-m-d");
             $post = [
                 'manufacture'            => $this->request->getVar('manufacture'),
-                'type'            => $this->request->getVar('type'),
-                'prosesor'            => $this->request->getVar('prosesor'),
-                'generasi'            => $this->request->getVar('generasi'),
-                'hdd'            => $this->request->getVar('hdd'),
-                'ram'            => $this->request->getVar('ram'),
-                'rincian'            => $this->request->getVar('rincian'),
+                'type'            => 'Printer',
+                'port'            => $this->request->getVar('type'),
+
                 'status'            => $this->request->getVar('status'),
                 'stock'            => $this->request->getVar('stock'),
                 'kondisi'            => $this->request->getVar('kondisi'),
@@ -202,15 +197,27 @@ class laptop extends BaseController
 
             ];
 
-            if ($this->laptop->save($post)) {
-                session()->setFlashdata('success', '<strong>Berhasil !</strong> Data berhasil di simpan kedalam database.');
-                return redirect()->to(base_url('admin/laptop'));
+            $existingData = $this->aset->where('serial', $post['serial'])->first();
+
+            if (!$existingData) {
+                // Data doesn't exist, proceed with insertion
+                if ($this->aset->save($post)) {
+                    session()->setFlashdata('success', '<strong>Berhasil !</strong> Data berhasil di simpan kedalam database.');
+                    return redirect()->to(base_url('admin/printer'));
+                } else {
+                    session()->setFlashdata('error', '<strong>Pringatan !</strong> Data sudah terdaftar kedalam database !');
+                    return redirect()->to(base_url('admin/printer'));
+                }
             } else {
-                session()->setFlashdata('error', '<strong>Pringatan !</strong> Data sudah terdaftar kedalam database !');
-                return redirect()->to(base_url('admin/laptop'));
+                // Data already exists, set importSuccess to false
+                // $importSuccess = false;
+                session()->setFlashdata('warning', '<strong>Peringatan!</strong> Data dengan nomor serial <b>' . $post['serial'] . '</b> sudah terdaftar.');
+                return redirect()->to(base_url('admin/printer')); //break; // Exit the loop if any data already exists
             }
         }
     }
+
+
     public function import()
     {
         $file = $this->request->getFile('file_excel');
@@ -237,18 +244,14 @@ class laptop extends BaseController
                 $rowData = [
                     'tgl_masuk' => $value[1],
                     'tgl_keluar' => $value[2],
-                    'manufacture'    => $value[3],
-                    'type'    => 'Laptop',
-                    'prosesor'    => $value[4],
-                    'generasi'    => $value[5],
-                    'serial' => $value[6],
-                    'hdd' => $value[7],
-                    'ram'    => $value[8],
-                    'rincian'    => $value[9],
-                    'status' => $value[10],
-                    'stock'    => $value[11],
-                    'kondisi' => $value[12],
-                    'ket' => $value[13],
+                    'manufacture' => $value[3],
+                    'type' => 'Printer',
+                    'port' => $value[4],
+                    'serial' => $value[5],
+                    'status' => $value[6],
+                    'stock' => $value[7],
+                    'kondisi' => $value[8],
+                    'ket' => $value[9],
                 ];
 
                 // Check if the data already exists in the database
@@ -274,25 +277,28 @@ class laptop extends BaseController
             session()->setFlashdata('error', 'Format file tidak didukung; hanya format file <b>.xls</b> dan <b>.xlsx</b> yang diizinkan.');
         }
 
-        return redirect()->to(base_url('admin/laptop'));
+        return redirect()->to(base_url('admin/printer'));
     }
+
 
 
     public function delete($id)
     {
-        if ($this->laptop->delete($id)) {
-            session()->setFlashdata('success', '<strong>Berhasil !</strong> Data berhasil di hapus.');
-            return redirect()->to(base_url('admin/laptop'));
+        if ($this->aset->delete($id)) {
+            session()->setFlashdata('warning', '<strong>Berhasil !</strong> Data berhasil terhapus.');
+
+            return redirect()->to(base_url('admin/printer'));
         } else {
-            session()->setFlashdata('danger', '<strong>Gagal !</strong> Data gagal di hapus.');
-            return redirect()->to(base_url('admin/laptop'));
+            session()->setFlashdata('danger', '<strong>Gagal !</strong> Data gagal di hapus !');
+
+            return redirect()->to(base_url('admin/printer'));
         }
     }
 
     public function downloadExcel()
     {
-        // $file = 'public/Ex_laptop.csv';
-        $file = 'assets/Exel/Ex.Import file data laptop.xlsx';
+        // $file = 'public/Ex_pc.csv';
+        $file = 'assets/Exel/Ex.Import file data printer.xlsx';
 
         $response = $this->response
             ->download($file, null)
@@ -303,7 +309,8 @@ class laptop extends BaseController
     public function export()
     {
 
-        $contacts = $this->laptop->where('type', 'laptop')->orderBy('id', 'desc')->findAll();
+        $contacts =  $this->aset->where('type', 'printer')->orderBy('id', 'desc')->findAll();
+
 
         $spreadsheet = new Spreadsheet();
 
@@ -313,17 +320,12 @@ class laptop extends BaseController
         $sheet->setCellValue('B1', 'Tgl Masuk');
         $sheet->setCellValue('C1', 'Tgl Keluar');
         $sheet->setCellValue('D1', 'Manufacture');
-        $sheet->setCellValue('E1', 'Prosessor');
-        $sheet->setCellValue('F1', 'Generasi');
-
-        $sheet->setCellValue('G1', 'Serial');
-        $sheet->setCellValue('H1', 'HDD/SSD');
-        $sheet->setCellValue('I1', 'RAM');
-        $sheet->setCellValue('J1', 'Rincian');
-        $sheet->setCellValue('K1', 'Status');
-        $sheet->setCellValue('L1', 'Stock');
-        $sheet->setCellValue('M1', 'Kondisi');
-        $sheet->setCellValue('N1', 'Keterangan');
+        $sheet->setCellValue('E1', 'Type');
+        $sheet->setCellValue('F1', 'Serial');
+        $sheet->setCellValue('G1', 'Status');
+        $sheet->setCellValue('H1', 'Stock');
+        $sheet->setCellValue('I1', 'Kondisi');
+        $sheet->setCellValue('J1', 'Keterangan');
 
         $column = 2; // kolom start
 
@@ -332,21 +334,18 @@ class laptop extends BaseController
             $sheet->setCellValue('B' . $column, $value->tgl_masuk);
             $sheet->setCellValue('C' . $column, $value->tgl_keluar);
             $sheet->setCellValue('D' . $column, $value->manufacture);
-            $sheet->setCellValue('E' . $column, $value->prosesor);
-            $sheet->setCellValue('F' . $column, $value->generasi);
-            $sheet->setCellValue('G' . $column, $value->serial);
-            $sheet->setCellValue('H' . $column, $value->hdd);
-            $sheet->setCellValue('I' . $column, $value->ram);
-            $sheet->setCellValue('J' . $column, $value->rincian);
-            $sheet->setCellValue('K' . $column, $value->status);
-            $sheet->setCellValue('L' . $column, $value->stock);
-            $sheet->setCellValue('M' . $column, $value->kondisi);
-            $sheet->setCellValue('N' . $column, $value->ket);
+            $sheet->setCellValue('E' . $column, $value->port);
+            $sheet->setCellValue('F' . $column, $value->serial);
+
+            $sheet->setCellValue('G' . $column, $value->status);
+            $sheet->setCellValue('H' . $column, $value->stock);
+            $sheet->setCellValue('I' . $column, $value->kondisi);
+            $sheet->setCellValue('J' . $column, $value->ket);
             $column++;
         }
 
-        $sheet->getStyle('A1:N1')->getFont()->setBold(true);
-        $sheet->getStyle('A1:N1')->getFill()
+        $sheet->getStyle('A1:J1')->getFont()->setBold(true);
+        $sheet->getStyle('A1:J1')->getFill()
             ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
             ->getStartColor()->setARGB('FFFFFF00');
         $styleArray = [
@@ -364,7 +363,7 @@ class laptop extends BaseController
 
         ];
 
-        $sheet->getStyle('A1:N' . ($column - 1))->applyFromArray($styleArray);
+        $sheet->getStyle('A1:J' . ($column - 1))->applyFromArray($styleArray);
 
         $sheet->getColumnDimension('A')->setAutoSize(true);
         $sheet->getColumnDimension('B')->setAutoSize(true);
@@ -376,14 +375,10 @@ class laptop extends BaseController
         $sheet->getColumnDimension('H')->setAutoSize(true);
         $sheet->getColumnDimension('I')->setAutoSize(true);
         $sheet->getColumnDimension('J')->setAutoSize(true);
-        $sheet->getColumnDimension('K')->setAutoSize(true);
-        $sheet->getColumnDimension('L')->setAutoSize(true);
-        $sheet->getColumnDimension('M')->setAutoSize(true);
-        $sheet->getColumnDimension('N')->setAutoSize(true);
 
         $writer = new Xlsx($spreadsheet);
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-        header('Content-Disposition: attachment;filename=Export Data laptop.xlsx');
+        header('Content-Disposition: attachment;filename=Export Data Printer.xlsx');
         header('Cache-Control: max-age=0');
         $writer->save('php://output');
 

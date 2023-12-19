@@ -34,7 +34,7 @@ $menu = $aktiv;
         <?php endif ?>
         <?php if (session()->getFlashData('success')) : ?>
             <div class="alert alert-success alert-dismissible fade show" role="alert">
-                <i class="fa-solid fa-circle-check mr-5"></i>
+                <i class="fa-solid fa-circle-check"></i>
                 <?= session()->getFlashData('success') ?>
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
@@ -51,15 +51,15 @@ $menu = $aktiv;
         <div class="row ">
 
             <div class="col-md-4 col-sm-6 col-xs-12 mb-3 ">
-                <a href="<?= base_url('admin/laptop/add') ?>" class="btn app-btn-primary text-white w-50">
-                    <i class="fas fa-plus"></i> Tambah laptops
+                <a href="<?= base_url('admin/printer/add') ?>" class="btn app-btn-primary text-white w-50">
+                    <i class="fas fa-plus"></i> Tambah Asets
                 </a>
             </div>
 
             <div class="col-md-6 col-sm-2 col-xs-2 ">
-                <form class="row" action="<?= base_url('admin/laptop/import') ?>" method="post" enctype="multipart/form-data">
+                <form class="row" action="<?= base_url('admin/printer/import') ?>" method="post" enctype="multipart/form-data">
                     <div class="col-md-3 col-sm-3 text-end mb-2 ">
-                        <a href="<?= base_url('admin/laptop/downloadExcel') ?>" class="text-info">
+                        <a href="<?= base_url('admin/printer/downloadExcel') ?>" class="text-info">
                             <i class="fa-solid fa-file-circle-question"></i>
                         </a>
                     </div>
@@ -73,7 +73,7 @@ $menu = $aktiv;
                 </form>
             </div>
             <div class="col-md-2 col-sm-6 col-xs-1 ">
-                <a class="btn app-btn- bg-success text-white w-100" href="<?= base_url('admin/laptop/export') ?>">
+                <a class="btn app-btn- bg-success text-white w-100" href="<?= base_url('admin/printer/export') ?>">
                     <i class="fa-solid fa-file-excel"></i>
                     Export Excel
                 </a>
@@ -85,10 +85,10 @@ $menu = $aktiv;
 
 
 <nav id="orders-table-tab" class="orders-table-tab app-nav-tabs nav shadow-sm d-flex mb-1" role="tablist">
-    <a class="flex-fill text-center nav-link <?= ($menu == 'ALL') ? 'active' : '' ?>" href="<?= base_url('admin/laptop') ?>" aria-controls="orders-all" aria-selected="false">All <?= $total_laptop ?></a>
-    <a class="flex-fill text-center nav-link <?= ($menu == 'OK') ? 'active' : '' ?>" href="<?= base_url('admin/laptop/search/OK') ?>" aria-controls="orders-paid" aria-selected="false">Oke <?= $total_laptop_ok ?></a>
-    <a class="flex-fill text-center nav-link <?= ($menu == 'RUSAK') ? 'active' : '' ?>" href="<?= base_url('admin/laptop/search/RUSAK') ?>" role="tab" aria-controls="orders-pending" aria-selected="true">Rusak <?= $total_laptop_rusak ?></a>
-    <a class="flex-fill text-center nav-link <?= ($menu == 'BLANKS') ? 'active' : '' ?>" href="<?= base_url('admin/laptop/search/BLANKS') ?>" role="tab" aria-controls="orders-cancelled" aria-selected="true">Blank <?= $total_laptop_blanks ?></a>
+    <a class="flex-fill text-center nav-link <?= ($menu == 'ALL') ? 'active' : '' ?>" href="<?= base_url('admin/printer') ?>" aria-controls="orders-all" aria-selected="false">All <?= $total_mo ?></a>
+    <a class="flex-fill text-center nav-link <?= ($menu == 'OK') ? 'active' : '' ?>" href="<?= base_url('admin/printer/search/OK') ?>" aria-controls="orders-paid" aria-selected="false">Oke <?= $total_mo_ok ?></a>
+    <a class="flex-fill text-center nav-link <?= ($menu == 'RUSAK') ? 'active' : '' ?>" href="<?= base_url('admin/printer/search/RUSAK') ?>" role="tab" aria-controls="orders-pending" aria-selected="true">Rusak <?= $total_mo_rusak ?></a>
+    <a class="flex-fill text-center nav-link <?= ($menu == 'BLANKS') ? 'active' : '' ?>" href="<?= base_url('admin/printer/search/BLANKS') ?>" role="tab" aria-controls="orders-cancelled" aria-selected="true">Blank <?= $total_mo_blanks ?></a>
 </nav>
 
 
@@ -98,7 +98,7 @@ $menu = $aktiv;
     <div class="app-card-body p-4">
 
         <div class="table-responsive">
-            <? //= print_r($laptop) 
+            <? //= print_r($aset) 
             ?>
             <table id="tabel1" class="table responsive-table">
                 <thead>
@@ -106,7 +106,6 @@ $menu = $aktiv;
                         <th>NO.</th>
                         <th>Serial</th>
                         <th>Manufacture</th>
-                        <th>Spesifikasi</th>
 
                         <th>Status</th>
                         <th>Tanggal</th>
@@ -119,7 +118,7 @@ $menu = $aktiv;
 
                     <?php
                     $no = 1;
-                    foreach ($laptop as $key => $value) :
+                    foreach ($aset as $key => $value) :
 
                     ?>
                         <tr class="table-<?= ($value->kondisi == 'OK') ? 'success ' : (($value->kondisi == 'RUSAK') ? 'warning' : 'danger') ?>">
@@ -127,14 +126,9 @@ $menu = $aktiv;
                             <td><b><?= $value->serial ?></b></td>
                             <td>
                                 <b> <?= $value->manufacture ?></b><br>
-                                Type : <?= $value->type ?>
+                                Type : <?= $value->port ?>
                             </td>
-                            <td>
-                                Prosesor : <?= $value->prosesor ?> <br>
-                                Generasi : <?= $value->generasi ?> <br>
-                                Hdd/SSD : <?= $value->hdd ?><br>
-                                Ram :<?= $value->ram ?>/<?= $value->rincian ?><br>
-                            </td>
+
                             <td>
                                 Status :<?= $value->status ?><br>
                                 Stock :<?= $value->stock ?><br>
@@ -159,10 +153,10 @@ $menu = $aktiv;
                                 </span>
                             </td>
                             <td>
-                                <a href="<?= base_url('admin/laptop/edit/' . $value->id) ?>" class="btn btn-sm btn-info text-white ">
+                                <a href="<?= base_url('admin/printer/edit/' . $value->id) ?>" class="btn btn-sm btn-info text-white ">
                                     <i class="fa-solid fa-pen-to-square"></i>
                                 </a>
-                                <a href="<?= base_url("admin/laptop/delete/{$value->id}") ?>" class="btn btn-sm btn-danger text-white" onclick="return confirm('Yakin ingin menghapus?')">
+                                <a href="<?= base_url("admin/printer/delete/{$value->id}") ?>" class="btn btn-sm btn-danger text-white" onclick="return confirm('Yakin ingin menghapus?')">
                                     <i class="fa-solid fa-trash-can"></i>
                                 </a>
 
@@ -206,7 +200,7 @@ $menu = $aktiv;
             $('#table').DataTable({
                 processing: true,
                 serverSide: true,
-                ajax: '<?= base_url('admin/laptop/data') ?>',
+                ajax: '<?= base_url('admin/printer/data') ?>',
                 order: [],
                 columns: [{
                         data: 'no',

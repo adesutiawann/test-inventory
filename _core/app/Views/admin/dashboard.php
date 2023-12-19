@@ -66,8 +66,8 @@
 
         </div><!--//app-card-->
     </div><!--//col-->
-    <div class="col-12 col-lg-2">
-        <div class="app-card app-card-basic d-flex flex-column align-items-start shadow-md">
+    <div class="col-12 col-lg-2 ">
+        <div class="app-card app-card-basic d-flex flex-column align-items-start  shadow-lg fa-radiation ">
             <div class="app-card-header p-3 border-bottom-0">
                 <div class="row align-items-center gx-3">
                     <div class="col-auto">
@@ -76,8 +76,9 @@
                         </div><!--//icon-holder-->
 
                     </div><!--//col-->
-                    <div class="col-auto">
-                        <h4 class="app-card-title"><?= $total_la ?></h4>User
+                    <div class="col-auto ">
+                        <h4 class="app-card-title"><?= $total_la ?></h4>
+                        <small class="text-sm"><i class="fa-solid fa-circle text-success"></i> User Active</small>
                     </div><!--//col-->
                 </div><!--//row-->
             </div><!--//app-card-header-->
@@ -355,27 +356,27 @@
                                 <td class=" ">
                                     <h5 class="meta">Printer</h5>
                                     <div class="progress h-50 ">
-                                        <div class="progress-bar bg-danger" role="progressbar" style="width: <?= $ky_d = ($total_ky_blanks / $total_ky) * 100 ?>%;" aria-valuenow="52" aria-valuemin="0" aria-valuemax="100"><?= number_format($ky_d) ?>%</div>
-                                        <div class="progress-bar bg-warning" role="progressbar" style="width:  <?= $ky_w = ($total_ky_rusak / $total_ky) * 100 ?>%;" aria-valuenow="52" aria-valuemin="0" aria-valuemax="100"><?= number_format($ky_w) ?>%</div>
-                                        <div class="progress-bar bg-success" role="progressbar" style="width: <?= $ky_s = ($total_ky_ok / $total_ky) * 100 ?>%;" aria-valuenow="52" aria-valuemin="0" aria-valuemax="100"><?= number_format($ky_s) ?>%</div>
+                                        <div class="progress-bar bg-danger" role="progressbar" style="width: <?= $pr_d = ($total_pr_blanks / $total_pr) * 100 ?>%;" aria-valuenow="52" aria-valuemin="0" aria-valuemax="100"><?= number_format($pr_d) ?>%</div>
+                                        <div class="progress-bar bg-warning" role="progressbar" style="width:  <?= $pr_w = ($total_pr_rusak / $total_pr) * 100 ?>%;" aria-valuenow="52" aria-valuemin="0" aria-valuemax="100"><?= number_format($pr_w) ?>%</div>
+                                        <div class="progress-bar bg-success" role="progressbar" style="width: <?= $pr_s = ($total_pr_ok / $total_pr) * 100 ?>%;" aria-valuenow="52" aria-valuemin="0" aria-valuemax="100"><?= number_format($pr_s) ?>%</div>
                                     </div>
 
 
                                 </td>
                                 <div class="">
                                     <td class="stat-cell text-danger  ">
-                                        <div class="mt-2"><b><?= $total_ky_blanks ?></b></div>
+                                        <div class="mt-2"><b><?= $total_pr_blanks ?></b></div>
                                     </td>
                                     <td class="stat-cell text-warning">
-                                        <div class="mt-2"><b><?= $total_ky_rusak ?></b>
+                                        <div class="mt-2"><b><?= $total_pr_rusak ?></b>
                                         </div>
                                     </td>
                                     <td class="stat-cell text-success">
-                                        <div class="mt-2"><b><?= $total_ky_ok ?></b>
+                                        <div class="mt-2"><b><?= $total_pr_ok ?></b>
                                         </div>
                                     </td>
                                     <td class="stat-cell ">
-                                        <div class="mt-2"><b><?= $total_ky ?></b>
+                                        <div class="mt-2"><b><?= $total_pr ?></b>
                                         </div>
                                     </td>
                                 </div>

@@ -25,6 +25,8 @@ class User extends BaseController
             'title'   => 'Admin & Guru',
             'segment' => $this->request->uri->getSegments(),
             'admin'   => $this->admin->find(session()->get('id')),
+            // 'user'   => $this->admin->orderBy('id', 'desc'),
+            'user'    => $this->admin->orderBy('nama', 'asc')->findAll(),
         ];
 
         return view('admin/user', $data);
@@ -47,8 +49,8 @@ class User extends BaseController
                 return $l;
             })
             ->add('action', function ($row) {
-                return '<a href="' . base_url('admin/user/edit/' . $row->id) . 
-                '" class="btn btn-xm btn-info text-white"><i class="fa-solid fa-pen-to-square"></i></a> <a href="' . base_url('admin/user/delete/' . $row->id) . '" 
+                return '<a href="' . base_url('admin/user/edit/' . $row->id) .
+                    '" class="btn btn-xm btn-info text-white"><i class="fa-solid fa-pen-to-square"></i></a> <a href="' . base_url('admin/user/delete/' . $row->id) . '" 
                 class="btn btn-sm btn-danger text-white" onclick="return confirm(\'Yakin?\')"><i class="fa-solid fa-trash-can"></i></a>';
             })
             ->addNumbering('no')->toJson(true);
@@ -111,7 +113,8 @@ class User extends BaseController
             $post = [
                 'username' => $this->request->getVar('username'),
                 'nama'     => $this->request->getVar('nama'),
-                'password' => password_hash($this->request->getVar('username'), PASSWORD_BCRYPT),
+                'password'     => $this->request->getVar('password'),
+                //'password' => password_hash($this->request->getVar('username'), PASSWORD_BCRYPT),
                 'whatsapp' => $this->request->getVar('whatsapp'),
                 'level'    => $this->request->getVar('level'),
             ];
