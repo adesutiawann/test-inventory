@@ -23,9 +23,9 @@ class Dashboard extends BaseController
     public function __construct()
     {
         $this->admin           = new AdminModel();
-        $this->tahun_pelajaran = new Tahun_pelajaranModel();
-        $this->siswa           = new SiswaModel();
-        $this->absensi         = new AbsensiModel();
+        //$this->tahun_pelajaran = new Tahun_pelajaranModel();
+        // $this->siswa           = new SiswaModel();
+        //$this->absensi         = new AbsensiModel();
 
 
         $this->aset = new AsetModel();
@@ -45,6 +45,7 @@ class Dashboard extends BaseController
             'admin'       => $this->admin->find(session()->get('id')),
 
             //'total_destop' => $this->aset->where(['type' => "Destop"])->countAllResults(),
+            'total_admin' => $this->admin->countAllResults(),
             'total_aset' => $this->aset->countAllResults(),
             // perhitungan pc
             'total_pc' => $this->aset->where('type', 'pc')->countAllResults(),

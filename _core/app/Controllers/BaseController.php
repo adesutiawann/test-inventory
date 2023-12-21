@@ -74,23 +74,23 @@ class BaseController extends Controller
 
         // E.g.: $this->session = \Config\Services::session();
 
-        $this->tp = new Tahun_pelajaranModel();
-        $this->tp = $this->tp->where('aktif', '1')->first();
+        // $this->tp = new Tahun_pelajaranModel();
+        //  $this->tp = $this->tp->where('aktif', '1')->first();
 
         $this->setting   = new SettingModel();
         $this->setting   = $this->setting->find(1);
 
-        $this->pembina           = new PembinaModel();
+        //  $this->pembina           = new PembinaModel();
 
         // $this->walikelas         = new WalikelasModel();
-        $this->walikelas         = new WalikelasModel();
-        $this->piket             = new PiketModel();
-        $this->bp                = new BpModel();
-        $this->absensi_telat     = new Absensi_telatModel();
-        $this->poin              = new PoinModel();
-        $this->pelanggaran_siswa = new Pelanggaran_siswaModel();
+        // $this->walikelas         = new WalikelasModel();
+        //  $this->piket             = new PiketModel();
+        // $this->bp                = new BpModel();
+        // // $this->absensi_telat     = new Absensi_telatModel();
+        //  $this->poin              = new PoinModel();
+        //$this->pelanggaran_siswa = new Pelanggaran_siswaModel();
 
         $this->aset     = new AsetModel();
-        $this->absensi_dhuhur    = new Absensi_dhuhurModel();
+        // $this->absensi_dhuhur    = new Absensi_dhuhurModel();
     }
 }

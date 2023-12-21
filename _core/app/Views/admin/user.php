@@ -14,13 +14,28 @@
             <i class="fas fa-plus"></i> Tambah Baru</a>
 
         <?php if (session()->getFlashData('error')) : ?>
-            <div class="alert alert-danger bd-callout bd-callout-info">
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <i class="fa-solid fa-circle-exclamation"></i>
+                <strong>Gagal !</strong>
                 <?= session()->getFlashData('error') ?>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         <?php endif ?>
         <?php if (session()->getFlashData('success')) : ?>
-            <div class="alert alert-success bd-callout bd-callout-info">
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <i class="fa-solid fa-circle-check"></i>
+                <strong>Berhasil !</strong>
                 <?= session()->getFlashData('success') ?>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        <?php endif ?>
+        <?php if (session()->getFlashData('warning')) : ?>
+
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                <i class="fa-solid fa-triangle-exclamation mr-3"></i>
+                <strong>Perhatian !</strong>
+                <?= session()->getFlashData('warning') ?>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         <?php endif ?>
 
@@ -30,10 +45,10 @@
                     <tr>
                         <th>NO.</th>
                         <th>NIK</th>
-                        <th>USERS</th>
-                        <th>NO. WHATSAPP</th>
-                        <th>nama</th>
-                        <th>AKSI</th>
+                        <th>Username</th>
+                        <th>Data</th>
+
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -43,39 +58,45 @@
                     foreach ($user as $key => $value) :
 
                     ?>
-                        <tr>
+                        <tr class="table-<?= ($value->level == '1') ? 'success ' : (($value->level == '2') ? 'warning' : 'danger') ?>">
+
                             <td><?= $no++ ?></td>
                             <td><b><?= $value->nik ?></b></td>
-                            <td>
-                                Username :<?= $value->username ?></b><br>
-                                Password :<?= $value->password ?>
 
+                            <td>
+                                Username : <?= $value->username ?></b><br>
+                                Password : <?= $value->password ?><br>
+                                Level :
+
+                                <?php
+                                if ($value->level == 1) {
+                                    echo $l = '<span class="badge bg-primary">Administrator</span>';
+                                } else if ($value->level == 2) {
+                                    echo $l = '<span class="badge bg-warning">Staff</span>';
+                                } else {
+                                    echo  $l = '<span class="badge bg-danger">Tamu</span>';
+                                }
+                                ?>
                             </td>
 
                             <td>
-                                Status :<?= $value->nama ?><br>
-                                Stock :<?= $value->whatsapp ?><br>
-                                nama:
-                                <span class="badge bg-<?= ($value->nama == '1') ? 'success' : (($value->nama == '2') ? 'warning' : 'danger') ?>">
-                                    <?= $value->nama ?>
+                                Nama : <b><?= $value->nama ?></b><br>
+                                Telpon : <?= $value->whatsapp ?><br>
+
+                                Created :
+
+                                <span class="text-primary">
+                                    <?= $value->tgl ?><br>
                                 </span>
                             </td>
 
-                            <td>
-                                In :
-                                <span class="text-success">
-                                    <?= $value->nama ?><br>
-                                </span>Out :
-                                <span class="text-danger">
-                                    <?= $value->nama ?><br>
-                                </span>
-                            </td>
+
 
                             <td>
-                                <a href="<?= base_url('admin/printer/edit/' . $value->id) ?>" class="btn btn-sm btn-info text-white ">
+                                <a href="<?= base_url('admin/user/edit/' . $value->id) ?>" class="btn btn-sm btn-info text-white ">
                                     <i class="fa-solid fa-pen-to-square"></i>
                                 </a>
-                                <a href="<?= base_url("admin/printer/delete/{$value->id}") ?>" class="btn btn-sm btn-danger text-white" onclick="return confirm('Yakin ingin menghapus?')">
+                                <a href="<?= base_url("admin/user/delete/{$value->id}") ?>" class="btn btn-sm btn-danger text-white" onclick="return confirm('Warning','Yakin ingin menghapus?')">
                                     <i class="fa-solid fa-trash-can"></i>
                                 </a>
 

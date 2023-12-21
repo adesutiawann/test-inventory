@@ -77,7 +77,7 @@
 
                     </div><!--//col-->
                     <div class="col-auto ">
-                        <h4 class="app-card-title"><?= $total_la ?></h4>
+                        <h4 class="app-card-title"><?= $total_admin ?></h4>
                         <small class="text-sm"><i class="fa-solid fa-circle text-success"></i> User Active</small>
                     </div><!--//col-->
                 </div><!--//row-->

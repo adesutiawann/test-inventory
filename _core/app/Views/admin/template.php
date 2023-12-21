@@ -48,7 +48,7 @@
                             <div class="app-utility-item app-user-dropdown dropdown">
 
                                 <a class="dropdown-toggle" id="user-dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">
-                                    <span class="text-dark pr-4">Hi,<strong>Ade Sutiawan</strong></span>
+                                    <span class="text-dark pr-4">Hi,<strong><?= $admin->nama ?></strong></span>
                                 </a>
                                 <ul class="dropdown-menu" aria-labelledby="user-dropdown-toggle">
                                     <li>

@@ -244,7 +244,7 @@ class Suratkeluar extends BaseController
         } else {
             $tgl = date("Y-m-d");
             $post = [
-                'id_sk'            => $this->request->getVar('id_sk'),
+                'id_sk'            => '1',
                 'id_aset'            => $this->request->getVar('id_aset'),
                 'tgl'           => $tgl,
             ];

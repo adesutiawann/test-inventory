@@ -22,7 +22,7 @@ class User extends BaseController
         }
 
         $data = [
-            'title'   => 'Admin & Guru',
+            'title'   => 'Account',
             'segment' => $this->request->uri->getSegments(),
             'admin'   => $this->admin->find(session()->get('id')),
             // 'user'   => $this->admin->orderBy('id', 'desc'),
@@ -92,14 +92,18 @@ class User extends BaseController
         if (session()->get('logged_admin') != true) {
             return redirect()->to(base_url());
         }
-
+        $tgl = date("Y-m-d");
         if ($this->request->getVar('id')) {
+
             $post = [
                 'id'       => $this->request->getVar('id'),
+                'nik' => $this->request->getVar('nik'),
+
                 'username' => $this->request->getVar('username'),
                 'nama'     => $this->request->getVar('nama'),
                 'whatsapp' => $this->request->getVar('whatsapp'),
                 'level'    => $this->request->getVar('level'),
+                'tgl'           =>  $tgl,
             ];
 
             if ($this->admin->save($post) === false) {
@@ -111,12 +115,17 @@ class User extends BaseController
             }
         } else {
             $post = [
-                'username' => $this->request->getVar('username'),
+                'nik' => $this->request->getVar('nik'),
+
                 'nama'     => $this->request->getVar('nama'),
+
+
+                'username' => $this->request->getVar('username'),
                 'password'     => $this->request->getVar('password'),
                 //'password' => password_hash($this->request->getVar('username'), PASSWORD_BCRYPT),
                 'whatsapp' => $this->request->getVar('whatsapp'),
                 'level'    => $this->request->getVar('level'),
+                'tgl'           =>  $tgl,
             ];
 
             if ($this->admin->save($post) === false) {

@@ -43,7 +43,7 @@
 <div class="app-card app-card-accordion shadow-sm mb-4">
     <div class="app-card-body p-4">
         <div class="table-responsive">
-            <table id="tabel1" class="table table-striped">
+            <table id="tabel" class="table table-striped">
                 <thead>
                     <tr>
                         <th>NO.</th>
@@ -68,7 +68,7 @@
 
 <script>
     $(document).ready(function() {
-        $('#tabel1').DataTable({
+        $('#tabel').DataTable({
             processing: true,
             serverSide: true,
             ajax: '<?= base_url('admin/manufacture/data') ?>',

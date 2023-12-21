@@ -12,7 +12,7 @@ class AdminModel extends Model
     protected $returnType       = 'object';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['username', 'password', 'nama', 'whatsapp', 'level'];
+    protected $allowedFields    = ['nik', 'username', 'password', 'nama', 'whatsapp', 'level', 'tgl'];
 
     protected $validationRules = [
         'username' => 'required|is_unique[admin.username,id,{id}]',
