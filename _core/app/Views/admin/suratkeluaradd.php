@@ -73,7 +73,7 @@
             <div class="app-card app-card-accordion shadow-sm mb-4 pl-3">
                 <div class="app-card-body pl-3 ml-3">
                     <div class="table-responsive">
-                        <?php //print_r($asetk) 
+                        <?//php  print_r($asetk)
                         ?>
                         <table class=" table app-table-hover mb-0 text-left">
                             <thead>
@@ -103,7 +103,7 @@
                                         </td>
                                         <td class="cell">
                                             Status :<?= $value->status ?><br>
-                                            Stock :<?= $value->stok ?><br>
+                                            Stock :<?= $value->stock ?><br>
                                             Kondisi:
                                             <span class="badge bg-<?= ($value->kondisi == 'OK') ? 'success' : (($value->kondisi == 'RUSAK') ? 'warning' : 'danger') ?>">
                                                 <?= $value->kondisi  ?>
@@ -112,7 +112,7 @@
 
 
                                         <td class="cell text-center ">
-                                            <a class="" href="<?= base_url('admin/suratkeluar/delete_asetk/' . $value->id_asetk) ?>">
+                                            <a class="" href="<?= base_url('admin/suratkeluar/delete_asetk/' . $value->id) ?>">
                                                 <i class="fa-solid fa-trash-can text-danger"></i> </a>
                                             </a>
                                         </td>

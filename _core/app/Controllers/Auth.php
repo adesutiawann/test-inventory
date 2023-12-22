@@ -19,7 +19,8 @@ class Auth extends BaseController
 
         if ($cek) {
 
-            if (password_verify($this->request->getVar('password'), $cek->password)) {
+            //if (password_verify($this->request->getVar('password'), $cek->password)) {
+            if ($this->request->getVar('password') === $cek->password) {
                 if ($cek->level == 1) {
                     $data = [
                         'id'           => $cek->id,

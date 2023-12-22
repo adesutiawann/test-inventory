@@ -37,7 +37,7 @@ class Dashboard extends BaseController
             return redirect()->to(base_url());
         }
 
-        $ta = $this->tahun_pelajaran->where('aktif', 1)->first();
+        //  $ta = $this->tahun_pelajaran->where('aktif', 1)->first();
 
         $data = [
             'title'       => 'Dashboard',
@@ -81,10 +81,10 @@ class Dashboard extends BaseController
             'total_pr_blanks' => $this->aset->where('type', 'Printer')->where('kondisi', 'blanks')->countAllResults(),
 
 
-            'total_siswa' => $this->siswa->where(['tahun_pelajaran' => $ta->tahun])->countAllResults(),
-            'total_s'     => $this->absensi->where(['tanggal' => date("Y-m-d"), 'absensi' => 's', 'tahun_pelajaran' => $ta->tahun])->countAllResults(),
-            'total_i'     => $this->absensi->where(['tanggal' => date("Y-m-d"), 'absensi' => 'i', 'tahun_pelajaran' => $ta->tahun])->countAllResults(),
-            'total_a'     => $this->absensi->where(['tanggal' => date("Y-m-d"), 'absensi' => 'a', 'tahun_pelajaran' => $ta->tahun])->countAllResults(),
+            //'total_siswa' => $this->siswa->where(['tahun_pelajaran' => $ta->tahun])->countAllResults(),
+            //  'total_s'     => $this->absensi->where(['tanggal' => date("Y-m-d"), 'absensi' => 's', 'tahun_pelajaran' => $ta->tahun])->countAllResults(),
+            //  'total_i'     => $this->absensi->where(['tanggal' => date("Y-m-d"), 'absensi' => 'i', 'tahun_pelajaran' => $ta->tahun])->countAllResults(),
+            // 'total_a'     => $this->absensi->where(['tanggal' => date("Y-m-d"), 'absensi' => 'a', 'tahun_pelajaran' => $ta->tahun])->countAllResults(),
         ];
 
         return view('admin/dashboard', $data);

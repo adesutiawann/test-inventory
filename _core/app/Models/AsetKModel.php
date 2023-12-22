@@ -6,7 +6,7 @@ use CodeIgniter\Database\Query;
 use CodeIgniter\Model;
 use PhpParser\Node\Stmt\Else_;
 
-class SuratkeluarModel extends Model
+class AsetKModel extends Model
 {
   protected $table            = 'tb_asetk';
   protected $primaryKey       = 'id';
@@ -14,7 +14,7 @@ class SuratkeluarModel extends Model
   protected $returnType       = 'object';
   protected $useSoftDeletes   = false;
   protected $protectFields    = true;
-  protected $allowedFields    = ['id', 'id_sk', 'id_aset', 'tgl'];
+  protected $allowedFields    = ['id', 'id_sk', 'serial', 'tgl'];
 
 
   protected $validationRules = [
@@ -24,36 +24,19 @@ class SuratkeluarModel extends Model
   function getAll()
   {
     // Membuat instance query builder untuk tabel 'tb_aset'      
-    $builder = $this->db->table('tb_aset')
+    $builder = $this->db->table('tb_asetk')
       ->select(
-        'tb_aset.id,tb_aset.tgl_masuk,tb_aset.tgl_keluar,tb_aset.serial,tb_aset.ket,
-            tb_hdd.nama as hdd ,
-            tb_manufacture.nama as manufacture,
-            tb_prosesor.nama as prosesor,
-            tb_type.nama as type,
-            tb_generasi.nama as generasi,
-            tb_ram.nama as ram,
-            tb_rincian.nama as rincian,
-            tb_status.nama as status,
-            tb_stok.nama as stok,
-            tb_kondisi.nama as kondisi',
+        'tb_asetk.id,tb_asetk.serial,
+            tb_aset.type,tb_aset.manufacture, tb_aset.status, tb_aset.stock, tb_aset.kondisi',
 
       )
 
-      ->join('tb_hdd', 'tb_hdd.id = tb_aset.hdd')
-      ->join('tb_manufacture', 'tb_manufacture.id = tb_aset.manufacture')
-      ->join('tb_type', 'tb_type.id = tb_aset.type')
-      ->join('tb_prosesor', 'tb_prosesor.id = tb_aset.prosesor')
-      ->join('tb_generasi', 'tb_generasi.id = tb_aset.generasi')
-      ->join('tb_ram', 'tb_ram.id = tb_aset.ram')
-      ->join('tb_rincian', 'tb_rincian.id = tb_aset.rincian')
-      ->join('tb_status', 'tb_status.id = tb_aset.status')
-      ->join('tb_stok', 'tb_stok.id = tb_aset.stock')
-      ->join('tb_kondisi', 'tb_kondisi.id = tb_aset.kondisi')
+      ->join('tb_aset', 'tb_aset.serial = tb_asetk.serial')
 
-      //->where('tb_kondisi.nama', $id)
 
-      ->orderBy('tb_aset.id', 'desc');
+      ->where('tb_asetk.id_sk', '1')
+
+      ->orderBy('tb_asetk.id', 'desc');
     $query = $builder->get();
     return $query->getResult();
   }
