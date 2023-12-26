@@ -96,7 +96,7 @@ $con = new mysqli("localhost", "root", "", "absensi_walikelas") or die(mysqli_er
 
                     <?php
                     $no = 1;
-                    foreach ($suratkeluar_sk as $key => $value) :
+                    foreach ($suratkeluar as $key => $value) :
 
                     ?>
                         <tr>
@@ -107,11 +107,11 @@ $con = new mysqli("localhost", "root", "", "absensi_walikelas") or die(mysqli_er
                             </td>
                             <td>
                                 <?php
-                                $guru = mysqli_query($con, "SELECT * FROM tb_asetk where id_sk='" . $id . "' ");
+                                $guru = mysqli_query($con, "SELECT * FROM tb_asetk where serial='" . $id . "' ");
                                 $non = 1;
                                 foreach ($guru as $g) {
 
-                                    echo $non++ . '. ' . $g['id_aset'] . '<br>';
+                                    echo $non++ . '. ' . $g['serial'] . '<br>';
                                 }
                                 ?>
 
@@ -140,7 +140,7 @@ $con = new mysqli("localhost", "root", "", "absensi_walikelas") or die(mysqli_er
                                 <a href="<?= base_url('admin/suratkeluar/sk_edit/' . $value->nomor) ?>" class="btn btn-sm btn-info text-white mt-2 mr-2">
                                     <i class="fa-solid fa-pen-to-square"></i>
                                 </a>
-                                <a href="<?= base_url('admin/suratkeluar/sk_delete/' . $value->nomor) ?>" class="btn btn-sm btn-danger text-white" onclick="return confirm('Yakin ingin menghapus?')">
+                                <a href="<?= base_url('admin/suratkeluar/delete_sk/' . $value->nomor) ?>" class="btn btn-sm btn-danger text-white" onclick="return confirm('Yakin ingin menghapus?')">
                                     <i class="fa-solid fa-trash-can"></i>
                                 </a>
 

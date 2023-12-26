@@ -19,47 +19,43 @@
 <div class="app-card app-card-accordion shadow-sm mb-4">
     <div class="app-card-body p-4">
         <?php if (session()->getFlashData('error')) : ?>
-            <div class="alert alert-danger">
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <i class="fa-solid fa-circle-exclamation"></i>
+                <strong>Error ! </strong>
                 <?= session()->getFlashData('error') ?>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         <?php endif ?>
         <?php if (session()->getFlashData('success')) : ?>
-            <div class="alert alert-success">
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <i class="fa-solid fa-circle-check"></i>
+                <strong>Success ! </strong>
                 <?= session()->getFlashData('success') ?>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        <?php endif ?>
+        <?php if (session()->getFlashData('warning')) : ?>
+
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                <i class="fa-solid fa-triangle-exclamation mr-3"></i>
+                <strong>Peringatan ! </strong>
+                <?= session()->getFlashData('warning') ?>
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         <?php endif ?>
 
         <form action="<?= base_url('admin/suratkeluar/save') ?>" method="POST">
             <div class="row">
-                <div class="col-md-12 mb-4">
-                    <div class="row g-3">
 
-                        <div class="col-sm-2 text-right">
-                            <p class="text-end fw-bold"> Nomor :</p>
-
-                        </div>
-                        <div class="col-lg-8">
-
-                            <input type="text" name="nomor" class="form-control text-center" required value="001/PRY-MSI/KITECH/XI/2023">
-                        </div>
-                        <div class="col-sm-2">
-                            Tanggal :<br>
-                            <strong class="text-right"><?= date('d M Y') ?></strong>
-                        </div>
-                    </div>
-                </div>
-
-
-                <hr>
                 <div class="col-md-12 mb-3">
-                    <div class="row g-3">
+                    <div class="row g-3 shadow-lg pb-3">
                         <div class="col-sm">
                             <p class="text-end fw-bold"> Add Serial :</p>
 
 
                         </div>
                         <div class="col-sm-7">
-                            <input type="text" name="id_aset" class="form-control text-center" placeholder="Serial">
+                            <input type="text" name="serial" class="form-control text-center" placeholder="Serial">
                         </div>
                         <div class="col-sm">
                             <button class="btn btn-primary text-white" type="submit"><i class="fa-solid fa-plus"></i> Add</button>
@@ -70,10 +66,10 @@
         <hr>
         <div class="col-md-12 mb-3">
 
-            <div class="app-card app-card-accordion shadow-sm mb-4 pl-3">
+            <div class="app-card app-card-accordion  mb-4 pl-3">
                 <div class="app-card-body pl-3 ml-3">
                     <div class="table-responsive">
-                        <?//php  print_r($asetk)
+                        <? //php  print_r($asetk)
                         ?>
                         <table class=" table app-table-hover mb-0 text-left">
                             <thead>
@@ -130,13 +126,35 @@
         </div>
 
         <form action="<?= base_url('admin/suratkeluar/savesuratkeluar') ?>" method="POST">
+
+            <div class="col-md-12 mb-1  ">
+
+                <div class="row g-3 shadow-lg pb-3">
+
+                    <div class="col-sm-2 text-right">
+                        <p class="text-end fw-bold"> Nomor :</p>
+
+                    </div>
+                    <div class="col-lg-8">
+
+                        <input type="text" name="nomor" class="form-control text-center" placeholder="001/PRY-MSI/KITECH/XI/2023" required>
+                    </div>
+                    <div class="col-sm-2">
+                        Tanggal :<br>
+                        <strong class="text-right"><?= date('d M Y') ?></strong>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <hr>
             <div class="container ">
                 <div class="row gx-2">
                     <div class="col-md-12 col-lg-6">
                         <div class="p-3 border bg-light">
                             <h6>Barang</h6>
                             <hr>
-                            <input type="text" name="nomor" class="form-control text-center" required value="">
 
                             <div class="row">
 

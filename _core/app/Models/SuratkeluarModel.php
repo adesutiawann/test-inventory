@@ -6,10 +6,10 @@ use CodeIgniter\Database\Query;
 use CodeIgniter\Model;
 use PhpParser\Node\Stmt\Else_;
 
-class Suratkeluar_sk_Model extends Model
+class SuratkeluarModel extends Model
 {
   protected $table            = 'tb_suratkeluar';
-  protected $primaryKey       = 'nomor';
+  protected $primaryKey       = 'id';
   protected $useAutoIncrement = true;
   protected $returnType       = 'object';
   protected $useSoftDeletes   = false;

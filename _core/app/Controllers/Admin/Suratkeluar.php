@@ -20,7 +20,7 @@ use App\Models\StokModel;
 use App\Models\KondisiModel;
 //use App\Models\PelajaranModel;
 
-use App\Models\Suratkeluar_sk_Model;
+use App\Models\SuratkeluarModel;
 use App\Models\AsetKModel;
 
 class Suratkeluar extends BaseController
@@ -50,7 +50,7 @@ class Suratkeluar extends BaseController
         $this->aset = new AsetModel();
         $this->asetk     = new AsetKModel();
 
-        $this->suratkeluar     = new Suratkeluar_sk_Model();
+        $this->suratkeluar     = new SuratkeluarModel();
 
         // $this->pelajaran     = new PelajaranModel();
 
@@ -89,7 +89,9 @@ class Suratkeluar extends BaseController
             'stock'    => $this->stok->orderBy('nama', 'asc')->findAll(),
             'aktiv'   => 'ALL',
             'aset' => $this->aset->getAll(),
-            'suratkeluar_sk' => $this->asetk->getAllsuratkeluar(),
+
+            'suratkeluar' => $this->suratkeluar->where('id_sk', '1')->getAllsuratkeluar(),
+            // 'total_pc_ok' => $this->aset->where('type', 'pc')->where('kondisi', 'OK')->countAllResults(),
 
 
 
@@ -136,7 +138,9 @@ class Suratkeluar extends BaseController
             'kondisi'    => $this->kondisi->orderBy('nama', 'asc')->findAll(),
             'stock'    => $this->stok->orderBy('nama', 'asc')->findAll(),
             //'asetk' => $this->asetk->getIdasetkeluar(),
-            'asetk' => $this->asetk->getAll(),
+            'asetk' => $this->asetk->where('id_sk', '1')->getAll(),
+            //'suratkeluar' => $this->suratkeluar->where('id_sk', '1')->getAllsuratkeluar(),
+
             // 'asetk' => $this->asetk->getIdasetkeluar(),
 
         ];
@@ -243,18 +247,28 @@ class Suratkeluar extends BaseController
                 return redirect()->to(base_url('admin/suratkeluar'));
             }
         } else {
-            $tgl = date("Y-m-d");
-            $post = [
-                'id_sk'            => '1',
-                'id_aset'            => $this->request->getVar('id_aset'),
-                'tgl'           => $tgl,
-            ];
 
-            if ($this->asetk->save($post)) {
-                session()->setFlashdata('success', 'Data berhasil di simpan.');
-                return redirect()->to(base_url('admin/suratkeluar/add'));
+            $serial = $this->request->getVar('serial');
+            $existingData = $this->aset->where('serial', $serial)->first();
+            if ($existingData) {
+                $tgl = date("Y-m-d");
+                $post = [
+                    'id_sk'            => '1',
+                    'serial'            => $this->request->getVar('serial'),
+                    'tgl'           => $tgl,
+                ];
+
+                if ($this->asetk->save($post)) {
+                    session()->setFlashdata('success', 'Data berhasil di simpan.');
+                    return redirect()->to(base_url('admin/suratkeluar/add'));
+                } else {
+                    session()->setFlashdata('error', 'Data Sudah Terdaftar !');
+                    return redirect()->to(base_url('admin/suratkeluar/add'));
+                }
             } else {
-                session()->setFlashdata('error', 'Data Sudah Terdaftar !');
+                //  session()->setFlashdata('warning', '<strong>Peringatan!</strong> Data dengan nomor serial <b>' . $serial . '</b> sudah terdaftar.');
+                //return redirect()->to(base_url('admin/suratkeluar/add')); //break; // Exit the loop if any data already exists
+                session()->setFlashdata('warning', 'Serial <b>' . $serial . '</b>  tidak terdaftar dalam system !');
                 return redirect()->to(base_url('admin/suratkeluar/add'));
             }
         }
@@ -267,8 +281,8 @@ class Suratkeluar extends BaseController
         $tgl = date("Y-m-d");
 
         $post = [
-            'id'       => $this->request->getVar('id'),
-            'nama'            => $this->request->getVar('nama'),
+            'id_sk'       => '1',
+            'id_sk'            => $this->request->getVar('id_sk'),
             'tgl'           => $tgl,
             //'tahun_pelajaran' => $this->tp->tahun,
         ];
@@ -285,9 +299,12 @@ class Suratkeluar extends BaseController
     {
 
         $tgl = date("Y-m-d");
-        if ($this->request->getVar('id')) {
+        $serial = $this->request->getVar('nomor');
+        $existingData = $this->suratkeluar->where('nomor', $serial)->first();
+        if (!$existingData) {
+
             $post = [
-                'nomor'       => $this->request->getVar('nomor'),
+                //'nomor'       =>  $this->request->getVar('nomor'),
                 'jumlah'            => $this->request->getVar('jumlah'),
                 'satuan'            => $this->request->getVar('satuan'),
                 'ket'            => $this->request->getVar('ket'),
@@ -298,44 +315,25 @@ class Suratkeluar extends BaseController
                 'lokasi'            => $this->request->getVar('lokasi'),
 
                 'tgl'           => $tgl,
-
-                'status'            => $this->request->getVar('status'),
+                'nomor'       =>  $this->request->getVar('nomor'),
+                'status'            => $this->request->getVar('status')
                 //'tahun_pelajaran' => $this->tp->tahun,
             ];
 
             if ($this->suratkeluar->save($post)) {
-                session()->setFlashdata('success', 'Data berhasil di EDIT surat keluar !');
+                $con = new mysqli("localhost", "root", "", "absensi_walikelas") or die(mysqli_error($con));
+                $guru= mysqli_query($con,"UPDATE tb_asetk SET id_sk='$serial' WHERE id_sk='1'");
+                $guru = mysqli_query($con, "SELECT * FROM tb_asetk where serial='" . $id . "' ");
+                              
+                session()->setFlashdata('success', 'Data berhasil di simpan surat keluar ' . $serial . 'MASA !');
                 return redirect()->to(base_url('admin/suratkeluar'));
             } else {
                 session()->setFlashdata('error', 'Data Gagal di simpan.');
                 return redirect()->to(base_url('admin/suratkeluar'));
             }
         } else {
-
-            $post = [
-                //'nomor'       => $this->request->getVar('nomor'),
-                'jumlah'            => $this->request->getVar('jumlah'),
-                'satuan'            => $this->request->getVar('satuan'),
-                'ket'            => $this->request->getVar('ket'),
-
-                'nik'            => $this->request->getVar('nik'),
-                'penerima'            => $this->request->getVar('penerima'),
-                'telpon'            => $this->request->getVar('telpon'),
-                'lokasi'            => $this->request->getVar('lokasi'),
-
-                'tgl'           => $tgl,
-
-                'status'            => $this->request->getVar('status'),
-                //'tahun_pelajaran' => $this->tp->tahun,
-            ];
-
-            if ($this->suratkeluar->save($post)) {
-                session()->setFlashdata('success', 'Data berhasil di simpan surat keluar !');
-                return redirect()->to(base_url('admin/suratkeluar'));
-            } else {
-                session()->setFlashdata('error', 'Data Gagal di simpan.');
-                return redirect()->to(base_url('admin/suratkeluar'));
-            }
+            session()->setFlashdata('error', 'NOMOR SURAT SUDAH DI GUNAKAN .');
+            return redirect()->to(base_url('admin/suratkeluar'));
         }
     }
     public function delete_asetk($id)
@@ -346,6 +344,16 @@ class Suratkeluar extends BaseController
         } else {
             session()->setFlashdata('danger', 'Data berhasil di hapus.');
             return redirect()->to(base_url('admin/suratkeluar/add'));
+        }
+    }
+    public function delete_sk($id)
+    {
+        if ($this->suratkeluar->delete($id)) {
+            session()->setFlashdata('success', 'Data berhasil di hapus.');
+            return redirect()->to(base_url('admin/suratkeluar'));
+        } else {
+            session()->setFlashdata('danger', 'Data berhasil di hapus.');
+            return redirect()->to(base_url('admin/suratkeluar'));
         }
     }
 }
