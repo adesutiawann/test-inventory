@@ -94,7 +94,7 @@ class Monitor extends BaseController
             'title'   => 'Monitor',
             'aktiv'   => $id,
             'segment' => $this->request->uri->getSegments(),
-
+            'admin'   => $this->admin->find(session()->get('id')),
             'aset' => $this->aset->where('type', 'monitor')->where('kondisi', $id)->orderBy('id', 'desc')->findAll(),
 
             'total_mo' => $this->aset->where('type', 'monitor')->countAllResults(),

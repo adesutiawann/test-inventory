@@ -297,7 +297,7 @@ class Suratkeluar extends BaseController
     }
     public function savesuratkeluar()
     {
-
+       
         $tgl = date("Y-m-d");
         $serial = $this->request->getVar('nomor');
         $existingData = $this->suratkeluar->where('nomor', $serial)->first();
@@ -320,11 +320,8 @@ class Suratkeluar extends BaseController
                 //'tahun_pelajaran' => $this->tp->tahun,
             ];
 
-            if ($this->suratkeluar->save($post)) {
-                $con = new mysqli("localhost", "root", "", "absensi_walikelas") or die(mysqli_error($con));
-                $guru= mysqli_query($con,"UPDATE tb_asetk SET id_sk='$serial' WHERE id_sk='1'");
-                $guru = mysqli_query($con, "SELECT * FROM tb_asetk where serial='" . $id . "' ");
-                              
+            if ($this->suratkeluar->save($post) & $this->asetk->save($post) ) {
+
                 session()->setFlashdata('success', 'Data berhasil di simpan surat keluar ' . $serial . 'MASA !');
                 return redirect()->to(base_url('admin/suratkeluar'));
             } else {

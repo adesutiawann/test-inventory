@@ -94,7 +94,7 @@ class Printer extends BaseController
             'title'   => 'printer',
             'aktiv'   => $id,
             'segment' => $this->request->uri->getSegments(),
-
+            'admin'   => $this->admin->find(session()->get('id')),
             'aset' => $this->aset->where('type', 'printer')->where('kondisi', $id)->orderBy('id', 'desc')->findAll(),
 
             'total_mo' => $this->aset->where('type', 'printer')->countAllResults(),

@@ -94,7 +94,7 @@ class Keyboard extends BaseController
             'title'   => 'keyboard',
             'aktiv'   => $id,
             'segment' => $this->request->uri->getSegments(),
-
+            'admin'   => $this->admin->find(session()->get('id')),
             'aset' => $this->aset->where('type', 'keyboard')->where('kondisi', $id)->orderBy('id', 'desc')->findAll(),
 
             'total_mo' => $this->aset->where('type', 'keyboard')->countAllResults(),

@@ -90,7 +90,7 @@ class laptop extends BaseController
             'title'   => 'Data Personal Computer',
             'aktiv'   => $id,
             'segment' => $this->request->uri->getSegments(),
-
+            'admin'   => $this->admin->find(session()->get('id')),
             'laptop' => $this->laptop->where('type', 'laptop')->where('kondisi', $id)->orderBy('id', 'desc')->findAll(),
 
             'total_laptop' => $this->laptop->where('type', 'laptop')->countAllResults(),

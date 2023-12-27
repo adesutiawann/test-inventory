@@ -90,7 +90,7 @@ class aset extends BaseController
             'title'   => 'Data Personal Computer',
             'aktiv'   => $id,
             'segment' => $this->request->uri->getSegments(),
-
+            'admin'   => $this->admin->find(session()->get('id')),
             'aset' => $this->aset->where('type', 'pc')->where('kondisi', $id)->orderBy('id', 'desc')->findAll(),
 
             'total_pc' => $this->aset->where('type', 'pc')->countAllResults(),

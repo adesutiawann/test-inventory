@@ -265,7 +265,7 @@
 
                         <!--//nav-item-->
 
-                        <li class="nav-item has-submenu">
+                        <li class="nav-item has-submenu" <?= ($admin->level == '3') ? 'hidden' : (($admin->level == '3') ? 'hidden' : '') ?>>
                             <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
                             <a class="nav-link submenu-toggle" href="#" data-bs-toggle="collapse" data-bs-target="#submenu-2" aria-expanded="false" aria-controls="submenu-2">
                                 <span class="nav-icon">
@@ -405,7 +405,7 @@
 
                         <!--//nav-item-->
 
-                        <li class="nav-item">
+                        <li class="nav-item" <?= ($admin->level == '2') ? 'hidden' : (($admin->level == '3') ? 'hidden' : '') ?>>
                             <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
                             <a class="nav-link <?= ($menu == 'user') ? 'active' : '' ?>"" href=" <?= base_url('admin/user') ?>">
                                 <span class="nav-icon">

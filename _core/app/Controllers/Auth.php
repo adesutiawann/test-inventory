@@ -21,50 +21,14 @@ class Auth extends BaseController
 
             //if (password_verify($this->request->getVar('password'), $cek->password)) {
             if ($this->request->getVar('password') === $cek->password) {
-                if ($cek->level == 1) {
-                    $data = [
-                        'id'           => $cek->id,
-                        'logged_admin' => true,
-                    ];
 
-                    session()->set($data);
-                    return redirect()->to(base_url('admin/dashboard'));
-                } else if ($cek->level == 2) {
-                    $cek_pembina = $this->pembina->find($cek->id);
-                    if ($cek_pembina != null) {
-                        $logged_pembina = true;
-                    } else {
-                        $logged_pembina = false;
-                    }
+                $data = [
+                    'id'           => $cek->id,
+                    'logged_admin' => true,
+                ];
 
-                    $cek_piket = $this->pembina->find($cek->id);
-                    if ($cek_piket != null) {
-                        $logged_piket = true;
-                    } else {
-                        $logged_piket = false;
-                    }
-
-                    $cek_bk = $this->pembina->find($cek->id);
-                    if ($cek_bk != null) {
-                        $logged_bp = true;
-                    } else {
-                        $logged_bp = false;
-                    }
-
-                    $data = [
-                        'id'               => $cek->id,
-                        'logged_walikelas' => true,
-                        'logged_pembina'   => $logged_pembina,
-                        'logged_piket'     => $logged_piket,
-                        'logged_bp'        => $logged_bp,
-                    ];
-
-                    session()->set($data);
-                    return redirect()->to(base_url('walikelas/dashboard'));
-                } else {
-                    session()->setFlashdata('error', 'Tidak ada level buat anda masuk.');
-                    return redirect()->to(base_url());
-                }
+                session()->set($data);
+                return redirect()->to(base_url('admin/dashboard'));
             } else {
                 session()->setFlashdata('error', 'Password tidak cocok.');
                 return redirect()->to(base_url());

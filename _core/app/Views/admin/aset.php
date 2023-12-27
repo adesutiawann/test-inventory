@@ -23,7 +23,7 @@ $menu = $aktiv;
 </style>
 <h1 class="app-page-title"><?= $title ?></h1>
 
-<div class="app-card app-card-accordion shadow-sm mb-4">
+<div class="app-card app-card-accordion shadow-sm mb-4" <?= ($admin->level == '3') ? 'hidden' : '' ?>>
     <div class="app-card-body p-4">
         <?php if (session()->getFlashData('error')) : ?>
             <div class="alert alert-danger">
@@ -100,7 +100,7 @@ $menu = $aktiv;
                         <th>Tanggal</th>
 
                         <th>Keterangan</th>
-                        <th>Action</th>
+                        <th <?= ($admin->level == '3') ? 'hidden' : '' ?>>Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -146,7 +146,7 @@ $menu = $aktiv;
                                     <?= $value->ket ?><br>
                                 </span>
                             </td>
-                            <td>
+                            <td <?= ($admin->level == '3') ? 'hidden' : '' ?>>
                                 <a href="<?= base_url('admin/aset/edit/' . $value->id) ?>" class="btn btn-sm btn-info text-white ">
                                     <i class="fa-solid fa-pen-to-square"></i>
                                 </a>
