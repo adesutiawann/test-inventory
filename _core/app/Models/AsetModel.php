@@ -13,7 +13,7 @@ class AsetModel extends Model
   protected $useSoftDeletes   = false;
   protected $protectFields    = true;
   protected $allowedFields    = [
-    'id', 'tgl_masuk', 'tgl_keluar', 'manufacture', 'type', 'prosesor',
+    'id', 'id_sk', 'tgl_masuk', 'tgl_keluar', 'manufacture', 'type', 'prosesor',
     'generasi', 'port', 'serial', 'hdd', 'ram', 'rincian', 'status', 'stock', 'kondisi', 'ket'
   ];
 
@@ -60,135 +60,22 @@ class AsetModel extends Model
     $query = $builder->get();
     return $query->getResult();
   }
-  function getAllmonitor()
+  public function updateDatax($serial, $post)
   {
-    
-    // Membuat instance query builder untuk tabel 'tb_aset'      
-    $builder = $this->db->table('tb_aset')
-      ->select(
-        'tb_aset.id,tb_aset.tgl_masuk,tb_aset.tgl_keluar,tb_aset.serial,tb_aset.ket,
-          
-            tb_manufacture.nama as manufacture,
-         
-            tb_type.nama as type,
-           
-            tb_port.port as port,
-       
-            tb_status.nama as status,
-            tb_stok.nama as stok,
-            tb_kondisi.nama as kondisi',
-
-      )
-
-      ->join('tb_manufacture', 'tb_manufacture.id = tb_aset.manufacture')
-      ->join('tb_type', 'tb_type.id = tb_aset.type')
-      ->join('tb_port', 'tb_port.id = tb_aset.port')
-      ->join('tb_status', 'tb_status.id = tb_aset.status')
-      ->join('tb_stok', 'tb_stok.id = tb_aset.stock')
-      ->join('tb_kondisi', 'tb_kondisi.id = tb_aset.kondisi')
-
-      ->where('tb_type.nama', 'Monitor')
-
-      ->orderBy('tb_aset.id', 'desc');
-    $query = $builder->get();
-    return $query->getResult();
+    //$tgl = '1';
+    $this->where('serial', $serial);
+    $this->set($post);
+    return $this->update();
   }
-  function getAllkeyboard()
+  public function insertno_sk($data)
   {
-    // Membuat instance query builder untuk tabel 'tb_aset'      
-    $builder = $this->db->table('tb_aset')
-      ->select(
-        'tb_aset.id,tb_aset.tgl_masuk,tb_aset.tgl_keluar,tb_aset.serial,tb_aset.ket,
-          
-            tb_manufacture.nama as manufacture,
-         
-            tb_type.nama as type,
-           
-       
-            tb_status.nama as status,
-            tb_stok.nama as stok,
-            tb_kondisi.nama as kondisi',
+    // $tgl = '2';
+    $this->where('id_sk', '1');
+    $this->set($data);
 
-      )
-
-      ->join('tb_manufacture', 'tb_manufacture.id = tb_aset.manufacture')
-      ->join('tb_type', 'tb_type.id = tb_aset.type')
-      ->join('tb_status', 'tb_status.id = tb_aset.status')
-      ->join('tb_stok', 'tb_stok.id = tb_aset.stock')
-      ->join('tb_kondisi', 'tb_kondisi.id = tb_aset.kondisi')
-
-      ->where('tb_type.nama', 'Keyboard')
-
-      ->orderBy('tb_aset.id', 'desc');
-    $query = $builder->get();
-    return $query->getResult();
+    return $this->update();
   }
-  function getAllmouse()
-  {
-    // Membuat instance query builder untuk tabel 'tb_aset'      
-    $builder = $this->db->table('tb_aset')
-      ->select(
-        'tb_aset.id,tb_aset.tgl_masuk,tb_aset.tgl_keluar,tb_aset.serial,tb_aset.ket,
-          
-            tb_manufacture.nama as manufacture,
-         
-            tb_type.nama as type,
-           
-       
-            tb_status.nama as status,
-            tb_stok.nama as stok,
-            tb_kondisi.nama as kondisi',
 
-      )
-
-      ->join('tb_manufacture', 'tb_manufacture.id = tb_aset.manufacture')
-      ->join('tb_type', 'tb_type.id = tb_aset.type')
-      ->join('tb_status', 'tb_status.id = tb_aset.status')
-      ->join('tb_stok', 'tb_stok.id = tb_aset.stock')
-      ->join('tb_kondisi', 'tb_kondisi.id = tb_aset.kondisi')
-
-      ->where('tb_type.nama', 'Mouse')
-
-      ->orderBy('tb_aset.id', 'desc');
-    $query = $builder->get();
-    return $query->getResult();
-  }
-  function getAlllaptop()
-  {
-    // Membuat instance query builder untuk tabel 'tb_aset'      
-    $builder = $this->db->table('tb_aset')
-      ->select(
-        'tb_aset.id,tb_aset.tgl_masuk,tb_aset.tgl_keluar,tb_aset.serial,tb_aset.ket,
-            tb_hdd.nama as hdd ,
-            tb_manufacture.nama as manufacture,
-            tb_prosesor.nama as prosesor,
-            tb_type.nama as type,
-            tb_generasi.nama as generasi,
-            tb_ram.nama as ram,
-            tb_rincian.nama as rincian,
-            tb_status.nama as status,
-            tb_stok.nama as stok,
-            tb_kondisi.nama as kondisi',
-
-      )
-
-      ->join('tb_hdd', 'tb_hdd.id = tb_aset.hdd')
-      ->join('tb_manufacture', 'tb_manufacture.id = tb_aset.manufacture')
-      ->join('tb_type', 'tb_type.id = tb_aset.type')
-      ->join('tb_prosesor', 'tb_prosesor.id = tb_aset.prosesor')
-      ->join('tb_generasi', 'tb_generasi.id = tb_aset.generasi')
-      ->join('tb_ram', 'tb_ram.id = tb_aset.ram')
-      ->join('tb_rincian', 'tb_rincian.id = tb_aset.rincian')
-      ->join('tb_status', 'tb_status.id = tb_aset.status')
-      ->join('tb_stok', 'tb_stok.id = tb_aset.stock')
-      ->join('tb_kondisi', 'tb_kondisi.id = tb_aset.kondisi')
-
-      ->where('tb_type.nama', 'laptop')
-
-      ->orderBy('tb_aset.id', 'desc');
-    $query = $builder->get();
-    return $query->getResult();
-  }
   function getId($id)
   {
     $builder = $this->db->table('tb_aset')

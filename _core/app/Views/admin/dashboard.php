@@ -28,18 +28,38 @@
 <!--//app-card-->
 
 <div class="row g-4 mb-3">
-    <div class="col-12 col-lg-5">
+    <div class="col-12 col-lg-3">
         <div class="app-card app-card-basic d-flex flex-column align-items-start shadow-sm">
             <div class="app-card-header p-3 border-bottom-0">
                 <div class="row align-items-center gx-3">
                     <div class="col-auto">
-                        <div class="app-icon-holder">
+                        <div class="app-icon-holder ">
                             <i class="fa-solid fa-boxes-stacked"></i>
                         </div><!--//icon-holder-->
 
                     </div><!--//col monitor-->
                     <div class="col-auto">
-                        <h4 class="app-card-title"><?= $total_aset ?></h4>.Unit
+                        <h4 class="app-card-title"><?= $total_tersedia ?></h4>Persediaan
+                    </div><!--//col-->
+                </div><!--//row-->
+            </div><!--//app-card-header-->
+
+
+        </div><!--//app-card-->
+    </div><!--//col-->
+    <div class="col-12 col-lg-2 ">
+        <div class="app-card app-card-basic d-flex flex-column align-items-start  shadow-sm fa-radiation ">
+            <div class="app-card-header p-3 border-bottom-0">
+                <div class="row align-items-center gx-3">
+                    <div class="col-auto">
+                        <div class="app-icon-holder bg-danger">
+                            <i class="fa-solid fa-building-circle-arrow-right text-white"></i>
+                        </div><!--//icon-holder-->
+
+                    </div><!--//col-->
+                    <div class="col-auto ">
+                        <h4 class="app-card-title"><?= $total_terdistribusi ?></h4>
+                        <small class="text-sm"> Terdistribusi </small>
                     </div><!--//col-->
                 </div><!--//row-->
             </div><!--//app-card-header-->

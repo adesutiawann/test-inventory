@@ -138,7 +138,7 @@ class Suratkeluar extends BaseController
             'kondisi'    => $this->kondisi->orderBy('nama', 'asc')->findAll(),
             'stock'    => $this->stok->orderBy('nama', 'asc')->findAll(),
             //'asetk' => $this->asetk->getIdasetkeluar(),
-            'asetk' => $this->asetk->where('id_sk', '1')->getAll(),
+            'asetk' => $this->aset->where('id_sk', '1')->findAll(),
             //'suratkeluar' => $this->suratkeluar->where('id_sk', '1')->getAllsuratkeluar(),
 
             // 'asetk' => $this->asetk->getIdasetkeluar(),
@@ -240,7 +240,7 @@ class Suratkeluar extends BaseController
             ];
 
             if ($this->asetk->save($post)) {
-                session()->setFlashdata('success', 'Data berhasil di edit.');
+                session()->setFlashdata('success', 'Data berhasil di edit update.');
                 return redirect()->to(base_url('admin/suratkeluar'));
             } else {
                 session()->setFlashdata('error', 'Data Gagal di simpan.');
@@ -253,13 +253,16 @@ class Suratkeluar extends BaseController
             if ($existingData) {
                 $tgl = date("Y-m-d");
                 $post = [
+                    // 'id' => '1',
+
+                    //'serial'            => $this->request->getVar('serial'),
+                    //'tgl_keluar'           => $tgl,
                     'id_sk'            => '1',
-                    'serial'            => $this->request->getVar('serial'),
-                    'tgl'           => $tgl,
                 ];
 
-                if ($this->asetk->save($post)) {
-                    session()->setFlashdata('success', 'Data berhasil di simpan.');
+                if ($this->aset->updateDatax($serial, $post)) {
+                    // if ($this->suratkeluar->updateDatax($post)) {
+                    session()->setFlashdata('success', 'Data berhasil di simpan PUSING.');
                     return redirect()->to(base_url('admin/suratkeluar/add'));
                 } else {
                     session()->setFlashdata('error', 'Data Sudah Terdaftar !');
@@ -297,7 +300,7 @@ class Suratkeluar extends BaseController
     }
     public function savesuratkeluar()
     {
-       
+
         $tgl = date("Y-m-d");
         $serial = $this->request->getVar('nomor');
         $existingData = $this->suratkeluar->where('nomor', $serial)->first();
@@ -319,8 +322,16 @@ class Suratkeluar extends BaseController
                 'status'            => $this->request->getVar('status')
                 //'tahun_pelajaran' => $this->tp->tahun,
             ];
+            $postask = [
+                //'id_sk'            => '1',
+                'id_sk'       =>  $this->request->getVar('nomor'),
+                'ket'            => $this->request->getVar('ket'),
+                'stock'            => $this->request->getVar('status'),
+                'tgl_keluar'           => $tgl,
 
-            if ($this->suratkeluar->save($post) & $this->asetk->save($post) ) {
+            ];
+
+            if ($this->suratkeluar->save($post) && $this->aset->insertno_sk($postask)) {
 
                 session()->setFlashdata('success', 'Data berhasil di simpan surat keluar ' . $serial . 'MASA !');
                 return redirect()->to(base_url('admin/suratkeluar'));
@@ -333,9 +344,14 @@ class Suratkeluar extends BaseController
             return redirect()->to(base_url('admin/suratkeluar'));
         }
     }
-    public function delete_asetk($id)
+    public function delete_asetk($serial)
     {
-        if ($this->asetk->delete($id)) {
+        $post = [
+            //'id_sk'            => '1',
+            'id_sk'       => '',
+
+        ];
+        if ($this->aset->updateDatax($serial, $post)) {
             session()->setFlashdata('success', 'Data berhasil di hapus.');
             return redirect()->to(base_url('admin/suratkeluar/add'));
         } else {

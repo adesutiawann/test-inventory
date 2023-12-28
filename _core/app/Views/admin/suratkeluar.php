@@ -9,7 +9,7 @@ use PhpParser\Node\Expr\Print_;
 
 $menu = $aktiv;
 
-$con = new mysqli("localhost", "root", "", "absensi_walikelas") or die(mysqli_error($con));
+$con = new mysqli("localhost", "root", "", "db_inventory") or die(mysqli_error($con));
 // $submenu = $segment[2];
 ?>
 <style>
@@ -69,8 +69,8 @@ $con = new mysqli("localhost", "root", "", "absensi_walikelas") or die(mysqli_er
 <nav id="orders-table-tab" class="orders-table-tab app-nav-tabs nav shadow-sm flex-column flex-sm-row mb-1" role="tablist">
 
     <a class="flex-sm-fill text-sm-center nav-link <?= ($menu == 'ALL') ? 'active' : '' ?>" href="<?= base_url('admin/suratkeluar') ?>" aria-controls="orders-all" aria-selected="false">All</a>
-    <a class="flex-sm-fill text-sm-center nav-link <?= ($menu == 'OK') ? 'active' : '' ?>" href="<?= base_url('admin/suratkeluar/ok/OK') ?>" aria-controls="orders-paid" aria-selected="false">Oke</a>
-    <a class="flex-sm-fill text-sm-center nav-link <?= ($menu == 'RUSAK') ? 'active' : '' ?>" href="<?= base_url('admin/suratkeluar/ok/RUSAK') ?>" role="tab" aria-controls="orders-pending" aria-selected="true">Rusak</a>
+    <a class="flex-sm-fill text-sm-center nav-link <?= ($menu == 'OK') ? 'active' : '' ?>" href="<?= base_url('admin/suratkeluar/ok/OK') ?>" aria-controls="orders-paid" aria-selected="false">Terdistribusi</a>
+    <a class="flex-sm-fill text-sm-center nav-link <?= ($menu == 'RUSAK') ? 'active' : '' ?>" href="<?= base_url('admin/suratkeluar/ok/RUSAK') ?>" role="tab" aria-controls="orders-pending" aria-selected="true">Backup</a>
     <a class="flex-sm-fill text-sm-center nav-link <?= ($menu == 'BLANKS') ? 'active' : '' ?>" href="<?= base_url('admin/suratkeluar/ok/BLANKS') ?>" role="tab" aria-controls="orders-cancelled" aria-selected="true" tabindex="-1">Blank</a>
 </nav>
 
@@ -107,11 +107,11 @@ $con = new mysqli("localhost", "root", "", "absensi_walikelas") or die(mysqli_er
                             </td>
                             <td>
                                 <?php
-                                $guru = mysqli_query($con, "SELECT * FROM tb_asetk where serial='" . $id . "' ");
+                                $guru = mysqli_query($con, "SELECT * FROM tb_aset WHERE tb_aset.id_sk = '$id'");
                                 $non = 1;
                                 foreach ($guru as $g) {
 
-                                    echo $non++ . '. ' . $g['serial'] . '<br>';
+                                    echo $non++ . '. ' . $g['type'] . '-<B>' . $g['serial'] . '</B><br>';
                                 }
                                 ?>
 
@@ -136,15 +136,16 @@ $con = new mysqli("localhost", "root", "", "absensi_walikelas") or die(mysqli_er
 
 
 
-                            <td>
-                                <a href="<?= base_url('admin/suratkeluar/sk_edit/' . $value->nomor) ?>" class="btn btn-sm btn-info text-white mt-2 mr-2">
+                            <td width="15%">
+                                <a href="<?= base_url('admin/suratkeluar/sk_edit/' . $value->id) ?>" onclick="printPage()" class="btn btn-sm btn-primary text-white  mr-2">
+                                    <i class="fa-solid fa-print"></i>
+                                </a>
+                                <a href="<?= base_url('admin/suratkeluar/sk_edit/' . $value->id) ?>" class="btn btn-sm btn-info text-white  mr-2">
                                     <i class="fa-solid fa-pen-to-square"></i>
                                 </a>
-                                <a href="<?= base_url('admin/suratkeluar/delete_sk/' . $value->nomor) ?>" class="btn btn-sm btn-danger text-white" onclick="return confirm('Yakin ingin menghapus?')">
+                                <a href="<?= base_url('admin/suratkeluar/delete_sk/' . $value->id) ?>" class="btn btn-sm btn-danger text-white" onclick="return confirm('Yakin ingin menghapus?')">
                                     <i class="fa-solid fa-trash-can"></i>
                                 </a>
-
-
                             </td>
                         </tr>
                     <?php endforeach ?>

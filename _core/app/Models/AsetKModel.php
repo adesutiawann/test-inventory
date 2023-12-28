@@ -40,4 +40,13 @@ class AsetKModel extends Model
     $query = $builder->get();
     return $query->getResult();
   }
+  public function updateData($data)
+  {
+    $tgl = '2';
+    $this->where('id_sk', $tgl);
+    $this->set($data);
+
+    return $this->update();
+  }
+ 
 }

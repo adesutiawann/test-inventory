@@ -108,7 +108,7 @@
 
 
                                         <td class="cell text-center ">
-                                            <a class="" href="<?= base_url('admin/suratkeluar/delete_asetk/' . $value->id) ?>">
+                                            <a class="" href="<?= base_url('admin/suratkeluar/delete_asetk/' . $value->serial) ?>">
                                                 <i class="fa-solid fa-trash-can text-danger"></i> </a>
                                             </a>
                                         </td>
