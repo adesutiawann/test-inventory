@@ -5,52 +5,100 @@
 
 <?= $this->section('content') ?>
 
-<h1 class="app-page-title"><?= $title ?></h1>
+<div class="app-content pt-3 p-md-3 p-lg-4">
+    <div class="container-xl">
+        <h1 class="app-page-title"><?= $title ?></h1>
+        <hr class="mb-4">
+        <div class="row g-4 settings-section">
 
-<div class="app-card app-card-settings shadow-sm mb-4">
-    <div class="app-card-body p-4">
-        <?php if (session()->getFlashData('error')) : ?>
-            <div class="alert alert-danger">
-                <?= session()->getFlashData('error') ?>
-            </div>
-        <?php endif ?>
-        <?php if (session()->getFlashData('success')) : ?>
-            <div class="alert alert-success">
-                <?= session()->getFlashData('success') ?>
-            </div>
-        <?php endif ?>
+            <div class="col-12 col-md-8">
+                <div class="app-card app-card-settings shadow-sm p-4">
 
-        <div class="row">
-            <div class="col-md-5">
-                <form method="POST" action="<?= base_url('admin/user/save') ?>" class="settings-form">
-                    <input type="hidden" name="id" value="<?= $user->id ?>">
-                    <div class="mb-3">
-                        <label for="setting-input-2" class="form-label">Username</label>
-                        <input type="text" name="username" class="form-control" value="<?= $user->username ?>" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="setting-input-2" class="form-label">Nama</label>
-                        <input type="text" name="nama" class="form-control" value="<?= $user->nama ?>" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="setting-input-2" class="form-label">Nomor Whatsapp</label>
-                        <input type="text" name="whatsapp" class="form-control" value="<?= $user->whatsapp ?>" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="setting-input-2" class="form-label">Akses Login</label>
-                        <select name="level" class="form-select">
-                            <option value="1" <?= ($user->level == '1') ? 'selected' : '' ?>>Administrator</option>
-                            <option value="2" <?= ($user->level == '2') ? 'selected' : '' ?>>Guru</option>
-                        </select>
-                    </div>
-                    <div class="mb-3">
-                        <input type="submit" class="btn btn-primary" value="Simpan">
-                    </div>
-                </form>
-            </div>
-        </div>
+                    <div class="app-card-body">
+                        <form method="POST" action="<?= base_url('admin/user/save') ?>" class="settings-form card-body">
+                            <input type="hidden" name="id" value="<?= $user->id ?>">
 
-    </div>
+                            <div class="col-md-3 mb-1">
+                                <strong>Add Account</strong>
+                            </div>
+                            <hr>
+                            <div class="mb-3 row">
+                                <div class="col-2 col-md-2">
+                                    <label for="setting-input-1" class="form-label">NIK</label>
+                                </div>
+                                <div class="col-10 col-md-10">
+                                    <input name="nik" type="text" value="<?= $user->nik ?>" class="form-control" placeholder="JN123" required>
+                                </div>
+                            </div>
+                            <div class="mb-3 row">
+                                <div class="col-2 col-md-2">
+                                    <label for="setting-input-1" class="form-label">Nama</label>
+                                </div>
+                                <div class="col-10 col-md-10">
+                                    <input name="nama" type="text" value="<?= $user->nama ?>" class="form-control" placeholder="Andika" required="">
+                                </div>
+                            </div>
+                            <div class="mb-3 row">
+                                <div class="col-2 col-md-2">
+                                    <label for="setting-input-1" class="form-label">Telpon</label>
+                                </div>
+                                <div class="col-10 col-md-10">
+                                    <input name="whatsapp" type="text" value="<?= $user->whatsapp ?>" class="form-control" placeholder="+62" required="">
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="mb-3 row">
+                                <div class="col-2 col-md-2">
+                                    <label for="setting-input-1" class="form-label">Username</label>
+                                </div>
+                                <div class="col-10 col-md-10">
+                                    <input name="username" type="text" value="<?= $user->username ?>" class="form-control" placeholder="Andika" required="">
+                                </div>
+                            </div>
+                            <div class="mb-3 row">
+                                <div class="col-2 col-md-2">
+                                    <label for="setting-input-1" class="form-label">Password</label>
+                                </div>
+                                <div class="col-10 col-md-10">
+                                    <input name="password" type="text" value="<?= $user->password ?>" class="form-control" placeholder="******" required="">
+                                </div>
+                            </div>
+                            <div class="mb-3 row">
+                                <div class="col-2 col-md-2">
+                                    <label for="setting-input-1" class="form-label">Level</label>
+                                </div>
+                                <div class="col-10 col-md-10">
+                                    <select name="level" class="form-select col-10" required>
+                                        <option class="text-danger" value="">Pilih Level </option>
+
+                                        <option value="1" <?= ($user->level == '1') ? 'selected' : '' ?>>Administrator</option>
+                                        <option value="2" <?= ($user->level == '2') ? 'selected' : '' ?>>Staff</option>
+                                        <option value="3" <?= ($user->level == '3') ? 'selected' : '' ?>>Tamu</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="text-end">
+
+                                <button type="submit" class="btn app-btn-primary">Save Changes</button>
+                            </div>
+                        </form>
+                    </div><!--//app-card-body-->
+
+                </div><!--//app-card-->
+            </div>
+            <div class="col-12 col-md-4">
+                <h3 class="section-title">Registrasi</h3>
+                <div class="section-intro">
+                    Langkah-langkah registrasi ini diperlukan agar pengguna dapat mengakses layanan atau fitur yang disediakan oleh platform tersebut. Tujuan dari registrasi akun adalah untuk mengidentifikasi pengguna secara unik dan memberikan akses yang terbatas sesuai dengan hak akses yang diberikan kepada akun tersebut.</div>
+            </div>
+        </div><!--//row-->
+
+        <hr class="my-4">
+    </div><!--//container-fluid-->
+</div>
+
+</div>
 </div>
 
 <?= $this->endSection() ?>

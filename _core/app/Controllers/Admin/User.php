@@ -78,7 +78,7 @@ class User extends BaseController
         }
 
         $data = [
-            'title'   => 'Edit Admin & Wali Kelas',
+            'title'   => 'Edit Account',
             'segment' => $this->request->uri->getSegments(),
             'admin'   => $this->admin->find(session()->get('id')),
             'user'    => $this->admin->find($id),
@@ -99,8 +99,12 @@ class User extends BaseController
                 'id'       => $this->request->getVar('id'),
                 'nik' => $this->request->getVar('nik'),
 
-                'username' => $this->request->getVar('username'),
                 'nama'     => $this->request->getVar('nama'),
+
+
+                'username' => $this->request->getVar('username'),
+                'password'     => $this->request->getVar('password'),
+                //'password' => password_hash($this->request->getVar('username'), PASSWORD_BCRYPT),
                 'whatsapp' => $this->request->getVar('whatsapp'),
                 'level'    => $this->request->getVar('level'),
                 'tgl'           =>  $tgl,
@@ -108,10 +112,10 @@ class User extends BaseController
 
             if ($this->admin->save($post) === false) {
                 session()->setFlashdata('error', 'Gagal menyimpan data.');
-                return redirect()->to(base_url('admin/user/edit/' . $this->request->getVar('id')));
+                return redirect()->to(base_url('admin/user'));
             } else {
                 session()->setFlashdata('success', 'Data berhasil disimpan.');
-                return redirect()->to(base_url('admin/user/edit/' . $this->request->getVar('id')));
+                return redirect()->to(base_url('admin/user'));
             }
         } else {
             $post = [
