@@ -9,7 +9,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta name="description" content="Aplikasi laporan absensi wali kelas">
+    <meta name="description" content="Aplikasi Inventory">
     <meta name="author" content="DukunWeb">
     <link rel="shortcut icon" href="<?= base_url() ?>/logoks.png">
 
@@ -143,7 +143,7 @@
 
 
                             <!--//nav-link-->
-                            <div id="submenu-1" class="collapse submenu submenu-1 <?= ($menu == 'aset' || $menu == 'monitor' || $menu == 'keyboard' || $menu == 'mouse' || $menu == 'laptop') ? 'show' : '' ?>"" data-bs-parent=" #menu-accordion">
+                            <div id="submenu-1" class="collapse submenu submenu-1 <?= ($menu == 'aset' || $menu == 'monitor' || $menu == 'keyboard' || $menu == 'mouse' || $menu == 'laptop' || $menu == 'printer') ? 'show' : '' ?>"" data-bs-parent=" #menu-accordion">
                                 <ul class="submenu-list list-unstyled">
 
 
@@ -285,7 +285,7 @@
 
 
                             <!--//nav-link-->
-                            <div id="submenu-2" class="collapse submenu submenu-2 <?= ($menu == 'manufacture' || $menu == 'type' || $menu == 'port' || $menu == 'prosesor' || $menu == 'generasi' || $menu == 'hdd' || $menu == 'ram' || $menu == 'rincian' || $menu == 'status' || $menu == 'stok' || $menu == 'kondisi') ? 'show' : '' ?>"" data-bs-parent=" #menu-accordion">
+                            <div id="submenu-2" class="collapse submenu submenu-2 <?= ($menu == 'manufacture' || $menu == 'type' || $menu == 'port' || $menu == 'prosesor' || $menu == 'generasi' || $menu == 'hdd' || $menu == 'ram' || $menu == 'rincian' || $menu == 'status' || $menu == 'stok' || $menu == 'kondisi' || $menu == 'port') ? 'show' : '' ?>" data-bs-parent=" #menu-accordion">
                                 <ul class="submenu-list list-unstyled">
 
 
@@ -302,7 +302,7 @@
                                         <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
                                         <a class="submenu-link <?= ($menu == 'type') ? 'active' : '' ?>"" href=" <?= base_url('admin/type') ?>">
 
-                                            <span class="nav-link-text">Type</span>
+                                            <span class="nav-link-text">Type Printer</span>
                                         </a>
                                         <!--//nav-link-->
                                     </li>
@@ -375,7 +375,7 @@
 
                                     <li class="submenu-item">
                                         <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-                                        <a class="submenu-link <?= ($menu == 'Port') ? 'active' : '' ?>"" href=" <?= base_url('admin/Port') ?>">
+                                        <a class="submenu-link <?= ($menu == 'port') ? 'active' : '' ?>" href=" <?= base_url('admin/port') ?>">
 
                                             <span class="nav-link-text">Port</span>
                                         </a>

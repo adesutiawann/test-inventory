@@ -9,7 +9,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta name="description" content="Aplikasi laporan absensi wali kelas">
+    <meta name="description" content="Aplikasi Inventory">
     <meta name="author" content="DukunWeb">
     <link rel="shortcut icon" href="<?= base_url() ?>/logo.png">
 

@@ -9,7 +9,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta name="description" content="Aplikasi laporan absensi wali kelas">
+    <meta name="description" content="Aplikasi Inventory">
     <meta name="author" content="DukunWeb">
     <link rel="shortcut icon" href="<?= base_url() ?>/logo.png">
 
@@ -40,18 +40,18 @@
                             </a>
                         </div>
                         <!--//col-->
-                      
+
                         <div class="app-utilities col-auto">
-                     
+
 
                             <div class="app-utility-item app-user-dropdown dropdown">
 
-                            <span class="text-dark pr-4">Hi,<strong><?= $admin->nama ?></strong></span>
+                                <span class="text-dark pr-4">Hi,<strong><?= $admin->nama ?></strong></span>
                                 <a class="dropdown-toggle" id="user-dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">
-                                 
-                              </a>
 
-                                    
+                                </a>
+
+
                                 <ul class="dropdown-menu" aria-labelledby="user-dropdown-toggle">
                                     <li><a class="dropdown-item" href="<?= base_url('walikelas/profile') ?>">Update Profile</a></li>
                                     <li><a class="dropdown-item" href="<?= base_url('walikelas/profile/password') ?>">Ganti Password</a></li>
@@ -77,7 +77,7 @@
             <div class="sidepanel-inner d-flex flex-column">
                 <a href="#" id="sidepanel-close" class="sidepanel-close d-xl-none">&times;</a>
                 <div class="app-branding">
-                    <a class="app-logo" href="#"><img class="logo-icon me-2" src="<?= base_url() ?>/assets/images/users/nopic.png" alt="logo"><span class="logo-text">INVENTORY  </span></a>
+                    <a class="app-logo" href="#"><img class="logo-icon me-2" src="<?= base_url() ?>/assets/images/users/nopic.png" alt="logo"><span class="logo-text">INVENTORY </span></a>
 
                 </div>
                 <!--//app-branding-->
@@ -103,16 +103,16 @@
                         <!--//nav-item-->
 
                         <li class="nav-item">
-                       
+
                             <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
                             <a class="nav-link <?= ($menu == 'jadwal') ? 'active' : '' ?>"" href=" <?= base_url('walikelas/jadwalku') ?>">
-                            <i class="bi-calendar-week nav-icon"></i>
+                                <i class="bi-calendar-week nav-icon"></i>
                                 <span class="nav-link-text">Jadwal Mengajar</span>
                             </a>
                             <!--//nav-link-->
                         </li>
                         <?php if ($walikelas) : ?>
-                            
+
                             <li class="nav-item has-submenu">
                                 <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
                                 <a class="nav-link submenu-toggle" href="#" data-bs-toggle="collapse" data-bs-target="#submenu-1" aria-expanded="false" aria-controls="submenu-1">

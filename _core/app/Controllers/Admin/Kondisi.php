@@ -6,21 +6,21 @@ use \Hermawan\DataTables\DataTable;
 
 use App\Controllers\BaseController;
 use App\Models\AdminModel;
-use App\Models\PortModel;
+use App\Models\kondisiModel;
 use App\Models\SiswaModel;
 //use App\Models\PelajaranModel;
 
-class Port extends BaseController
+class Kondisi extends BaseController
 {
     protected $admin;
-    protected $port;
+    protected $kondisi;
     protected $siswa;
     //  protected $pelajaran;
 
     public function __construct()
     {
         $this->admin     = new AdminModel();
-        $this->port = new PortModel();
+        $this->kondisi = new kondisiModel();
         $this->siswa     = new SiswaModel();
 
         // $this->pelajaran     = new PelajaranModel();
@@ -33,38 +33,38 @@ class Port extends BaseController
         }
 
         $data = [
-            'title'   => 'port',
+            'title'   => 'kondisi',
             'segment' => $this->request->uri->getSegments(),
             'admin'   => $this->admin->find(session()->get('id')),
             // 'mapel'    => $this->admin->orderBy('mapel', 'asc')->findAll(),
             // 'kelas'   => $this->siswa->groupBy('kelas')->findAll(),
 
             //  $id='',
-            'port'    => $this->port->findAll(),
-            //'nama'   => $this->port->select('nama'),
+            'kondisi'    => $this->kondisi->findAll(),
+            //'nama'   => $this->kondisi->select('nama'),
             //perintah hiden insert edit
             //'input'   => '',
             //'edit'   => 'disabled',
 
         ];
 
-        return view('admin/port', $data);
+        return view('admin/kondisi', $data);
     }
 
     public function data()
     {
         $db = db_connect();
-        $builder = $db->table('tb_port');
+        $builder = $db->table('tb_kondisi');
         // ->select('tb_mapel');
-        //->join('admin', 'admin.id=port.guru')
+        //->join('admin', 'admin.id=kondisi.guru')
         // ->orderBy('mapel', 'desc');
 
         return DataTable::of($builder)
             ->add('action', function ($row) {
-                return '<a href="' . base_url('admin/port/edit/' . $row->id) .
+                return '<a href="' . base_url('admin/kondisi/edit/' . $row->id) .
                     '" class="btn btn-sm btn-info text-white">
 <i class="fa-solid fa-pen-to-square"></i></a> 
-                <a href="' . base_url('admin/port/delete/' . $row->id) .
+                <a href="' . base_url('admin/kondisi/delete/' . $row->id) .
                     '" class="btn btn-sm btn-danger text-white" onclick="return confirm(\'Yakin?\')"><i class="fa-solid fa-trash-can"></i></a>';
             })
             ->addNumbering('no')->toJson(true);
@@ -84,7 +84,7 @@ class Port extends BaseController
 
         $data = [
 
-            'title'   => 'Edit port',
+            'title'   => 'Edit kondisi',
             'input'   => 'hidden',
             'edit'   => '',
             'ade' => '1',
@@ -92,11 +92,11 @@ class Port extends BaseController
             'segment' => $this->request->uri->getSegments(),
             //'pel'   => $this->admin->find(session()->get('id')),
 
-            'port'    => $this->port->find($id),
-            'nama'   => $this->port->select('nama'),
+            'kondisi'    => $this->kondisi->find($id),
+            'nama'   => $this->kondisi->select('nama'),
         ];
 
-        return view('admin/port', $data);
+        return view('admin/kondisi', $data);
     }
 
     public function save()
@@ -107,33 +107,33 @@ class Port extends BaseController
 
             $post = [
                 'id'       => $this->request->getVar('id'),
-                'port'            => $this->request->getVar('nama'),
+                'kondisi'            => $this->request->getVar('nama'),
                 'tgl'           => $tgl,
                 //'tahun_pelajaran' => $this->tp->tahun,
             ];
 
-            if ($this->port->save($post)) {
+            if ($this->kondisi->save($post)) {
                 session()->setFlashdata('success', 'Data berhasil di edit.');
-                return redirect()->to(base_url('admin/port'));
+                return redirect()->to(base_url('admin/kondisi'));
             } else {
                 session()->setFlashdata('error', 'Data Gagal di simpan.');
-                return redirect()->to(base_url('admin/port'));
+                return redirect()->to(base_url('admin/kondisi'));
             }
         } else {
             // $tgl= date("Y-m-d");
             $post = [
-                'port'            => $this->request->getVar('nama'),
+                'kondisi'            => $this->request->getVar('nama'),
                 'tgl'           =>  $tgl,
                 //'kelas'           => $this->request->getVar('kelas'),
-                //'tahun_port' => $this->tp->tahun,
+                //'tahun_kondisi' => $this->tp->tahun,
             ];
 
-            if ($this->port->save($post)) {
+            if ($this->kondisi->save($post)) {
                 session()->setFlashdata('success', 'Data berhasil di simpan.');
-                return redirect()->to(base_url('admin/port'));
+                return redirect()->to(base_url('admin/kondisi'));
             } else {
                 session()->setFlashdata('error', 'Data Sudah Terdaftar !');
-                return redirect()->to(base_url('admin/port'));
+                return redirect()->to(base_url('admin/kondisi'));
             }
         }
     }
@@ -151,22 +151,22 @@ class Port extends BaseController
             //'tahun_pelajaran' => $this->tp->tahun,
         ];
 
-        if ($this->port->save($post)) {
+        if ($this->kondisi->save($post)) {
             session()->setFlashdata('success', 'Data berhasil di edit.');
-            return redirect()->to(base_url('admin/port'));
+            return redirect()->to(base_url('admin/kondisi'));
         } else {
             session()->setFlashdata('error', 'Data Gagal di simpan.');
-            return redirect()->to(base_url('admin/port'));
+            return redirect()->to(base_url('admin/kondisi'));
         }
     }
     public function delete($id)
     {
-        if ($this->port->delete($id)) {
+        if ($this->kondisi->delete($id)) {
             session()->setFlashdata('success', 'Data berhasil di hapus.');
-            return redirect()->to(base_url('admin/port'));
+            return redirect()->to(base_url('admin/kondisi'));
         } else {
             session()->setFlashdata('danger', 'Data berhasil di hapus.');
-            return redirect()->to(base_url('admin/port'));
+            return redirect()->to(base_url('admin/kondisi'));
         }
     }
 }

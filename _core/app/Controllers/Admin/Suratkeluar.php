@@ -117,6 +117,24 @@ class Suratkeluar extends BaseController
         ];
         return view('admin/suratkeluar', $data);
     }
+    public function print()
+    {
+        $id = urldecode($this->request->getGet('id'));
+        $nomor = urldecode($this->request->getGet('nomor'));
+        $data = [
+            'title'   => 'Print',
+            // 'id' = urldecode($this->request->getGet('id')),
+            //'nomor' = urldecode($this->request->getGet('nomor')),
+            'segment' => $this->request->uri->getSegments(),
+            'admin'   => $this->admin->find(session()->get('id')),
+
+            'aset' =>  $this->aset->where('id_sk', $nomor)->findAll(),
+            //'aset'    => $this->asetk->getId($id),
+            'suratkeluar' => $this->suratkeluar->where('id', $id)->findAll(),
+
+        ];
+        return view('admin/cetak', $data);
+    }
     public function add()
     {
         if (session()->get('logged_admin') != true) {

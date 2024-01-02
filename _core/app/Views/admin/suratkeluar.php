@@ -37,23 +37,13 @@ $con = new mysqli("localhost", "root", "", "db_inventory") or die(mysqli_error($
         <?php endif ?>
 
         <div class="row ">
-            <div class="col-6 ml-4">
-                <a href="<?= base_url('admin/suratkeluar/add') ?>" class="btn app-btn-primary mb-3 text-white"><i class="fas fa-plus"></i> Tambah Asets</a>
+            <div class="col-10 ml-4">
+                <a href="<?= base_url('admin/suratkeluar/add') ?>" class="btn app-btn-primary mb-3 text-white"><i class="fas fa-plus"></i> Creat Surat Keluar</a>
 
             </div>
-            <div class="col-3">
-                <form class="row g-3 ">
-
-                    <div class="col">
-                        <input type="file" class="form-control" id="inputPassword2" placeholder="Password">
-                    </div>
-                    <div class="col "> <button type="submit" class="btn app-btn-secondary"><i class="fa-solid fa-arrow-up-from-bracket"></i> Upload</button>
-                    </div>
-                </form>
-            </div>
 
 
-            <div class="col-3">
+            <div class="col-2">
                 <a class="btn app-btn-secondary" href="#">
                     <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-download me-1" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                         <path fill-rule="evenodd" d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"></path>
@@ -137,9 +127,11 @@ $con = new mysqli("localhost", "root", "", "db_inventory") or die(mysqli_error($
 
 
                             <td width="15%">
-                                <a href="<?= base_url('admin/suratkeluar/sk_edit/' . $value->id) ?>" onclick="printPage()" class="btn btn-sm btn-primary text-white  mr-2">
+                                <a href="<?= base_url('admin/suratkeluar/print?id=' . urlencode($value->id) . '&nomor=' . urlencode($value->nomor)) ?>" target="_blank" class="btn btn-sm btn-primary text-white mr-2">
                                     <i class="fa-solid fa-print"></i>
                                 </a>
+
+
                                 <a href="<?= base_url('admin/suratkeluar/sk_edit/' . $value->id) ?>" class="btn btn-sm btn-info text-white  mr-2">
                                     <i class="fa-solid fa-pen-to-square"></i>
                                 </a>

@@ -1,482 +1,234 @@
-<?php
-session_start();
-if (isset($_SESSION['ses_nama']) == "") {
-    header("location: login.php");
-} else {
-    $data_id = $_SESSION["ses_id"];
-    $data_nama = $_SESSION["ses_nama"];
-    $data_level = $_SESSION["ses_level"];
-    
-};                                       
-include "../../inc/koneksi.php";
+<!DOCTYPE html>
+<html lang="en">
 
-
-function rupiah($angka)
-{
-
-    $hasil_rupiah = "" . number_format($angka, 0, ',', '.');
-    return $hasil_rupiah;
-}
-function rprupiah($angka)
-{
-
-    $hasil_rupiah = " <small>Rp.</small>" . number_format($angka, 2, ',', '.');
-    return $hasil_rupiah;
-}
-                                 
-                                         ?>
-
-<?php
- //$set=$_GET['set'];
- //$pb=$_GET['pb'];
-$date=$_GET['daterange'];  
-   // $koneksi = new mysqli ("localhost","root","","db_sinarjaya");
-                           
-                                         ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title><?= $title ?></title>
 
-<link rel="icon" type="image/png" sizes="16x16" href="../../images/favicon.png">
-<title>Laporan </title>
-<style type="text/css">
+    <!-- Meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-#judula {
- width:100%;
- margin-bottom:20px;
- text-align:center;
-}
-#judull a{
- width:100%;
- margin-bottom:20px;
- text-align:right;
- margin-top: auto;
-}
+    <meta name="description" content="Aplikasi Inventory">
+    <meta name="author" content="DukunWeb">
+    <link rel="shortcut icon" href="<?= base_url() ?>/logoks.png">
 
-</style>
+    <!-- FontAwesome JS-->
+    <script defer src="<?= base_url() ?>/assets/plugins/fontawesome/js/all.min.js"></script>
 
-<link href="../../vendor/datatables/css/jquery.dataTables.min.css" rel="stylesheet">
-    <link href="../../vendor/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet">
-<link rel="stylesheet" href="Style.css" type="text/css" />
-<link rel="canonical" href="https://fontawesome.com" />
 
-    <link href="../../css/style.css" rel="stylesheet">
+    <!-- App CSS -->
+    <link id="theme-style" rel="stylesheet" href="<?= base_url() ?>/assets/css/portal.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
+    <?= $this->renderSection('css') ?>
+    <!-- App DATA TABEL -->
+
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap5.min.css">
 </head>
 
-<body>
- 
-<div id='contentwrapper' class='contentwrapper mt-4'>
-  
+<body class="app p-2">
+    <script>
+        // Mengeksekusi fungsi pencetakan otomatis setelah halaman dimuat
+        window.onload = function() {
+            // Mengeksekusi fungsi pencetakan
+            printDocument();
+        };
+
+        // Fungsi pencetakan
+        function printDocument() {
+            // Membuka jendela pencetakan
+            window.print();
+        }
+    </script>
+
+    <?php
+
+    use App\Controllers\Admin\Manufacture;
+    use PhpParser\Node\Expr\Print_;
 
 
 
+    $con = new mysqli("localhost", "root", "", "db_inventory") or die(mysqli_error($con));
+    // $submenu = $segment[2];
+    ?>
+    <style>
+        /* Contoh CSS untuk menentukan lebar dan tinggi textarea */
+        textarea {
+            width: 300px;
+            /* Lebar textarea */
+            height: 100px;
+            /* Tinggi textarea */
+        }
+    </style>
+    <h1 class="app-page-title"></h1>
 
-<div class="row">
-                    <div class="col-xl-12">
-                        <div class="card">
-                            <div class="card-header ">
+    <div class="app-card app-card-accordion s mb-4 rounded-5  " onclick="print()">
+        <div class="app-card-body p-3">
 
-                            <div class="d-flex align-items-center mb-3 mr-3">
-                            
-                            <img src="../../images/logo.png" class="text-right " width="15%" alt=""  /> 
-											<div class="mr-auto ml-4">
-												<h2 class="fs-20 text-black font-w600 mt-2">
-                                                <?PHP
-                                                if ($_GET['data']==0) {
-                                                    echo'LAPORAN DATA BUKU';
-                                                }elseif ($_GET['data']==1) {
-                                                    echo'LAPORAN DATA PENGUNJUNG';
-                                                }
-                                                elseif ($_GET['data']==2) {
-                                                    echo'LAPORAN DATA PEMINJAMAN';
-                                                }
-                                                elseif ($_GET['data']==3) {
-                                                    echo'LAPORAN DATA PENGEMBALIAN';
-                                                }
-                                                elseif ($_GET['data']==4) {
-                                                    echo'LAPORAN DATA ANGGOTA';
-                                                }else{
-                                                    echo'LAPORAN DATA PERPUSTAKAAN';
-                                                }
-                                                ?>
- </h2>
-												
-                                                <H2 class="fs-bold">SDIT AL-HANIF<H2></div>
-										</div>
-                               
-                               
-                            </div>
+            <div class="row ">
+                <div class="col-12 ml-4 text-center">
+                    <img class="logo-icon me-2" width="50%" src="<?= base_url() ?>/assets/images/logofull.png" alt="logo">
+
+                </div>
+                <div class="col-12 ml-4 text-center mb-3 mt-3">
+                    <h5 class="mt-3">MEMO DINAS</h5>
+                    <h5 class="">Nomor : 001/PRX-MSI/KITEC/XI/2024 </h5>
+                </div>
+                <div class="col-12 ml-4  MT-3 mb-4">
 
 
-<div class="card-body">
-	<!-- pengunjung-->
-<?PHP
-if ($_GET['data']==1) {
-?>
-<table class="table header-border" onclick="print()">
-                                        <thead>
-                                            <tr  class="thead-primary">
-                                            <th>No</th>
-											<th>NISN</th>
-											<th>Siswa</th>
-											<th>Date/Time</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-										<?php
-										$no = 1;
-										$sql = $koneksi->query("select * from tb_pengunjung where tgl_in BETWEEN $date ORDER BY id DESC ");
-										while ($data = $sql->fetch_assoc()) {
-										?>
-											<tr>
-												<td>
-													<?php echo $no++; ?>
-												</td>
-												<td>
-											
-													<b><?php echo $data['nisn']; ?></b>
+                    <h6> Kepada : Pos Keamanan PT. Krakatu IT <br>
+                        Dari : Leader Workshop <br>
+                        Perihal : Ijin Keluar/Masuk Barang<br>
+                        Tanggal : <?= date("d F Y") ?></h6>
 
-												</td>
-												<td class="sorting_1">
-												<?php
-										$no = 1;
-										//$sql1_cek="select * from tb_siswa where nisn='".$data['nisn']."'";
-                                        $sql_cek = "SELECT * FROM tb_siswa WHERE nisn='".$data['nisn']."'";
-                                        //$data1 = mysqli_fetch_array($sql1,MYSQLI_BOTH);
-										$query_cek = mysqli_query($koneksi, $sql_cek);
-                                        $data_cekk = mysqli_fetch_array($query_cek,MYSQLI_BOTH);
-										?>
-													<?php echo $data_cekk['nama']; ?><br>
-													<?php echo $data_cekk['jk']; ?> / KLS:<?php echo $data_cekk['kelas']; ?><br>
-													TL :<?php echo $data_cekk['tgl_lahir']; ?>
-                                       
-												</td>
-												<td>
-													<?php echo  $data['tgl_in']; ?>
-												</td>
-												
-												
-
-											</tr>
-
-										<?php
-										}
-										?>
-
-									</tbody>
-                                    </table>
+                </div>
 
 
-<!-- buku-->		<?PHP
-}elseif ($_GET['data']==0) {
-?>
+                <div class="col-12 ml-4  MT-3">
+                    <h6>Mohon bantuan ijin keluar barang berupa :</h6>
 
-									<table class="table header-border" onclick="print()">
-                                        <thead>
-                                            <tr  class="thead-primary">
-											<th>No</th>
-                                            <th>Judul </th>
-                                            <th>Pengarang </th>
-                                            <th>Penerbit</th>
-                                            <th>Jumlah Buku</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-										<?php
-                                        $no = 1;
-                                        $sql = $koneksi->query("select * from tb_buku");
-                                        while ($data = $sql->fetch_assoc()) {
-                                        ?>
-                                            <tr>
-                                                <td>
-                                                  <?php echo $no++; ?>
-                                                </td>
-                                                
-                                                <td>
-                                                    <?php echo $data['judul']; ?><br>
-                                                         <?php
-                                                          $sql_cek = "SELECT * FROM tb_kategori WHERE id='" . $data['id_kategori'] . "'";
-                                                            $query_cek = mysqli_query($koneksi, $sql_cek);
-                                                            $data_cek = mysqli_fetch_array($query_cek, MYSQLI_BOTH);
-                                                        echo $data_cek['kategori']; 
-                                                        ?><br>
-                                                             
-                                                                   <?php echo $data['tahun']; ?><br>
-                                              </td>
-                                              
-                                                <td>
-                                                <?php echo $data['pengarang']; ?><br>
-                                                </td>
+                    <table class="table table-bordered  border border-black">
 
-                                                <td>
-                                              
-                                              <?php echo $data['penerbit']; ?><br>
-                                                </td>
+                        <thead>
+                            <tr>
+                                <th scope="col">No</th>
+                                <th scope="col">Nama Barang</th>
+                                <th scope="col">Jumlah</th>
+                                <th scope="col">Satuan</th>
+                                <th scope="col">Keterangan</th>
+                            </tr>
+                        </thead>
+                        <tbody>
 
-                                                <td>
-                                                    Rak : <?php echo $data['rak']; ?><br>
-                                                Jumlah : <?php echo $data['jumlah']; ?><br>
-                                                </td>
+                            <?php
+                            $no = 1;
+                            foreach ($aset as $key => $value) :
 
-                                                        
-                                                
-                                            </tr>
+                            ?>
+                                <tr>
+                                    <th scope="row"><?= $no++ ?></th>
+                                    <td><?= $value->type . ' ' . $value->manufacture . ' ' . $value->generasi . ' SN : <b>' . $value->serial ?></b></td>
+                                    <td>Satuan </td>
+                                    <td>Untit</td>
+                                    <td><?= $value->ket ?></td>
+                                </tr>
+                            <?php
+                            endforeach ?>
+                        </tbody>
 
-                                        <?php
-                                        }
-                                        ?>
-									</tbody>
-                                    </table>
+                    </table>
+                </div>
 
-<!-- pinjam -->	<?PHP
-}elseif ($_GET['data']==2) {
-?>
+                <div class="col-12 ml-4  MT-3">
+                    <table class="table table-bordered">
 
-									<table class="table header-border" onclick="print()">
-                                        <thead>
-                                            <tr  class="thead-primary">
-											<th>No</th>
-                                            <th>No.Pinjam</th>
-                                            <th>Judul </th>
-                                            <th>Nama Siswa</th>
-                                            <th>Waktu</th>
-                                            <th>Status</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-										<?php
-                                        $no = 1;
-                                        $sql = $koneksi->query("select * from tb_pinjam where setatus=0 && tgl_pinjam BETWEEN $date");
-                                        while ($data = $sql->fetch_assoc()) {
-                                        ?>
-                                            <tr>
-                                                <td>
-                                                  <?php echo $no++; ?>
-                                                </td>
-                                                
-                                                <td>
-                                                    <?php echo $data['id']; ?><br>
-                                                        
-                                              </td>
-                                              
-                                                <td>
-                                                <?php
-                                                          $sql_cek = "SELECT * FROM tb_buku WHERE id='" . $data['id_buku'] . "'";
-                                                            $query_cek = mysqli_query($koneksi, $sql_cek);
-                                                            $data_cek = mysqli_fetch_array($query_cek, MYSQLI_BOTH);
-                                                        echo $data_cek['judul'].'<br>Pengarang :'. 
-                                                        $data_cek['pengarang'].'<br>Penerbit : '. 
-                                                        $data_cek['penerbit']; 
-                                                        ?><br>
-                                                </td>
+                        <thead>
+                            <tr>
+                                <th scope="col">NO</th>
+                                <th scope="col">Nama Penerima</th>
+                                <th scope="col">NIK</th>
+                                <th scope="col">Unit Kerja/ Lokasi </th>
+                                <th scope="col">Telpon</th>
+                                <th scope="col">Tanda tangan </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            $no = 1;
+                            foreach ($suratkeluar as $key => $value) :
 
-                                                <td>
-                                                <?php
-                                                          $sql_cek1 = "SELECT * FROM tb_siswa WHERE nisn='" . $data['id_siswa'] . "'";
-                                                            $query_cek1 = mysqli_query($koneksi, $sql_cek1);
-                                                            $data_cek1 = mysqli_fetch_array($query_cek1, MYSQLI_BOTH);
-                                                        echo $data_cek1 ['nama']; 
-                                                        ?>
-                                                </td>
+                            ?>
+                                <tr>
+                                    <th scope="row">1</th>
+                                    <td> <?= $value->penerima ?></td>
+                                    <td> <?= $value->nik ?></td>
+                                    <td> <?= $value->lokasi ?></td>
+                                    <td> <?= $value->telpon ?></td>
+                                    <td></td>
+                                </tr>
+                            <?php endforeach ?>
+                        </tbody>
 
-                                                <td>
-                                                Tgl.Pinjam  : <?php echo $data['tgl_pinjam']; ?>  s/d <?php echo $data['tgl_kembali']; ?><br>
-                                               
-                                                </td>
+                    </table>
+                    <h6>Demikian yang dapat disampaikan terima kasih.</h6>
 
-                                                      <td>
-                                                      <span class="badge light badge-warning ml-3">
-														<i class="fa fa-circle text-warning mr-1"></i>
-														di Pinjam
-													</span>
-                                                      
-                                                      </td>  
-                                                
-                                            </tr>
+                </div>
 
-                                        <?php
-                                        }
-                                        ?>
+                <div class="col-12 ml-4 text-end mt-4 mb-4">
+                    <h6 class="mb-3"> Manage Service 1 </h6>
+                    <br>
 
-									</tbody>
-                                    </table>
-	<!-- pengembalian-->			<?PHP
-}elseif ($_GET['data']==3) {
-?>
-
-									<table class="table header-border" onclick="print()">
-                                        <thead>
-                                            <tr  class="thead-primary">
-											<th>No</th>
-                                            <th>No.Pinjam</th>
-                                            <th>Judul </th>
-                                            <th>Nama Siswa</th>
-                                            <th>Waktu</th>
-                                            <th>Status</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-										<?php
-                                        $no = 1;
-                                        $sql = $koneksi->query("select * from tb_pinjam where setatus=1 && tgl_dikembalikan BETWEEN $date");
-                                        while ($data = $sql->fetch_assoc()) {
-                                        ?>
-                                            <tr>
-                                                <td>
-                                                  <?php echo $no++; ?>
-                                                </td>
-                                                
-                                                <td>
-                                                    <?php echo $data['id']; ?><br>
-                                                        
-                                              </td>
-                                              
-                                                <td>
-                                                <?php
-                                                          $sql_cek = "SELECT * FROM tb_buku WHERE id='" . $data['id_buku'] . "'";
-                                                            $query_cek = mysqli_query($koneksi, $sql_cek);
-                                                            $data_cek = mysqli_fetch_array($query_cek, MYSQLI_BOTH);
-                                                            echo $data_cek['judul'].'<br>Pengarang :'. 
-                                                            $data_cek['pengarang'].'<br>Penerbit : '. 
-                                                            $data_cek['penerbit']; 
-                                                        ?><br>
-                                                </td>
-
-                                                <td>
-                                                <?php
-                                                          $sql_cek1 = "SELECT * FROM tb_siswa WHERE nisn='" . $data['id_siswa'] . "'";
-                                                            $query_cek1 = mysqli_query($koneksi, $sql_cek1);
-                                                            $data_cek1 = mysqli_fetch_array($query_cek1, MYSQLI_BOTH);
-                                                        echo $data_cek1 ['nama']; 
-                                                        ?>
-                                                </td>
-
-                                                <td>
-                                                Tgl.Pinjam  : <?php echo $data['tgl_pinjam']; ?>  s/d <?php echo $data['tgl_kembali']; ?><br>
-                                                Tgl.Dikembalikan : <?php echo $data['tgl_dikembalikan']; ?><br>
-                                                <?php 
-                                                $tgl1 = new DateTime($data['tgl_kembali']);
-                                                $tgl2 = new DateTime($data['tgl_dikembalikan']);
-
-                                                //$tgl1 = new DateTime("2020-01-01");
-                                                //$tgl2 = new DateTime("2020-01-05");
-
-                                                if($tgl1>$tgl2){
-                                                            
-                                                }else{
-                                                    $jarak = $tgl2->diff($tgl1);
-                                                   
-                                                    echo "  Total Denda ".$jarak->d." Hari :".rprupiah($jarak->d*1000);
-                                                   
-                                                }
-                                               ?>
-                                                </td>
-
-                                                      <td>
-                                                      <span class="badge light badge-success ml-3">
-														<i class="fa fa-circle text-success mr-1"></i>
-														di Kembalikan
-													</span>
-                                                      </td>   
-                                                
-                                            </tr>
-
-                                        <?php
-                                        }
-                                        ?>
-
-									</tbody>
-                                    </table>
-	<!-- sisswa-->								<?PHP
-}else  {
-?>
-<table class="table header-border" onclick="print()">
-                                        <thead>
-                                            <tr  class="thead-primary">
-											<th>No</th>
-											<th>NISN</th>
-											<th>Nama</th>
-                                            <th>No.Whatsapp</th>
-											<th>Tgl.Lahir</th>
-											<th>Kelas</th>
-											<th>Alamat</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-										<?php
-										$no = 1;
-										$sql = $koneksi->query("select * from tb_siswa ");
-										while ($data = $sql->fetch_assoc()) {
-										?>
-											<tr>
-												<td>
-													<?php echo $no++; ?>
-												</td>
-												<td>
-											
-													<?php echo $data['nisn']; ?>
-
-												</td>
-												<td class="sorting_1">
-												
-													<?php echo $data['nama']; ?><br>
-													<?php echo $data['jk']; ?>
-													
-
-												</td>
-												<td>
-													<?php echo $data['nowa']; ?>
-												</td>
-                                                <td>
-													<?php echo $data['tgl_lahir']; ?>
-												</td>
-												<td>
-													<?php echo $data['kelas']; ?>
-												</td>
-												<td>
-												<?php echo $data['alamat']; ?>
-												</td>
-												
-
-											</tr>
-
-										<?php
-										}
-										?>
-									</tbody>
-                                    </table>
+                    <h6 class="mt-3"> Harris Permana </h6>
+                    <h6> Leader Workshop</h6>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
-		<?PHP
-}
-?>
 
-  <div>
-  
-	  <?php
-    $tgl = date("d/M/Y");
-?>
-<hr color="#eee" /> 
-</div>
-    <div id="judull" class ="text-right mt-4 mb-4">
+    </div>
+    </div>
+    </div>
+    </div>
+    <!-- your_view.php -->
 
-   
-<text class="mr-4">Serang, <?=$tgl;?></text><br />
-<text class="mr-4">Set.<?php if($data_level=="1"){echo 'Administrator'; }else{ echo 'Petugas'; } ?></text><br/><br/><br/>
-<text class="mr-2">____________________ </text><br />
-<text class="mr-5"><?=$data_nama;?> </text><br />
-</div>
-</div>
- 
- </div>
+    <!-- Tambahkan jQuery jika belum ada -->
 
- 
+    <!-- Tambahkan elemen anchor (link) -->
 
-	  
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+
+    <!-- Tambahkan skrip JavaScript -->
+
+
+
+    <!-- Javascript -->
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="<?= base_url() ?>/assets/plugins/popper.min.js"></script>
+    <script src="<?= base_url() ?>/assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+
+    <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap5.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            {
+                $('#tabel1').DataTable()
+            }
+
+        })
+    </script>
+
+    <script>
+        function convertToUppercase(input) {
+            input.value = input.value.toUpperCase();
+        }
+    </script>
+    <script>
+        document.getElementById('capitalizeInput').addEventListener('input', function() {
+            this.value = this.value.replace(/\b\w/g, function(match) {
+                return match.toUpperCase();
+            });
+        });
+    </script>
+    <script>
+        document.getElementById('sentenceCaseInput').addEventListener('input', function() {
+            this.value = this.value.replace(/(^|\.\s+|\!\s+|\?\s+)([a-z])/g, function(match) {
+                return match.toUpperCase();
+            });
+        });
+    </script>
+
+
+    <!-- Charts JS -->
+    <!-- <script src="<?= base_url() ?>/assets/plugins/chart.js/chart.min.js"></script> -->
+    <!-- <script src="<?= base_url() ?>/assets/js/index-charts.js"></script> -->
+
+    <!-- Page Specific JS -->
+    <script src="<?= base_url() ?>/assets/js/app.js"></script>
+
+    <?= $this->renderSection('js') ?>
 
 </body>
 
 </html>
-

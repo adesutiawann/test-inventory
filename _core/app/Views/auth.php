@@ -3,7 +3,7 @@
 
 
 <head>
-	<title>Laporan Absensi Wali Kelas</title>
+	<title>INVENTORY</title>
 
 	<!-- Meta -->
 	<meta charset="utf-8">
