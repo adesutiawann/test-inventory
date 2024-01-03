@@ -158,7 +158,11 @@ $menu = $aktiv;
                                     <?= $value->ket ?><br>
                                 </span>
                             </td>
-                            <td>
+                            <td width="15%" <?= ($admin->level == '3') ? 'hidden' : '' ?>>
+
+                                <a href="<?= base_url('admin/aset/view/' . $value->id) ?>" s class="btn btn-sm btn-primary text-white mr-2">
+                                    <i class="fa-solid fa-circle-info"></i>
+                                </a>
                                 <a href="<?= base_url('admin/laptop/edit/' . $value->id) ?>" class="btn btn-sm btn-info text-white ">
                                     <i class="fa-solid fa-pen-to-square"></i>
                                 </a>

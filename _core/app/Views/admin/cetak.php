@@ -22,7 +22,15 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
     <?= $this->renderSection('css') ?>
     <!-- App DATA TABEL -->
-
+    <style>
+        /* Menambahkan warna hitam pada border tabel */
+        .table-bordered thead,
+        .table-bordered td,
+        .table-bordered tr,
+        .table-bordered th {
+            border-color: #000;
+        }
+    </style>
     <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap5.min.css">
 </head>
 
@@ -88,15 +96,15 @@
                 <div class="col-12 ml-4  MT-3">
                     <h6>Mohon bantuan ijin keluar barang berupa :</h6>
 
-                    <table class="table table-bordered  border border-black">
+                    <table class="table table-bordered  ">
 
                         <thead>
                             <tr>
-                                <th scope="col">No</th>
-                                <th scope="col">Nama Barang</th>
-                                <th scope="col">Jumlah</th>
-                                <th scope="col">Satuan</th>
-                                <th scope="col">Keterangan</th>
+                                <td scope="col "><strong>No </strong></td>
+                                <td scope="col "><strong>Nama Barang</strong></td>
+                                <td scope="col "><strong>Jumlah</strong></td>
+                                <td scope="col "><strong>Satuan</strong></td>
+                                <td scope="col "><b>Keterangan</b></td>
                             </tr>
                         </thead>
                         <tbody>
@@ -125,12 +133,12 @@
 
                         <thead>
                             <tr>
-                                <th scope="col">NO</th>
-                                <th scope="col">Nama Penerima</th>
-                                <th scope="col">NIK</th>
-                                <th scope="col">Unit Kerja/ Lokasi </th>
-                                <th scope="col">Telpon</th>
-                                <th scope="col">Tanda tangan </th>
+                                <td scope="col"><b>No</b></td>
+                                <td scope="col"><b>Nama Penerima</b></td>
+                                <td scope="col"><b>NIK</b></td>
+                                <td scope="col"><b>Unit Kerja/ Lokasi </b></td>
+                                <td scope="col"><b>Telpon</b></td>
+                                <td scope="col"><b>Tanda tangan</b> </td>
                             </tr>
                         </thead>
                         <tbody>

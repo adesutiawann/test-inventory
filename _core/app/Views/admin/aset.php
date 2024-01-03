@@ -23,25 +23,7 @@ $menu = $aktiv;
 </style>
 <h1 class="app-page-title"><?= $title ?></h1>
 
-<div class="inner">
-    <div class="app-card-body p-4">
-        <div class="row gx-5 gy-3">
-            <div class="col-12 col-lg-9">
 
-                <div>You can use <a href="https://www.chartjs.org/" target="_blank">Chart.js</a> to create charts for your app. To configure the charts on this page you can edit the relevant JavaScript file: <code>assets/js/charts-demo.js</code> </div>
-            </div><!--//col-->
-            <div class="col-12 col-lg-3">
-                <a class="btn app-btn-primary" href="https://www.chartjs.org/docs/latest/" target="_blank"><svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-arrow-up-right-square me-2" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                        <path fill-rule="evenodd" d="M14 1H2a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"></path>
-                        <path fill-rule="evenodd" d="M5.172 10.828a.5.5 0 0 0 .707 0l4.096-4.096V9.5a.5.5 0 1 0 1 0V5.525a.5.5 0 0 0-.5-.5H6.5a.5.5 0 0 0 0 1h2.768l-4.096 4.096a.5.5 0 0 0 0 .707z"></path>
-                    </svg>Learn More</a>
-            </div><!--//col-->
-        </div><!--//row-->
-
-    </div><!--//app-card-body-->
-
-</div>
-----
 <div class="app-card app-card-accordion shadow-sm mb-4" <?= ($admin->level == '3') ? 'hidden' : '' ?>>
     <div class="app-card-body p-4">
         <?php if (session()->getFlashData('error')) : ?>
@@ -116,7 +98,7 @@ $menu = $aktiv;
                         <th>Spesifikasi</th>
 
                         <th>Status</th>
-                        <th>Tanggal</th>
+                        <th>Pengguna</th>
 
                         <th>Keterangan</th>
                         <th <?= ($admin->level == '3') ? 'hidden' : '' ?>>Action</th>
@@ -131,7 +113,15 @@ $menu = $aktiv;
                     ?>
                         <tr class="table-<?= ($value->kondisi == 'OK') ? 'success ' : (($value->kondisi == 'RUSAK') ? 'warning' : 'danger') ?>">
                             <td><?= $no++ ?></td>
-                            <td><b><?= $value->serial ?></b></td>
+                            <td><b><?= $value->serial ?></b><br>
+                                In :
+                                <span class="text-success">
+                                    <?= $value->tgl_masuk ?><br>
+                                </span>Out :
+                                <span class="text-danger">
+                                    <?= $value->tgl_keluar ?><br>
+                                </span>
+                            </td>
                             <td>
                                 <b> <?= $value->manufacture ?></b><br>
                                 Type : <?= $value->type ?>
@@ -152,12 +142,12 @@ $menu = $aktiv;
                             </td>
 
                             <td>
-                                In :
-                                <span class="text-success">
-                                    <?= $value->tgl_masuk ?><br>
-                                </span>Out :
-                                <span class="text-danger">
-                                    <?= $value->tgl_keluar ?><br>
+                                User :
+                                <span>
+                                    <?= $value->user ?> <br>
+                                </span>Lokasi :
+                                <span>
+                                    <?= $value->lokasi ?><br>
                                 </span>
                             </td>
                             <td>
@@ -167,7 +157,7 @@ $menu = $aktiv;
                             </td>
                             <td width="15%" <?= ($admin->level == '3') ? 'hidden' : '' ?>>
 
-                                <a href="<?= base_url('admin/suratkeluar/view/' . $value->id) ?>" s class="btn btn-sm btn-primary text-white mr-2">
+                                <a href="<?= base_url('admin/aset/view/' . $value->id) ?>" s class="btn btn-sm btn-primary text-white mr-2">
                                     <i class="fa-solid fa-circle-info"></i>
                                 </a>
                                 <a href="<?= base_url('admin/aset/edit/' . $value->id) ?>" class="btn btn-sm btn-info text-white ">

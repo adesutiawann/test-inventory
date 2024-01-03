@@ -43,10 +43,7 @@ class aset extends BaseController
     {
         $this->admin     = new AdminModel();
         $this->aset = new AsetModel();
-        $this->siswa     = new SiswaModel();
-
-        // $this->pelajaran     = new PelajaranModel();
-
+       
         $this->manufacture = new ManufactureModel;
         $this->type = new TypeModel;
         $this->prosesor = new ProsesorModel;
@@ -125,6 +122,30 @@ class aset extends BaseController
             'stock'    => $this->stok->orderBy('nama', 'asc')->findAll(),
         ];
         return view('admin/asetadd', $data);
+    }
+
+    public function view()
+    {
+        if (session()->get('logged_admin') != true) {
+            return redirect()->to(base_url());
+        }
+
+        $data = [
+            'title'   => 'Ditails',
+            'segment' => $this->request->uri->getSegments(),
+            'admin'   => $this->admin->find(session()->get('id')),
+            'nama'    => $this->manufacture->orderBy('nama', 'asc')->findAll(),
+            'type' => $this->type->where('nama', 'pc')->orderBy('nama', 'asc')->findAll(),
+            'prosesor'    => $this->prosesor->orderBy('nama', 'asc')->findAll(),
+            'generasi'    => $this->generasi->orderBy('nama', 'asc')->findAll(),
+            'hdd'    => $this->hdd->orderBy('nama', 'asc')->findAll(),
+            'ram'    => $this->ram->orderBy('nama', 'asc')->findAll(),
+            'rincian'    => $this->rincian->orderBy('nama', 'asc')->findAll(),
+            'status'    => $this->status->orderBy('nama', 'asc')->findAll(),
+            'kondisi'    => $this->kondisi->orderBy('nama', 'asc')->findAll(),
+            'stock'    => $this->stok->orderBy('nama', 'asc')->findAll(),
+        ];
+        return view('admin/view', $data);
     }
     public function edit($id)
     {
