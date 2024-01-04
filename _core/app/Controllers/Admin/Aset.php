@@ -7,7 +7,7 @@ use \Hermawan\DataTables\DataTable;
 use App\Controllers\BaseController;
 use App\Models\AdminModel;
 use App\Models\AsetModel;
-use App\Models\SiswaModel;
+use App\Models\RiwayatModel;
 
 use App\Models\ManufactureModel;
 use App\Models\TypeModel;
@@ -27,7 +27,7 @@ class aset extends BaseController
 {
     protected $admin;
     protected $aset;
-
+    protected $riwayat;
     protected $manufacture;
     protected $type;
     protected $prosesor;
@@ -43,7 +43,7 @@ class aset extends BaseController
     {
         $this->admin     = new AdminModel();
         $this->aset = new AsetModel();
-       
+        $this->riwayat = new RiwayatModel;
         $this->manufacture = new ManufactureModel;
         $this->type = new TypeModel;
         $this->prosesor = new ProsesorModel;
@@ -124,7 +124,7 @@ class aset extends BaseController
         return view('admin/asetadd', $data);
     }
 
-    public function view()
+    public function view($id)
     {
         if (session()->get('logged_admin') != true) {
             return redirect()->to(base_url());
@@ -144,6 +144,8 @@ class aset extends BaseController
             'status'    => $this->status->orderBy('nama', 'asc')->findAll(),
             'kondisi'    => $this->kondisi->orderBy('nama', 'asc')->findAll(),
             'stock'    => $this->stok->orderBy('nama', 'asc')->findAll(),
+
+            'riwayat' => $this->riwayat->where('serial', $id)->findAll(),
         ];
         return view('admin/view', $data);
     }
@@ -177,11 +179,11 @@ class aset extends BaseController
     {
         // $tgl = date("Y-m-d");
         if ($this->request->getVar('id')) {
-
+            //s$tgl = date("Y-m-d");
             $post = [
                 'id'       => $this->request->getVar('id'),
                 'manufacture'            => $this->request->getVar('manufacture'),
-                'type'            => $this->request->getVar('type'),
+                // 'type'            => $this->request->getVar('type'),
                 'prosesor'            => $this->request->getVar('prosesor'),
                 'generasi'            => $this->request->getVar('generasi'),
                 'hdd'            => $this->request->getVar('hdd'),
@@ -194,9 +196,29 @@ class aset extends BaseController
                 'tgl_masuk'            => $this->request->getVar('masuk'),
                 'tgl_keluar'            => $this->request->getVar('keluar'),
                 'serial'            => $this->request->getVar('serial'),
+                'user'            => $this->request->getVar('user'),
+                'lokasi'            => $this->request->getVar('lokasi'),
             ];
 
-            if ($this->aset->save($post)) {
+            $tgl = date("Y-m-d");
+            // $admin = $this->Admin_model->find($this->session->userdata('id'));
+            $admin   = $this->admin->find(session()->get('id'));
+            $postx = [
+                //'id'       => $this->request->getVar('id'),      
+
+                'serial'            => $this->request->getVar('id'),
+                'tgl'            => $tgl,
+                'ket'            => $this->request->getVar('ketupdate'),
+                'user'            => $this->request->getVar('user'),
+                'lokasi'            => $this->request->getVar('lokasi'),
+                //'teknisi'   => $this->admin->find(session()->get('id')),
+                'teknisi'   => $admin->nama,
+            ];
+            if (
+                $this->aset->save($post) &&
+                $this->riwayat->save($postx)
+            ) {
+                //saveriwayat();
                 session()->setFlashdata('success', 'Data berhasil di edit.');
                 return redirect()->to(base_url('admin/aset'));
             } else {
@@ -233,6 +255,61 @@ class aset extends BaseController
         }
     }
 
+    public function process()
+    {
+        // Validate the form data (add validation rules as needed)
+        $validation = \Config\Services::validation();
+        $validation->setRules([
+            'images' => 'uploaded[images]|max_size[images,10240]|mime_in[images,image/jpg,image/jpeg,image/png]'
+        ]);
+
+        if (!$validation->withRequest($this->request)->run()) {
+            return redirect()->to('/upload')->withInput()->with('errors', $validation->getErrors());
+        }
+
+        // Handle image upload
+        $uploadedFiles = $this->request->getFiles('images');
+
+        foreach ($uploadedFiles as $file) {
+            if ($file->isValid() && !$file->hasMoved()) {
+                $newName = $file->getRandomName();
+                $file->move('./assets/images/aset/', $newName);
+                // You can save the file name or other relevant information to the database here
+            }
+        }
+
+        session()->setFlashdata('success', 'Data berhasil di edit.');
+        return redirect()->to(base_url('admin/aset'));
+    }
+
+    public function saveriwayat()
+    {
+        // $tgl = date("Y-m-d");
+        // if ($this->request->getVar('id')) {
+        $tgl = date("Y-m-d");
+
+        $post = [
+            //'id'       => $this->request->getVar('id'),      
+
+            'serial'            => $this->request->getVar('serial'),
+            'tgl'            => $tgl,
+            'ket'            => $this->request->getVar('ketupdate'),
+            'user'            => $this->request->getVar('user'),
+            'lokasi'            => $this->request->getVar('lokasi'),
+            //'teknisi'   => $this->admin->find(session()->get('id')),
+            'teknisi'   => 'Ade Sutiawan',
+        ];
+
+        if ($this->riwayat->save($post)) {
+
+            //  $this->riwayat->save($postr);
+            session()->setFlashdata('success', 'Data berhasil di edit.');
+            return redirect()->to(base_url('admin/aset'));
+        } else {
+            session()->setFlashdata('error', 'Data Gagal di simpan.');
+            return redirect()->to(base_url('admin/aset'));
+        }
+    }
     public function import()
     {
         $file = $this->request->getFile('file_excel');

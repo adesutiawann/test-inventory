@@ -109,26 +109,20 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <th scope="row">1</th>
-                    <td>23 Januari 2023 </td>
-                    <td>Update Ram Dari 4 GB Menjadi 8 GB</td>
-                    <td>Rina Dewi </td>
-                    <td>Div.Keuangan KTI</td>
-                    <td>Arkan</td>
-                </tr>
-                <tr>
-                    <th scope="row">2</th>
-                    <td>15 Januari 2024</td>
-                    <td>Ganti Hardisk Menjadi SSD 450 GB</td>
-                    <td>Bragas</td>
-                </tr>
-                <tr>
-                    <th scope="row">3</th>
-                    <td>2 Januari 2024</td>
-                    <td>Ganti LCD </td>
-                    <td>Ade Sutiawan</td>
-                </tr>
+                <?php
+                $no = 1;
+                foreach ($riwayat as $key => $value) :
+
+                ?>
+                    <tr>
+                        <th scope="row"><?= $no++ ?></th>
+                        <td><?= $value->tgl ?> </td>
+                        <td><?= $value->ket ?> </td>
+                        <td><?= $value->user ?> </td>
+                        <td><?= $value->lokasi ?> </td>
+                        <td><?= $value->teknisi ?> </td>
+                    </tr>
+                <?php endforeach ?>
             </tbody>
         </table>
     </main>

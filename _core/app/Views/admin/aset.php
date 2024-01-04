@@ -100,7 +100,7 @@ $menu = $aktiv;
                         <th>Status</th>
                         <th>Pengguna</th>
 
-                        <th>Keterangan</th>
+                        <th>Deskripsi</th>
                         <th <?= ($admin->level == '3') ? 'hidden' : '' ?>>Action</th>
                     </tr>
                 </thead>

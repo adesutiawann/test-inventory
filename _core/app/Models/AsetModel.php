@@ -14,7 +14,7 @@ class AsetModel extends Model
   protected $protectFields    = true;
   protected $allowedFields    = [
     'id', 'id_sk', 'tgl_masuk', 'tgl_keluar', 'manufacture', 'type', 'prosesor',
-    'generasi', 'port', 'serial', 'hdd', 'ram', 'rincian', 'status', 'stock', 'kondisi', 'ket'
+    'generasi', 'port', 'serial', 'hdd', 'ram', 'rincian', 'status', 'stock', 'kondisi', 'ket', 'user', 'lokasi'
   ];
 
 
