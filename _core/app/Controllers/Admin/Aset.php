@@ -19,7 +19,7 @@ use App\Models\RincianModel;
 use App\Models\StatusModel;
 use App\Models\StokModel;
 use App\Models\KondisiModel;
-//use App\Models\PelajaranModel;
+use App\Models\ImagesModel;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
@@ -38,6 +38,7 @@ class aset extends BaseController
     protected $status;
     protected $stok;
     protected $kondisi;
+    protected $images;
 
     public function __construct()
     {
@@ -54,6 +55,7 @@ class aset extends BaseController
         $this->status = new StatusModel;
         $this->stok = new StokModel;
         $this->kondisi = new KondisiModel;
+        $this->images = new ImagesModel;
     }
 
     public function index()
@@ -145,6 +147,7 @@ class aset extends BaseController
             'kondisi'    => $this->kondisi->orderBy('nama', 'asc')->findAll(),
             'stock'    => $this->stok->orderBy('nama', 'asc')->findAll(),
 
+            'images' => $this->images->where('serial', $id)->findAll(),
             'riwayat' => $this->riwayat->where('serial', $id)->findAll(),
         ];
         return view('admin/view', $data);
@@ -171,15 +174,50 @@ class aset extends BaseController
             'kondisi'    => $this->kondisi->orderBy('nama', 'asc')->findAll(),
             'stock'    => $this->stok->orderBy('nama', 'asc')->findAll(),
             'aset'    => $this->aset->find($id),
+            'images' => $this->images->where('serial', $id)->findAll(),
         ];
         return view('admin/asetedit', $data);
     }
 
     public function save()
     {
+        if (isset($_POST['Simpan'])) {
+            $tgl = date("Y-m-d");
+            $files = $this->request->getFileMultiple('foto');
+            $namaFiles = []; // Array untuk menyimpan nama-nama file
+
+            foreach ($files as $file) {
+                $nama = $file->getRandomName();
+                $file->move('uploads/kegiatan/', $nama);
+
+                // Simpan nama file ke dalam array
+                $namaFiles[] = $nama;
+            }
+
+            // Persiapkan data untuk disimpan ke dalam database
+            foreach ($namaFiles as $nama) {
+                $postData = [
+                    'tgl' => $tgl,
+                    'serial' => $this->request->getVar('id'),
+                    'image' => $nama,
+                ];
+
+                // Simpan data ke dalam database
+                if ($this->images->insert($postData) === false) {
+                    session()->setFlashdata('error', 'Data gagal disimpan.');
+                    return redirect()->to(base_url('admin/aset'));
+                }
+            }
+
+            session()->setFlashdata('success', 'Upload foto berhasil.');
+            return redirect()->to(base_url('admin/aset'));
+        } else {
+            session()->setFlashdata('success', 'PROSESS EDIT DATA ');
+            return redirect()->to(base_url('admin/aset'));
+        }
         // $tgl = date("Y-m-d");
         if ($this->request->getVar('id')) {
-            //s$tgl = date("Y-m-d");
+            //$tgl = date("Y-m-d");
             $post = [
                 'id'       => $this->request->getVar('id'),
                 'manufacture'            => $this->request->getVar('manufacture'),
@@ -385,6 +423,18 @@ class aset extends BaseController
             return redirect()->to(base_url('admin/aset'));
         }
     }
+
+    public function deleteimages($id)
+    {
+        if ($this->images->delete($id)) {
+            session()->setFlashdata('success', 'Foto berhasil di hapus.');
+            return redirect()->to(base_url('admin/aset/edit/' . $id));
+        } else {
+            session()->setFlashdata('danger', 'Data berhasil di hapus.');
+            return redirect()->to(base_url('admin/aset/edit/' . $id));
+        }
+    }
+
 
     public function downloadExcel()
     {

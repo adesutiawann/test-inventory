@@ -31,7 +31,7 @@
             </div>
         <?php endif ?>
 
-        <form action="<?= base_url('admin/aset/save') ?>" method="POST">
+        <form action="<?= base_url('admin/aset/save') ?>" method="POST" enctype="multipart/form-data">
             <div class="row">
                 <div class="col-md-12 mb-4">
                     <strong>Form Data Edit:</strong>
@@ -163,21 +163,17 @@
                         <div class="col-md-6">
                             <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
                                 <div class="carousel-inner">
-                                    <div class="carousel-item active">
-                                        <img src="<?= base_url() ?>/assets/images/aset/noimage.png" class="d-block w-100 rounded-1 " alt="Laptop 1">
-                                    </div>
-                                    <div class="carousel-item">
-                                        <img src="<?= base_url() ?>/assets/images/aset/leptop1.jpeg" class="d-block w-100" alt="Laptop 2">
-                                    </div>
-                                    <div class="carousel-item">
-                                        <img src="<?= base_url() ?>/assets/images/aset/leptop2.jpeg" class="d-block w-100 rounded-2" alt="Laptop 3">
-                                    </div>
-                                    <div class="carousel-item">
-                                        <img src="<?= base_url() ?>/assets/images/aset/leptop.jpeg" class="d-block w-100" alt="Laptop 4">
-                                    </div>
-                                    <div class="carousel-item">
-                                        <img src="<?= base_url() ?>/assets/images/aset/leptop2.jpeg" class="d-block w-100" alt="Laptop 5">
-                                    </div>
+                                    <?php if ($images == null) : ?>
+                                        <div class="carousel-item active">
+                                            <img src="<?= base_url() ?>/uploads/noimage.png" class="d-block w-100 rounded-1" alt="No Image">
+                                        </div>
+                                    <?php else : ?>
+                                        <?php foreach ($images as $key => $value) : ?>
+                                            <div class="carousel-item<?= $key == 0 ? ' active' : '' ?>">
+                                                <img src="<?= base_url() ?>/uploads/kegiatan/<?= $value->image ?>" class="d-block w-100 rounded-1" alt="Image <?= $key + 1 ?>">
+                                            </div>
+                                        <?php endforeach; ?>
+                                    <?php endif; ?>
                                 </div>
                                 <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
                                     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -189,14 +185,46 @@
                                 </button>
                             </div>
 
+                            <div class="row mt-4">
+                                <?php if ($images == null) : ?>
+                                    <div class="col">
+                                        <img src="<?= base_url() ?>/uploads/noimage.png" class="d-block w-100 rounded-1" alt="No Image" onclick="showImage('<?= base_url() ?>/uploads/noimage.png')">
+                                    </div>
+                                <?php else : ?>
+                                    <?php foreach ($images as $key => $value) : ?>
+                                        <div class="col">
+                                            <img src="<?= base_url() ?>/uploads/kegiatan/<?= $value->image ?>" class="d-block w-100 rounded-1" alt="Image <?= $key + 1 ?>" onclick="showImage('<?= base_url() ?>/uploads/kegiatan/<?= $value->image ?>')">
+                                            <a href="<?= base_url("admin/aset/deleteimages/{$value->id}") ?>" onclick="return confirm('Yakin ingin menghapus?')">
+                                                <i class="fa-solid fa-xmark text-danger"></i>
+                                            </a>
+                                        </div>
+
+                                    <?php endforeach; ?>
+                                <?php endif; ?>
+                            </div>
                         </div>
+
+                        <script>
+                            function showImage(imageUrl) {
+                                // Mengganti gambar di carousel dengan gambar yang diklik
+                                $('#carouselExampleIndicators .carousel-inner').html(`<div class="carousel-item active"><img src="${imageUrl}" class="d-block w-100 rounded-1" alt="Clicked Image"></div>`);
+                            }
+                        </script>
+
 
                         <div class="col-md-6">
                             <h2>XPS 13 Plus Laptop</h2>
                             <p class="lead"><b>Spesifikasi :</b> Prosesor Intel i5, RAM 8GB, SSD 256GB</p>
 
                             <hr>
+                            <div class="col-md-12">
+                                images
+                                <div class="input-group">
+                                    <input type="file" name="foto[]" multiple="multiple" class="form-control" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
+                                    <button class="btn btn-primary text-white" name="Simpan" type="SUBMIT" id="inputGroupFileAddon04">Upload</button>
 
+                                </div>
+                            </div>
 
                             <div class="col-md-12">
                                 User
@@ -207,14 +235,7 @@
                                 Lokasi
                                 <input type="text" name="lokasi" class="form-control" value="<?= $aset->lokasi ?>" required>
                             </div>
-                            <div class="col-md-12">
-                                images
 
-                                <div class="row">
-                                    <input type="file" name="image[]" multiple class="form-control">
-                                    <input type="submit" class="btn btn-primary text-white" value="upload">
-                                </div>
-                            </div>
                             <div class="col-md-12 mb-5">
                                 Keterangan Update
                                 <div class="form-floating">
@@ -238,10 +259,6 @@
 
 
 
-        <form action="<?= base_url('admin/aset/process') ?>" method="POST">
-            <input type="file" name="image[]" multiple class="form-control">
-            <input type="submit" class="btn btn-primary text-white" value="upload">
-        </form>
 
     </div>
 </div>
