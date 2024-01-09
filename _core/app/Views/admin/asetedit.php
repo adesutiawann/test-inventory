@@ -188,7 +188,6 @@
                             <div class="row mt-4">
                                 <?php if ($images == null) : ?>
                                     <div class="col">
-                                        <img src="<?= base_url() ?>/uploads/noimage.png" class="d-block w-100 rounded-1" alt="No Image" onclick="showImage('<?= base_url() ?>/uploads/noimage.png')">
                                     </div>
                                 <?php else : ?>
                                     <?php foreach ($images as $key => $value) : ?>
@@ -239,7 +238,7 @@
                             <div class="col-md-12 mb-5">
                                 Keterangan Update
                                 <div class="form-floating">
-                                    <textarea name="ketupdate" id="sentenceCaseInput" class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px"></textarea>
+                                    <textarea name="ketupdate" id="sentenceCaseInput" class="form-control" required placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px"></textarea>
                                     <label for="floatingTextarea2">Comments</label>
                                 </div>
 
@@ -261,6 +260,53 @@
 
 
     </div>
+</div>
+
+<div class="container-xl mt-3">
+    <h1 class="app-page-title">Riwayat</h1>
+</div><!--//container-fluid-->
+
+<main class="app-card app-card-settings shadow-sm p-4">
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Tanggal</th>
+                <th scope="col">Riwayat Update</th>
+                <th scope="col">User</th>
+                <th scope="col">Lokasi</th>
+                <th scope="col">Teknisi</th>
+                <th scope="col"><i class="fa-solid fa-trash "></i></th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php
+            $no = 1;
+            foreach ($riwayat as $key => $value) :
+
+            ?>
+                <tr>
+                    <th scope="row"><?= $no++ ?></th>
+                    <td><?= $value->tgl ?> </td>
+                    <td><?= $value->ket ?> </td>
+                    <td><?= $value->user ?> </td>
+                    <td><?= $value->lokasi ?> </td>
+                    <td><?= $value->teknisi ?> </td>
+                    <td width="" <?= ($admin->level == '3') ? 'hidden' : '' ?>>
+
+
+                        <a href="<?= base_url("admin/aset/deleteriwayat/{$value->id}") ?>" class="" onclick="return confirm('Yakin ingin menghapus?')">
+                            <i class="fa-solid fa-xmark text-danger"></i>
+
+                        </a>
+
+
+                    </td>
+                </tr>
+            <?php endforeach ?>
+        </tbody>
+    </table>
+</main>
 </div>
 
 <?= $this->endSection() ?>

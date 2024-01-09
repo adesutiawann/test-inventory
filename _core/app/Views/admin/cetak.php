@@ -85,10 +85,10 @@
                 <div class="col-12 ml-4  MT-3 mb-4">
 
 
-                    <h6> Kepada : Pos Keamanan PT. Krakatu IT <br>
-                        Dari : Leader Workshop <br>
-                        Perihal : Ijin Keluar/Masuk Barang<br>
-                        Tanggal : <?= date("d F Y") ?></h6>
+                    <h6> Kepada &nbsp; : &nbsp;Pos Keamanan PT. Krakatu IT <br>
+                        Dari &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: &nbsp;Leader Workshop <br>
+                        Perihal &nbsp;&nbsp;&nbsp;: &nbsp;Ijin Keluar/Masuk Barang<br>
+                        Tanggal &nbsp;: &nbsp;<?= date("d F Y") ?></h6>
 
                 </div>
 

@@ -101,7 +101,7 @@ $menu = $aktiv;
                         <th>Pengguna</th>
 
                         <th>Deskripsi</th>
-                        <th <?= ($admin->level == '3') ? 'hidden' : '' ?>>Action</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -155,18 +155,18 @@ $menu = $aktiv;
                                     <?= $value->ket ?><br>
                                 </span>
                             </td>
-                            <td width="15%" <?= ($admin->level == '3') ? 'hidden' : '' ?>>
+                            <td width="15%">
 
-                                <a href="<?= base_url('admin/aset/view/' . $value->id) ?>" s class="btn btn-sm btn-primary text-white mr-2">
+                                <a href="<?= base_url('admin/aset/view/' . $value->id) ?>" <?= ($admin->level == '3') ? 'hidden' : '' ?> class="btn btn-sm btn-primary text-white mr-2">
                                     <i class="fa-solid fa-circle-info"></i>
                                 </a>
+
                                 <a href="<?= base_url('admin/aset/edit/' . $value->id) ?>" class="btn btn-sm btn-info text-white ">
                                     <i class="fa-solid fa-pen-to-square"></i>
                                 </a>
                                 <a href="<?= base_url("admin/aset/delete/{$value->id}") ?>" class="btn btn-sm btn-danger text-white" onclick="return confirm('Yakin ingin menghapus?')">
                                     <i class="fa-solid fa-trash-can"></i>
                                 </a>
-
 
                             </td>
                         </tr>

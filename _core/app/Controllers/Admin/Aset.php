@@ -133,20 +133,11 @@ class aset extends BaseController
         }
 
         $data = [
-            'title'   => 'Ditails',
+            'title'   => 'Details',
             'segment' => $this->request->uri->getSegments(),
             'admin'   => $this->admin->find(session()->get('id')),
-            'nama'    => $this->manufacture->orderBy('nama', 'asc')->findAll(),
-            'type' => $this->type->where('nama', 'pc')->orderBy('nama', 'asc')->findAll(),
-            'prosesor'    => $this->prosesor->orderBy('nama', 'asc')->findAll(),
-            'generasi'    => $this->generasi->orderBy('nama', 'asc')->findAll(),
-            'hdd'    => $this->hdd->orderBy('nama', 'asc')->findAll(),
-            'ram'    => $this->ram->orderBy('nama', 'asc')->findAll(),
-            'rincian'    => $this->rincian->orderBy('nama', 'asc')->findAll(),
-            'status'    => $this->status->orderBy('nama', 'asc')->findAll(),
-            'kondisi'    => $this->kondisi->orderBy('nama', 'asc')->findAll(),
-            'stock'    => $this->stok->orderBy('nama', 'asc')->findAll(),
 
+            'aset' => $this->aset->where('id', $id)->findAll(),
             'images' => $this->images->where('serial', $id)->findAll(),
             'riwayat' => $this->riwayat->where('serial', $id)->findAll(),
         ];
@@ -175,6 +166,7 @@ class aset extends BaseController
             'stock'    => $this->stok->orderBy('nama', 'asc')->findAll(),
             'aset'    => $this->aset->find($id),
             'images' => $this->images->where('serial', $id)->findAll(),
+            'riwayat' => $this->riwayat->where('serial', $id)->findAll(),
         ];
         return view('admin/asetedit', $data);
     }
@@ -212,83 +204,82 @@ class aset extends BaseController
             session()->setFlashdata('success', 'Upload foto berhasil.');
             return redirect()->to(base_url('admin/aset'));
         } else {
-            session()->setFlashdata('success', 'PROSESS EDIT DATA ');
-            return redirect()->to(base_url('admin/aset'));
-        }
-        // $tgl = date("Y-m-d");
-        if ($this->request->getVar('id')) {
-            //$tgl = date("Y-m-d");
-            $post = [
-                'id'       => $this->request->getVar('id'),
-                'manufacture'            => $this->request->getVar('manufacture'),
-                // 'type'            => $this->request->getVar('type'),
-                'prosesor'            => $this->request->getVar('prosesor'),
-                'generasi'            => $this->request->getVar('generasi'),
-                'hdd'            => $this->request->getVar('hdd'),
-                'ram'            => $this->request->getVar('ram'),
-                'rincian'            => $this->request->getVar('rincian'),
-                'status'            => $this->request->getVar('status'),
-                'stock'            => $this->request->getVar('stock'),
-                'kondisi'            => $this->request->getVar('kondisi'),
-                'ket'            => $this->request->getVar('ket'),
-                'tgl_masuk'            => $this->request->getVar('masuk'),
-                'tgl_keluar'            => $this->request->getVar('keluar'),
-                'serial'            => $this->request->getVar('serial'),
-                'user'            => $this->request->getVar('user'),
-                'lokasi'            => $this->request->getVar('lokasi'),
-            ];
 
-            $tgl = date("Y-m-d");
-            // $admin = $this->Admin_model->find($this->session->userdata('id'));
-            $admin   = $this->admin->find(session()->get('id'));
-            $postx = [
-                //'id'       => $this->request->getVar('id'),      
+            // $tgl = date("Y-m-d");
+            if ($this->request->getVar('id')) {
+                //$tgl = date("Y-m-d");
+                $post = [
+                    'id'       => $this->request->getVar('id'),
+                    'manufacture'            => $this->request->getVar('manufacture'),
+                    // 'type'            => $this->request->getVar('type'),
+                    'prosesor'            => $this->request->getVar('prosesor'),
+                    'generasi'            => $this->request->getVar('generasi'),
+                    'hdd'            => $this->request->getVar('hdd'),
+                    'ram'            => $this->request->getVar('ram'),
+                    'rincian'            => $this->request->getVar('rincian'),
+                    'status'            => $this->request->getVar('status'),
+                    'stock'            => $this->request->getVar('stock'),
+                    'kondisi'            => $this->request->getVar('kondisi'),
+                    'ket'            => $this->request->getVar('ket'),
+                    'tgl_masuk'            => $this->request->getVar('masuk'),
+                    'tgl_keluar'            => $this->request->getVar('keluar'),
+                    'serial'            => $this->request->getVar('serial'),
+                    'user'            => $this->request->getVar('user'),
+                    'lokasi'            => $this->request->getVar('lokasi'),
+                ];
 
-                'serial'            => $this->request->getVar('id'),
-                'tgl'            => $tgl,
-                'ket'            => $this->request->getVar('ketupdate'),
-                'user'            => $this->request->getVar('user'),
-                'lokasi'            => $this->request->getVar('lokasi'),
-                //'teknisi'   => $this->admin->find(session()->get('id')),
-                'teknisi'   => $admin->nama,
-            ];
-            if (
-                $this->aset->save($post) &&
-                $this->riwayat->save($postx)
-            ) {
-                //saveriwayat();
-                session()->setFlashdata('success', 'Data berhasil di edit.');
-                return redirect()->to(base_url('admin/aset'));
+                $tgl = date("Y-m-d");
+                // $admin = $this->Admin_model->find($this->session->userdata('id'));
+                $admin   = $this->admin->find(session()->get('id'));
+                $postx = [
+                    //'id'       => $this->request->getVar('id'),      
+
+                    'serial'            => $this->request->getVar('id'),
+                    'tgl'            => $tgl,
+                    //'ket'            => $this->request->getVar('ketupdate'),
+                    'user'            => $this->request->getVar('user'),
+                    'lokasi'            => $this->request->getVar('lokasi'),
+                    //'teknisi'   => $this->admin->find(session()->get('id')),
+                    'teknisi'   => $admin->nama,
+                ];
+                if (
+                    $this->aset->save($post) &&
+                    $this->riwayat->save($postx)
+                ) {
+                    //saveriwayat();
+                    session()->setFlashdata('success', 'Data berhasil di edit.');
+                    return redirect()->to(base_url('admin/aset'));
+                } else {
+                    session()->setFlashdata('error', 'Data Gagal di simpan.');
+                    return redirect()->to(base_url('admin/aset'));
+                }
             } else {
-                session()->setFlashdata('error', 'Data Gagal di simpan.');
-                return redirect()->to(base_url('admin/aset'));
-            }
-        } else {
-            // $tgl= date("Y-m-d");
-            $post = [
-                'manufacture'            => $this->request->getVar('manufacture'),
-                'type'            => $this->request->getVar('type'),
-                'prosesor'            => $this->request->getVar('prosesor'),
-                'generasi'            => $this->request->getVar('generasi'),
-                'hdd'            => $this->request->getVar('hdd'),
-                'ram'            => $this->request->getVar('ram'),
-                'rincian'            => $this->request->getVar('rincian'),
-                'status'            => $this->request->getVar('status'),
-                'stock'            => $this->request->getVar('stock'),
-                'kondisi'            => $this->request->getVar('kondisi'),
-                'ket'            => $this->request->getVar('ket'),
-                'tgl_masuk'            => $this->request->getVar('masuk'),
-                'tgl_keluar'            => $this->request->getVar('keluar'),
-                'serial'            => $this->request->getVar('serial'),
+                // $tgl= date("Y-m-d");
+                $post = [
+                    'manufacture'            => $this->request->getVar('manufacture'),
+                    'type'            => $this->request->getVar('type'),
+                    'prosesor'            => $this->request->getVar('prosesor'),
+                    'generasi'            => $this->request->getVar('generasi'),
+                    'hdd'            => $this->request->getVar('hdd'),
+                    'ram'            => $this->request->getVar('ram'),
+                    'rincian'            => $this->request->getVar('rincian'),
+                    'status'            => $this->request->getVar('status'),
+                    'stock'            => $this->request->getVar('stock'),
+                    'kondisi'            => $this->request->getVar('kondisi'),
+                    'ket'            => $this->request->getVar('ket'),
+                    'tgl_masuk'            => $this->request->getVar('masuk'),
+                    'tgl_keluar'            => $this->request->getVar('keluar'),
+                    'serial'            => $this->request->getVar('serial'),
 
-            ];
+                ];
 
-            if ($this->aset->save($post)) {
-                session()->setFlashdata('success', 'Data berhasil di simpan.');
-                return redirect()->to(base_url('admin/aset'));
-            } else {
-                session()->setFlashdata('error', 'Data Sudah Terdaftar !');
-                return redirect()->to(base_url('admin/aset'));
+                if ($this->aset->save($post)) {
+                    session()->setFlashdata('success', 'Data berhasil di simpan.');
+                    return redirect()->to(base_url('admin/aset'));
+                } else {
+                    session()->setFlashdata('error', 'Data Sudah Terdaftar !');
+                    return redirect()->to(base_url('admin/aset'));
+                }
             }
         }
     }
@@ -420,6 +411,17 @@ class aset extends BaseController
             return redirect()->to(base_url('admin/aset'));
         } else {
             session()->setFlashdata('danger', 'Data berhasil di hapus.');
+            return redirect()->to(base_url('admin/aset'));
+        }
+    }
+
+    public function deleteriwayat($id)
+    {
+        if ($this->riwayat->delete($id)) {
+            session()->setFlashdata('success', 'Data Riwayat berhasil di hapus.');
+            return redirect()->to(base_url('admin/aset'));
+        } else {
+            session()->setFlashdata('danger', 'Data Gagal berhasil di hapus.');
             return redirect()->to(base_url('admin/aset'));
         }
     }

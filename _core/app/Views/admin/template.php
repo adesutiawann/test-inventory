@@ -204,7 +204,7 @@
                             </div>
                         </li>
 
-                        <li class="nav-item has-submenu">
+                        <li class="nav-item has-submenu" <?= ($admin->level == '3') ? 'hidden' : '' ?>>
                             <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
                             <a class="nav-link submenu-toggle" href="#" data-bs-toggle="collapse" data-bs-target="#submenu-5" aria-expanded="false" aria-controls="submenu-5">
                                 <span class="nav-icon">
@@ -433,9 +433,9 @@
                             <!--//nav-item-->
 
                             <!--//nav-item-->
-                            <li class="nav-item">
+                            <li class="nav-item" <?= ($admin->level == '3') ? 'hidden' : '' ?>>
                                 <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-                                <a class="nav-link <?= ($menu == 'setting') ? 'active' : '' ?>"" href=" <?= base_url('admin/setting') ?>">
+                                <a class="nav-link <?= ($menu == 'setting') ? 'active' : '' ?>"" href=" <?= base_url('') ?>">
                                     <span class="nav-icon">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-gear" viewBox="0 0 16 16">
                                             <path d="M8 4.754a3.246 3.246 0 1 0 0 6.492 3.246 3.246 0 0 0 0-6.492zM5.754 8a2.246 2.246 0 1 1 4.492 0 2.246 2.246 0 0 1-4.492 0z" />

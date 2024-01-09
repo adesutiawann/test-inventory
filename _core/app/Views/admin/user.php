@@ -72,7 +72,7 @@
                                 if ($value->level == 1) {
                                     echo $l = '<span class="badge bg-primary">Administrator</span>';
                                 } else if ($value->level == 2) {
-                                    echo $l = '<span class="badge bg-warning">Staff</span>';
+                                    echo $l = '<span class="badge bg-warning">Teknisi</span>';
                                 } else {
                                     echo  $l = '<span class="badge bg-danger">Tamu</span>';
                                 }

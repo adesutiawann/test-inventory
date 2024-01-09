@@ -16,7 +16,10 @@
             <div class="col-md-6">
                 <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
                     <div class="carousel-inner">
-                        <?php if ($images == null) : ?>
+                        <?php
+
+
+                        if ($images == null) : ?>
                             <div class="carousel-item active">
                                 <img src="<?= base_url() ?>/uploads/noimage.png" class="d-block w-100 rounded-1" alt="No Image">
                             </div>
@@ -41,7 +44,6 @@
                 <div class="row mt-4">
                     <?php if ($images == null) : ?>
                         <div class="col">
-                            <img src="<?= base_url() ?>/uploads/noimage.png" class="d-block w-100 rounded-1" alt="No Image" onclick="showImage('<?= base_url() ?>/uploads/noimage.png')">
                         </div>
                     <?php else : ?>
                         <?php foreach ($images as $key => $value) : ?>
@@ -62,38 +64,14 @@
 
 
             <div class="col-md-6">
-                <h2>XPS 13 Plus Laptop</h2>
-                <p class="lead"><b>Spesifikasi :</b> Prosesor Intel i5, RAM 8GB, SSD 256GB</p>
+                <h2><?php $aset1 = $aset[0];
+                    echo $aset1->manufacture ?></h2>
+                <p class="lead"><b>Spesifikasi :</b> Prosesor <?= $aset1->prosesor ?>, RAM <?= $aset1->ram ?>GB, <?= $aset1->hdd ?></p>
 
                 <hr>
 
                 <h5>Deskripsi</h5>
-                <p>Tech Specs & Customization
-                    Processor
-                    12th Generation Intel® Core™ i7-1260P (18MB Cache, up to 4.7 GHz, 12 cores)
-
-                    Operating System
-                    (Dell Technologies recommends Windows 11 Pro for business)
-                    Windows 11 Pro, 64-bit
-                    Windows 11 Home, 64-bit
-
-                    Video Card
-                    Integrated:
-                    Intel® Iris Xe Graphics
-
-                    Display
-                    13.4", 3.5K 3456x2160, 60Hz, OLED, Touch, Anti-Reflect, 400 nit, InfinityEdge
-
-                    Memory*
-                    16GB, LPDDR5, 5200 MHz, integrated, dual channel
-
-                    Storage
-                    512G M.2 PCIe Gen 4 NVMe Solid State Drive
-                    1TB M.2 PCIe Gen 4 NVMe Solid State Drive
-
-                    Color
-                    Platinum Silver
-                    Graphite</p>
+                <p><?= $aset1->ket ?></p>
 
                 <hr>
 
