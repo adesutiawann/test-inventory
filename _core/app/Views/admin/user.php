@@ -80,7 +80,7 @@
                             </td>
 
                             <td>
-                                Nama : <b><?= $value->nama ?></b><br>
+                                Nama : <b><?= htmlspecialchars($value->nama) ?></b><br>
                                 Telpon : <?= $value->whatsapp ?><br>
 
                                 Created :

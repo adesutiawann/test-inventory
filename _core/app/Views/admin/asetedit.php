@@ -148,7 +148,7 @@
                 <div class="col-md-12 mb-3">
                     Keterangan
                     <div class="form-floating">
-                        <textarea name="ket" id="sentenceCaseInput" class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px"><?= $aset->ket ?></textarea>
+                        <textarea name="ket" id="sentenceCaseInput" class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 200px"><?= $aset->ket ?></textarea>
                         <label for="floatingTextarea2">Comments</label>
                     </div>
 
@@ -212,8 +212,8 @@
 
 
                         <div class="col-md-6">
-                            <h2>XPS 13 Plus Laptop</h2>
-                            <p class="lead"><b>Spesifikasi :</b> Prosesor Intel i5, RAM 8GB, SSD 256GB</p>
+                            <h2><?= $aset->manufacture ?></h2>
+                            <p class="lead"><b>Spesifikasi :</b> Prosesor <?= $aset->prosesor ?>, RAM <?= $aset->ram ?>, <?= $aset->hdd ?></p>
 
                             <hr>
                             <div class="col-md-12">

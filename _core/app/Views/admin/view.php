@@ -64,18 +64,18 @@
 
 
             <div class="col-md-6">
-                <h2><?php $aset1 = $aset[0];
-                    echo $aset1->manufacture ?></h2>
-                <p class="lead"><b>Spesifikasi :</b> Prosesor <?= $aset1->prosesor ?>, RAM <?= $aset1->ram ?>GB, <?= $aset1->hdd ?></p>
+                <h2><?php //$aset = $aset[0];
+                    echo $aset->manufacture ?></h2>
+                <p class="lead"><b>Spesifikasi :</b> Prosesor <?= $aset->prosesor ?>, RAM <?= $aset->ram ?>GB, <?= $aset->hdd ?></p>
 
                 <hr>
 
                 <h5>Deskripsi</h5>
-                <p><?= $aset1->ket ?></p>
+                <p><?= $aset->ket ?></p>
 
                 <hr>
 
-                <h6>Tersedia: 50 Unit</h6>
+                <h6>Tersedia: <?= $jumlahmanufaktur ?> Unit</h6>
 
                 <hr>
                 <form action="<?= base_url('admin/suratkeluar/save') ?>" method="POST">

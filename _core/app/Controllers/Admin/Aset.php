@@ -128,21 +128,34 @@ class aset extends BaseController
 
     public function view($id)
     {
-        if (session()->get('logged_admin') != true) {
+        if (session()->get('logged_admin') !== true) {
             return redirect()->to(base_url());
         }
 
-        $data = [
-            'title'   => 'Details',
-            'segment' => $this->request->uri->getSegments(),
-            'admin'   => $this->admin->find(session()->get('id')),
+        // Assuming $this->aset is your model for "aset"
+        $aset = $this->aset->find($id);
 
-            'aset' => $this->aset->where('id', $id)->findAll(),
-            'images' => $this->images->where('serial', $id)->findAll(),
-            'riwayat' => $this->riwayat->where('serial', $id)->findAll(),
+        if (!$aset) {
+            // Handle the case when the "aset" with the given ID is not found
+            return redirect()->to(base_url());
+        }
+
+        $manufacture = $aset->manufacture; // Use arrow notation for object properties
+
+        $data = [
+            'title'           => 'Details',
+            'segment'         => $this->request->uri->getSegments(),
+            'admin'           => $this->admin->find(session()->get('id')),
+            'aset'            => $aset,
+            'jumlahmanufaktur' => $this->aset->where('manufacture', $manufacture)->countAllResults(),
+            'images'          => $this->images->where('serial', $id)->findAll(),
+            'riwayat'         => $this->riwayat->where('serial', $id)->findAll(),
         ];
+
         return view('admin/view', $data);
     }
+
+
     public function edit($id)
     {
         // $tgl= date("Y-m-d");
@@ -173,7 +186,8 @@ class aset extends BaseController
 
     public function save()
     {
-        if (isset($_POST['Simpan'])) {
+        //if (isset($_POST['Simpan'])) {
+        if (!empty($_FILES['foto']['name'][0])) {
             $tgl = date("Y-m-d");
             $files = $this->request->getFileMultiple('foto');
             $namaFiles = []; // Array untuk menyimpan nama-nama file
@@ -236,7 +250,7 @@ class aset extends BaseController
 
                     'serial'            => $this->request->getVar('id'),
                     'tgl'            => $tgl,
-                    //'ket'            => $this->request->getVar('ketupdate'),
+                    'ket'            => $this->request->getVar('ketupdate'),
                     'user'            => $this->request->getVar('user'),
                     'lokasi'            => $this->request->getVar('lokasi'),
                     //'teknisi'   => $this->admin->find(session()->get('id')),
