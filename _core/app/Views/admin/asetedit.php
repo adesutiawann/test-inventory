@@ -20,17 +20,6 @@
 
 <div class="app-card app-card-accordion shadow-sm mb-4">
     <div class="app-card-body p-4">
-        <?php if (session()->getFlashData('error')) : ?>
-            <div class="alert alert-danger">
-                <?= session()->getFlashData('error') ?>
-            </div>
-        <?php endif ?>
-        <?php if (session()->getFlashData('success')) : ?>
-            <div class="alert alert-success">
-                <?= session()->getFlashData('success') ?>
-            </div>
-        <?php endif ?>
-
         <form action="<?= base_url('admin/aset/save') ?>" method="POST" enctype="multipart/form-data">
             <div class="row">
                 <div class="col-md-12 mb-4">
@@ -193,7 +182,7 @@
                                     <?php foreach ($images as $key => $value) : ?>
                                         <div class="col">
                                             <img src="<?= base_url() ?>/uploads/kegiatan/<?= $value->image ?>" class="d-block w-100 rounded-1" alt="Image <?= $key + 1 ?>" onclick="showImage('<?= base_url() ?>/uploads/kegiatan/<?= $value->image ?>')">
-                                            <a href="<?= base_url("admin/aset/deleteimages/{$value->id}") ?>" onclick="return confirm('Yakin ingin menghapus?')">
+                                            <a href="<?= base_url("admin/aset/deleteimages/{$value->id}/{$value->serial}") ?>" onclick="return confirm('Yakin ingin menghapus?')">
                                                 <i class="fa-solid fa-xmark text-danger"></i>
                                             </a>
                                         </div>
@@ -220,7 +209,6 @@
                                 images
                                 <div class="input-group">
                                     <input type="file" name="foto[]" multiple="multiple" class="form-control" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
-                                    <button class="btn btn-primary text-white" name="Simpan" type="SUBMIT" id="inputGroupFileAddon04">Upload</button>
 
                                 </div>
                             </div>
@@ -264,6 +252,33 @@
 
 <div class="container-xl mt-3">
     <h1 class="app-page-title">Riwayat</h1>
+    <?php if (session()->getFlashData('error')) : ?>
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+
+            <i class="fa-solid fa-circle-exclamation"></i>
+            <strong>Gagal !</strong>
+            <?= session()->getFlashData('error') ?>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    <?php endif ?>
+    <?php if (session()->getFlashData('success')) : ?>
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+
+            <i class="fa-solid fa-circle-check"></i>
+            <strong>Berhasil !</strong>
+            <?= session()->getFlashData('success') ?>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    <?php endif ?>
+    <?php if (session()->getFlashData('warning')) : ?>
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+
+            <i class="fa-solid fa-triangle-exclamation mr-3"></i>
+            <strong>Peringatan !</strong>
+            <?= session()->getFlashData('warning') ?>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    <?php endif ?>
 </div><!--//container-fluid-->
 
 <main class="app-card app-card-settings shadow-sm p-4">
@@ -295,7 +310,7 @@
                     <td width="" <?= ($admin->level == '3') ? 'hidden' : '' ?>>
 
 
-                        <a href="<?= base_url("admin/aset/deleteriwayat/{$value->id}") ?>" class="" onclick="return confirm('Yakin ingin menghapus?')">
+                        <a href="<?= base_url("admin/aset/deleteriwayat/{$value->id}/{$value->serial}") ?>" class="" onclick="return confirm('Yakin ingin menghapus?')">
                             <i class="fa-solid fa-xmark text-danger"></i>
 
                         </a>
