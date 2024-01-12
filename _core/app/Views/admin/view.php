@@ -48,7 +48,7 @@
                     <?php else : ?>
                         <?php foreach ($images as $key => $value) : ?>
                             <div class="col">
-                                <img src="<?= base_url() ?>/uploads/kegiatan/<?= $value->image ?>" class="d-block w-100 rounded-1" alt="Image <?= $key + 1 ?>" onclick="showImage('<?= base_url() ?>/uploads/kegiatan/<?= $value->image ?>')">
+                                <img src="<?= base_url() ?>/uploads/kegiatan/<?= $value->image ?>" class="d-block w-50 rounded-1" alt="Image <?= $key + 1 ?>" onclick="showImage('<?= base_url() ?>/uploads/kegiatan/<?= $value->image ?>')">
                             </div>
                         <?php endforeach; ?>
                     <?php endif; ?>
@@ -62,8 +62,7 @@
                 }
             </script>
 
-
-            <div class="col-md-6">
+            <div class="col-md-6 mt-5">
                 <h2><?php //$aset = $aset[0];
                     echo $aset->manufacture ?></h2>
                 <p class="lead"><b>Spesifikasi :</b> Prosesor <?= $aset->prosesor ?>, RAM <?= $aset->ram ?>GB, <?= $aset->hdd ?></p>

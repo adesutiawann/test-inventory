@@ -15,6 +15,7 @@
 
     <!-- FontAwesome JS-->
     <script defer src="<?= base_url() ?>/assets/plugins/fontawesome/js/all.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 
     <!-- App CSS -->
@@ -23,10 +24,34 @@
     <?= $this->renderSection('css') ?>
     <!-- App DATA TABEL -->
 
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap5.min.css">
+    <link rel="stylesheet" href="<?= base_url() ?>/assets/css/dataTables.bootstrap5.min.css">
 </head>
 
 <body class="app">
+    <?php if (session()->getFlashData('login')) : ?>
+
+        <?php $pesan = "Hi, $admin->nama anda berhasil login !" ?>
+        <?= "<script>
+        const Toast = Swal.mixin({
+          toast: true,
+          position: 'top-end',
+          showConfirmButton: false,
+          timer: 5000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.onmouseenter = Swal.stopTimer;
+            toast.onmouseleave = Swal.resumeTimer;
+          }
+        });
+
+        Toast.fire({
+          icon: 'success',
+          title: 'Logined !',
+          text: '$pesan'
+        });
+    </script>"; ?>
+
+    <?php endif ?>
     <header class="app-header fixed-top">
         <div class="app-header-inner">
             <div class="container-fluid py-2">
@@ -462,8 +487,8 @@
 
     <div class="app-wrapper">
 
-        <div class="app-content pt-3 p-md-3 p-lg-4">
-            <div class="container-xl">
+        <div class="app-content pt-3 p-md-3 p-sm-3 p-lg-3">
+            <div class="">
 
                 <?= $this->renderSection('content') ?>
 

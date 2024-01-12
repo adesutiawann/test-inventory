@@ -1,7 +1,7 @@
 <?= $this->extend('admin/template') ?>
 
 <?= $this->section('css') ?>
-<link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap5.min.css">
+<link rel="stylesheet" href="<?= base_url() ?>/assets/css/dataTables.bootstrap5.min.css">
 <?= $this->endSection() ?>
 
 <?= $this->section('content') ?>
@@ -12,6 +12,7 @@ use PhpParser\Node\Expr\Print_;
 $menu = $aktiv;
 // $submenu = $segment[2];
 ?>
+
 <style>
     /* Contoh CSS untuk menentukan lebar dan tinggi textarea */
     textarea {
@@ -24,45 +25,69 @@ $menu = $aktiv;
 <h1 class="app-page-title"><?= $title ?></h1>
 
 
-<div class="app-card app-card-accordion shadow-sm mb-4" <?= ($admin->level == '3') ? 'hidden' : '' ?>>
-    <div class="app-card-body p-4">
+<div class="app-card app-card-accordion shadow-sm mb-3" <?= ($admin->level == '3') ? 'hidden' : '' ?>>
+    <div class="app-card-body p-3">
         <?php if (session()->getFlashData('error')) : ?>
             <div class="alert alert-danger">
                 <?= session()->getFlashData('error') ?>
+                <?= "<script>
+        const Toast = Swal.mixin({
+          toast: true,
+          position: 'center',
+          showConfirmButton: false,
+          timer: 5000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.onmouseenter = Swal.stopTimer;
+            toast.onmouseleave = Swal.resumeTimer;
+          }
+        });
+
+        Toast.fire({
+          icon: 'error',
+          title: '$pesan'
+        });
+    </script>"; ?>
             </div>
         <?php endif ?>
         <?php if (session()->getFlashData('success')) : ?>
             <div class="alert alert-success">
-                <?= session()->getFlashData('success') ?>
+                <?= $pesan = session()->getFlashData('success') ?>
+                <?= "<script>
+        const Toast = Swal.mixin({
+          toast: true,
+          position: 'center',
+          showConfirmButton: false,
+          timer: 5000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.onmouseenter = Swal.stopTimer;
+            toast.onmouseleave = Swal.resumeTimer;
+          }
+        });
+
+        Toast.fire({
+          icon: 'success',
+          title: '$pesan'
+        });
+    </script>"; ?>
             </div>
         <?php endif ?>
 
         <div class="row ">
 
-            <div class="col-md-4 col-sm-6 col-xs-12 mb-3 ">
-                <a href="<?= base_url('admin/aset/add') ?>" class="btn app-btn-primary text-white w-50">
+            <div class="col-md-8 col-sm-8 col-xs-8  ">
+                <a href="<?= base_url('admin/aset/add') ?>" class="btn app-btn-primary text-white ml-5 ">
                     <i class="fas fa-plus"></i> Tambah Asets
                 </a>
+                <button type="button" class="btn btn-primary text-white" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    <i class="fa-solid fa-file-import"></i> Import
+                </button>
             </div>
 
-            <div class="col-md-6 col-sm-2 col-xs-2 ">
-                <form class="row" action="<?= base_url('admin/aset/import') ?>" method="post" enctype="multipart/form-data">
-                    <div class="col-md-3 col-sm-3 text-end mb-2 ">
-                        <a href="<?= base_url('admin/aset/downloadExcel') ?>" class="text-info">
-                            <i class="fa-solid fa-file-circle-question"></i>
-                        </a>
-                    </div>
-                    <div class="col-md-6 col-sm-6 col-xs-10 mb-2">
-                        <input type="file" class="form-control" name="file_excel" required>
-                    </div>
-                    <div class="col-md-3 col-sm-3 col-xs-2 mb-3">
-                        <button type="submit" class="btn app-btn-secondary ">
-                            <i class="fa-solid fa-file-import"></i> Import</button>
-                    </div>
-                </form>
-            </div>
-            <div class="col-md-2 col-sm-6 col-xs-1 ">
-                <a class="btn app-btn- bg-success text-white w-100" href="<?= base_url('admin/aset/export') ?>">
+
+            <div class="col-md-4 col-sm-4 col-xs-4 text-end ">
+                <a class="btn app-btn- bg-success text-white " href="<?= base_url('admin/aset/export') ?>">
                     <i class="fa-solid fa-file-excel"></i>
                     Export Excel
                 </a>
@@ -99,8 +124,6 @@ $menu = $aktiv;
 
                         <th>Status</th>
                         <th>Pengguna</th>
-
-                        <th>Deskripsi</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -150,12 +173,8 @@ $menu = $aktiv;
                                     <?= $value->lokasi ?><br>
                                 </span>
                             </td>
+
                             <td>
-                                <span class="">
-                                    <?= $value->ket ?><br>
-                                </span>
-                            </td>
-                            <td width="15%">
 
                                 <a href="<?= base_url('admin/aset/view/' . $value->id) ?>" <?= ($admin->level == '3') ? 'hidden' : '' ?> class="btn btn-sm btn-primary text-white mr-2">
                                     <i class="fa-solid fa-circle-info"></i>
@@ -179,6 +198,38 @@ $menu = $aktiv;
 </div>
 </div>
 </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel"><i class="fa-solid fa-file-import"></i> Import </h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form class="row" action="<?= base_url('admin/aset/import') ?>" method="post" enctype="multipart/form-data">
+
+                    <div class="col-md-11 col-sm-6 col-xs-10 mb-2">
+                        <input type="file" class="form-control" name="file_excel" required>
+
+                    </div>
+                    <div class="col-md-1 col-sm-3 text-end mb-2 ">
+                        <a href="<?= base_url('admin/aset/downloadExcel') ?>" class="text-info">
+                            <i class="fa-solid fa-file-circle-question"></i>
+                        </a>
+                    </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary text-white"> <i class="fa-solid fa-file-import"></i> Import</button>
+
+            </div>
+            </form>
+        </div>
+    </div>
 </div>
 <!-- your_view.php -->
 

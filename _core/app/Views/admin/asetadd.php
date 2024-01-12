@@ -46,6 +46,15 @@
                         <?php endforeach ?>
                     </select>
                 </div>
+                <div class="col-md-4">
+                    Status
+                    <select name="status" class="form-select" required>
+                        <option value="">Pilih Status</option>
+                        <?php foreach ($status as $gr) : ?>
+                            <option value="<?= $gr->nama ?>"><?= $gr->nama ?></option>
+                        <?php endforeach ?>
+                    </select>
+                </div>
                 <div class="col-md-4" hidden>
                     Type
                     <select name="type" class="form-select">
@@ -54,7 +63,8 @@
                         <?php endforeach ?>
                     </select>
                 </div>
-                <div class="col-md-4">
+
+                <div class="col-md-2">
                     Prosesor
                     <select name="prosesor" class="form-select" required>
                         <option value="">Pilih Prosesor</option>
@@ -63,7 +73,7 @@
                         <?php endforeach ?>
                     </select>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-2">
                     Generasi
                     <select name="generasi" class="form-select" required>
                         <option value="">Pilih Generasi</option>
@@ -72,7 +82,7 @@
                         <?php endforeach ?>
                     </select>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-2">
                     HDD/SSD
                     <select name="hdd" class="form-select" required>
                         <option value="">Pilih HDD/SSD</option>
@@ -81,7 +91,7 @@
                         <?php endforeach ?>
                     </select>
                 </div>
-                <div class="col-md-2">
+                <div class="col-md-1">
                     RAM
                     <select name="ram" class="form-select" required>
                         <option value="">Pilih RAM</option>
@@ -90,7 +100,7 @@
                         <?php endforeach ?>
                     </select>
                 </div>
-                <div class="col-md-2">
+                <div class="col-md-1">
                     Rincian
                     <select name="rincian" class="form-select" required>
                         <option value="">Pilih Rincian</option>
@@ -99,16 +109,8 @@
                         <?php endforeach ?>
                     </select>
                 </div>
-                <div class="col-md-4">
-                    Status
-                    <select name="status" class="form-select" required>
-                        <option value="">Pilih Setatus</option>
-                        <?php foreach ($status as $gr) : ?>
-                            <option value="<?= $gr->nama ?>"><?= $gr->nama ?></option>
-                        <?php endforeach ?>
-                    </select>
-                </div>
-                <div class="col-md-4">
+
+                <div class="col-md-2">
                     Stok
                     <select name="stock" class="form-select" required>
                         <option value="">Pilih Stock</option>
@@ -117,7 +119,7 @@
                         <?php endforeach ?>
                     </select>
                 </div>
-                <div class="col-md-4 mb-4">
+                <div class="col-md-2 mb-2">
                     Kondisi
                     <select name="kondisi" class="form-select" required>
                         <option value="">Pilih Kondisi</option>
@@ -127,7 +129,7 @@
                         <?php endforeach ?>
                     </select>
                 </div>
-                <hr>
+
                 <div class="col-md-4">
                     Serial
                     <input type="text" name="serial" oninput="convertToUppercase(this)" class="form-control" required>
@@ -143,7 +145,7 @@
 
                 </div>
                 <div class="col-md-12 mb-5">
-                    Keterangan
+                    Deskripsi
                     <div class="form-floating">
                         <textarea name="ket" id="sentenceCaseInput" class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px"></textarea>
                         <label for="floatingTextarea2">Comments</label>

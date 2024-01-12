@@ -28,6 +28,7 @@ class Auth extends BaseController
                 ];
 
                 session()->set($data);
+                session()->setFlashdata('login', 'Anda Berhail Login !');
                 return redirect()->to(base_url('admin/dashboard'));
             } else {
                 session()->setFlashdata('error', 'Password tidak cocok.');

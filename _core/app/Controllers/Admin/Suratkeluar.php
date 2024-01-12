@@ -280,7 +280,7 @@ class Suratkeluar extends BaseController
 
                 if ($this->aset->updateDatax($serial, $post)) {
                     // if ($this->suratkeluar->updateDatax($post)) {
-                    session()->setFlashdata('success', 'Data berhasil di simpan PUSING.');
+                    session()->setFlashdata('success', 'Data berhasil masuk list.');
                     return redirect()->to(base_url('admin/suratkeluar/add'));
                 } else {
                     session()->setFlashdata('error', 'Data Sudah Terdaftar !');
