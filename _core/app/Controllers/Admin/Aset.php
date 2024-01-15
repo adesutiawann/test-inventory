@@ -65,7 +65,7 @@ class aset extends BaseController
         }
 
         $data = [
-            'title'   => 'Personal Computer',
+            'title'   => 'Persediaan/Pc',
             'segment' => $this->request->uri->getSegments(),
             'admin'   => $this->admin->find(session()->get('id')),
 
@@ -109,7 +109,7 @@ class aset extends BaseController
         }
 
         $data = [
-            'title'   => 'Add Personal Computer',
+            'title'   => 'Persediaan/Pc/Add',
             'segment' => $this->request->uri->getSegments(),
             'admin'   => $this->admin->find(session()->get('id')),
             'nama'    => $this->manufacture->orderBy('nama', 'asc')->findAll(),
@@ -143,7 +143,7 @@ class aset extends BaseController
         $manufacture = $aset->manufacture; // Use arrow notation for object properties
 
         $data = [
-            'title'           => 'Details',
+            'title'           => 'Persediaan/Pc/Details',
             'segment'         => $this->request->uri->getSegments(),
             'admin'           => $this->admin->find(session()->get('id')),
             'aset'            => $aset,
@@ -163,7 +163,7 @@ class aset extends BaseController
             return redirect()->to(base_url());
         }
         $data = [
-            'title'   => 'Edit Personal Computer',
+            'title'   => 'Persediaan/Pc/Edit',
             'edit'   => 'redy',
             'segment' => $this->request->uri->getSegments(),
             'admin'   => $this->admin->find(session()->get('id')),
@@ -421,7 +421,7 @@ class aset extends BaseController
     public function delete($id)
     {
         if ($this->aset->delete($id)) {
-            session()->setFlashdata('success', 'Data berhasil di hapus.');
+            session()->setFlashdata('hapussuccess', 'a');
             return redirect()->to(base_url('admin/aset'));
         } else {
             session()->setFlashdata('danger', 'Data berhasil di hapus.');

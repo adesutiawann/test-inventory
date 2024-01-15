@@ -34,7 +34,7 @@
         <?= "<script>
         const Toast = Swal.mixin({
           toast: true,
-          position: 'top-end',
+          position: 'center',
           showConfirmButton: false,
           timer: 5000,
           timerProgressBar: true,
@@ -50,6 +50,63 @@
           text: '$pesan'
         });
     </script>"; ?>
+
+    <?php endif ?>
+    <?php if (session()->getFlashData('error')) : ?>
+        <div class="alert alert-danger">
+            <? session()->getFlashData('error') ?>
+            <?= "<script>
+                        const Toast = Swal.mixin({
+                        toast: true,
+                        position: 'center',
+                        showConfirmButton: false,
+                        timer: 5000,
+                        timerProgressBar: true,
+                        didOpen: (toast) => {
+                            toast.onmouseenter = Swal.stopTimer;
+                            toast.onmouseleave = Swal.resumeTimer;
+                        }
+                        });
+
+                        Toast.fire({
+                        icon: 'error',
+                        title: '$pesan'
+                        });
+                    </script>";
+            ?>
+        </div>
+    <?php endif ?>
+    <?php if (session()->getFlashData('success')) : ?>
+
+        <?php $pesan = session()->getFlashData('success') ?>
+        <?= "<script>
+                        
+
+                        Swal.fire({
+                            position: 'center',
+                            icon: 'success',
+                            title: 'Success!',
+                            text: '$pesan.',
+                            showConfirmButton: false,
+                            timer: 2100
+                          });
+                          
+                    </script>"; ?>
+
+    <?php endif ?>
+    <?php if (session()->getFlashData('hapussuccess')) : ?>
+
+        <?= "<script>
+                Swal.fire({
+                    position: 'center',
+                    icon: 'success',
+                    title: 'Dihapus!',
+                    text: 'Data telah dihapus.',
+                    showConfirmButton: false,
+                    timer: 2000
+                  });
+                        
+                    </script>"; ?>
 
     <?php endif ?>
     <header class="app-header fixed-top">
@@ -549,6 +606,7 @@
 
 
     <!-- Charts JS -->
+
     <!-- <script src="<?= base_url() ?>/assets/plugins/chart.js/chart.min.js"></script> -->
     <!-- <script src="<?= base_url() ?>/assets/js/index-charts.js"></script> -->
 

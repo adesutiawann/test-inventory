@@ -22,57 +22,12 @@ $menu = $aktiv;
         /* Tinggi textarea */
     }
 </style>
-<h1 class="app-page-title"><?= $title ?></h1>
+<h2 class="app-page-title text-scondary fw-semibold"><?= $title ?></h2>
+<hr>
 
 
 <div class="app-card app-card-accordion shadow-sm mb-3" <?= ($admin->level == '3') ? 'hidden' : '' ?>>
     <div class="app-card-body p-3">
-        <?php if (session()->getFlashData('error')) : ?>
-            <div class="alert alert-danger">
-                <?= session()->getFlashData('error') ?>
-                <?= "<script>
-        const Toast = Swal.mixin({
-          toast: true,
-          position: 'center',
-          showConfirmButton: false,
-          timer: 5000,
-          timerProgressBar: true,
-          didOpen: (toast) => {
-            toast.onmouseenter = Swal.stopTimer;
-            toast.onmouseleave = Swal.resumeTimer;
-          }
-        });
-
-        Toast.fire({
-          icon: 'error',
-          title: '$pesan'
-        });
-    </script>"; ?>
-            </div>
-        <?php endif ?>
-        <?php if (session()->getFlashData('success')) : ?>
-            <div class="alert alert-success">
-                <?= $pesan = session()->getFlashData('success') ?>
-                <?= "<script>
-        const Toast = Swal.mixin({
-          toast: true,
-          position: 'center',
-          showConfirmButton: false,
-          timer: 5000,
-          timerProgressBar: true,
-          didOpen: (toast) => {
-            toast.onmouseenter = Swal.stopTimer;
-            toast.onmouseleave = Swal.resumeTimer;
-          }
-        });
-
-        Toast.fire({
-          icon: 'success',
-          title: '$pesan'
-        });
-    </script>"; ?>
-            </div>
-        <?php endif ?>
 
         <div class="row ">
 
@@ -183,7 +138,8 @@ $menu = $aktiv;
                                 <a href="<?= base_url('admin/aset/edit/' . $value->id) ?>" class="btn btn-sm btn-info text-white ">
                                     <i class="fa-solid fa-pen-to-square"></i>
                                 </a>
-                                <a href="<?= base_url("admin/aset/delete/{$value->id}") ?>" class="btn btn-sm btn-danger text-white" onclick="return confirm('Yakin ingin menghapus?')">
+
+                                <a href="<?= base_url("admin/aset/delete/{$value->id}") ?>" class="btn btn-sm btn-danger text-white hapusDataBtn" data-id="<?php echo $value->serial; ?>">
                                     <i class="fa-solid fa-trash-can"></i>
                                 </a>
 
@@ -251,73 +207,31 @@ $menu = $aktiv;
 <script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap5.min.js"></script>
 
 <script>
-    //$(document).ready(function() {
+    // Menangani klik pada setiap tautan hapus data
+    document.querySelectorAll('.hapusDataBtn').forEach(function(element) {
+        element.addEventListener('click', function(event) {
+            event.preventDefault(); // Menghentikan peristiwa default pengklikan tautan
 
-    $(document).ready(function() {
-        try {
-            $('#table').DataTable({
-                processing: true,
-                serverSide: true,
-                ajax: '<?= base_url('admin/aset/data') ?>',
-                order: [],
-                columns: [{
-                        data: 'no',
-                        orderable: false
-                    },
-                    {
-                        data: 'serial'
+            var dataId = element.getAttribute('data-id');
+            var href = element.getAttribute('href');
 
-                    },
-                    {
-                        data: null,
-                        render: function(data, type, row) {
-                            // Assuming 'tgl_masuk' and 'tgl_keluar' are Date objects or date strings
-                            return '<b>' + row.manufacture +
-                                '</b> <br> type  :' + row.type;
-                        }
-                    }, {
-                        data: null,
-                        render: function(data, type, row) {
-                            // Assuming 'tgl_masuk' and 'tgl_keluar' are Date objects or date strings
-                            return 'Prosesor  :' + row.prosesor +
-                                ' <br> Generasi  :' + row.generasi +
-                                ' <br> Hdd/SSD   :' + row.hdd +
-                                ' <br> Ram       :' + row.ram +
-                                ' GB<br> Rincian    :' + row.prosesor;
-                        }
-                    }, {
-                        data: null,
-                        render: function(data, type, row) {
-                            var bgClass = row.kondisi === 'OK' ? 'success' :
-                                row.kondisi === 'RUSAK' ? 'danger' :
-                                row.kondisi === 'BLANKS' ? 'warning' : '';
-
-                            // Assuming 'tgl_masuk' and 'tgl_keluar' are Date objects or date strings
-                            return 'Status  :' + row.status + '<br> Stock  :' + row.stok +
-                                ' <br> Stok  : <span class="badge bg-' + bgClass + '">' + row.kondisi + '</span>';
-                        }
-                    },
-                    {
-                        data: null,
-                        render: function(data, type, row) {
-                            // Assuming 'tgl_masuk' and 'tgl_keluar' are Date objects or date strings
-                            return 'In :' + row.tgl_masuk + ' <br>Out  :' + row.tgl_keluar;
-                        }
-                    },
-                    {
-                        data: 'ket'
-
-                    },
-                    {
-                        data: 'action',
-                        orderable: false
-                    },
-                ]
+            // Tampilkan SweetAlert konfirmasi
+            Swal.fire({
+                title: 'Anda yakin?',
+                text: 'Data serial ' + dataId + ' akan dihapus permanen!',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya, Hapus!',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Jika pengguna menekan tombol konfirmasi, navigasikan ke tautan penghapusan data
+                    window.location.href = href;
+                }
             });
-
-        } catch (error) {
-            console.error('DataTables initialization error:', error);
-        }
+        });
     });
 </script>
 <?= $this->endSection() ?>

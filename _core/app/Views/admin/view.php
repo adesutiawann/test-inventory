@@ -4,11 +4,12 @@
 <?= $this->endSection() ?>
 
 <?= $this->section('content') ?>
+<h2 class="app-page-title text-scondary fw-semibold"><?= $title ?></h2>
+<hr>
 
-<div class="app-content pt-3 p-md-3 p-lg-4">
+<div class="app-content pt-3 p-md-3 p-lg-0">
     <div class="container-xl">
-        <h1 class="app-page-title"><?= $title ?></h1>
-        <hr class="mb-4">
+
     </div><!--//container-fluid-->
 
     <main class="app-card app-card-settings shadow-sm p-4">

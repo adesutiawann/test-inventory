@@ -14,7 +14,7 @@
         /* Tinggi textarea */
     }
 </style>
-<h1 class="app-page-title"><?= $title ?></h1>
+<h2 class="app-page-title text-scondary fw-semibold"><?= $title ?></h2>
 
 
 

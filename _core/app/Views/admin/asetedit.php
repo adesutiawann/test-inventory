@@ -14,7 +14,7 @@
         /* Tinggi textarea */
     }
 </style>
-<h1 class="app-page-title"><?= $title ?></h1>
+<h2 class="app-page-title text-scondary fw-semibold"><?= $title ?></h2>
 
 
 
@@ -142,9 +142,7 @@
                     </div>
 
                 </div>
-                <div>
-                    <strong>Keterangan Update:</strong>
-                </div>
+
                 <hr>
 
                 <main class="app-card app-card-settings shadow-sm p-4">
@@ -224,7 +222,7 @@
                             </div>
 
                             <div class="col-md-12 mb-5">
-                                Keterangan Update
+                                Keterangan 
                                 <div class="form-floating">
                                     <textarea name="ketupdate" id="sentenceCaseInput" class="form-control" required placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px"></textarea>
                                     <label for="floatingTextarea2">Comments</label>
@@ -252,33 +250,7 @@
 
 <div class="container-xl mt-3">
     <h1 class="app-page-title">Riwayat</h1>
-    <?php if (session()->getFlashData('error')) : ?>
-        <div class="alert alert-danger alert-dismissible fade show" role="alert">
 
-            <i class="fa-solid fa-circle-exclamation"></i>
-            <strong>Gagal !</strong>
-            <?= session()->getFlashData('error') ?>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-    <?php endif ?>
-    <?php if (session()->getFlashData('success')) : ?>
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-
-            <i class="fa-solid fa-circle-check"></i>
-            <strong>Berhasil !</strong>
-            <?= session()->getFlashData('success') ?>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-    <?php endif ?>
-    <?php if (session()->getFlashData('warning')) : ?>
-        <div class="alert alert-warning alert-dismissible fade show" role="alert">
-
-            <i class="fa-solid fa-triangle-exclamation mr-3"></i>
-            <strong>Peringatan !</strong>
-            <?= session()->getFlashData('warning') ?>
-            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-        </div>
-    <?php endif ?>
 </div><!--//container-fluid-->
 
 <main class="app-card app-card-settings shadow-sm p-4">
