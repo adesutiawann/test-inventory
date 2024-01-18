@@ -13,9 +13,11 @@
     <meta name="author" content="DukunWeb">
     <link rel="shortcut icon" href="<?= base_url() ?>/logoks.png">
 
+    <link rel="stylesheet" href="<?= base_url('/assets/css/loader.css') ?>">
     <!-- FontAwesome JS-->
     <script defer src="<?= base_url() ?>/assets/plugins/fontawesome/js/all.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
 
 
     <!-- App CSS -->
@@ -23,11 +25,22 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
     <?= $this->renderSection('css') ?>
     <!-- App DATA TABEL -->
-
     <link rel="stylesheet" href="<?= base_url() ?>/assets/css/dataTables.bootstrap5.min.css">
 </head>
 
 <body class="app">
+
+    <!-- lowadeer -->
+    <div id="preloader-active">
+        <div class="preloader d-flex align-items-center justify-content-center">
+            <div class="preloader-inner position-relative">
+                <div class="preloader-circle"></div>
+                <div class="preloader-img pere-text">
+                    <img src="<?= base_url() ?>/assets/images/users/logoks.png" alt>
+                </div>
+            </div>
+        </div>
+    </div>
     <?php if (session()->getFlashData('login')) : ?>
 
         <?php $pesan = "Hi, $admin->nama anda berhasil login !" ?>
@@ -47,8 +60,23 @@
         Toast.fire({
           icon: 'success',
           title: 'Logined !',
-          text: '$pesan'
+          text: '$pesan',
+           showClass: {
+            popup: `
+              animate__animated
+              animate__fadeInUp
+              animate__faster
+            `
+          },
+          hideClass: {
+            popup: `
+              animate__animated
+              animate__fadeOutDown
+              animate__faster
+            `
+          }
         });
+       
     </script>"; ?>
 
     <?php endif ?>
@@ -80,18 +108,28 @@
 
         <?php $pesan = session()->getFlashData('success') ?>
         <?= "<script>
-                        
-
-                        Swal.fire({
-                            position: 'center',
-                            icon: 'success',
-                            title: 'Success!',
-                            text: '$pesan.',
-                            showConfirmButton: false,
-                            timer: 2100
-                          });
-                          
-                    </script>"; ?>
+    Swal.fire({
+        position: 'center',
+        icon: 'success',
+        title: 'Success!',
+        text: '<?= $pesan ?>',
+        showConfirmButton: false,
+        timer: 2100,
+        showClass: {
+            popup: `
+                animate__animated
+                animate__fadeInUp
+            `
+        },
+        hideClass: {
+            popup: `
+                animate__animated
+                animate__fadeOutDown
+            `
+        }
+    });
+</script>
+"; ?>
 
     <?php endif ?>
     <?php if (session()->getFlashData('hapussuccess')) : ?>
@@ -544,25 +582,30 @@
 
     <div class="app-wrapper">
 
-        <div class="app-content pt-3 p-md-3 p-sm-3 p-lg-3">
-            <div class="">
+        <div class="container-fluid">
 
-                <?= $this->renderSection('content') ?>
-
-
+            <div class="row">
+                <div class="col-12 col-md-8 col-lg-12 mx-auto">
+                    <div class="app-content pt-3 p-md-3 m-sm-6 p-lg-4">
+                        <?= $this->renderSection('content') ?>
+                    </div>
+                </div>
             </div>
-            <!--//container-fluid-->
+
         </div>
-        <!--//app-content-->
 
-        <footer class="app-footer">
-            <div class="container text-center py-3">
-                <!--/* This template is free as long as you keep the footer attribution link. If you'd like to use the template without the attribution link, you can buy the commercial license via our website: themes.3rdwavemedia.com Thank you for your support. :) */-->
-                <small class="copyright">Designed with <span class="sr-only">love</span> <i class="fa-solid fa-code" style="color: #fb866a;"></i> By <a class="app-link" href="" target="_blank">AdeSutiawan</a></small>
+        <!--//container-fluid-->
+    </div>
+    <!--//app-content-->
 
-            </div>
-        </footer>
-        <!--//app-footer-->
+    <footer class="app-footer">
+        <div class="container text-center py-3">
+            <!--/* This template is free as long as you keep the footer attribution link. If you'd like to use the template without the attribution link, you can buy the commercial license via our website: themes.3rdwavemedia.com Thank you for your support. :) */-->
+            <small class="copyright">Designed with <span class="sr-only">love</span> <i class="fa-solid fa-code" style="color: #fb866a;"></i> By <a class="app-link" href="" target="_blank">AdeSutiawan</a></small>
+
+        </div>
+    </footer>
+    <!--//app-footer-->
 
     </div>
     <!--//app-wrapper-->
@@ -611,6 +654,7 @@
     <!-- <script src="<?= base_url() ?>/assets/js/index-charts.js"></script> -->
 
     <!-- Page Specific JS -->
+    <script src="<?= base_url('/assets/js/loader.js') ?>"></script>
     <script src="<?= base_url() ?>/assets/js/app.js"></script>
 
     <?= $this->renderSection('js') ?>

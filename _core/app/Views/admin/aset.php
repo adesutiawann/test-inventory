@@ -74,6 +74,7 @@ $menu = $aktiv;
                     <tr>
                         <th>NO.</th>
                         <th>Serial</th>
+                        <th>QRCODE</th>
                         <th>Manufacture</th>
                         <th>Spesifikasi</th>
 
@@ -99,6 +100,17 @@ $menu = $aktiv;
                                 <span class="text-danger">
                                     <?= $value->tgl_keluar ?><br>
                                 </span>
+                            </td>
+                            <td>
+                                <?php
+
+                                $kode = "pt.adminlte/" . $value->serial . "/" . $value->id . "";
+                                require_once('assets/phpqrcode/qrlib.php');
+                                QRcode::png("$kode", "kode" . $no . ".png", "M", 2, 2);
+
+                                ?>
+
+                                <img src="kode<?= $no ?>" alt="">
                             </td>
                             <td>
                                 <b> <?= $value->manufacture ?></b><br>

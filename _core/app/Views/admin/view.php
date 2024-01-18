@@ -1,10 +1,11 @@
 <?= $this->extend('admin/template') ?>
 
 <?= $this->section('css') ?>
+<!-- Additional CSS styles go here -->
 <?= $this->endSection() ?>
 
 <?= $this->section('content') ?>
-<h2 class="app-page-title text-scondary fw-semibold"><?= $title ?></h2>
+<h2 class="app-page-title text-secondary fw-semibold"><?= $title ?></h2>
 <hr>
 
 <div class="app-content pt-3 p-md-3 p-lg-0">
@@ -17,10 +18,7 @@
             <div class="col-md-6">
                 <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
                     <div class="carousel-inner">
-                        <?php
-
-
-                        if ($images == null) : ?>
+                        <?php if ($images == null) : ?>
                             <div class="carousel-item active">
                                 <img src="<?= base_url() ?>/uploads/noimage.png" class="d-block w-100 rounded-1" alt="No Image">
                             </div>
@@ -43,10 +41,7 @@
                 </div>
 
                 <div class="row mt-4">
-                    <?php if ($images == null) : ?>
-                        <div class="col">
-                        </div>
-                    <?php else : ?>
+                    <?php if ($images != null) : ?>
                         <?php foreach ($images as $key => $value) : ?>
                             <div class="col">
                                 <img src="<?= base_url() ?>/uploads/kegiatan/<?= $value->image ?>" class="d-block w-50 rounded-1" alt="Image <?= $key + 1 ?>" onclick="showImage('<?= base_url() ?>/uploads/kegiatan/<?= $value->image ?>')">
@@ -58,14 +53,12 @@
 
             <script>
                 function showImage(imageUrl) {
-                    // Mengganti gambar di carousel dengan gambar yang diklik
                     $('#carouselExampleIndicators .carousel-inner').html(`<div class="carousel-item active"><img src="${imageUrl}" class="d-block w-100 rounded-1" alt="Clicked Image"></div>`);
                 }
             </script>
 
             <div class="col-md-6 mt-5">
-                <h2><?php //$aset = $aset[0];
-                    echo $aset->manufacture ?></h2>
+                <h2><?= $aset->manufacture ?></h2>
                 <p class="lead"><b>Spesifikasi :</b> Prosesor <?= $aset->prosesor ?>, RAM <?= $aset->ram ?>GB, <?= $aset->hdd ?></p>
 
                 <hr>
@@ -79,9 +72,7 @@
 
                 <hr>
                 <form action="<?= base_url('admin/suratkeluar/save') ?>" method="POST">
-
                     <input type="hidden" name="serial" class="form-control text-center" value="8993221A11" placeholder="Serial">
-
                     <button class="btn btn-primary btn-lg text-white">Distribusikan</button>
                 </form>
             </div>
@@ -105,13 +96,9 @@
                 </tr>
             </thead>
             <tbody>
-                <?php
-                $no = 1;
-                foreach ($riwayat as $key => $value) :
-
-                ?>
+                <?php foreach ($riwayat as $key => $value) : ?>
                     <tr>
-                        <th scope="row"><?= $no++ ?></th>
+                        <th scope="row"><?= $key + 1 ?></th>
                         <td><?= $value->tgl ?> </td>
                         <td><?= $value->ket ?> </td>
                         <td><?= $value->user ?> </td>
@@ -123,11 +110,8 @@
         </table>
     </main>
 </div>
-
-</div>
-</div>
-
 <?= $this->endSection() ?>
 
 <?= $this->section('js') ?>
+<!-- Additional JavaScript code goes here -->
 <?= $this->endSection() ?>

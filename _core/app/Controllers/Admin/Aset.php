@@ -271,7 +271,7 @@ class aset extends BaseController
             // $tgl= date("Y-m-d");
             $post = [
                 'manufacture'            => $this->request->getVar('manufacture'),
-                'type'            => $this->request->getVar('type'),
+                'type'            => 'PC',
                 'prosesor'            => $this->request->getVar('prosesor'),
                 'generasi'            => $this->request->getVar('generasi'),
                 'hdd'            => $this->request->getVar('hdd'),
@@ -353,51 +353,7 @@ class aset extends BaseController
             return redirect()->to(base_url('admin/aset'));
         }
     }
-    public function import()
-    {
-        $file = $this->request->getFile('file_excel');
-        $extension = $file->getClientExtension();
 
-        if ($extension == 'xlsx' || $extension == 'xls') {
-
-            if ($extension == 'xls') {
-                $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xls();
-            } else {
-                $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
-            }
-            $spreadsheed = $reader->load($file);
-            $contak = $spreadsheed->getActiveSheet()->toArray();
-            //print_r($contak);
-            foreach ($contak as $key => $value) {
-                if ($key == 0) {
-                    continue;
-                }
-                $data = [
-
-                    'tgl_masuk' => $value[1],
-                    'tgl_keluar' => $value[2],
-                    'manufacture'    => $value[3],
-                    'type'    => 'PC',
-                    'prosesor'    => $value[4],
-                    'generasi'    => $value[5],
-                    'serial' => $value[6],
-                    'hdd' => $value[7],
-                    'ram'    => $value[8],
-                    'rincian'    => $value[9],
-                    'status' => $value[10],
-                    'stock'    => $value[11],
-                    'kondisi' => $value[12],
-                    'ket' => $value[13],
-                ];
-                $this->aset->insert($data);
-            }
-            session()->setFlashdata('success', 'Data Berhasil di Import.');
-            return redirect()->to(base_url('admin/aset'));
-        } else {
-            session()->setFlashdata('error', 'Format file tidak didukung; hanya format file <b>.xls</b> dan <b>.xlsx</b> yang diizinkan.');
-            return redirect()->to(base_url('admin/aset'));
-        }
-    }
     public function saveedit()
     {
 
@@ -451,7 +407,51 @@ class aset extends BaseController
         }
     }
 
+    public function import()
+    {
+        $file = $this->request->getFile('file_excel');
+        $extension = $file->getClientExtension();
 
+        if ($extension == 'xlsx' || $extension == 'xls') {
+
+            if ($extension == 'xls') {
+                $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xls();
+            } else {
+                $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
+            }
+            $spreadsheed = $reader->load($file);
+            $contak = $spreadsheed->getActiveSheet()->toArray();
+            //print_r($contak);
+            foreach ($contak as $key => $value) {
+                if ($key == 0) {
+                    continue;
+                }
+                $data = [
+
+                    'tgl_masuk' => $value[1],
+                    'tgl_keluar' => $value[2],
+                    'manufacture'    => $value[3],
+                    'type'    => 'PC',
+                    'prosesor'    => $value[4],
+                    'generasi'    => $value[5],
+                    'serial' => $value[6],
+                    'hdd' => $value[7],
+                    'ram'    => $value[8],
+                    'rincian'    => $value[9],
+                    'status' => $value[10],
+                    'stock'    => $value[11],
+                    'kondisi' => $value[12],
+                    'ket' => $value[13],
+                ];
+                $this->aset->insert($data);
+            }
+            session()->setFlashdata('success', 'Data Berhasil di Import.');
+            return redirect()->to(base_url('admin/aset'));
+        } else {
+            session()->setFlashdata('error', 'Format file tidak didukung; hanya format file <b>.xls</b> dan <b>.xlsx</b> yang diizinkan.');
+            return redirect()->to(base_url('admin/aset'));
+        }
+    }
     public function downloadExcel()
     {
         // $file = 'public/Ex_pc.csv';
