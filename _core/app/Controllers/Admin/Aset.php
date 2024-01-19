@@ -83,6 +83,56 @@ class aset extends BaseController
 
         return view('admin/aset', $data);
     }
+    public function cetakqrcode()
+    {
+        if (session()->get('logged_admin') != true) {
+            return redirect()->to(base_url());
+        }
+
+        $data = [
+            'title'   => 'Print/QRcode',
+            'segment' => $this->request->uri->getSegments(),
+            'admin'   => $this->admin->find(session()->get('id')),
+
+            'aktiv'   => 'ALL',
+            'aset' => $this->aset->where('type', 'pc')->orderBy('id', 'desc')->findAll(),
+
+            // 'aset' => $this->aset->where('type', 'pc')->where('kondisi', $id)->orderBy('id', 'desc')->findAll(),
+
+            'total_pc' => $this->aset->where('type', 'pc')->countAllResults(),
+            'total_pc_ok' => $this->aset->where('type', 'pc')->where('kondisi', 'OK')->countAllResults(),
+            'total_pc_rusak' => $this->aset->where('type', 'pc')->where('kondisi', 'rusak')->countAllResults(),
+            'total_pc_blanks' => $this->aset->where('type', 'pc')->where('kondisi', 'blanks')->countAllResults(),
+
+        ];
+
+        return view('admin/cetakqrcode', $data);
+    }
+    public function cetakpdf()
+    {
+        if (session()->get('logged_admin') != true) {
+            return redirect()->to(base_url());
+        }
+
+        $data = [
+            'title'   => 'Print/Pdf',
+            'segment' => $this->request->uri->getSegments(),
+            'admin'   => $this->admin->find(session()->get('id')),
+
+            'aktiv'   => 'ALL',
+            'aset' => $this->aset->where('type', 'pc')->orderBy('id', 'desc')->findAll(),
+
+            // 'aset' => $this->aset->where('type', 'pc')->where('kondisi', $id)->orderBy('id', 'desc')->findAll(),
+
+            'total_pc' => $this->aset->where('type', 'pc')->countAllResults(),
+            'total_pc_ok' => $this->aset->where('type', 'pc')->where('kondisi', 'OK')->countAllResults(),
+            'total_pc_rusak' => $this->aset->where('type', 'pc')->where('kondisi', 'rusak')->countAllResults(),
+            'total_pc_blanks' => $this->aset->where('type', 'pc')->where('kondisi', 'blanks')->countAllResults(),
+
+        ];
+
+        return view('admin/cetakpdf', $data);
+    }
     public function search($id)
     {
         $data = [

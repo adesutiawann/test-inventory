@@ -31,7 +31,7 @@ $menu = $aktiv;
 
         <div class="row ">
 
-            <div class="col-md-8 col-sm-8 col-xs-8  ">
+            <div class="col-md-8 col-sm-8 col-xs-6  ">
                 <a href="<?= base_url('admin/aset/add') ?>" class="btn app-btn-primary text-white ml-5 ">
                     <i class="fas fa-plus"></i> Tambah Asets
                 </a>
@@ -41,10 +41,17 @@ $menu = $aktiv;
             </div>
 
 
-            <div class="col-md-4 col-sm-4 col-xs-4 text-end ">
-                <a class="btn app-btn- bg-success text-white " href="<?= base_url('admin/aset/export') ?>">
+            <div class="col-md-4 col-sm-4 col-xs-6 text-end ">
+                <a class="btn app-btn- bg-warning text-white xs-1" target="_blank" href="<?= base_url('admin/aset/cetakqrcode') ?>">
+                    <i class="fa-solid fa-qrcode"></i>
+                </a>
+
+                <a class="btn app-btn- bg-danger text-white" target="_blank" href="<?= base_url('admin/aset/cetakpdf') ?>">
+                    <i class="fa-solid fa-file-pdf"></i>
+
+                </a>
+                <a class="btn app-btn- bg-success text-white" href="<?= base_url('admin/aset/export') ?>">
                     <i class="fa-solid fa-file-excel"></i>
-                    Export Excel
                 </a>
             </div>
         </div>
@@ -73,11 +80,10 @@ $menu = $aktiv;
                 <thead>
                     <tr>
                         <th>NO.</th>
-                        <th>Serial</th>
                         <th>QRCODE</th>
+                        <th>Serial</th>
                         <th>Manufacture</th>
                         <th>Spesifikasi</th>
-
                         <th>Status</th>
                         <th>Pengguna</th>
                         <th>Action</th>
@@ -92,6 +98,14 @@ $menu = $aktiv;
                     ?>
                         <tr class="table-<?= ($value->kondisi == 'OK') ? 'success ' : (($value->kondisi == 'RUSAK') ? 'warning' : 'danger') ?>">
                             <td><?= $no++ ?></td>
+                            <td>
+                                <div class="imgBox">
+                                    <img src="" width="40%" class="qrImage">
+                                </div>
+                                <div class="qrText">
+
+                                </div>
+                            </td>
                             <td><b><?= $value->serial ?></b><br>
                                 In :
                                 <span class="text-success">
@@ -101,17 +115,7 @@ $menu = $aktiv;
                                     <?= $value->tgl_keluar ?><br>
                                 </span>
                             </td>
-                            <td>
-                                <?php
 
-                                $kode = "pt.adminlte/" . $value->serial . "/" . $value->id . "";
-                                require_once('assets/phpqrcode/qrlib.php');
-                                QRcode::png("$kode", "kode" . $no . ".png", "M", 2, 2);
-
-                                ?>
-
-                                <img src="kode<?= $no ?>" alt="">
-                            </td>
                             <td>
                                 <b> <?= $value->manufacture ?></b><br>
                                 Type : <?= $value->type ?>
@@ -157,9 +161,33 @@ $menu = $aktiv;
 
                             </td>
                         </tr>
+
                     <?php endforeach ?>
                 </tbody>
             </table>
+            <script>
+                // Move script outside of the loop
+                let imgBoxes = document.querySelectorAll(".imgBox");
+                let qrImages = document.querySelectorAll(".qrImage");
+
+                let serials = <?php echo json_encode(array_column($aset, 'id')); ?>;
+
+                function generateQR(text, imgBox, qrImage) {
+                    if (text.length > 0) {
+                        // Generate QR code for each row
+                        let qrCodeUrl = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://inventiry.com/admin/aset/view/144/" + text;
+                        qrImage.src = qrCodeUrl;
+                        imgBox.classList.add("show-img");
+                    } else {
+                        // Handle error condition
+                    }
+                }
+
+                // Loop through each row and generate QR codes
+                for (let i = 0; i < serials.length; i++) {
+                    generateQR(serials[i], imgBoxes[i], qrImages[i]);
+                }
+            </script>
         </div>
     </div>
 </div>
