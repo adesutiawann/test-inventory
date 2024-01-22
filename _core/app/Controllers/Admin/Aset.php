@@ -83,31 +83,45 @@ class aset extends BaseController
 
         return view('admin/aset', $data);
     }
+
+
     public function cetakqrcode()
     {
-        if (session()->get('logged_admin') != true) {
+        if (session()->get('logged_admin') !== true) {
             return redirect()->to(base_url());
         }
 
+        $cari = $this->request->getVar('cari');
+
+        // Query Builder for the main asset data
+        $asetQuery = $this->aset->where('type', 'pc')
+            ->groupStart()
+            ->orWhere('serial', $cari)
+            ->orWhere('manufacture', $cari)
+            ->groupEnd()
+            ->orderBy('id', 'desc');
+
         $data = [
-            'title'   => 'Print/QRcode',
-            'segment' => $this->request->uri->getSegments(),
-            'admin'   => $this->admin->find(session()->get('id')),
-
-            'aktiv'   => 'ALL',
-            'aset' => $this->aset->where('type', 'pc')->orderBy('id', 'desc')->findAll(),
-
-            // 'aset' => $this->aset->where('type', 'pc')->where('kondisi', $id)->orderBy('id', 'desc')->findAll(),
-
-            'total_pc' => $this->aset->where('type', 'pc')->countAllResults(),
-            'total_pc_ok' => $this->aset->where('type', 'pc')->where('kondisi', 'OK')->countAllResults(),
-            'total_pc_rusak' => $this->aset->where('type', 'pc')->where('kondisi', 'rusak')->countAllResults(),
-            'total_pc_blanks' => $this->aset->where('type', 'pc')->where('kondisi', 'blanks')->countAllResults(),
-
+            'title'        => 'Print/QRcode',
+            'segment'      => $this->request->uri->getSegments(),
+            'admin'        => $this->admin->find(session()->get('id')),
+            'aktiv'        => 'ALL',
+            'aset'         => $asetQuery->findAll(),
+            'total_pc'     => $this->aset->where('type', 'pc')->countAllResults(),
+            'total_pc_ok'  => $this->getTotalByCondition('OK'),
+            'total_pc_rusak' => $this->getTotalByCondition('rusak'),
+            'total_pc_blanks' => $this->getTotalByCondition('blanks'),
         ];
 
         return view('admin/cetakqrcode', $data);
     }
+
+    // Helper method to get total by condition
+    private function getTotalByCondition($condition)
+    {
+        return $this->aset->where('type', 'pc')->where('kondisi', $condition)->countAllResults();
+    }
+
     public function cetakpdf()
     {
         if (session()->get('logged_admin') != true) {

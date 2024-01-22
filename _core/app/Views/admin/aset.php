@@ -42,6 +42,10 @@ $menu = $aktiv;
 
 
             <div class="col-md-4 col-sm-4 col-xs-6 text-end ">
+
+                <button type="button" class="btn btn-primary text-white" data-bs-toggle="modal" data-bs-target="#qrcode">
+                    <i class="fa-solid fa-qrcode"></i>
+                </button>
                 <a class="btn app-btn- bg-warning text-white xs-1" target="_blank" href="<?= base_url('admin/aset/cetakqrcode') ?>">
                     <i class="fa-solid fa-qrcode"></i>
                 </a>
@@ -221,6 +225,36 @@ $menu = $aktiv;
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                 <button type="submit" class="btn btn-primary text-white"> <i class="fa-solid fa-file-import"></i> Import</button>
+
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Modal cetak -->
+<div class="modal fade" id="qrcode" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel"><i class="fa-solid fa-magnifying-glass"></i> Search data</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form class="row" action="<?= base_url('admin/aset/cetakqrcode') ?>" method="post" enctype="multipart/form-data">
+
+                    <div class="col-md-11 col-sm-6 col-xs-10 mb-2">
+                        <input type="text" class="form-control" name="cari" required>
+
+                    </div>
+                    <div class="col-md-1 col-sm-3 text-end mb-2 ">
+
+                    </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="submit" target="_blank" class="btn btn-primary text-white"><i class="fa-solid fa-print"></i> Print</button>
 
             </div>
             </form>
