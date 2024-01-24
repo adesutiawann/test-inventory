@@ -85,6 +85,7 @@ class aset extends BaseController
     }
 
 
+
     public function cetakqrcode()
     {
         if (session()->get('logged_admin') !== true) {
@@ -92,15 +93,30 @@ class aset extends BaseController
         }
 
         $cari = $this->request->getVar('cari');
+        $tglin = $this->request->getVar('tglin');
+        $tglout = $this->request->getVar('tglout');
 
-        // Query Builder for the main asset data
-        $asetQuery = $this->aset->where('type', 'pc')
-            ->groupStart()
-            ->orWhere('serial', $cari)
-            ->orWhere('manufacture', $cari)
-            ->groupEnd()
-            ->orderBy('id', 'desc');
+        // Inisialisasi Query Builder untuk data aset utama
+        $asetQuery = $this->aset->where('type', 'pc');
 
+        // Filter berdasarkan kriteria pencarian
+        if ($cari) {
+            $asetQuery->groupStart()
+                ->orWhere('serial', $cari)
+                ->orWhere('manufacture', $cari)
+                ->groupEnd();
+        }
+
+        // Filter berdasarkan rentang tanggal
+        if ($tglin && $tglout) {
+            $asetQuery->where('tgl_masuk>=', $tglin)
+                ->where('tgl_keluar <=', $tglout);
+        }
+
+        // Urutkan hasil query
+        $asetQuery->orderBy('id', 'desc');
+
+        // Data yang akan dikirim ke view
         $data = [
             'title'        => 'Print/QRcode',
             'segment'      => $this->request->uri->getSegments(),

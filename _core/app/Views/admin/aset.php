@@ -43,8 +43,12 @@ $menu = $aktiv;
 
             <div class="col-md-4 col-sm-4 col-xs-6 text-end ">
 
-                <button type="button" class="btn btn-primary text-white" data-bs-toggle="modal" data-bs-target="#qrcode">
+
+                <button type="button" class="btn btn-warning text-white" data-bs-toggle="modal" data-bs-target="#qrcode">
                     <i class="fa-solid fa-qrcode"></i>
+                </button>
+                <button type="button" class="btn btn-danger text-white" data-bs-toggle="modal" data-bs-target="#pdf">
+                    <i class="fa-solid fa-file-pdf"></i>
                 </button>
                 <a class="btn app-btn- bg-warning text-white xs-1" target="_blank" href="<?= base_url('admin/aset/cetakqrcode') ?>">
                     <i class="fa-solid fa-qrcode"></i>
@@ -235,25 +239,69 @@ $menu = $aktiv;
 <!-- Modal cetak -->
 <div class="modal fade" id="qrcode" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel"><i class="fa-solid fa-magnifying-glass"></i> Search data</h1>
+        <div class="modal-content mt-15">
+            <div class="modal-header bg-warning">
+                <h1 class="modal-title fs-5 text-white" id="exampleModalLabel"><i class="fa-solid fa-arrow-down-short-wide"></i> Filter Data Qrcode</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <form class="row" action="<?= base_url('admin/aset/cetakqrcode') ?>" method="post" enctype="multipart/form-data">
 
-                    <div class="col-md-11 col-sm-6 col-xs-10 mb-2">
-                        <input type="text" class="form-control" name="cari" required>
+                    <div class="col-md-12 col-sm-12 col-xs-10 mb-2">
+                        Filter
+                        <input type="text" class="form-control" name="cari" placeholder="Serial or Manufacture" id="textInput">
 
                     </div>
-                    <div class="col-md-1 col-sm-3 text-end mb-2 ">
 
+                    <div class="col-md-12 col-sm-12 mb-2 ">
+                        Dari Tanggal
+                        <input type="date" class="form-control" name="tglin" id="dateInput">
+                    </div>
+                    <div class="col-md-12 col-sm-12 mb-2 ">
+                        Sampai Tanggal
+                        <input type="date" class="form-control" name="tglout" id="dateInput1">
                     </div>
 
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-secondary" onclick="refreshInput()"><i class="fa-solid fa-arrows-rotate"></i></button>
+                <button type="submit" target="_blank" class="btn btn-primary text-white"><i class="fa-solid fa-print"></i> Print</button>
+
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Modal cetak pdf -->
+<div class="modal fade" id="pdf" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content mt-15">
+            <div class="modal-header bg-danger ">
+                <h1 class="modal-title fs-5 text-white" id="exampleModalLabel"><i class="fa-solid fa-arrow-down-short-wide"></i> Filter Data Pdf</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form class="row" action="<?= base_url('admin/aset/cetakqrcode') ?>" method="post" enctype="multipart/form-data">
+
+                    <div class="col-md-12 col-sm-12 col-xs-10 mb-2">
+                        Filter
+                        <input type="text" class="form-control" name="cari" placeholder="Serial or Manufacture" id="textInput">
+
+                    </div>
+
+                    <div class="col-md-12 col-sm-12 mb-2 ">
+                        Dari Tanggal
+                        <input type="date" class="form-control" name="tglin" id="dateInput">
+                    </div>
+                    <div class="col-md-12 col-sm-12 mb-2 ">
+                        Sampai Tanggal
+                        <input type="date" class="form-control" name="tglout" id="dateInput1">
+                    </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" onclick="refreshInput()"><i class="fa-solid fa-arrows-rotate"></i></button>
                 <button type="submit" target="_blank" class="btn btn-primary text-white"><i class="fa-solid fa-print"></i> Print</button>
 
             </div>
@@ -307,5 +355,14 @@ $menu = $aktiv;
             });
         });
     });
+
+    function refreshInput() {
+        document.getElementById('textInput').value = '';
+
+        document.getElementById('dateInput').value = '';
+        document.getElementById('dateInput1').value = '';
+        textInput.focus();
+    }
 </script>
+
 <?= $this->endSection() ?>
