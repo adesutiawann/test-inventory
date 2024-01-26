@@ -50,17 +50,12 @@ $menu = $aktiv;
                 <button type="button" class="btn btn-danger text-white" data-bs-toggle="modal" data-bs-target="#pdf">
                     <i class="fa-solid fa-file-pdf"></i>
                 </button>
-                <a class="btn app-btn- bg-warning text-white xs-1" target="_blank" href="<?= base_url('admin/aset/cetakqrcode') ?>">
-                    <i class="fa-solid fa-qrcode"></i>
-                </a>
 
-                <a class="btn app-btn- bg-danger text-white" target="_blank" href="<?= base_url('admin/aset/cetakpdf') ?>">
-                    <i class="fa-solid fa-file-pdf"></i>
-
-                </a>
-                <a class="btn app-btn- bg-success text-white" href="<?= base_url('admin/aset/export') ?>">
+                <button type="button" class="btn btn-success text-white" data-bs-toggle="modal" data-bs-target="#excel">
                     <i class="fa-solid fa-file-excel"></i>
-                </a>
+                </button>
+
+
             </div>
         </div>
     </div>
@@ -245,7 +240,7 @@ $menu = $aktiv;
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form class="row" action="<?= base_url('admin/aset/cetakqrcode') ?>" method="post" enctype="multipart/form-data">
+                <form class="row" action="<?= base_url('admin/aset/cetakqrcode') ?>" target="_blank" method="post" enctype="multipart/form-data">
 
                     <div class="col-md-12 col-sm-12 col-xs-10 mb-2">
                         Filter
@@ -259,7 +254,7 @@ $menu = $aktiv;
                     </div>
                     <div class="col-md-12 col-sm-12 mb-2 ">
                         Sampai Tanggal
-                        <input type="date" class="form-control" name="tglout" id="dateInput1">
+                        <input type="date" class="form-control" name="tglout" id="dateInput">
                     </div>
 
             </div>
@@ -282,17 +277,17 @@ $menu = $aktiv;
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form class="row" action="<?= base_url('admin/aset/cetakqrcode') ?>" method="post" enctype="multipart/form-data">
+                <form class="row" action="<?= base_url('admin/aset/cetakpdf') ?>" target="_blank" method="post" enctype="multipart/form-data">
 
                     <div class="col-md-12 col-sm-12 col-xs-10 mb-2">
                         Filter
-                        <input type="text" class="form-control" name="cari" placeholder="Serial or Manufacture" id="textInput">
+                        <input type="text" class="form-control" name="cari" placeholder="Serial or Manufacture" id="textInput1">
 
                     </div>
 
                     <div class="col-md-12 col-sm-12 mb-2 ">
                         Dari Tanggal
-                        <input type="date" class="form-control" name="tglin" id="dateInput">
+                        <input type="date" class="form-control" name="tglin" id="dateInput1">
                     </div>
                     <div class="col-md-12 col-sm-12 mb-2 ">
                         Sampai Tanggal
@@ -301,8 +296,45 @@ $menu = $aktiv;
 
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" onclick="refreshInput()"><i class="fa-solid fa-arrows-rotate"></i></button>
+                <button type="button" class="btn btn-secondary" onclick="refreshInput1()"><i class="fa-solid fa-arrows-rotate"></i></button>
                 <button type="submit" target="_blank" class="btn btn-primary text-white"><i class="fa-solid fa-print"></i> Print</button>
+
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Modal cetak exel -->
+<div class="modal fade" id="excel" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content mt-15">
+            <div class="modal-header bg-success ">
+                <h1 class="modal-title fs-5 text-white" id="exampleModalLabel"><i class="fa-solid fa-arrow-down-short-wide"></i> Filter Data Excel</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form class="row" action="<?= base_url('admin/aset/export') ?>" method="post" enctype="multipart/form-data">
+
+                    <div class="col-md-12 col-sm-12 col-xs-10 mb-2">
+                        Filter
+                        <input type="text" class="form-control" name="cari" placeholder="Serial or Manufacture" id="textInput2">
+
+                    </div>
+
+                    <div class="col-md-12 col-sm-12 mb-2 ">
+                        Dari Tanggal
+                        <input type="date" class="form-control" name="tglin" id="dateInput2">
+                    </div>
+                    <div class="col-md-12 col-sm-12 mb-2 ">
+                        Sampai Tanggal
+                        <input type="date" class="form-control" name="tglout" id="dateInput2">
+                    </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-white" onclick="refreshInput2()"><i class="fa-solid fa-arrows-rotate"></i></button>
+                <button type="submit" name="excel" class="btn btn-danger text-white"><i class="fa-solid fa-cloud-arrow-down"></i> Donlowad</button>
 
             </div>
             </form>
@@ -360,8 +392,24 @@ $menu = $aktiv;
         document.getElementById('textInput').value = '';
 
         document.getElementById('dateInput').value = '';
-        document.getElementById('dateInput1').value = '';
+        document.getElementById('dateInput').value = '';
         textInput.focus();
+    }
+
+    function refreshInput1() {
+        document.getElementById('textInput1').value = '';
+
+        document.getElementById('dateInput1').value = '';
+        document.getElementById('dateInput1').value = '';
+        textInput1.focus();
+    }
+
+    function refreshInput2() {
+        document.getElementById('textInput2').value = '';
+
+        document.getElementById('dateInput2').value = '';
+        document.getElementById('dateInput2').value = '';
+        textInput2.focus();
     }
 </script>
 

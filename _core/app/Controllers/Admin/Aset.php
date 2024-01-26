@@ -132,13 +132,62 @@ class aset extends BaseController
         return view('admin/cetakqrcode', $data);
     }
 
+    public function cetakpdf()
+    {
+        if (session()->get('logged_admin') !== true) {
+            return redirect()->to(base_url());
+        }
+
+        $cari = $this->request->getVar('cari');
+        $tglin = $this->request->getVar('tglin');
+        $tglout = $this->request->getVar('tglout');
+
+        // Inisialisasi Query Builder untuk data aset utama
+        $asetQuery = $this->aset->where('type', 'pc');
+
+        // Filter berdasarkan kriteria pencarian
+        if ($cari) {
+            $asetQuery->groupStart()
+                ->orWhere('serial', $cari)
+                ->orWhere('manufacture', $cari)
+                ->groupEnd();
+        }
+
+        // Filter berdasarkan rentang tanggal
+        if ($tglin && $tglout) {
+            $asetQuery->where('tgl_masuk>=', $tglin)
+                ->where('tgl_keluar <=', $tglout);
+        }
+
+        // Urutkan hasil query
+        $asetQuery->orderBy('id', 'desc');
+
+        // Data yang akan dikirim ke view
+        $data = [
+            'title'        => 'Print/QRcode',
+            'segment'      => $this->request->uri->getSegments(),
+            'admin'        => $this->admin->find(session()->get('id')),
+            'aktiv'        => 'ALL',
+            'aset'         => $asetQuery->findAll(),
+            'total_pc'     => $this->aset->where('type', 'pc')->countAllResults(),
+            'total_pc_ok'  => $this->getTotalByCondition('OK'),
+            'total_pc_rusak' => $this->getTotalByCondition('rusak'),
+            'total_pc_blanks' => $this->getTotalByCondition('blanks'),
+        ];
+        if (isset($_GET['excel'])) {
+            return view('admin/cetakexcel', $data);
+        } else {
+            return view('admin/cetakpdf', $data);
+        }
+    }
+
     // Helper method to get total by condition
     private function getTotalByCondition($condition)
     {
         return $this->aset->where('type', 'pc')->where('kondisi', $condition)->countAllResults();
     }
 
-    public function cetakpdf()
+    public function cetakpdfxxxxx()
     {
         if (session()->get('logged_admin') != true) {
             return redirect()->to(base_url());
@@ -545,8 +594,35 @@ class aset extends BaseController
     }
     public function export()
     {
+        if (session()->get('logged_admin') !== true) {
+            return redirect()->to(base_url());
+        }
 
-        $contacts = $this->aset->where('type', 'PC')->orderBy('id', 'desc')->findAll();
+        $cari = $this->request->getVar('cari');
+        $tglin = $this->request->getVar('tglin');
+        $tglout = $this->request->getVar('tglout');
+
+        // Inisialisasi Query Builder untuk data aset utama
+        $asetQuery = $this->aset->where('type', 'pc');
+
+        // Filter berdasarkan kriteria pencarian
+        if ($cari) {
+            $asetQuery->groupStart()
+                ->orWhere('serial', $cari)
+                ->orWhere('manufacture', $cari)
+                ->groupEnd();
+        }
+
+        // Filter berdasarkan rentang tanggal
+        if ($tglin && $tglout) {
+            $asetQuery->where('tgl_masuk>=', $tglin)
+                ->where('tgl_keluar <=', $tglout);
+        }
+
+        // Urutkan hasil query
+        $asetQuery->orderBy('id', 'desc');
+        $contacts = $asetQuery->findAll();
+        // $contacts = $this->aset->where('type', 'PC')->orderBy('id', 'desc')->findAll();
 
         $spreadsheet = new Spreadsheet();
 
