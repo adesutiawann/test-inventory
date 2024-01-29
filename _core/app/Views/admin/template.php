@@ -14,8 +14,10 @@
     <link rel="shortcut icon" href="<?= base_url() ?>/logoks.png">
 
     <link rel="stylesheet" href="<?= base_url('/assets/css/loader.css') ?>">
+
     <!-- FontAwesome JS-->
     <script defer src="<?= base_url() ?>/assets/plugins/fontawesome/js/all.min.js"></script>
+
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
 
@@ -47,9 +49,9 @@
         <?= "<script>
         const Toast = Swal.mixin({
           toast: true,
-          position: 'center',
+          position: 'top-end',
           showConfirmButton: false,
-          timer: 5000,
+          timer: 3000,
           timerProgressBar: true,
           didOpen: (toast) => {
             toast.onmouseenter = Swal.stopTimer;
@@ -88,7 +90,7 @@
                         toast: true,
                         position: 'center',
                         showConfirmButton: false,
-                        timer: 5000,
+                        timer: 3000,
                         timerProgressBar: true,
                         didOpen: (toast) => {
                             toast.onmouseenter = Swal.stopTimer;
@@ -98,7 +100,7 @@
 
                         Toast.fire({
                         icon: 'error',
-                        title: '$pesan'
+                        title: 'GAGAL DARI TRMPLATE'
                         });
                     </script>";
             ?>
@@ -348,18 +350,19 @@
 
 
                             <!--//nav-link-->
-                            <div id="submenu-5" class="collapse submenu submenu-5 <?= ($menu == 'sm' ||$menu == 'sk' || $menu == 'suratkeluar') ? 'show' : '' ?>"" data-bs-parent=" #menu-accordion">
+                            <div id="submenu-5" class="collapse submenu submenu-5 <?= ($menu == 'sm' || $menu == 'sk' || $menu == 'sb' || $menu == 'suratkeluar') ? 'show' : '' ?>"" data-bs-parent=" #menu-accordion">
                                 <ul class="submenu-list list-unstyled">
 
 
                                     <li class="submenu-item">
                                         <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-                                        <a class="submenu-link <?= ($menu == 'sm') ? 'active' : '' ?>" href=" <?= base_url('admin/suratmasuk') ?>">
+                                        <a class="submenu-link <?= ($menu == 'sb') ? 'active' : '' ?>" href=" <?= base_url('admin/suratkeluar/add') ?>">
 
-                                            <span class="nav-link-text">Surat Masuk</span>
+                                            <span class="nav-link-text">Surat Baru</span>
                                         </a>
                                         <!--//nav-link-->
                                     </li>
+                                 
 
                                     <li class="submenu-item">
                                         <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->

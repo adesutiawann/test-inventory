@@ -73,7 +73,7 @@
                 <hr>
                 <form action="<?= base_url('admin/suratkeluar/save') ?>" method="POST">
                     <input type="hidden" name="serial" class="form-control text-center" value="8993221A11" placeholder="Serial">
-                    <button class="btn btn-primary btn-lg text-white">Distribusikan</button>
+                    <button class="btn btn-primary btn-lg text-white"> <i class="fa-solid fa-outdent"></i> Distribusikan</button>
                 </form>
             </div>
         </div>

@@ -44,11 +44,27 @@
             </div>
         <?php endif ?>
 
-        <form action="<?= base_url('admin/suratkeluar/save') ?>" method="POST">
-            <div class="row">
+
+        <div class="row">
+            <div class=" shadow-lg pb-3 pt-3">
+                <div class="row g-3 mb-3 ">
+
+                    <div class="col-lg-4  col-sm-12 text-lg-end text-sm-center">
+
+                        <h5>Nomor :</h5>
+                    </div>
+                    <div class="col-lg-4 col-sm-12 text-center">
+
+                        <h3><?= $nomor ?> </h3>
+                    </div>
+                    <div class="col-lg-4 col-sm-12 text-lg-start text-sm-center">
+                        Tanggal :<br>
+                        <strong class="text-right"><?= date('d M Y') ?></strong>
+                    </div>
+                </div>
 
                 <div class="col-md-12 mb-3">
-                    <div class="row g-3 shadow-lg pb-3">
+                    <div class="row g-3  ">
                         <div class="col-sm">
                             <p class="text-end fw-bold"> Add Serial :</p>
 
@@ -62,178 +78,180 @@
                         </div>
                     </div>
                 </div>
-        </form>
-        <hr>
-        <div class="col-md-12 mb-3">
+                </form>
 
-            <div class="app-card app-card-accordion  mb-4 pl-3">
-                <div class="app-card-body pl-3 ml-3">
-                    <div class="table-responsive">
-                        <? //php  print_r($asetk)
-                        ?>
-                        <table class=" table app-table-hover mb-0 text-left">
-                            <thead>
-                                <tr>
-                                    <th class="cell">No</th>
-                                    <th class="cell">Serial</th>
-                                    <th class="cell">Product</th>
-                                    <th class="cell">Status</th>
-                                    <th class="cell text-center">Action</th>
-                                </tr>
-                            </thead>
+            </div>
+            <hr>
+            <div class="col-md-12 mb-3">
 
-                            <tbody>
-                                <?php
-                                $no = 1;
-                                foreach ($asetk as $key => $value) :
-
-                                ?>
+                <div class="app-card app-card-accordion  mb-4 pl-3">
+                    <div class="app-card-body pl-3 ml-3">
+                        <div class="table-responsive">
+                            <? //php  print_r($asetk)
+                            ?>
+                            <table class=" table app-table-hover mb-0 text-left">
+                                <thead>
                                     <tr>
-                                        <td><?= $no++ ?></td>
-
-
-                                        <td class="cell"><b><?= $value->serial ?></b></td>
-                                        <td class="cell">
-                                            <span class="truncate"><?= $value->manufacture ?></span><br>
-                                            <span class="truncate">Type :<?= $value->type ?></span>
-                                        </td>
-                                        <td class="cell">
-                                            Status :<?= $value->status ?><br>
-                                            Stock :<?= $value->stock ?><br>
-                                            Kondisi:
-                                            <span class="badge bg-<?= ($value->kondisi == 'OK') ? 'success' : (($value->kondisi == 'RUSAK') ? 'warning' : 'danger') ?>">
-                                                <?= $value->kondisi  ?>
-                                            </span>
-                                        </td>
-
-
-                                        <td class="cell text-center ">
-                                            <a class="" href="<?= base_url('admin/suratkeluar/delete_asetk/' . $value->serial) ?>">
-                                                <i class="fa-solid fa-trash-can text-danger"></i> </a>
-                                            </a>
-                                        </td>
+                                        <th class="cell">No</th>
+                                        <th class="cell">Serial</th>
+                                        <th class="cell">Product</th>
+                                        <th class="cell">Status</th>
+                                        <th class="cell text-center">Action</th>
                                     </tr>
-                                <?php endforeach ?>
+                                </thead>
+
+                                <tbody>
+                                    <?php
+                                    $no = 1;
+                                    foreach ($asetk as $key => $value) :
+
+                                    ?>
+                                        <tr>
+                                            <td><?= $no++ ?></td>
 
 
-                            </tbody>
-                        </table>
-                    </div><!--//table-responsive-->
+                                            <td class="cell"><b><?= $value->serial ?></b></td>
+                                            <td class="cell">
+                                                <span class="truncate"><?= $value->manufacture ?></span><br>
+                                                <span class="truncate">Type :<?= $value->type ?></span>
+                                            </td>
+                                            <td class="cell">
+                                                Status :<?= $value->status ?><br>
+                                                Stock :<?= $value->stock ?><br>
+                                                Kondisi:
+                                                <span class="badge bg-<?= ($value->kondisi == 'OK') ? 'success' : (($value->kondisi == 'RUSAK') ? 'warning' : 'danger') ?>">
+                                                    <?= $value->kondisi  ?>
+                                                </span>
+                                            </td>
+
+
+                                            <td class="cell text-center ">
+                                                <a class="" href="<?= base_url('admin/suratkeluar/delete_asetk/' . $value->serial) ?>">
+                                                    <i class="fa-solid fa-trash-can text-danger"></i> </a>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    <?php endforeach ?>
+
+
+                                </tbody>
+                            </table>
+                        </div><!--//table-responsive-->
+
+                    </div>
+                </div>
+
+            </div>
+
+            <form action="<?= base_url('admin/suratkeluar/savesuratkeluar') ?>" method="POST">
+
+                <div class="col-md-12 mb-1  ">
+
+                    <div class="row g-3  pb-3" hidden>
+
+                        <div class="col-sm-2 text-right">
+                            <p class="text-end fw-bold"> Nomor :</p>
+
+                        </div>
+                        <div class="col-lg-8">
+
+                            <input type="text" name="nomor" class="form-control text-center" value="<?= $nomor ?>" placeholder="001/PRY-MSI/KITECH/XI/2023" required>
+                        </div>
+                        <div class="col-sm-2">
+                            Tanggal :<br>
+                            <strong class="text-right"><?= date('d M Y') ?></strong>
+                        </div>
+                    </div>
 
                 </div>
-            </div>
+
+
+                <hr>
+                <div class=" ">
+                    <div class="row ">
+                        <div class="col-md-12 col-lg-6">
+                            <div class="p-3 border bg-light">
+                                <h6>Barang</h6>
+                                <hr>
+
+                                <div class="row">
+
+                                    <div class="col-2">
+                                        Jumlah :
+                                        <input type="text" name="jumlah" class="form-control" required placeholder="000">
+
+                                    </div>
+                                    <div class="col-5">
+                                        Satuan :
+                                        <input type="text" name="satuan" class="form-control" required placeholder="Unit">
+
+                                    </div>
+
+                                    <div class="col-5 mb-4">
+                                        Status
+                                        <select name="status" class="form-select">
+                                            <?php foreach ($stock as $gr) : ?>
+                                                <option value="<?= $gr->nama ?>"><?= $gr->nama ?></option>
+                                            <?php endforeach ?>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-12 mb-5">
+                                        Keterangan
+                                        <div class="form-floating">
+                                            <textarea name="ket" class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px"></textarea>
+                                            <label for="floatingTextarea2">Keterangan</label>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 col-lg-6">
+                            <div class="p-3 border bg-light">
+                                <h6>Penerima</h6>
+                                <hr>
+                                <div class="row ">
+                                    <div class="col-2">
+                                        NIK :
+                                        <input type="text" name="nik" class="form-control UPPERCASE" required placeholder="NIK">
+
+                                    </div>
+                                    <div class="col-5">
+                                        Penerima :
+                                        <input type="text" name="penerima" class="form-control" required placeholder="Nama Penerima">
+
+                                    </div>
+                                    <div class="col-5">
+                                        Telpon :
+                                        <input type="text" name="telpon" class="form-control" required placeholder="Telpon ">
+
+                                    </div>
+                                    <div class="col-md-12 mb-5 mt-3">
+                                        Lokasi
+                                        <div class="form-floating">
+                                            <textarea name="lokasi" class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px"></textarea>
+                                            <label for="floatingTextarea2">Lokasi</label>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 text-end mt-3">
+                    <button class="btn btn-primary text-white" type="submit">
+                        <i class="fa-solid fa-download"></i> Simpan </button>
+                </div>
+
 
         </div>
 
-        <form action="<?= base_url('admin/suratkeluar/savesuratkeluar') ?>" method="POST">
-
-            <div class="col-md-12 mb-1  ">
-
-                <div class="row g-3 shadow-lg pb-3">
-
-                    <div class="col-sm-2 text-right">
-                        <p class="text-end fw-bold"> Nomor :</p>
-
-                    </div>
-                    <div class="col-lg-8">
-
-                        <input type="text" name="nomor" class="form-control text-center" placeholder="001/PRY-MSI/KITECH/XI/2023" required>
-                    </div>
-                    <div class="col-sm-2">
-                        Tanggal :<br>
-                        <strong class="text-right"><?= date('d M Y') ?></strong>
-                    </div>
-                </div>
-
-            </div>
-
-
-            <hr>
-            <div class="container ">
-                <div class="row gx-2">
-                    <div class="col-md-12 col-lg-6">
-                        <div class="p-3 border bg-light">
-                            <h6>Barang</h6>
-                            <hr>
-
-                            <div class="row">
-
-                                <div class="col-2">
-                                    Jumlah :
-                                    <input type="text" name="jumlah" class="form-control" required placeholder="000">
-
-                                </div>
-                                <div class="col-5">
-                                    Satuan :
-                                    <input type="text" name="satuan" class="form-control" required placeholder="Unit">
-
-                                </div>
-
-                                <div class="col-5 mb-4">
-                                    Status
-                                    <select name="status" class="form-select">
-                                        <?php foreach ($stock as $gr) : ?>
-                                            <option value="<?= $gr->nama ?>"><?= $gr->nama ?></option>
-                                        <?php endforeach ?>
-                                    </select>
-                                </div>
-                                <div class="col-md-12 mb-5">
-                                    Keterangan
-                                    <div class="form-floating">
-                                        <textarea name="ket" class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px"></textarea>
-                                        <label for="floatingTextarea2">Keterangan</label>
-                                    </div>
-
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-12 col-lg-6">
-                        <div class="p-3 border bg-light">
-                            <h6>Penerima</h6>
-                            <hr>
-                            <div class="row ">
-                                <div class="col-2">
-                                    NIK :
-                                    <input type="text" name="nik" class="form-control UPPERCASE" required placeholder="NIK">
-
-                                </div>
-                                <div class="col-5">
-                                    Penerima :
-                                    <input type="text" name="penerima" class="form-control" required placeholder="Nama Penerima">
-
-                                </div>
-                                <div class="col-5">
-                                    Telpon :
-                                    <input type="text" name="telpon" class="form-control" required placeholder="Telpon ">
-
-                                </div>
-                                <div class="col-md-12 mb-5 mt-3">
-                                    Lokasi
-                                    <div class="form-floating">
-                                        <textarea name="lokasi" class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px"></textarea>
-                                        <label for="floatingTextarea2">Lokasi</label>
-                                    </div>
-
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-12 text-end mt-3">
-                <button class="btn btn-primary text-white" type="submit">
-                    <i class="fa-solid fa-download"></i> Simpan </button>
-            </div>
-
 
     </div>
-
-
-</div>
 
 
 </div>

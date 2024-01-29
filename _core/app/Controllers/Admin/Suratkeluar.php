@@ -71,31 +71,30 @@ class Suratkeluar extends BaseController
         if (session()->get('logged_admin') != true) {
             return redirect()->to(base_url());
         }
-        // $data['aset'] = $this->aset->findAll();
+        // script pengulangan;
+        $suratKeluar = $this->suratkeluar->findAll();
+        foreach ($suratKeluar as $key => $value) {
+            $aset = $this->aset->where('id_sk', $value->nomor)->findAll();
+            $suratKeluar[$key]->aset = $aset;
+        }
 
         $data = [
             'title'   => 'Surat Keluar',
             'segment' => $this->request->uri->getSegments(),
             'admin'   => $this->admin->find(session()->get('id')),
             'nama'    => $this->manufacture->orderBy('nama', 'asc')->findAll(),
-            'type'    => $this->type->orderBy('nama', 'asc')->findAll(),
-            'prosesor'    => $this->prosesor->orderBy('nama', 'asc')->findAll(),
-            'generasi'    => $this->generasi->orderBy('nama', 'asc')->findAll(),
-            'hdd'    => $this->hdd->orderBy('nama', 'asc')->findAll(),
-            'ram'    => $this->ram->orderBy('nama', 'asc')->findAll(),
-            'rincian'    => $this->rincian->orderBy('nama', 'asc')->findAll(),
-            'status'    => $this->status->orderBy('nama', 'asc')->findAll(),
-            'kondisi'    => $this->kondisi->orderBy('nama', 'asc')->findAll(),
-            'stock'    => $this->stok->orderBy('nama', 'asc')->findAll(),
+
             'aktiv'   => 'ALL',
-            'aset' => $this->aset->getAll(),
 
-            'suratkeluar' => $this->suratkeluar->where('id_sk', '1')->getAllsuratkeluar(),
+            //'suratkeluar' => $this->suratkeluar->findAll(),
+            'suratkeluar' => $suratKeluar,
             // 'total_pc_ok' => $this->aset->where('type', 'pc')->where('kondisi', 'OK')->countAllResults(),
+            'suratkeluarttl' => $this->suratkeluar->countAllResults(),
+            'suratkeluardis' => $this->suratkeluar->where('status', 'Terdistribusi')->countAllResults(),
+            'suratkeluarbac' => $this->suratkeluar->where('status', 'Backup')->countAllResults(),
 
 
-
-            'asetk' => $this->asetk->findAll(),
+            //'asetk' => $this->asetk->findAll(),
             //'suratkeluar'    => $this->asetk->find($id),
 
         ];
@@ -105,17 +104,90 @@ class Suratkeluar extends BaseController
         return view('admin/suratkeluar', $data);
     }
 
-    public function ok($id)
+    public function search($id)
     {
         $data = [
-            'title'   => 'Surat Keluar',
+            'title'   => 'Data Personal Computer',
             'aktiv'   => $id,
             'segment' => $this->request->uri->getSegments(),
-            //'aset' =>  $this->asetk->where('kondisi', 'OK')->getAll(),
-            'aset'    => $this->asetk->getId($id),
+            'admin'   => $this->admin->find(session()->get('id')),
+            'suratkeluar' => $this->suratkeluar->where('status', $id)->findAll(),
+            'suratkeluarttl' => $this->suratkeluar->countAllResults(),
+            'suratkeluardis' => $this->suratkeluar->where('status', 'Terdistribusi')->countAllResults(),
+            'suratkeluarbac' => $this->suratkeluar->where('status', 'Backup')->countAllResults(),
+            //'asetk' => $this->asetk->where('status', $id)->orderBy('id', 'desc')->findAll(),
+            //'asetk' => $this->asetk->findAll(),
+            // 'total_pc' => $this->aset->where('type', 'pc')->countAllResults(),
+            //'total_pc_ok' => $this->aset->where('type', 'pc')->where('kondisi', 'OK')->countAllResults(),
+            //'total_pc_rusak' => $this->aset->where('type', 'pc')->where('kondisi', 'rusak')->countAllResults(),
+            //'total_pc_blanks' => $this->aset->where('type', 'pc')->where('kondisi', 'blanks')->countAllResults(),
+            //'aset'    => $this->aset->getId($id),
 
         ];
         return view('admin/suratkeluar', $data);
+    }
+
+    public function cetaksuratkeluar()
+    {
+        if (session()->get('logged_admin') != true) {
+            return redirect()->to(base_url());
+        }
+        // $data['aset'] = $this->aset->findAll();
+
+        $cari = $this->request->getVar('cari');
+        $tglin = $this->request->getVar('tglin');
+        $tglout = $this->request->getVar('tglout');
+
+        // Inisialisasi Query Builder untuk data aset utama
+        //$asetQuery = $this->aset->where('type', 'pc');
+
+        $asetQuery = $this->suratkeluar;
+        // Filter berdasarkan kriteria pencarian
+        if ($cari) {
+            $asetQuery->groupStart()
+                ->orWhere('serial', $cari)
+                ->orWhere('manufacture', $cari)
+                ->groupEnd();
+        }
+
+        // Filter berdasarkan rentang tanggal
+        if ($tglin && $tglout) {
+            $asetQuery->where('tgl=', $tglin)
+                ->where('tgl<=', $tglout);
+        }
+
+        // Urutkan hasil query
+        $asetQuery->orderBy('id', 'desc');
+
+        $suratKeluar = $this->suratkeluar->findAll();
+        foreach ($suratKeluar as $key => $value) {
+            $aset = $this->aset->where('id_sk', $value->nomor)->findAll();
+            $suratKeluar[$key]->aset = $aset;
+        }
+        $data = [
+            'title'   => 'Surat Keluar',
+            'segment' => $this->request->uri->getSegments(),
+            'admin'   => $this->admin->find(session()->get('id')),
+
+            'aset' => $this->aset->getAll(),
+
+            //'suratkeluar' => $this->suratkeluar->findAll(),
+            'suratkeluar' => $suratKeluar,
+
+            // 'total_pc_ok' => $this->aset->where('type', 'pc')->where('kondisi', 'OK')->countAllResults(),
+            'suratkeluarttl' => $this->suratkeluar->countAllResults(),
+            'suratkeluardis' => $this->suratkeluar->where('status', 'Terdistribusi')->countAllResults(),
+            'suratkeluarbac' => $this->suratkeluar->where('status', 'Backup')->countAllResults(),
+
+
+            'asetk' => $this->asetk->findAll(),
+            //'suratkeluar'    => $this->asetk->find($id),
+
+        ];
+
+
+
+        return view('admin/cetaksuratkeluar', $data);
     }
     public function print()
     {
@@ -140,9 +212,11 @@ class Suratkeluar extends BaseController
         if (session()->get('logged_admin') != true) {
             return redirect()->to(base_url());
         }
+        // $code = $this->suratkeluar->generateCode();
         //  $id = '1';
         $data = [
             'title'   => 'Surat Keluar',
+            'nomor' => $this->suratkeluar->generateCode(),
             'segment' => $this->request->uri->getSegments(),
             'admin'   => $this->admin->find(session()->get('id')),
             'nama'    => $this->manufacture->orderBy('nama', 'asc')->findAll(),
@@ -295,9 +369,43 @@ class Suratkeluar extends BaseController
         }
     }
 
+    public function keranjang($serial)
+    {
+
+        $tgl = date("Y-m-d");
+        // $serial = $this->request->getVar('serial');
+        $existingData = $this->aset->where('serial', $serial)->first();
+        if ($existingData) {
+            $tgl = date("Y-m-d");
+            $post = [
+                // 'id' => '1',
+
+                //'serial'            => $this->request->getVar('serial'),
+                //'tgl_keluar'           => $tgl,
+                'id_sk'            => '1',
+            ];
+
+            if ($this->aset->updateDatax($serial, $post)) {
+                // if ($this->suratkeluar->updateDatax($post)) {
+                session()->setFlashdata('success', 'Data berhasil masuk list.');
+                return redirect()->to(base_url('admin/suratkeluar/add'));
+            } else {
+                session()->setFlashdata('error', 'Data Sudah Terdaftar !');
+                return redirect()->to(base_url('admin/suratkeluar/add'));
+            }
+        } else {
+            //  session()->setFlashdata('warning', '<strong>Peringatan!</strong> Data dengan nomor serial <b>' . $serial . '</b> sudah terdaftar.');
+            //return redirect()->to(base_url('admin/suratkeluar/add')); //break; // Exit the loop if any data already exists
+            session()->setFlashdata('warning', 'Serial <b>' . $serial . '</b>  tidak terdaftar dalam system !');
+            return redirect()->to(base_url('admin/suratkeluar/add'));
+        }
+    }
+
+
 
     public function saveedit()
     {
+
 
         $tgl = date("Y-m-d");
 

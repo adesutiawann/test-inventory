@@ -23,45 +23,42 @@ $con = new mysqli("localhost", "root", "", "db_inventory") or die(mysqli_error($
 </style>
 <h1 class="app-page-title"><?= $title ?></h1>
 
-<div class="app-card app-card-accordion shadow-sm mb-4">
-    <div class="app-card-body p-4">
-        <?php if (session()->getFlashData('error')) : ?>
-            <div class="alert alert-danger">
-                <?= session()->getFlashData('error') ?>
-            </div>
-        <?php endif ?>
-        <?php if (session()->getFlashData('success')) : ?>
-            <div class="alert alert-success">
-                <?= session()->getFlashData('success') ?>
-            </div>
-        <?php endif ?>
+
+<div class="app-card app-card-accordion shadow-sm mb-3" <?= ($admin->level == '3') ? 'hidden' : '' ?>>
+    <div class="app-card-body p-3">
 
         <div class="row ">
-            <div class="col-10 ml-4">
-                <a href="<?= base_url('admin/suratkeluar/add') ?>" class="btn app-btn-primary mb-3 text-white"><i class="fas fa-plus"></i> Creat Surat Keluar</a>
+
+            <div class="col-md-8 col-sm-8 col-xs-6  <?= ($admin->level == '3') ? 'hidden' : '' ?> ">
+                <a href="<?= base_url('admin/suratkeluar/add') ?>" class="btn app-btn-primary text-white ml-5 ">
+                    <i class="fas fa-plus"></i> Surat Baru
+                </a>
 
             </div>
 
 
-            <div class="col-2">
-                <a class="btn app-btn-secondary" href="#">
-                    <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-download me-1" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                        <path fill-rule="evenodd" d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5z"></path>
-                        <path fill-rule="evenodd" d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708l3 3z"></path>
-                    </svg>
-                    Download CSV
-                </a>
+            <div class="col-md-4 col-sm-4 col-xs-6 text-end ">
+
+                <button type="button" class="btn btn-danger text-white" data-bs-toggle="modal" data-bs-target="#pdf">
+                    <i class="fa-solid fa-file-pdf"></i>
+                </button>
+
+                <button type="button" class="btn btn-success text-white" data-bs-toggle="modal" data-bs-target="#excel">
+                    <i class="fa-solid fa-file-excel"></i>
+                </button>
+
+
             </div>
         </div>
     </div>
 </div>
 
+
 <nav id="orders-table-tab" class="orders-table-tab app-nav-tabs nav shadow-sm flex-column flex-sm-row mb-1" role="tablist">
 
-    <a class="flex-sm-fill text-sm-center nav-link <?= ($menu == 'ALL') ? 'active' : '' ?>" href="<?= base_url('admin/suratkeluar') ?>" aria-controls="orders-all" aria-selected="false">All</a>
-    <a class="flex-sm-fill text-sm-center nav-link <?= ($menu == 'OK') ? 'active' : '' ?>" href="<?= base_url('admin/suratkeluar/ok/OK') ?>" aria-controls="orders-paid" aria-selected="false">Terdistribusi</a>
-    <a class="flex-sm-fill text-sm-center nav-link <?= ($menu == 'RUSAK') ? 'active' : '' ?>" href="<?= base_url('admin/suratkeluar/ok/RUSAK') ?>" role="tab" aria-controls="orders-pending" aria-selected="true">Backup</a>
-    <a class="flex-sm-fill text-sm-center nav-link <?= ($menu == 'BLANKS') ? 'active' : '' ?>" href="<?= base_url('admin/suratkeluar/ok/BLANKS') ?>" role="tab" aria-controls="orders-cancelled" aria-selected="true" tabindex="-1">Blank</a>
+    <a class="flex-sm-fill text-sm-center nav-link <?= ($menu == 'ALL') ? 'active' : '' ?>" href="<?= base_url('admin/suratkeluar') ?>" aria-controls="orders-all" aria-selected="false"><?= $suratkeluarttl ?> All</a>
+    <a class="flex-sm-fill text-sm-center nav-link <?= ($menu == 'Terdistribusi') ? 'active' : '' ?>" href="<?= base_url('admin/suratkeluar/search/Terdistribusi') ?>" aria-controls="orders-paid" aria-selected="false"><?= $suratkeluardis ?> Terdistribusi</a>
+    <a class="flex-sm-fill text-sm-center nav-link <?= ($menu == 'Backup') ? 'active' : '' ?>" href="<?= base_url('admin/suratkeluar/search/Backup') ?>" role="tab" aria-controls="orders-pending" aria-selected="true"><?= $suratkeluarbac ?> Backup</a>
 </nav>
 
 <div class="app-card app-card-accordion shadow-sm mb-4">
@@ -96,15 +93,10 @@ $con = new mysqli("localhost", "root", "", "db_inventory") or die(mysqli_error($
                                     <?= $value->tgl ?>
                             </td>
                             <td>
-                                <?php
-                                $guru = mysqli_query($con, "SELECT * FROM tb_aset WHERE tb_aset.id_sk = '$id'");
-                                $non = 1;
-                                foreach ($guru as $g) {
-
-                                    echo $non++ . '. ' . $g['type'] . '-<B>' . $g['serial'] . '</B><br>';
-                                }
-                                ?>
-
+                                <?php $non = 1; ?>
+                                <?php foreach ($value->aset as $g) : ?>
+                                    <?= esc($non++) . '. ' . esc($g->type) . '-<b>' . esc($g->serial) . '</b><br>'; ?>
+                                <?php endforeach; ?>
                             </td>
 
                             <td>
@@ -150,6 +142,43 @@ $con = new mysqli("localhost", "root", "", "db_inventory") or die(mysqli_error($
 </div>
 </div>
 </div>
+</div>
+
+<!-- Modal cetak pdf -->
+<div class="modal fade" id="pdf" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content mt-15">
+            <div class="modal-header bg-danger ">
+                <h1 class="modal-title fs-5 text-white" id="exampleModalLabel"><i class="fa-solid fa-arrow-down-short-wide"></i> Filter Data Pdf</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form class="row" action="<?= base_url('admin/suratkeluar/cetaksuratkeluar') ?>" target="_blank" method="post" enctype="multipart/form-data">
+
+                    <div class="col-md-12 col-sm-12 col-xs-10 mb-2">
+                        Filter
+                        <input type="text" class="form-control" name="cari" placeholder="Serial or Manufacture" id="textInput1">
+
+                    </div>
+
+                    <div class="col-md-12 col-sm-12 mb-2 ">
+                        Dari Tanggal
+                        <input type="date" class="form-control" name="tglin" id="dateInput1">
+                    </div>
+                    <div class="col-md-12 col-sm-12 mb-2 ">
+                        Sampai Tanggal
+                        <input type="date" class="form-control" name="tglout" id="dateInput1">
+                    </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" onclick="refreshInput1()"><i class="fa-solid fa-arrows-rotate"></i></button>
+                <button type="submit" target="_blank" class="btn btn-primary text-white"><i class="fa-solid fa-print"></i> Print</button>
+
+            </div>
+            </form>
+        </div>
+    </div>
 </div>
 <!-- your_view.php -->
 

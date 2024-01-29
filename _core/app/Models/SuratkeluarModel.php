@@ -21,6 +21,36 @@ class SuratkeluarModel extends Model
     // 'Aset' => 'required|is_unique[tb_aset.aset,id,{id}]',
   ];
 
+  public function generateCode()
+  {
+    $builder = $this->table('tb_suratkeluar');
+    $builder->selectMax('nomor', 'invoiceMax');
+    $query = $builder->get()->getResult();
+
+    $serialNumber = 1;
+
+    if (!empty($query)) {
+      $maxInvoice = $query[0]->invoiceMax;
+      // Assuming the serial number is the first 4 characters of the invoice
+      if ($maxInvoice && strlen($maxInvoice) >= 4) {
+        $ambilKode = substr($maxInvoice, 0, 4);
+        $serialNumber = (intval($ambilKode)) + 1;
+      }
+    }
+
+    $formattedSerialNumber = sprintf('%04s', $serialNumber);
+    $romanMonth = $this->numberToRomanRepresentation(date("m"));
+    $year = date("Y");
+
+    return $formattedSerialNumber . '/PRY-MSI/KITECH/' . $romanMonth . '/' . $year;
+  }
+
+  private function numberToRomanRepresentation($number)
+  {
+    $map = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII', 'VIII', 'IX', 'X', 'XI', 'XII'];
+    return $map[$number - 1] ?? '';
+  }
+
 
   public function updateDatax($post)
   {

@@ -49,6 +49,8 @@ class Dashboard extends BaseController
             'total_aset' => $this->aset->countAllResults(),
             'total_tersedia' => $this->aset->where('stock', 'Tersedia')->countAllResults(),
             'total_terdistribusi' => $this->aset->where('stock', 'Terdistribusi')->countAllResults(),
+            'total_backup' => $this->aset->where('stock', 'Backup')->countAllResults(),
+            'total_peminjaman' => $this->aset->where('stock', 'Peminjaman')->countAllResults(),
             // perhitungan pc
             'total_pc' => $this->aset->where('type', 'pc')->countAllResults(),
             'total_pc_ok' => $this->aset->where('type', 'pc')->where('kondisi', 'OK')->countAllResults(),

@@ -56,7 +56,7 @@
 
 
 
-    $con = new mysqli("localhost", "root", "", "db_inventory") or die(mysqli_error($con));
+    //$con = new mysqli("localhost", "root", "", "db_inventory") or die(mysqli_error($con));
     // $submenu = $segment[2];
     ?>
     <style>
@@ -79,95 +79,99 @@
 
                 </div>
                 <div class="col-12 ml-4 text-center mb-3 mt-3">
-                    <h5 class="mt-3">MEMO DINAS</h5>
-                    <h5 class="">Nomor : <?= $_GET['nomor'] ?> </h5>
+                    <h3 class="mt-3"><?= $title ?></h3>
                 </div>
                 <div class="col-12 ml-4  MT-3 mb-4">
 
 
-                    <h6> Kepada &nbsp; : &nbsp;Pos Keamanan PT. Krakatu IT <br>
-                        Dari &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: &nbsp;Leader Workshop <br>
-                        Perihal &nbsp;&nbsp;&nbsp;: &nbsp;Ijin Keluar/Masuk Barang<br>
-                        Tanggal &nbsp;: &nbsp;<?= date("d F Y") ?></h6>
 
                 </div>
 
 
                 <div class="col-12 ml-4  MT-3">
-                    <h6>Mohon bantuan ijin keluar barang berupa :</h6>
 
-                    <table class="table table-bordered  ">
-
+                    <table id="tabel" class="table table-striped">
                         <thead>
                             <tr>
-                                <td scope="col "><strong>No </strong></td>
-                                <td scope="col "><strong>Nama Barang</strong></td>
-                                <td scope="col "><strong>Jumlah</strong></td>
-                                <td scope="col "><strong>Satuan</strong></td>
-                                <td scope="col "><b>Keterangan</b></td>
+                                <th>NO.</th>
+                                <th>NOMOR</th>
+                                <th>Barang</th>
+                                <th>Penerima</th>
+                                <th>Keterangan</th>
                             </tr>
                         </thead>
                         <tbody>
 
-                            <?php
-                            $no = 1;
-                            foreach ($suratkeluar as $key => $value1) :
-
-                            ?>
-                                <tr>
-                                    <th scope="row"><?= $no++ ?></th>
-                                    <td>
-                                        <?php
-                                        $non = 1;
-                                        foreach ($aset as $key => $value) :
-
-                                        ?>
-                                            <?= $non++ . '-' . $value->type . ' ' . $value->manufacture . ' ' . $value->generasi . ' SN : <b>' . $value->serial ?></b><br>
-                                        <?php
-                                        endforeach ?>
-                                    </td>
-                                    <td><?= $non - 1 ?> </td>
-                                    <td><?= $value1->satuan ?></td>
-                                    <td><?= $value1->ket ?></td>
-                                </tr>
-                            <?php
-                            endforeach ?>
-                        </tbody>
-
-                    </table>
-                </div>
-
-                <div class="col-12 ml-4  MT-3">
-                    <table class="table table-bordered">
-
-                        <thead>
-                            <tr>
-                                <td scope="col"><b>No</b></td>
-                                <td scope="col"><b>Nama Penerima</b></td>
-                                <td scope="col"><b>NIK</b></td>
-                                <td scope="col"><b>Unit Kerja/ Lokasi </b></td>
-                                <td scope="col"><b>Telpon</b></td>
-                                <td scope="col"><b>Tanda tangan</b> </td>
-                            </tr>
-                        </thead>
-                        <tbody>
                             <?php
                             $no = 1;
                             foreach ($suratkeluar as $key => $value) :
 
                             ?>
                                 <tr>
-                                    <th scope="row">1</th>
-                                    <td> <?= $value->penerima ?></td>
-                                    <td> <?= $value->nik ?></td>
-                                    <td> <?= $value->lokasi ?></td>
-                                    <td> <?= $value->telpon ?></td>
-                                    <td height="100px"></td>
+                                    <td><?= $no++ ?></td>
+                                    <td><b><?= $id = $value->nomor ?></b><br>
+                                        Tanggal : <span class="text-danger">
+                                            <?= $value->tgl ?>
+                                    </td>
+                                    <td>
+                                        <?php $non = 1; ?>
+                                        <?php foreach ($value->aset as $g) : ?>
+                                            <?= esc($non++) . '. ' . esc($g->type) . '-<b>' . esc($g->serial) . '</b><br>'; ?>
+                                        <?php endforeach; ?>
+                                    </td>
+
+
+                                    <td>
+                                        NIK : <?= $value->nik ?> <br>
+                                        Penerima : <?= $value->penerima ?> <br>
+                                        Telpon : <?= $value->telpon ?><br>
+                                        Lokasi : <?= $value->lokasi ?>
+
+                                    </td>
+                                    <td>
+
+                                        Status : <b>
+                                            <?= $value->status ?>
+                                        </b><br>
+                                        Ket : <?= $value->ket ?>
+
+                                        </span>
+                                    </td>
+
+
+
+
                                 </tr>
                             <?php endforeach ?>
                         </tbody>
-
                     </table>
+                    <script>
+                        // Move script outside of the loop
+                        let imgBoxes = document.querySelectorAll(".imgBox");
+                        let qrImages = document.querySelectorAll(".qrImage");
+
+                        let serials = <?php echo json_encode(array_column($aset, 'id')); ?>;
+
+                        function generateQR(text, imgBox, qrImage) {
+                            if (text.length > 0) {
+                                // Generate QR code for each row
+                                let qrCodeUrl = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://inventiry.com/admin/aset/view/144/" + text;
+                                qrImage.src = qrCodeUrl;
+                                imgBox.classList.add("show-img");
+                            } else {
+                                // Handle error condition
+                            }
+                        }
+
+                        // Loop through each row and generate QR codes
+                        for (let i = 0; i < serials.length; i++) {
+                            generateQR(serials[i], imgBoxes[i], qrImages[i]);
+                        }
+                    </script>
+                </div>
+
+                <div class="col-12 ml-4  MT-3">
+
                     <h6>Demikian yang dapat disampaikan terima kasih.</h6>
 
                 </div>

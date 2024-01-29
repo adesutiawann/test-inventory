@@ -131,7 +131,7 @@ $menu = $aktiv;
                             </td>
                             <td>
                                 Status :<?= $value->status ?><br>
-                                Stock :<?= $value->stock ?><br>
+                                Stock : <b><?= $value->stock ?></b><br>
                                 Kondisi:
                                 <span class="badge bg-<?= ($value->kondisi == 'OK') ? 'success' : (($value->kondisi == 'RUSAK') ? 'warning' : 'danger') ?>">
                                     <?= $value->kondisi ?>
@@ -149,6 +149,9 @@ $menu = $aktiv;
                             </td>
 
                             <td>
+                                <a href="<?= base_url('admin/suratkeluar/keranjang/' . $value->serial) ?>" <?= ($admin->level == '3') ? 'hidden' : '' ?> class="btn btn-sm btn-success text-white mr-2">
+                                    <i class="fa-solid fa-right-from-bracket"></i>
+                                </a>
 
                                 <a href="<?= base_url('admin/aset/view/' . $value->id) ?>" <?= ($admin->level == '3') ? 'hidden' : '' ?> class="btn btn-sm btn-primary text-white mr-2">
                                     <i class="fa-solid fa-circle-info"></i>
