@@ -28,7 +28,7 @@
                 <hr>
                 <div class="col-md-8">
                     Manufacture
-                    <input type="text" name="id" hidden class="form-control" value="<?= $aset->id ?>" required>
+                    <input type="text" name="id" hidden class="form-control" value="<?= $aset->id  ?>" required>
 
                     <select name="manufacture" class="form-select" required>
                         <option value="">Pilih Manufacture</option>

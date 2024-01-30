@@ -29,34 +29,35 @@ $menu = $aktiv;
 <div class="app-card app-card-accordion shadow-sm mb-3" <?= ($admin->level == '3') ? 'hidden' : '' ?>>
     <div class="app-card-body p-3">
 
-        <div class="row ">
+        <div class="row-md-12 row-sm-12 row-xs-12">
 
-            <div class="col-md-8 col-sm-8 col-xs-6  ">
-                <a href="<?= base_url('admin/aset/add') ?>" class="btn app-btn-primary text-white ml-5 ">
-                    <i class="fas fa-plus"></i> Tambah Asets
-                </a>
-                <button type="button" class="btn btn-primary text-white" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                    <i class="fa-solid fa-file-import"></i> Import
-                </button>
+            <div class="col  ">
+                <div class="row ">
+                    <div class="col  ">
+                        <a href="<?= base_url('admin/aset/add') ?>" class="btn app-btn-primary text-white ml-5 ">
+                            <i class="fas fa-plus"></i> New
+                        </a>
+                        <button type="button" class="btn btn-primary text-white" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                            <i class="fa-solid fa-file-import"></i>
+                        </button>
+                    </div>
+                    <div class="col text-end">
+                        <button type="button" class="btn btn-warning text-white" data-bs-toggle="modal" data-bs-target="#qrcode">
+                            <i class="fa-solid fa-qrcode"></i>
+                        </button>
+                        <button type="button" class="btn btn-danger text-white" data-bs-toggle="modal" data-bs-target="#pdf">
+                            <i class="fa-solid fa-file-pdf"></i>
+                        </button>
+
+                        <button type="button" class="btn btn-success text-white" data-bs-toggle="modal" data-bs-target="#excel">
+                            <i class="fa-solid fa-file-excel"></i>
+                        </button>
+                    </div>
+                </div>
             </div>
 
 
-            <div class="col-md-4 col-sm-4 col-xs-6 text-end ">
 
-
-                <button type="button" class="btn btn-warning text-white" data-bs-toggle="modal" data-bs-target="#qrcode">
-                    <i class="fa-solid fa-qrcode"></i>
-                </button>
-                <button type="button" class="btn btn-danger text-white" data-bs-toggle="modal" data-bs-target="#pdf">
-                    <i class="fa-solid fa-file-pdf"></i>
-                </button>
-
-                <button type="button" class="btn btn-success text-white" data-bs-toggle="modal" data-bs-target="#excel">
-                    <i class="fa-solid fa-file-excel"></i>
-                </button>
-
-
-            </div>
         </div>
     </div>
 </div>
@@ -153,7 +154,7 @@ $menu = $aktiv;
                                     <i class="fa-solid fa-right-from-bracket"></i>
                                 </a>
 
-                                <a href="<?= base_url('admin/aset/view/' . $value->id) ?>" <?= ($admin->level == '3') ? 'hidden' : '' ?> class="btn btn-sm btn-primary text-white mr-2">
+                                <a href="<?= base_url('admin/aset/view/' . $value->serial) ?>" <?= ($admin->level == '3') ? 'hidden' : '' ?> class="btn btn-sm btn-primary text-white mr-2">
                                     <i class="fa-solid fa-circle-info"></i>
                                 </a>
 
@@ -176,12 +177,12 @@ $menu = $aktiv;
                 let imgBoxes = document.querySelectorAll(".imgBox");
                 let qrImages = document.querySelectorAll(".qrImage");
 
-                let serials = <?php echo json_encode(array_column($aset, 'id')); ?>;
+                let serials = <?php echo json_encode(array_column($aset, 'serial')); ?>;
 
                 function generateQR(text, imgBox, qrImage) {
                     if (text.length > 0) {
                         // Generate QR code for each row
-                        let qrCodeUrl = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://noble-fair-skunk.ngrok-free.app/inventory/admin/aset/view/" + text;
+                        let qrCodeUrl = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=<?= base_url() ?>admin/aset/view/" + text;
                         qrImage.src = qrCodeUrl;
                         imgBox.classList.add("show-img");
                     } else {

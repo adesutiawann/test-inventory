@@ -2,6 +2,34 @@
 
 <?= $this->section('css') ?>
 <!-- Additional CSS styles go here -->
+<style>
+    .fixed-size-image {
+        width: 200px;
+        /* or any specific width */
+        height: 150px;
+        /* or any specific height */
+        object-fit: contain;
+        /* This will prevent stretching */
+    }
+
+    .fixed-size-image1 {
+        width: 500px;
+        /* or any specific width */
+        height: 350px;
+        /* or any specific height */
+        object-fit: contain;
+        /* This will prevent stretching */
+    }
+
+
+    .thumbnail-image {
+        width: 150px;
+        /* Example width */
+        height: 100px;
+        /* Example height */
+        object-fit: cover;
+    }
+</style>
 <?= $this->endSection() ?>
 
 <?= $this->section('content') ?>
@@ -16,16 +44,18 @@
     <main class="app-card app-card-settings shadow-sm p-4">
         <div class="row">
             <div class="col-md-6">
+
+
                 <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
                     <div class="carousel-inner">
                         <?php if ($images == null) : ?>
                             <div class="carousel-item active">
-                                <img src="<?= base_url() ?>/uploads/noimage.png" class="d-block w-100 rounded-1" alt="No Image">
+                                <img src="<?= base_url() ?>/uploads/noimage.png" class="d-block w-100 rounded-1 fixed-size-image" alt="No Image">
                             </div>
                         <?php else : ?>
                             <?php foreach ($images as $key => $value) : ?>
                                 <div class="carousel-item<?= $key == 0 ? ' active' : '' ?>">
-                                    <img src="<?= base_url() ?>/uploads/kegiatan/<?= $value->image ?>" class="d-block w-100 rounded-1" alt="Image <?= $key + 1 ?>">
+                                    <img src="<?= base_url() ?>/uploads/kegiatan/<?= $value->image ?>" class="d-block w-100 rounded-1 fixed-size-image1" alt="Image <?= $key + 1 ?>">
                                 </div>
                             <?php endforeach; ?>
                         <?php endif; ?>
@@ -40,11 +70,12 @@
                     </button>
                 </div>
 
+
                 <div class="row mt-4">
                     <?php if ($images != null) : ?>
                         <?php foreach ($images as $key => $value) : ?>
                             <div class="col">
-                                <img src="<?= base_url() ?>/uploads/kegiatan/<?= $value->image ?>" class="d-block w-50 rounded-1" alt="Image <?= $key + 1 ?>" onclick="showImage('<?= base_url() ?>/uploads/kegiatan/<?= $value->image ?>')">
+                                <img src="<?= base_url() ?>/uploads/kegiatan/<?= $value->image ?>" class="d-block w-50 rounded-1 fixed-size-image" alt="Image <?= $key + 1 ?>" onclick="showImage('<?= base_url() ?>/uploads/kegiatan/<?= $value->image ?>')">
                             </div>
                         <?php endforeach; ?>
                     <?php endif; ?>
@@ -53,12 +84,13 @@
 
             <script>
                 function showImage(imageUrl) {
-                    $('#carouselExampleIndicators .carousel-inner').html(`<div class="carousel-item active"><img src="${imageUrl}" class="d-block w-100 rounded-1" alt="Clicked Image"></div>`);
+                    $('#carouselExampleIndicators .carousel-inner').html(`<div class="carousel-item active"><img src="${imageUrl}" class="d-block w-100 rounded-1 fixed-size-image" alt="Clicked Image"></div>`);
                 }
             </script>
 
             <div class="col-md-6 mt-5">
                 <h2><?= $aset->manufacture ?></h2>
+                <h5>SN : <?= $aset->serial ?></h5>
                 <p class="lead"><b>Spesifikasi :</b> Prosesor <?= $aset->prosesor ?>, RAM <?= $aset->ram ?>GB, <?= $aset->hdd ?></p>
 
                 <hr>
@@ -71,10 +103,16 @@
                 <h6>Tersedia: <?= $jumlahmanufaktur ?> Unit</h6>
 
                 <hr>
-                <form action="<?= base_url('admin/suratkeluar/save') ?>" method="POST">
-                    <input type="hidden" name="serial" class="form-control text-center" value="8993221A11" placeholder="Serial">
-                    <button class="btn btn-primary btn-lg text-white"> <i class="fa-solid fa-outdent"></i> Distribusikan</button>
-                </form>
+                <a href="<?= base_url('admin/suratkeluar/keranjang/' . $aset->serial) ?>" <?= ($admin->level == '3') ? 'hidden' : '' ?> class="btn btn-sm btn-success text-white mr-2">
+                    <i class="fa-solid fa-right-from-bracket"></i> Distribusikan
+                </a>
+                <a href="<?= base_url('admin/suratkeluar/keranjang/' . $aset->serial) ?>" <?= ($admin->level == '3') ? 'hidden' : '' ?> class="btn btn-sm btn-primary text-white mr-2">
+                    <i class="fa-solid fa-chalkboard-user"></i> Dipinjam
+                </a>
+
+                <a href="<?= base_url('admin/aset/edit/' . $aset->serial) ?>" class="btn btn-sm btn-info text-white ">
+                    <i class="fa-solid fa-pen-to-square"></i>
+                </a>
             </div>
         </div>
     </main>

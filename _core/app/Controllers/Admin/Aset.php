@@ -230,35 +230,42 @@ class aset extends BaseController
         ];
         return view('admin/asetadd', $data);
     }
-
     public function view($id)
     {
-        if (session()->get('logged_admin') !== true) {
+        // Check if the admin is logged in
+        if (!session()->get('logged_admin')) {
             return redirect()->to(base_url());
         }
 
-        // Assuming $this->aset is your model for "aset"
-        $aset = $this->aset->find($id);
+        // Find the asset by its serial number
+        $aset = $this->aset->where('serial', $id)->first();
 
+        // Redirect if the asset is not found
         if (!$aset) {
-            // Handle the case when the "aset" with the given ID is not found
+            session()->setFlashdata('error', 'Asset not found.');
             return redirect()->to(base_url());
         }
 
-        $manufacture = $aset->manufacture; // Use arrow notation for object properties
+        // Retrieve additional data
+        $manufacture = $aset->manufacture; // Assuming $aset is returned as an array
 
         $data = [
-            'title'           => 'Persediaan/Pc/Details',
-            'segment'         => $this->request->uri->getSegments(),
-            'admin'           => $this->admin->find(session()->get('id')),
-            'aset'            => $aset,
-            'jumlahmanufaktur' => $this->aset->where('stock', 'Tersedia')->where('type', 'PC')->where('manufacture', $manufacture)->countAllResults(),
-            'images'          => $this->images->where('serial', $id)->findAll(),
-            'riwayat'         => $this->riwayat->where('serial', $id)->orderBy('id', 'desc')->findAll(),
+            'title' => 'Persediaan/Pc/Details',
+            'segment' => $this->request->uri->getSegments(),
+            'admin' => $this->admin->find(session()->get('id')),
+            'aset' => $aset,
+            'jumlahmanufaktur' => $this->aset->where('stock', 'Tersedia')
+                ->where('type', 'PC')
+                ->where('manufacture', $manufacture)
+                ->countAllResults(),
+            'images' => $this->images->where('serial', $id)->findAll(),
+            'riwayat' => $this->riwayat->where('serial', $id)->orderBy('id', 'desc')->findAll(),
         ];
 
+        // Load the view with the data
         return view('admin/view', $data);
     }
+
 
 
     public function edit($id)
@@ -267,6 +274,8 @@ class aset extends BaseController
         if (session()->get('logged_admin') != true) {
             return redirect()->to(base_url());
         }
+        //$aset  = $this->aset->find($id);
+        //$serialx = $aset->serial;
         $data = [
             'title'   => 'Persediaan/Pc/Edit',
             'edit'   => 'redy',
@@ -282,7 +291,7 @@ class aset extends BaseController
             'status'    => $this->status->orderBy('nama', 'asc')->findAll(),
             'kondisi'    => $this->kondisi->orderBy('nama', 'asc')->findAll(),
             'stock'    => $this->stok->orderBy('nama', 'asc')->findAll(),
-            'aset'    => $this->aset->find($id),
+            'aset'    => $this->aset->where('serial', $id)->findAll(),
             'images' => $this->images->where('serial', $id)->findAll(),
             'riwayat' => $this->riwayat->where('serial', $id)->orderBy('id', 'desc')->findAll(),
         ];
@@ -324,7 +333,7 @@ class aset extends BaseController
             $postx = [
                 //'id'       => $this->request->getVar('id'),      
 
-                'serial'            => $this->request->getVar('id'),
+                'serial'            => $this->request->getVar('serial'),
                 'tgl'            => $tgl,
                 'ket'            => $this->request->getVar('ketupdate'),
                 'user'            => $this->request->getVar('user'),
@@ -352,7 +361,7 @@ class aset extends BaseController
                     foreach ($namaFiles as $nama) {
                         $postData = [
                             'tgl' => $tgl,
-                            'serial' => $this->request->getVar('id'),
+                            'serial' => $this->request->getVar('serial'),
                             'image' => $nama,
                         ];
 
@@ -505,10 +514,10 @@ class aset extends BaseController
     {
         if ($this->images->delete($id)) {
             session()->setFlashdata('success', 'Foto berhasil di hapus.');
-            return redirect()->to(base_url('admin/aset/edit/' . $id2));
+            return redirect()->to(base_url('admin/aset/edit/' . $id));
         } else {
             session()->setFlashdata('danger', 'Data berhasil di hapus.');
-            return redirect()->to(base_url('admin/aset/edit/' . $id2));
+            return redirect()->to(base_url('admin/aset/edit/' . $id));
         }
     }
 
