@@ -158,7 +158,7 @@ $menu = $aktiv;
                                     <i class="fa-solid fa-circle-info"></i>
                                 </a>
 
-                                <a href="<?= base_url('admin/aset/edit/' . $value->id) ?>" class="btn btn-sm btn-info text-white ">
+                                <a href="<?= base_url('admin/aset/edit/' . $value->serial) ?>" class="btn btn-sm btn-info text-white ">
                                     <i class="fa-solid fa-pen-to-square"></i>
                                 </a>
 
@@ -182,7 +182,7 @@ $menu = $aktiv;
                 function generateQR(text, imgBox, qrImage) {
                     if (text.length > 0) {
                         // Generate QR code for each row
-                        let qrCodeUrl = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=<?= base_url() ?>admin/aset/view/" + text;
+                        let qrCodeUrl = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=<?= base_url() ?>/admin/aset/view/" + text;
                         qrImage.src = qrCodeUrl;
                         imgBox.classList.add("show-img");
                     } else {

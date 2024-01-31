@@ -49,13 +49,18 @@
                 <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
                     <div class="carousel-inner">
                         <?php if ($images == null) : ?>
-                            <div class="carousel-item active">
-                                <img src="<?= base_url() ?>/uploads/noimage.png" class="d-block w-100 rounded-1 fixed-size-image" alt="No Image">
+
+                            <div class="carousel-item active center">
+
+                                <div class="imgBox ">
+                                    <img class="qrImage" alt="QR Code">
+                                    <div class="text"><?= $aset->serial ?></div> <!-- Example text for QR code generation -->
+                                </div>
                             </div>
                         <?php else : ?>
                             <?php foreach ($images as $key => $value) : ?>
                                 <div class="carousel-item<?= $key == 0 ? ' active' : '' ?>">
-                                    <img src="<?= base_url() ?>/uploads/kegiatan/<?= $value->image ?>" class="d-block w-100 rounded-1 fixed-size-image1" alt="Image <?= $key + 1 ?>">
+                                    <img src="<?= base_url() ?>/uploads/kegiatan/<?= $value->image ?>" class="d-block w-100 rounded-1 " alt="Image <?= $key + 1 ?>">
                                 </div>
                             <?php endforeach; ?>
                         <?php endif; ?>
@@ -74,8 +79,8 @@
                 <div class="row mt-4">
                     <?php if ($images != null) : ?>
                         <?php foreach ($images as $key => $value) : ?>
-                            <div class="col">
-                                <img src="<?= base_url() ?>/uploads/kegiatan/<?= $value->image ?>" class="d-block w-50 rounded-1 fixed-size-image" alt="Image <?= $key + 1 ?>" onclick="showImage('<?= base_url() ?>/uploads/kegiatan/<?= $value->image ?>')">
+                            <div class="col-auto">
+                                <img src="<?= base_url() ?>/uploads/kegiatan/<?= $value->image ?>" class="d-block w-50 rounded-1 " alt="Image <?= $key + 1 ?>" onclick="showImage('<?= base_url() ?>/uploads/kegiatan/<?= $value->image ?>')">
                             </div>
                         <?php endforeach; ?>
                     <?php endif; ?>
@@ -84,7 +89,7 @@
 
             <script>
                 function showImage(imageUrl) {
-                    $('#carouselExampleIndicators .carousel-inner').html(`<div class="carousel-item active"><img src="${imageUrl}" class="d-block w-100 rounded-1 fixed-size-image" alt="Clicked Image"></div>`);
+                    $('#carouselExampleIndicators .carousel-inner').html(`<div class="carousel-item active"><img src="${imageUrl}" class="d-block w-100 rounded-1 " alt="Clicked Image"></div>`);
                 }
             </script>
 
@@ -117,37 +122,93 @@
         </div>
     </main>
 
-    <div class="container-xl mt-3">
-        <h1 class="app-page-title">Riwayat</h1>
-    </div><!--//container-fluid-->
 
-    <main class="app-card app-card-settings shadow-sm p-4">
+    <main class="app-card app-card-settings shadow-sm p-4 mt-3">
+
         <table class="table">
             <thead>
                 <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Tanggal</th>
-                    <th scope="col">Riwayat Update</th>
-                    <th scope="col">User</th>
-                    <th scope="col">Lokasi</th>
-                    <th scope="col">Teknisi</th>
+                    <th scope="col">
+                        <h4>#</h4>
+                    </th>
+                    <th scope="col">
+                        <div class="d-flex justify-content-between align-items-center mb-8">
+                            <div>
+                                <!-- heading -->
+                                <h4>History</h4>
+                            </div>
+
+                        </div>
+                    </th>
                 </tr>
             </thead>
             <tbody>
                 <?php foreach ($riwayat as $key => $value) : ?>
                     <tr>
                         <th scope="row"><?= $key + 1 ?></th>
-                        <td><?= $value->tgl ?> </td>
-                        <td><?= $value->ket ?> </td>
-                        <td><?= $value->user ?> </td>
-                        <td><?= $value->lokasi ?> </td>
-                        <td><?= $value->teknisi ?> </td>
+
+
+                        <td>
+                            <div class="d-flex pb-6 mb-6">
+                                <!-- img -->
+                                <!-- img -->
+                                <div class="col ms-5">
+                                    <h6 class="mb-1"><?= $value->user ?></h6>
+                                    <!-- select option -->
+                                    <!-- content -->
+                                    <p class="small">
+                                        <span class="text-muted"><?= $value->tgl ?></span>
+                                        <span class="text-primary ms-3 fw-bold">Verified</span>
+                                    </p>
+                                    <!-- rating -->
+                                    <div class="mb-2">
+                                        <i class="fa-solid fa-screwdriver-wrench text-warning"></i>
+                                        <i class="fa-solid fa-screwdriver-wrench text-warning"></i>
+                                        <i class="fa-solid fa-screwdriver-wrench text-warning"></i>
+
+                                        <i class="fa-solid fa-screwdriver-wrench text-warning"></i>
+                                        <span class="ms-3 text-dark fw-bold"><?= $value->teknisi ?></span>
+                                    </div>
+                                    <!-- text-->
+                                    <p>
+                                        <?= $value->ket ?> </p>
+                                    <!-- icon -->
+                                    <div class="d-flex justify-content-end mt-4">
+                                        <a href="#" class="text-muted">
+                                            <i class="fa-solid fa-location-dot text-danger"></i>
+                                            <?= $value->lokasi ?>
+                                        </a>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
                     </tr>
+
                 <?php endforeach ?>
             </tbody>
         </table>
     </main>
 </div>
+<script>
+    window.onload = function() {
+        // Select the first .text element and corresponding .imgBox and .qrImage
+        let qrTextElement = document.querySelector(".text");
+        let imgBox = qrTextElement.closest('.imgBox');
+        let qrImage = imgBox.querySelector(".qrImage");
+
+        generateQR(qrTextElement.textContent, imgBox, qrImage);
+    };
+
+    function generateQR(text, imgBox, qrImage) {
+        let baseUrl = '<?= base_url() ?>'; // PHP variable passed to JavaScript
+        let qrCodeUrl = "https://api.qrserver.com/v1/create-qr-code/?size=350x350&data=" + baseUrl + "/admin/aset/view/" + text;
+        qrImage.src = qrCodeUrl;
+        imgBox.classList.add("show-img");
+    }
+</script>
+
+
 <?= $this->endSection() ?>
 
 <?= $this->section('js') ?>

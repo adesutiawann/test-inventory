@@ -276,6 +276,7 @@ class aset extends BaseController
         }
         //$aset  = $this->aset->find($id);
         //$serialx = $aset->serial;
+        $aset = $this->aset->where('serial', $id)->first();
         $data = [
             'title'   => 'Persediaan/Pc/Edit',
             'edit'   => 'redy',
@@ -291,7 +292,8 @@ class aset extends BaseController
             'status'    => $this->status->orderBy('nama', 'asc')->findAll(),
             'kondisi'    => $this->kondisi->orderBy('nama', 'asc')->findAll(),
             'stock'    => $this->stok->orderBy('nama', 'asc')->findAll(),
-            'aset'    => $this->aset->where('serial', $id)->findAll(),
+            // 'aset'    => $this->aset->where('serial', $id)->findAll(),
+            'aset'    => $aset,
             'images' => $this->images->where('serial', $id)->findAll(),
             'riwayat' => $this->riwayat->where('serial', $id)->orderBy('id', 'desc')->findAll(),
         ];
@@ -306,7 +308,7 @@ class aset extends BaseController
         // $tgl = date("Y-m-d");
         if ($this->request->getVar('id')) {
             //$tgl = date("Y-m-d");
-            $idlink = $this->request->getVar('id');
+            $idlink = $this->request->getVar('serial');
             $post = [
                 'id'       => $this->request->getVar('id'),
                 'manufacture'            => $this->request->getVar('manufacture'),
@@ -327,7 +329,7 @@ class aset extends BaseController
                 'lokasi'            => $this->request->getVar('lokasi'),
             ];
 
-            $tgl = date("Y-m-d");
+            $tgl = date("Y-m-d H:i:s");
             // $admin = $this->Admin_model->find($this->session->userdata('id'));
             $admin   = $this->admin->find(session()->get('id'));
             $postx = [
@@ -510,7 +512,7 @@ class aset extends BaseController
         }
     }
 
-    public function deleteimages($id, $id2)
+    public function deleteimagesaa($id, $id2)
     {
         if ($this->images->delete($id)) {
             session()->setFlashdata('success', 'Foto berhasil di hapus.');
@@ -520,6 +522,37 @@ class aset extends BaseController
             return redirect()->to(base_url('admin/aset/edit/' . $id));
         }
     }
+
+    public function deleteimages($id, $id2)
+    {
+        // Assuming you have a model method to get the image record based on $id
+        $img = $this->images->find($id);
+
+        if ($img) {
+            $filePath = 'uploads/kegiatan/' . $img->image; // Assuming the filename field stores the image name
+
+            // Check if the file exists and then try to delete it
+
+            if (unlink($filePath)) {
+                // Only delete the database record if the file deletion was successful
+                if ($this->images->delete($id)) {
+                    session()->setFlashdata('success', 'Foto dan data berhasil dihapus.');
+                } else {
+                    session()->setFlashdata('error', 'Gagal menghapus data.');
+                }
+            } else {
+                session()->setFlashdata('error', 'Gagal menghapus file.');
+            }
+        } else {
+            session()->setFlashdata('error', 'Data tidak ditemukan.');
+        }
+
+        return redirect()->to(base_url('admin/aset/edit/' . $id2));
+    }
+
+
+
+
 
     public function import()
     {

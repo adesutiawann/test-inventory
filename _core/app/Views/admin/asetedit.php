@@ -28,7 +28,7 @@
                 <hr>
                 <div class="col-md-8">
                     Manufacture
-                    <input type="text" name="id" hidden class="form-control" value="<?= $aset->id  ?>" required>
+                    <input type="text" name="id" hidden class="form-control" value="<?= $aset->id ?>" required>
 
                     <select name="manufacture" class="form-select" required>
                         <option value="">Pilih Manufacture</option>
@@ -172,19 +172,13 @@
                                 </button>
                             </div>
 
-                            <div class="row mt-4">
-                                <?php if ($images == null) : ?>
-                                    <div class="col">
-                                    </div>
-                                <?php else : ?>
-                                    <?php foreach ($images as $key => $value) : ?>
-                                        <div class="col">
-                                            <img src="<?= base_url() ?>/uploads/kegiatan/<?= $value->image ?>" class="d-block w-100 rounded-1" alt="Image <?= $key + 1 ?>" onclick="showImage('<?= base_url() ?>/uploads/kegiatan/<?= $value->image ?>')">
-                                            <a href="<?= base_url("admin/aset/deleteimages/{$value->id}/{$value->serial}") ?>" onclick="return confirm('Yakin ingin menghapus?')">
-                                                <i class="fa-solid fa-xmark text-danger"></i>
-                                            </a>
-                                        </div>
 
+                            <div class="row mt-4">
+                                <?php if ($images != null) : ?>
+                                    <?php foreach ($images as $key => $value) : ?>
+                                        <div class="col-auto">
+                                            <img src="<?= base_url() ?>/uploads/kegiatan/<?= $value->image ?>" class="d-block w-50 rounded-1 " alt="Image <?= $key + 1 ?>" onclick="showImage('<?= base_url() ?>/uploads/kegiatan/<?= $value->image ?>')">
+                                        </div>
                                     <?php endforeach; ?>
                                 <?php endif; ?>
                             </div>
@@ -192,8 +186,7 @@
 
                         <script>
                             function showImage(imageUrl) {
-                                // Mengganti gambar di carousel dengan gambar yang diklik
-                                $('#carouselExampleIndicators .carousel-inner').html(`<div class="carousel-item active"><img src="${imageUrl}" class="d-block w-100 rounded-1" alt="Clicked Image"></div>`);
+                                $('#carouselExampleIndicators .carousel-inner').html(`<div class="carousel-item active"><img src="${imageUrl}" class="d-block w-100 rounded-1 " alt="Clicked Image"></div>`);
                             }
                         </script>
 
@@ -222,7 +215,7 @@
                             </div>
 
                             <div class="col-md-12 mb-5">
-                                Keterangan 
+                                Keterangan
                                 <div class="form-floating">
                                     <textarea name="ketupdate" id="sentenceCaseInput" class="form-control" required placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px"></textarea>
                                     <label for="floatingTextarea2">Comments</label>
@@ -247,49 +240,73 @@
 
     </div>
 </div>
+<main class="app-card app-card-settings shadow-sm p-4 mt-3">
 
-<div class="container-xl mt-3">
-    <h1 class="app-page-title">Riwayat</h1>
-
-</div><!--//container-fluid-->
-
-<main class="app-card app-card-settings shadow-sm p-4">
     <table class="table">
         <thead>
             <tr>
-                <th scope="col">#</th>
-                <th scope="col">Tanggal</th>
-                <th scope="col">Riwayat Update</th>
-                <th scope="col">User</th>
-                <th scope="col">Lokasi</th>
-                <th scope="col">Teknisi</th>
-                <th scope="col"><i class="fa-solid fa-trash "></i></th>
+                <th scope="col">
+                    <h4>#</h4>
+                </th>
+                <th scope="col">
+                    <div class="d-flex justify-content-between align-items-center mb-8">
+                        <div>
+                            <!-- heading -->
+                            <h4>History</h4>
+                        </div>
+
+                    </div>
+                </th>
             </tr>
         </thead>
         <tbody>
-            <?php
-            $no = 1;
-            foreach ($riwayat as $key => $value) :
-
-            ?>
+            <?php foreach ($riwayat as $key => $value) : ?>
                 <tr>
-                    <th scope="row"><?= $no++ ?></th>
-                    <td><?= $value->tgl ?> </td>
-                    <td><?= $value->ket ?> </td>
-                    <td><?= $value->user ?> </td>
-                    <td><?= $value->lokasi ?> </td>
-                    <td><?= $value->teknisi ?> </td>
-                    <td width="" <?= ($admin->level == '3') ? 'hidden' : '' ?>>
+                    <th scope="row"><?= $key + 1 ?></th>
 
 
-                        <a href="<?= base_url("admin/aset/deleteriwayat/{$value->id}/{$value->serial}") ?>" class="" onclick="return confirm('Yakin ingin menghapus?')">
-                            <i class="fa-solid fa-xmark text-danger"></i>
+                    <td>
+                        <div class="d-flex pb-6 mb-6">
+                            <!-- img -->
+                            <!-- img -->
+                            <div class="col ms-5">
+                                <h6 class="mb-1"><?= $value->user ?></h6>
 
-                        </a>
+                                <!-- select option -->
+                                <!-- content -->
+                                <p class="small">
+                                    <span class="text-muted"><?= $value->tgl ?></span>
+                                    <span class="text-primary ms-3 fw-bold">Verified</span>
+                                </p>
+                                <!-- rating -->
+                                <div class="mb-2">
+                                    <i class="fa-solid fa-screwdriver-wrench text-warning"></i>
+                                    <i class="fa-solid fa-screwdriver-wrench text-warning"></i>
+                                    <i class="fa-solid fa-screwdriver-wrench text-warning"></i>
 
+                                    <i class="fa-solid fa-screwdriver-wrench text-warning"></i>
+                                    <span class="ms-3 text-dark fw-bold"><?= $value->teknisi ?></span>
+                                </div>
+                                <!-- text-->
+                                <p>
+                                    <?= $value->ket ?> </p>
+                                <!-- icon -->
 
+                                <div class="d-flex justify-content-end ">
+                                    <a href="#" class="ms-4">
+                                        <i class="fa-solid fa-location-dot text-danger"></i>
+                                        <?= $value->lokasi ?>
+                                    </a>
+                                    <a href="<?= base_url("admin/aset/deleteriwayat/{$value->id}/{$value->serial}") ?>" class="ms-4 btn btn-danger text-white">
+                                        <i class="fa-regular fa-trash-can text-white"></i> Remove
+                                    </a>
+                                </div>
+
+                            </div>
+                        </div>
                     </td>
                 </tr>
+
             <?php endforeach ?>
         </tbody>
     </table>

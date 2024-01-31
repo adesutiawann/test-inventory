@@ -59,7 +59,7 @@
                     </div>
                     <div class="col-lg-4 col-sm-12 text-lg-start text-sm-center">
                         Tanggal :<br>
-                        <strong class="text-right"><?= date('d M Y') ?></strong>
+                        <strong class="text-right"><?= date('d M Y H:i:s') ?></strong>
                     </div>
                 </div>
 
@@ -158,8 +158,8 @@
                             <input type="text" name="nomor" class="form-control text-center" value="<?= $nomor ?>" placeholder="001/PRY-MSI/KITECH/XI/2023" required>
                         </div>
                         <div class="col-sm-2">
-                            Tanggal :<br>
-                            <strong class="text-right"><?= date('d M Y') ?></strong>
+                            Tanggal 123 :<br>
+                            <strong class="text-right"><?= (new DateTime())->format('d M Y h:i:s') ?></strong>
                         </div>
                     </div>
 
