@@ -44,56 +44,99 @@
     <main class="app-card app-card-settings shadow-sm p-4">
         <div class="row">
             <div class="col-md-6">
-
-
-                <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+                <div id="mainCarousel" class="carousel slide" data-bs-ride="carousel">
                     <div class="carousel-inner">
                         <?php if ($images == null) : ?>
-
                             <div class="carousel-item active center">
-
-                                <div class="imgBox ">
+                                <div class="imgBox">
                                     <img class="qrImage" alt="QR Code">
-                                    <div class="text"><?= $aset->serial ?></div> <!-- Example text for QR code generation -->
+                                    <div class="text"><?= $aset->serial ?></div>
                                 </div>
                             </div>
                         <?php else : ?>
                             <?php foreach ($images as $key => $value) : ?>
-                                <div class="carousel-item<?= $key == 0 ? ' active' : '' ?>">
-                                    <img src="<?= base_url() ?>/uploads/kegiatan/<?= $value->image ?>" class="d-block w-100 rounded-1 " alt="Image <?= $key + 1 ?>">
+                                <div class="carousel-item<?= $key == 0 ? ' active' : '' ?>" data-bs-toggle="modal" data-bs-target="#imageModal">
+                                    <img src="<?= base_url() ?>/uploads/kegiatan/<?= $value->image ?>" class="d-block w-100 rounded-1" alt="Image <?= $key + 1 ?>">
                                 </div>
                             <?php endforeach; ?>
                         <?php endif; ?>
                     </div>
-                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                    <button class="carousel-control-prev" type="button" data-bs-target="#mainCarousel" data-bs-slide="prev">
                         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                         <span class="visually-hidden">Previous</span>
                     </button>
-                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                    <button class="carousel-control-next" type="button" data-bs-target="#mainCarousel" data-bs-slide="next">
                         <span class="carousel-control-next-icon" aria-hidden="true"></span>
                         <span class="visually-hidden">Next</span>
                     </button>
                 </div>
 
-
-                <div class="row mt-4">
-                    <?php if ($images != null) : ?>
-                        <?php foreach ($images as $key => $value) : ?>
-                            <div class="col-auto">
-                                <img src="<?= base_url() ?>/uploads/kegiatan/<?= $value->image ?>" class="d-block w-50 rounded-1 " alt="Image <?= $key + 1 ?>" onclick="showImage('<?= base_url() ?>/uploads/kegiatan/<?= $value->image ?>')">
+                <!-- Modal -->
+                <div class="modal fade" id="imageModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="imageModalLabel">Modal title</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
-                        <?php endforeach; ?>
-                    <?php endif; ?>
+                            <div class="modal-body container">
+                                <div id="modalCarousel" class="carousel slide" data-bs-ride="carousel">
+                                    <div class="carousel-inner">
+                                        <?php if ($images == null) : ?>
+                                            <div class="carousel-item active center">
+                                                <div class="imgBox text-center">
+                                                    <img class="qrImage img-fluid" alt="QR Code">
+                                                    <div class="text"><?= $aset->serial ?></div>
+                                                </div>
+                                            </div>
+                                        <?php else : ?>
+                                            <?php foreach ($images as $key => $value) : ?>
+                                                <div class="carousel-item<?= $key == 0 ? ' active' : '' ?>">
+                                                    <img src="<?= base_url() ?>/uploads/kegiatan/<?= $value->image ?>" class="d-block w-100 rounded-1 img-fluid" alt="Image <?= $key + 1 ?>">
+                                                </div>
+                                            <?php endforeach; ?>
+                                        <?php endif; ?>
+                                    </div>
+                                    <div class="btn-group">
+                                        <button class="carousel-control-prev" type="button" data-bs-target="#modalCarousel" data-bs-slide="prev">
+                                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                            <span class="visually-hidden">Previous</span>
+                                        </button>
+                                        <button class="carousel-control-next" type="button" data-bs-target="#modalCarousel" data-bs-slide="next">
+                                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                            <span class="visually-hidden">Next</span>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div class="row mt-4">
+                                    <?php if ($images != null) : ?>
+                                        <?php foreach ($images as $key => $value) : ?>
+                                            <div class="col-6 col-md-4 col-lg-3 mb-3">
+                                                <img src="<?= base_url() ?>/uploads/kegiatan/<?= $value->image ?>" class="d-block w-100 rounded-1 img-fluid" alt="Image <?= $key + 1 ?>" onclick="showImage('<?= base_url() ?>/uploads/kegiatan/<?= $value->image ?>')">
+                                            </div>
+                                        <?php endforeach; ?>
+                                    <?php endif; ?>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-primary">Understood</button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+                <!-- TUTUP Modal -->
             </div>
 
             <script>
                 function showImage(imageUrl) {
-                    $('#carouselExampleIndicators .carousel-inner').html(`<div class="carousel-item active"><img src="${imageUrl}" class="d-block w-100 rounded-1 " alt="Clicked Image"></div>`);
+                    $('#modalCarousel .carousel-inner').html(`<div class="carousel-item active"><img src="${imageUrl}" class="d-block w-100 rounded-1 img-fluid" alt="Clicked Image"></div>`);
                 }
             </script>
 
             <div class="col-md-6 mt-5">
+
                 <h2><?= $aset->manufacture ?></h2>
                 <h5>SN : <?= $aset->serial ?></h5>
                 <p class="lead"><b>Spesifikasi :</b> Prosesor <?= $aset->prosesor ?>, RAM <?= $aset->ram ?>GB, <?= $aset->hdd ?></p>
@@ -118,9 +161,11 @@
                 <a href="<?= base_url('admin/aset/edit/' . $aset->serial) ?>" class="btn btn-sm btn-info text-white ">
                     <i class="fa-solid fa-pen-to-square"></i>
                 </a>
+
             </div>
         </div>
     </main>
+
 
 
     <main class="app-card app-card-settings shadow-sm p-4 mt-3">

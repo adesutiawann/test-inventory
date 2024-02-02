@@ -157,7 +157,7 @@
                                     <?php else : ?>
                                         <?php foreach ($images as $key => $value) : ?>
                                             <div class="carousel-item<?= $key == 0 ? ' active' : '' ?>">
-                                                <img src="<?= base_url() ?>/uploads/kegiatan/<?= $value->image ?>" class="d-block w-100 rounded-1" alt="Image <?= $key + 1 ?>">
+                                                <img src="<?= base_url() ?>/uploads/kegiatan/<?= $value->image ?>" data-bs-toggle="modal" data-bs-target="#imageModal3" class="d-block w-100 rounded-1" alt="Image <?= $key + 1 ?>">
                                             </div>
                                         <?php endforeach; ?>
                                     <?php endif; ?>
@@ -172,16 +172,66 @@
                                 </button>
                             </div>
 
-
-                            <div class="row mt-4">
-                                <?php if ($images != null) : ?>
-                                    <?php foreach ($images as $key => $value) : ?>
-                                        <div class="col-auto">
-                                            <img src="<?= base_url() ?>/uploads/kegiatan/<?= $value->image ?>" class="d-block w-50 rounded-1 " alt="Image <?= $key + 1 ?>" onclick="showImage('<?= base_url() ?>/uploads/kegiatan/<?= $value->image ?>')">
+                            <!-- Modal -->
+                            <div class="modal fade" id="imageModal3" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-lg">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h1 class="modal-title fs-5" id="imageModalLabel">Modal title</h1>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
-                                    <?php endforeach; ?>
-                                <?php endif; ?>
+                                        <div class="modal-body container">
+                                            <div id="modalCarousel" class="carousel slide" data-bs-ride="carousel">
+                                                <div class="carousel-inner">
+                                                    <?php if ($images == null) : ?>
+                                                        <div class="carousel-item active center">
+                                                            <div class="imgBox text-center">
+                                                                <img class="qrImage img-fluid" alt="QR Code">
+                                                                <div class="text"><?= $aset->serial ?></div>
+                                                            </div>
+                                                        </div>
+                                                    <?php else : ?>
+                                                        <?php foreach ($images as $key => $value) : ?>
+                                                            <div class="carousel-item<?= $key == 0 ? ' active' : '' ?>">
+                                                                <img src="<?= base_url() ?>/uploads/kegiatan/<?= $value->image ?>" class="d-block w-100 rounded-1 img-fluid" alt="Image <?= $key + 1 ?>">
+                                                            </div>
+                                                        <?php endforeach; ?>
+                                                    <?php endif; ?>
+                                                </div>
+                                                <div class="btn-group">
+                                                    <button class="carousel-control-prev" type="button" data-bs-target="#modalCarousel" data-bs-slide="prev">
+                                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                                        <span class="visually-hidden">Previous</span>
+                                                    </button>
+                                                    <button class="carousel-control-next" type="button" data-bs-target="#modalCarousel" data-bs-slide="next">
+                                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                                        <span class="visually-hidden">Next</span>
+                                                    </button>
+                                                </div>
+                                            </div>
+
+                                            <div class="row mt-4">
+                                                <?php if ($images != null) : ?>
+                                                    <?php foreach ($images as $key => $value) : ?>
+                                                        <div class="col-6 col-md-4 col-lg-3 mb-3">
+                                                            <img src="<?= base_url() ?>/uploads/kegiatan/<?= $value->image ?>" class="d-block w-100 rounded-1 img-fluid" alt="Image <?= $key + 1 ?>" onclick="showImage('<?= base_url() ?>/uploads/kegiatan/<?= $value->image ?>')">
+                                                            <a href="<?= base_url("admin/aset/deleteimages/{$value->id}/{$value->serial}") ?>" class="ms-4  text-white btn-sm hapusDataBtn">
+                                                                <i class="fa-regular fa-trash-can text-danger"></i>
+                                                            </a>
+                                                        </div>
+                                                    <?php endforeach; ?>
+                                                <?php endif; ?>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                            <button type="button" class="btn btn-primary">Understood</button>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
+                            <!-- TUTUP Modal -->
+
                         </div>
 
                         <script>
@@ -297,8 +347,9 @@
                                         <i class="fa-solid fa-location-dot text-danger"></i>
                                         <?= $value->lokasi ?>
                                     </a>
-                                    <a href="<?= base_url("admin/aset/deleteriwayat/{$value->id}/{$value->serial}") ?>" class="ms-4 btn btn-danger text-white">
-                                        <i class="fa-regular fa-trash-can text-white"></i> Remove
+
+                                    <a href="<?= base_url("admin/aset/deleteriwayat/{$value->id}/{$value->serial}") ?>" class="ms-4  text-white btn-sm ">
+                                        <i class="fa-regular fa-trash-can text-danger"></i>
                                     </a>
                                 </div>
 
@@ -312,7 +363,58 @@
     </table>
 </main>
 </div>
+<script>
+    // Menangani klik pada setiap tautan hapus data
+    document.querySelectorAll('.hapusDataBtn').forEach(function(element) {
+        element.addEventListener('click', function(event) {
+            event.preventDefault(); // Menghentikan peristiwa default pengklikan tautan
 
+            var dataId = element.getAttribute('data-id');
+            var href = element.getAttribute('href');
+
+            // Tampilkan SweetAlert konfirmasi
+            Swal.fire({
+                title: 'Anda yakin?',
+                text: 'Data akan dihapus permanen!',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Ya, Hapus!',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Jika pengguna menekan tombol konfirmasi, navigasikan ke tautan penghapusan data
+                    window.location.href = href;
+                }
+            });
+        });
+    });
+
+    function refreshInput() {
+        document.getElementById('textInput').value = '';
+
+        document.getElementById('dateInput').value = '';
+        document.getElementById('dateInput').value = '';
+        textInput.focus();
+    }
+
+    function refreshInput1() {
+        document.getElementById('textInput1').value = '';
+
+        document.getElementById('dateInput1').value = '';
+        document.getElementById('dateInput1').value = '';
+        textInput1.focus();
+    }
+
+    function refreshInput2() {
+        document.getElementById('textInput2').value = '';
+
+        document.getElementById('dateInput2').value = '';
+        document.getElementById('dateInput2').value = '';
+        textInput2.focus();
+    }
+</script>
 <?= $this->endSection() ?>
 
 <?= $this->section('js') ?>
