@@ -42,6 +42,26 @@
     </div><!--//container-fluid-->
 
     <main class="app-card app-card-settings shadow-sm p-4">
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">Home</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">Profile</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact-tab-pane" type="button" role="tab" aria-controls="contact-tab-pane" aria-selected="false">Contact</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="disabled-tab" data-bs-toggle="tab" data-bs-target="#disabled-tab-pane" type="button" role="tab" aria-controls="disabled-tab-pane" aria-selected="false" disabled>Disabled</button>
+            </li>
+        </ul>
+        <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">...</div>
+            <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">...</div>
+            <div class="tab-pane fade" id="contact-tab-pane" role="tabpanel" aria-labelledby="contact-tab" tabindex="0">...</div>
+            <div class="tab-pane fade" id="disabled-tab-pane" role="tabpanel" aria-labelledby="disabled-tab" tabindex="0">...</div>
+        </div>
         <div class="row">
             <div class="col-md-6">
                 <div id="mainCarousel" class="carousel slide" data-bs-ride="carousel">
@@ -138,17 +158,72 @@
             <div class="col-md-6 mt-5">
 
                 <h2><?= $aset->manufacture ?></h2>
-                <h5>SN : <?= $aset->serial ?></h5>
-                <p class="lead"><b>Spesifikasi :</b> Prosesor <?= $aset->prosesor ?>, RAM <?= $aset->ram ?>GB, <?= $aset->hdd ?></p>
+                <p class="lead"><b> <?= $aset->serial ?></b> </p>
 
                 <hr>
+                <div class="table-responsive">
+                    <table style="width:100%; " class="easy-table easy-table-minimal specification_table">
+                        <tbody>
+                            <tr>
+                                <td style="width:30%;text-align:left">Product name:</td>
+                                <td style="width:60%;text-align:left"><?= $aset->manufacture ?></td>
+                                <td></td>
+                            </tr>
 
-                <h5>Deskripsi</h5>
-                <p><?= $aset->ket ?></p>
+                            <tr>
+                                <td style="text-align:left">Status:</td>
+                                <td style="text-align:left"><?= $aset->kondisi . ' <i class="fa-solid fa-arrow-right"></i> ' . $aset->stock . ' <i class="fa-solid fa-arrow-right"></i> ' . $aset->user . ' ' . $aset->lokasi ?></td>
+                                <td></td>
+                            </tr>
+
+                            <tr>
+                                <td style="text-align:left">Processor:</td>
+                                <td style="text-align:left"><?= $aset->prosesor ?></td>
+                                <td></td>
+                            </tr>
+
+                            <tr>
+                                <td style="text-align:left">RAM:</td>
+                                <td style="text-align:left"><?= $aset->ram ?></td>
+                                <td></td>
+                            </tr>
+
+                            <tr>
+                                <td style="text-align:left">Storage:</td>
+                                <td style="text-align:left"><?= $aset->hdd ?></td>
+                                <td></td>
+                            </tr>
+
+
+                        </tbody>
+                    </table>
+                </div>
 
                 <hr>
+                <div class="table-responsive">
+                    <table style="width:100%; " class="easy-table easy-table-minimal specification_table">
+                        <tbody>
+                            <tr>
+                                <td style="width:30%;text-align:left">Keterangan:</td>
+                                <td style="width:60%;text-align:left"><?= $aset->ket ?></td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
 
-                <h6>Tersedia: <?= $jumlahmanufaktur ?> Unit</h6>
+                <hr>
+                <div class="table-responsive">
+                    <table style="width:100%; " class="easy-table easy-table-minimal specification_table">
+                        <tbody>
+                            <tr>
+                                <td style="width:30%;text-align:left">Tersedia:</td>
+                                <td style="width:60%;text-align:left"><?= $jumlahmanufaktur ?> Unit</td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
 
                 <hr>
                 <a href="<?= base_url('admin/suratkeluar/keranjang/' . $aset->serial) ?>" <?= ($admin->level == '3') ? 'hidden' : '' ?> class="btn btn-sm btn-success text-white mr-2">

@@ -125,10 +125,10 @@ $menu = $aktiv;
                                 Type : <?= $value->type ?>
                             </td>
                             <td>
-                                Prosesor : <?= $value->prosesor ?> <br>
+                                Prosesor : <?= substr($value->prosesor,  0, 9) ?> <br>
                                 Generasi : <?= $value->generasi ?> <br>
-                                Hdd/SSD : <?= $value->hdd ?><br>
-                                Ram :<?= $value->ram ?>/<?= $value->rincian ?><br>
+                                Storage : <?= $value->hdd ?><br>
+                                Ram     :<?= substr($value->ram,  0, 9) ?>/<?= $value->rincian ?><br>
                             </td>
                             <td>
                                 Status :<?= $value->status ?><br>

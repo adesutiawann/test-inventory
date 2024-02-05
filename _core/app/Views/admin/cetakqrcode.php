@@ -101,7 +101,7 @@
                                                 <p class="card-text">
                                                     <?= $value->manufacture ?><br>
                                                     <b> SN : <?= $value->serial ?> </b><br>
-                                                    <small class="text-body-secondary"><?= $value->prosesor . ',' . $value->hdd . ',RAM :' . $value->ram . '(' . $value->rincian . ')' ?></small>
+                                                    <small class="text-body-secondary"><?= substr($value->prosesor,  0, 9) . ',' . substr($value->hdd, 0, 12) . ',RAM :' . substr($value->ram, 0, 10) . '(' . $value->rincian . ')' ?></small>
 
 
                                             </div>

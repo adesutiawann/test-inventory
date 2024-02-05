@@ -577,18 +577,23 @@ class aset extends BaseController
 
                     'tgl_masuk' => $value[1],
                     'tgl_keluar' => $value[2],
-                    'manufacture'    => $value[3],
+                    'serial' => $value[3],
+
+                    'manufacture'    => $value[4],
                     'type'    => 'PC',
-                    'prosesor'    => $value[4],
-                    'generasi'    => $value[5],
-                    'serial' => $value[6],
+                    'prosesor'    => $value[5],
+                    'generasi'    => $value[6],
+
                     'hdd' => $value[7],
                     'ram'    => $value[8],
                     'rincian'    => $value[9],
                     'status' => $value[10],
                     'stock'    => $value[11],
                     'kondisi' => $value[12],
-                    'ket' => $value[13],
+
+                    'user' => $value[13],
+                    'lokasi' => $value[14],
+                    'ket' => $value[15],
                 ];
                 $this->aset->insert($data);
             }
