@@ -283,6 +283,9 @@ class aset extends BaseController
             'segment' => $this->request->uri->getSegments(),
             'admin'   => $this->admin->find(session()->get('id')),
             'nama'    => $this->manufacture->orderBy('nama', 'asc')->findAll(),
+            'nama2'   => $this->aset->groupBy('manufacture')->findAll(),
+
+
             'type' => $this->type->where('nama', 'pc')->orderBy('nama', 'asc')->findAll(),
             'prosesor'    => $this->prosesor->orderBy('nama', 'asc')->findAll(),
             'generasi'    => $this->generasi->orderBy('nama', 'asc')->findAll(),

@@ -48,41 +48,41 @@ class Dashboard extends BaseController
             'total_admin' => $this->admin->countAllResults(),
             'total_aset' => $this->aset->countAllResults(),
             'total_tersedia' => $this->aset->where('stock', 'Tersedia')->countAllResults(),
-            'total_terdistribusi' => $this->aset->where('stock', 'Terdistribusi')->countAllResults(),
+            'total_terdistribusi' => $this->aset->where('stock', 'Sewa')->countAllResults(),
             'total_backup' => $this->aset->where('stock', 'Backup')->countAllResults(),
-            'total_peminjaman' => $this->aset->where('stock', 'Peminjaman')->countAllResults(),
+            'total_peminjaman' => $this->aset->where('stock', 'Dipinjam')->countAllResults(),
             // perhitungan pc
             'total_pc' => $this->aset->where('type', 'pc')->countAllResults(),
             'total_pc_ok' => $this->aset->where('type', 'pc')->where('kondisi', 'OK')->countAllResults(),
-            'total_pc_rusak' => $this->aset->where('type', 'pc')->where('kondisi', 'rusak')->countAllResults(),
-            'total_pc_blanks' => $this->aset->where('type', 'pc')->where('kondisi', 'blanks')->countAllResults(),
+            'total_pc_rusak' => $this->aset->where('type', 'pc')->where('kondisi', 'RUSAK')->countAllResults(),
+            'total_pc_blanks' => $this->aset->where('type', 'pc')->where('kondisi', 'BLANK')->countAllResults(),
 
             'total_mo' => $this->aset->where('type', 'monitor')->countAllResults(),
             'total_mo_ok' => $this->aset->where('type', 'monitor')->where('kondisi', 'OK')->countAllResults(),
             'total_mo_rusak' => $this->aset->where('type', 'monitor')->where('kondisi', 'RUSAK')->countAllResults(),
-            'total_mo_blanks' => $this->aset->where('type', 'monitor')->where('kondisi', 'blanks')->countAllResults(),
+            'total_mo_blanks' => $this->aset->where('type', 'monitor')->where('kondisi', 'BLANK')->countAllResults(),
 
             'total_ky' => $this->aset->where('type', 'keyboard')->countAllResults(),
             'total_ky_ok' => $this->aset->where('type', 'keyboard')->where('kondisi', 'OK')->countAllResults(),
-            'total_ky_rusak' => $this->aset->where('type', 'keyboard')->where('kondisi', 'rusak')->countAllResults(),
-            'total_ky_blanks' => $this->aset->where('type', 'keyboard')->where('kondisi', 'blanks')->countAllResults(),
+            'total_ky_rusak' => $this->aset->where('type', 'keyboard')->where('kondisi', 'RUSAK')->countAllResults(),
+            'total_ky_blanks' => $this->aset->where('type', 'keyboard')->where('kondisi', 'BLANK')->countAllResults(),
 
 
             'total_ms' => $this->aset->where('type', 'mouse')->countAllResults(),
             'total_ms_ok' => $this->aset->where('type', 'mouse')->where('kondisi', 'OK')->countAllResults(),
-            'total_ms_rusak' => $this->aset->where('type', 'mouse')->where('kondisi', 'rusak')->countAllResults(),
-            'total_ms_blanks' => $this->aset->where('type', 'mouse')->where('kondisi', 'blanks')->countAllResults(),
+            'total_ms_rusak' => $this->aset->where('type', 'mouse')->where('kondisi', 'RUSAK')->countAllResults(),
+            'total_ms_blanks' => $this->aset->where('type', 'mouse')->where('kondisi', 'BLANK')->countAllResults(),
 
 
             'total_la' => $this->aset->where('type', 'laptop')->countAllResults(),
             'total_la_ok' => $this->aset->where('type', 'laptop')->where('kondisi', 'OK')->countAllResults(),
-            'total_la_rusak' => $this->aset->where('type', 'laptop')->where('kondisi', 'rusak')->countAllResults(),
-            'total_la_blanks' => $this->aset->where('type', 'laptop')->where('kondisi', 'blanks')->countAllResults(),
+            'total_la_rusak' => $this->aset->where('type', 'laptop')->where('kondisi', 'RUSAK')->countAllResults(),
+            'total_la_blanks' => $this->aset->where('type', 'laptop')->where('kondisi', 'BLANK')->countAllResults(),
 
             'total_pr' => $this->aset->where('type', 'Printer')->countAllResults(),
             'total_pr_ok' => $this->aset->where('type', 'Printer')->where('kondisi', 'OK')->countAllResults(),
-            'total_pr_rusak' => $this->aset->where('type', 'Printer')->where('kondisi', 'rusak')->countAllResults(),
-            'total_pr_blanks' => $this->aset->where('type', 'Printer')->where('kondisi', 'blanks')->countAllResults(),
+            'total_pr_rusak' => $this->aset->where('type', 'Printer')->where('kondisi', 'RUSAK')->countAllResults(),
+            'total_pr_blanks' => $this->aset->where('type', 'Printer')->where('kondisi', 'BLANK')->countAllResults(),
 
 
             //'total_siswa' => $this->siswa->where(['tahun_pelajaran' => $ta->tahun])->countAllResults(),

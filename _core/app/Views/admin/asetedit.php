@@ -28,10 +28,23 @@
                 <hr>
                 <div class="col-md-8">
                     Manufacture
+
+                    <div class="input-group">
+                        <select class="form-select" id="inputGroupSelect04" aria-label="Example select with button addon">
+                            <option selected>Choose...</option>
+                            <option value="1">One</option>
+                            <option value="2">Two</option>
+                            <option value="3">Three</option>
+                        </select>
+                        <button class="btn btn-primary" type="button">Button</button>
+                    </div>
                     <input type="text" name="id" hidden class="form-control" value="<?= $aset->id ?>" required>
 
                     <select name="manufacture" class="form-select" required>
                         <option value="">Pilih Manufacture</option>
+                        <?php foreach ($nama2 as $gr) : ?>
+                            <option value="<?= $gr->manufacture ?>" <?= ($gr->manufacture == $aset->manufacture) ? 'selected' : '' ?>><?= $gr->manufacture ?></option>
+                        <?php endforeach ?>
                         <?php foreach ($nama as $gr) : ?>
                             <option value="<?= $gr->nama ?>" <?= ($gr->nama == $aset->manufacture) ? 'selected' : '' ?>><?= $gr->nama ?></option>
                         <?php endforeach ?>

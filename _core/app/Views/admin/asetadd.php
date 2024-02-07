@@ -39,12 +39,16 @@
                 <hr>
                 <div class="col-md-8">
                     Manufacture
-                    <select name="manufacture" class="form-select" required>
-                        <option value="">Pilih Manufacture</option>
-                        <?php foreach ($nama as $gr) : ?>
-                            <option value="<?= $gr->nama ?>"><?= $gr->nama ?></option>
-                        <?php endforeach ?>
-                    </select>
+                    <div class="input-group">
+                        <select class="form-select" id="inputGroupSelect04" aria-label="Example select with button addon">
+                            <option selected="">Pilih Manufacture</option>
+                            <?php foreach ($nama as $gr) : ?>
+                                <option value="<?= $gr->nama ?>"><?= $gr->nama ?></option>
+                            <?php endforeach ?>
+                        </select>
+                        <button class="btn btn-success" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="fa-regular fa-square-plus text-white"></i></i></button>
+                    </div>
+
                 </div>
                 <div class="col-md-4">
                     Status
@@ -166,6 +170,33 @@
     </div>
 </div>
 
+
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+    Launch demo modal
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">New Manufacture</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="<?= base_url('admin/manufacture/save') ?>" method="POST">
+
+                <div class="modal-body">
+                    <input type="text" name="nama" class="form-control" required placeholder="Dell Inspiration">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Save changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 <?= $this->endSection() ?>
 
 <?= $this->section('js') ?>
