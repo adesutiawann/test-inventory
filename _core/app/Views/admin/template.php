@@ -266,7 +266,7 @@
 
 
                             <!--//nav-link-->
-                            <div id="submenu-1" class="collapse submenu submenu-1 <?= ($menu == 'aset' || $menu == 'monitor' || $menu == 'keyboard' || $menu == 'mouse' || $menu == 'laptop' || $menu == 'printer') ? 'show' : '' ?>"" data-bs-parent=" #menu-accordion">
+                            <div id="submenu-1" class="collapse submenu submenu-1 <?= ($menu == 'aset' || $menu == 'kabel' || $menu == 'monitor' || $menu == 'keyboard' || $menu == 'mouse' || $menu == 'laptop' || $menu == 'printer') ? 'show' : '' ?>"" data-bs-parent=" #menu-accordion">
                                 <ul class="submenu-list list-unstyled">
 
 
@@ -322,6 +322,16 @@
                                         </a>
                                         <!--//nav-link-->
                                     </li>
+
+                                    <li class="submenu-item">
+                                        <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
+                                        <a class="submenu-link <?= ($menu == 'kabel') ? 'active' : '' ?>"" href=" <?= base_url('admin/kabel') ?>">
+
+                                            <span class="nav-link-text">Kabel</span>
+                                        </a>
+                                        <!--//nav-link-->
+                                    </li>
+
 
                                 </ul>
                             </div>

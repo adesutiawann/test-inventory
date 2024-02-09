@@ -4,13 +4,13 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class BpModel extends Model
+class KabelModel extends Model
 {
-    protected $table            = 'bp';
+    protected $table            = 'tb_kabel';
     protected $primaryKey       = 'id';
     protected $useAutoIncrement = true;
     protected $returnType       = 'object';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['guru'];
+    protected $allowedFields    = ['type,jumlah'];
 }

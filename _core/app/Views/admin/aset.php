@@ -68,7 +68,7 @@ $menu = $aktiv;
     <a class="flex-fill text-center nav-link <?= ($menu == 'ALL') ? 'active' : '' ?>" href="<?= base_url('admin/aset') ?>" aria-controls="orders-all" aria-selected="false">All <?= $total_pc ?></a>
     <a class="flex-fill text-center nav-link <?= ($menu == 'OK') ? 'active' : '' ?>" href="<?= base_url('admin/aset/search/OK') ?>" aria-controls="orders-paid" aria-selected="false">Oke <?= $total_pc_ok ?></a>
     <a class="flex-fill text-center nav-link <?= ($menu == 'RUSAK') ? 'active' : '' ?>" href="<?= base_url('admin/aset/search/RUSAK') ?>" role="tab" aria-controls="orders-pending" aria-selected="true">Rusak <?= $total_pc_rusak ?></a>
-    <a class="flex-fill text-center nav-link <?= ($menu == 'BLANKS') ? 'active' : '' ?>" href="<?= base_url('admin/aset/search/BLANKS') ?>" role="tab" aria-controls="orders-cancelled" aria-selected="true">Blank <?= $total_pc_blanks ?></a>
+    <a class="flex-fill text-center nav-link <?= ($menu == 'BLANK') ? 'active' : '' ?>" href="<?= base_url('admin/aset/search/BLANK') ?>" role="tab" aria-controls="orders-cancelled" aria-selected="true">Blank <?= $total_pc_blanks ?></a>
 </nav>
 
 
@@ -128,7 +128,7 @@ $menu = $aktiv;
                                 Prosesor : <?= substr($value->prosesor,  0, 9) ?> <br>
                                 Generasi : <?= $value->generasi ?> <br>
                                 Storage : <?= $value->hdd ?><br>
-                                Ram     :<?= substr($value->ram,  0, 9) ?>/<?= $value->rincian ?><br>
+                                Ram :<?= substr($value->ram,  0, 9) ?>/<?= $value->rincian ?><br>
                             </td>
                             <td>
                                 Status :<?= $value->status ?><br>

@@ -163,8 +163,8 @@
             <div class="app-card-header p-3">
 
                 <div class="app-card-header p-1 border-bottom-0">
-                    <div class="row align-items-center gx-3">
-                        <div class="col-auto">
+                    <div class="row align-items-center gx-3 ">
+                        <div class="col-auto bg-dark">
                             <div class="app-icon-holder">
                                 <i class="fa-solid fa-chart-simple"></i>
                             </div><!--//icon-holder-->
@@ -174,6 +174,8 @@
                             <i class="fa-solid fa-chart-simple"></i>
                             <h3 class="app-card-title">Statistik</h3>
                         </div><!--//col-->
+
+
                     </div><!--//row-->
 
                 </div>
@@ -446,7 +448,48 @@
                                     </td>
                                 </div>
                             </tr>
+                            <!--//KABEL-->
+                            <tr class="shadow">
+                                <td>
+                                    <div class="row align-items-center gx-3">
+                                        <div class="col-auto">
+                                            <div class="app-icon-holder  text-dark">
 
+                                                <i class="fa-solid fa-plug-circle-bolt text-dark"></i>
+                                            </div><!--//icon-holder-->
+
+                                        </div><!--//col-->
+
+                                    </div><!--//row-->
+                                </td>
+                                <td class=" ">
+                                    <h5 class="meta">Kabel</h5>
+                                    <div class="progress h-50 ">
+                                        <div class="progress-bar bg-danger" role="progressbar" style="width: <?= $pr_d = ($total_pr_blanks > 0) ? ($total_pr_blanks / $total_pr) * 100 : 0; ?>%;" aria-valuenow="52" aria-valuemin="0" aria-valuemax="100"><?= number_format($pr_d) ?>%</div>
+                                        <div class="progress-bar bg-warning" role="progressbar" style="width:  <?= $pr_w = ($total_pr_rusak > 0) ? ($total_pr_rusak / $total_pr) * 100 : 0; ?>%;" aria-valuenow="52" aria-valuemin="0" aria-valuemax="100"><?= number_format($pr_w) ?>%</div>
+                                        <div class="progress-bar bg-success" role="progressbar" style="width: <?= $pr_s = ($total_pr_ok > 0) ? ($total_pr_ok / $total_pr) * 100 : 0; ?>%;" aria-valuenow="52" aria-valuemin="0" aria-valuemax="100"><?= number_format($pr_s) ?>%</div>
+                                    </div>
+
+
+                                </td>
+                                <div class="">
+                                    <td class="stat-cell text-danger  ">
+                                        <div class="mt-2"><b><?= $total_pr_blanks ?></b></div>
+                                    </td>
+                                    <td class="stat-cell text-warning">
+                                        <div class="mt-2"><b><?= $total_pr_rusak ?></b>
+                                        </div>
+                                    </td>
+                                    <td class="stat-cell text-success">
+                                        <div class="mt-2"><b><?= $total_pr_ok ?></b>
+                                        </div>
+                                    </td>
+                                    <td class="stat-cell ">
+                                        <div class="mt-2"><b><?= $total_pr ?></b>
+                                        </div>
+                                    </td>
+                                </div>
+                            </tr>
                             <tr>
                                 <th colspan="2" class="meta text-end">Total Aset :</th>
                                 <th colspan="4" class="meta stat-cell text-and">

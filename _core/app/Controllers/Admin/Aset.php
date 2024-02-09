@@ -199,8 +199,8 @@ class aset extends BaseController
 
             'total_pc' => $this->aset->where('type', 'pc')->countAllResults(),
             'total_pc_ok' => $this->aset->where('type', 'pc')->where('kondisi', 'OK')->countAllResults(),
-            'total_pc_rusak' => $this->aset->where('type', 'pc')->where('kondisi', 'rusak')->countAllResults(),
-            'total_pc_blanks' => $this->aset->where('type', 'pc')->where('kondisi', 'blanks')->countAllResults(),
+            'total_pc_rusak' => $this->aset->where('type', 'pc')->where('kondisi', 'RUSAK')->countAllResults(),
+            'total_pc_blanks' => $this->aset->where('type', 'pc')->where('kondisi', 'BLANK')->countAllResults(),
             //'aset'    => $this->aset->getId($id),
 
         ];
