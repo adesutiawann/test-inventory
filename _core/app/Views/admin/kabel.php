@@ -122,11 +122,11 @@ $menu = $aktiv;
                             <td><?= $value->type ?></td>
                             <td>
                                 <a href="<?= base_url('admin/kabel/minus/' . $value->id) ?>">
-                                    <i class="fa-solid fa-minus text-danger"></i>
+                                    <i class="fa-solid fa-circle-minus text-danger"></i>
                                 </a>
                                 <?= $value->jumlah ?>
                                 <a href="<?= base_url('admin/kabel/plus/' . $value->id) ?>">
-                                    <i class="fa-solid fa-plus text-success"></i>
+                                    <i class="fa-solid fa-circle-plus text-success"></i>
                                 </a>
 
                             </td>
@@ -134,6 +134,10 @@ $menu = $aktiv;
 
 
                             <td>
+
+                                <button type="button" class="btn btn-info text-white" data-bs-toggle="modal" data-bs-target="#staticBackdrop"">
+                                    <i class=" fa-solid fa-pen-to-square"></i>
+                                </button>
                                 <a href="<?= base_url('admin/printer/edit/' . $value->id) ?>" class="btn btn-sm btn-info text-white ">
                                     <i class="fa-solid fa-pen-to-square"></i>
                                 </a>
@@ -155,7 +159,56 @@ $menu = $aktiv;
 </div>
 </div>
 <!-- your_view.php -->
+<!-- Button trigger modal -->
 
+<!-- Modal -->
+<div class="modal fade " id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="input-group mb-3">
+                    <span class="input-group-text bg-danger" onclick="decrementValue()">
+                        <i class="fas fa-minus text-white"></i>
+                    </span>
+                    <input id="quantity" type="text" class="form-control text-center" value="145" aria-label="Amount (to the nearest dollar)">
+                    <span class="input-group-text bg-success" onclick="incrementValue()">
+                        <i class="fas fa-plus text-white"></i>
+                    </span>
+                </div>
+
+                <script>
+                    function incrementValue() {
+                        var input = document.getElementById('quantity');
+                        var value = parseInt(input.value, 10);
+                        value = isNaN(value) ? 0 : value;
+                        value++;
+                        input.value = value;
+                    }
+
+                    function decrementValue() {
+                        var input = document.getElementById('quantity');
+                        var value = parseInt(input.value, 10);
+                        value = isNaN(value) ? 0 : value;
+                        value--;
+                        if (value < 0) {
+                            value = 0; // Ensure the value doesn't go below zero
+                        }
+                        input.value = value;
+                    }
+                </script>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
 <!-- Tambahkan jQuery jika belum ada -->
 
 <!-- Tambahkan elemen anchor (link) -->

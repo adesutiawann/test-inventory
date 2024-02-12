@@ -423,23 +423,23 @@
                                 <td class=" ">
                                     <h5 class="meta">Printer</h5>
                                     <div class="progress h-50 ">
-                                        <div class="progress-bar bg-danger" role="progressbar" style="width: <?= $pr_d = ($total_pr_blanks > 0) ? ($total_pr_blanks / $total_pr) * 100 : 0; ?>%;" aria-valuenow="52" aria-valuemin="0" aria-valuemax="100"><?= number_format($pr_d) ?>%</div>
-                                        <div class="progress-bar bg-warning" role="progressbar" style="width:  <?= $pr_w = ($total_pr_rusak > 0) ? ($total_pr_rusak / $total_pr) * 100 : 0; ?>%;" aria-valuenow="52" aria-valuemin="0" aria-valuemax="100"><?= number_format($pr_w) ?>%</div>
-                                        <div class="progress-bar bg-success" role="progressbar" style="width: <?= $pr_s = ($total_pr_ok > 0) ? ($total_pr_ok / $total_pr) * 100 : 0; ?>%;" aria-valuenow="52" aria-valuemin="0" aria-valuemax="100"><?= number_format($pr_s) ?>%</div>
+                                        <div class="progress-bar bg-danger" role="progressbar" style="width: <?= $kb_d = ($total_kb_pw->jumlah > 0) ? ($total_kb_pw->jumlah / $total_pr) * 100 : 0; ?>%;" aria-valuenow="52" aria-valuemin="0" aria-valuemax="100"><?= number_format($kb_d) ?>%</div>
+                                        <div class="progress-bar bg-warning" role="progressbar" style="width:  <?= $kb_w = ($total_kb_pw->jumlah > 0) ? ($total_kb_pw->jumlah / $total_pr) * 100 : 0; ?>%;" aria-valuenow="52" aria-valuemin="0" aria-valuemax="100"><?= number_format($kb_w) ?>%</div>
+                                        <div class="progress-bar bg-success" role="progressbar" style="width: <?= $kb_s = ($total_kb_pw->jumlah > 0) ? ($total_kb_pw->jumlah / $total_pr) * 100 : 0; ?>%;" aria-valuenow="52" aria-valuemin="0" aria-valuemax="100"><?= number_format($kb_s) ?>%</div>
                                     </div>
 
 
                                 </td>
                                 <div class="">
                                     <td class="stat-cell text-danger  ">
-                                        <div class="mt-2"><b><?= $total_pr_blanks ?></b></div>
+                                        <div class="mt-2"><b><?= $total_kb_blanks ?></b></div>
                                     </td>
                                     <td class="stat-cell text-warning">
-                                        <div class="mt-2"><b><?= $total_pr_rusak ?></b>
+                                        <div class="mt-2"><b><?= $total_kb_rusak ?></b>
                                         </div>
                                     </td>
                                     <td class="stat-cell text-success">
-                                        <div class="mt-2"><b><?= $total_pr_ok ?></b>
+                                        <div class="mt-2"><b><?= $total_kb_ok ?></b>
                                         </div>
                                     </td>
                                     <td class="stat-cell ">
@@ -465,27 +465,27 @@
                                 <td class=" ">
                                     <h5 class="meta">Kabel</h5>
                                     <div class="progress h-50 ">
-                                        <div class="progress-bar bg-danger" role="progressbar" style="width: <?= $pr_d = ($total_pr_blanks > 0) ? ($total_pr_blanks / $total_pr) * 100 : 0; ?>%;" aria-valuenow="52" aria-valuemin="0" aria-valuemax="100"><?= number_format($pr_d) ?>%</div>
-                                        <div class="progress-bar bg-warning" role="progressbar" style="width:  <?= $pr_w = ($total_pr_rusak > 0) ? ($total_pr_rusak / $total_pr) * 100 : 0; ?>%;" aria-valuenow="52" aria-valuemin="0" aria-valuemax="100"><?= number_format($pr_w) ?>%</div>
-                                        <div class="progress-bar bg-success" role="progressbar" style="width: <?= $pr_s = ($total_pr_ok > 0) ? ($total_pr_ok / $total_pr) * 100 : 0; ?>%;" aria-valuenow="52" aria-valuemin="0" aria-valuemax="100"><?= number_format($pr_s) ?>%</div>
+                                        <div class="progress-bar bg-danger" role="progressbar" style="width: <?= $kb_d = ($total_kb_pw->jumlah > 0) ? ($total_kb_pw->jumlah / $total_pr) * 100 : 0; ?>%;" aria-valuenow="52" aria-valuemin="0" aria-valuemax="100"><?= number_format($kb_d) ?>%</div>
+                                        <div class="progress-bar bg-warning" role="progressbar" style="width:  <?= $kb_w = ($total_kb_rusak > 0) ? ($total_kb_rusak / $total_pr) * 100 : 0; ?>%;" aria-valuenow="52" aria-valuemin="0" aria-valuemax="100"><?= number_format($kb_w) ?>%</div>
+                                        <div class="progress-bar bg-success" role="progressbar" style="width: <?= $kb_s = ($total_kb_ok > 0) ? ($total_kb_ok / $total_pr) * 100 : 0; ?>%;" aria-valuenow="52" aria-valuemin="0" aria-valuemax="100"><?= number_format($kb_s) ?>%</div>
                                     </div>
 
 
                                 </td>
                                 <div class="">
                                     <td class="stat-cell text-danger  ">
-                                        <div class="mt-2"><b><?= $total_pr_blanks ?></b></div>
+                                        <div class="mt-2"><b><?= $total_kb_pw->jumlah ?></b></div>
                                     </td>
                                     <td class="stat-cell text-warning">
-                                        <div class="mt-2"><b><?= $total_pr_rusak ?></b>
+                                        <div class="mt-2"><b><?= $total_kb_dp->jumlah ?></b>
                                         </div>
                                     </td>
                                     <td class="stat-cell text-success">
-                                        <div class="mt-2"><b><?= $total_pr_ok ?></b>
+                                        <div class="mt-2"><b><?= $total_kb_hdmi->jumlah ?></b>
                                         </div>
                                     </td>
                                     <td class="stat-cell ">
-                                        <div class="mt-2"><b><?= $total_pr ?></b>
+                                        <div class="mt-2"><b><?= $total_kb_vga->jumlah ?></b>
                                         </div>
                                     </td>
                                 </div>

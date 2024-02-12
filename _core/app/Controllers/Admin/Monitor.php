@@ -206,6 +206,62 @@ class Monitor extends BaseController
             }
         }
     }
+    public function importdulu()
+    {
+        $file = $this->request->getFile('file_excel');
+        $extension = $file->getClientExtension();
+
+        if ($extension == 'xlsx' || $extension == 'xls') {
+            if ($extension == 'xls') {
+                $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xls();
+            } else {
+                $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
+            }
+            $spreadsheed = $reader->load($file);
+            $contak = $spreadsheed->getActiveSheet()->toArray();
+
+            foreach ($contak as $key => $value) {
+                if ($key == 0) {
+                    continue;
+                }
+
+                // Check if the serial number already exists in the database
+                $existingSerial = $this->aset->where('serial', $value[4])->first();
+
+                if (!$existingSerial) {
+                    // Serial number doesn't exist, proceed with insertion
+                    $data = [
+                        'type'      => 'Monitor',
+                        'tgl_masuk' => $value[1],
+                        'tgl_keluar' => $value[2],
+                        'manufacture' => $value[3],
+                        'serial'     => $value[4],
+                        'port'       => $value[5],
+                        'status'     => $value[6],
+                        'stock'      => $value[7],
+                        'kondisi'    => $value[8],
+                        'user'       => $value[9],
+                        'lokasi'     => $value[10],
+                        'ket'        => $value[11],
+                    ];
+
+                    $this->aset->insert($data);
+                } else {
+                    // Serial number already exists, you may handle this case accordingly
+                    // For example, you can log an error, skip the row, or update the existing record
+                    // Here, I'm logging an error message
+                    session()->setFlashdata('error', 'Duplicate serial number found: ' . $value[4]);
+                    return redirect()->to(base_url('admin/monitor'));
+                    //log_message('error', 'Duplicate serial number found: ' . $value[4]);
+                }
+            }
+
+            // ... (existing code)
+        } else {
+            session()->setFlashdata('error', 'Format file tidak didukung; hanya format file <b>.xls</b> dan <b>.xlsx</b> yang diizinkan.');
+            return redirect()->to(base_url('admin/monitor'));
+        }
+    }
 
     public function import()
     {
@@ -227,22 +283,18 @@ class Monitor extends BaseController
                     continue;
                 }
                 $data = [
-
+                    'type'    => 'Monitor',
                     'tgl_masuk' => $value[1],
                     'tgl_keluar' => $value[2],
                     'manufacture'    => $value[3],
-
-                    'type'    => 'Monitor',
-
-
-                    'port'    => $value[4],
-                    'serial' => $value[5],
-
-
+                    'serial' => $value[4],
+                    'port'    => $value[5],
                     'status' => $value[6],
                     'stock'    => $value[7],
                     'kondisi' => $value[8],
-                    'ket' => $value[9],
+                    'user'    => $value[9],
+                    'lokasi' => $value[10],
+                    'ket' => $value[11],
                 ];
                 $this->aset->insert($data);
             }
@@ -253,7 +305,17 @@ class Monitor extends BaseController
             return redirect()->to(base_url('admin/monitor'));
         }
     }
-
+    public function deleteall($id)
+    {
+        // if ($this->aset->deleteByType($id)) {
+        if ($this->aset->where('type', $id)->delete()) {
+            session()->setFlashdata('success', 'Data berhasil di hapus.');
+            return redirect()->to(base_url('admin/monitor'));
+        } else {
+            session()->setFlashdata('danger', 'Data berhasil di hapus.');
+            return redirect()->to(base_url('admin/monitor'));
+        }
+    }
     public function delete($id)
     {
         if ($this->aset->delete($id)) {

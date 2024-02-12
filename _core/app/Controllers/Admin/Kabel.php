@@ -108,18 +108,32 @@ class Kabel extends BaseController
 
     public function plus($id)
     {
+        //$kabelModel = new KabelModel();
         $item = $this->kabel->find($id); // Fetch the item from the database based on $id
 
         if ($item) {
-            // Perform logic to increment the quantity
-            $newQuantity = $item->jumlah + 1;
+            // Perform logic to update the stock
+            $newStock = $item->jumlah + 1;
 
-            // Update the database with the new quantity
-            $this->kabel->update($id, ['jumlah' => $newQuantity]);
+            // Update the database
+            $data = ['jumlah' => $newStock];
+            $updated = $this->kabel->update($id, $data);
+
+            if ($updated) {
+                // Redirect back to the kabel page upon successful update
+                return redirect()->to(base_url('admin/kabel'))->with('success', 'Stock updated successfully.');
+            } else {
+                // Handle the case where the update failed
+                return redirect()->to(base_url('admin/kabel'))->with('error', 'Update failed.');
+            }
+        } else {
+            // Handle the case where the item with $id is not found
+            return redirect()->to(base_url('admin/kabel'))->with('error', 'Item not found.');
         }
-
-        return redirect()->to(base_url('admin/kabel')); // Redirect back to the kabel page
     }
+
+
+
 
 
     public function search($id)

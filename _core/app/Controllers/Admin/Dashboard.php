@@ -84,6 +84,11 @@ class Dashboard extends BaseController
             'total_pr_rusak' => $this->aset->where('type', 'Printer')->where('kondisi', 'RUSAK')->countAllResults(),
             'total_pr_blanks' => $this->aset->where('type', 'Printer')->where('kondisi', 'BLANK')->countAllResults(),
 
+            'total_kb' => $this->aset->where('type', 'Printer')->countAllResults(),
+            'total_kb_pw' => $this->aset->where('type', 'POWER')->find(),
+            'total_kb_vga' => $this->aset->where('type', 'VGA')->findAll(),
+            'total_kb_hdmi' => $this->aset->where('type', 'HDMI')->findAll(),
+            'total_kb_dp' => $this->aset->where('type', 'DISPLAY')->findAll(),
 
             //'total_siswa' => $this->siswa->where(['tahun_pelajaran' => $ta->tahun])->countAllResults(),
             //  'total_s'     => $this->absensi->where(['tanggal' => date("Y-m-d"), 'absensi' => 's', 'tahun_pelajaran' => $ta->tahun])->countAllResults(),

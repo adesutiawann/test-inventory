@@ -12,5 +12,5 @@ class KabelModel extends Model
     protected $returnType       = 'object';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['type,jumlah'];
+    protected $allowedFields    = ['jumlah'];
 }
