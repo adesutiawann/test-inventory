@@ -134,7 +134,6 @@ $menu = $aktiv;
 
 
                             <td>
-
                                 <button type="button" class="btn btn-info text-white" data-bs-toggle="modal" data-bs-target="#staticBackdrop"">
                                     <i class=" fa-solid fa-pen-to-square"></i>
                                 </button>
@@ -226,74 +225,4 @@ $menu = $aktiv;
 <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap5.min.js"></script>
 
-<script>
-    //$(document).ready(function() {
-
-    $(document).ready(function() {
-        try {
-            $('#table').DataTable({
-                processing: true,
-                serverSide: true,
-                ajax: '<?= base_url('admin/printer/data') ?>',
-                order: [],
-                columns: [{
-                        data: 'no',
-                        orderable: false
-                    },
-                    {
-                        data: 'serial'
-
-                    },
-                    {
-                        data: null,
-                        render: function(data, type, row) {
-                            // Assuming 'tgl_masuk' and 'tgl_keluar' are Date objects or date strings
-                            return '<b>' + row.manufacture +
-                                '</b> <br> type  :' + row.type;
-                        }
-                    }, {
-                        data: null,
-                        render: function(data, type, row) {
-                            // Assuming 'tgl_masuk' and 'tgl_keluar' are Date objects or date strings
-                            return 'Prosesor  :' + row.prosesor +
-                                ' <br> Generasi  :' + row.generasi +
-                                ' <br> Hdd/SSD   :' + row.hdd +
-                                ' <br> Ram       :' + row.ram +
-                                ' GB<br> Rincian    :' + row.prosesor;
-                        }
-                    }, {
-                        data: null,
-                        render: function(data, type, row) {
-                            var bgClass = row.kondisi === 'OK' ? 'success' :
-                                row.kondisi === 'RUSAK' ? 'danger' :
-                                row.kondisi === 'BLANKS' ? 'warning' : '';
-
-                            // Assuming 'tgl_masuk' and 'tgl_keluar' are Date objects or date strings
-                            return 'Status  :' + row.status + '<br> Stock  :' + row.stok +
-                                ' <br> Stok  : <span class="badge bg-' + bgClass + '">' + row.kondisi + '</span>';
-                        }
-                    },
-                    {
-                        data: null,
-                        render: function(data, type, row) {
-                            // Assuming 'tgl_masuk' and 'tgl_keluar' are Date objects or date strings
-                            return 'In :' + row.tgl_masuk + ' <br>Out  :' + row.tgl_keluar;
-                        }
-                    },
-                    {
-                        data: 'ket'
-
-                    },
-                    {
-                        data: 'action',
-                        orderable: false
-                    },
-                ]
-            });
-
-        } catch (error) {
-            console.error('DataTables initialization error:', error);
-        }
-    });
-</script>
 <?= $this->endSection() ?>

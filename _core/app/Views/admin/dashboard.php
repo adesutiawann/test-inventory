@@ -423,23 +423,23 @@
                                 <td class=" ">
                                     <h5 class="meta">Printer</h5>
                                     <div class="progress h-50 ">
-                                        <div class="progress-bar bg-danger" role="progressbar" style="width: <?= $kb_d = ($total_kb_pw->jumlah > 0) ? ($total_kb_pw->jumlah / $total_pr) * 100 : 0; ?>%;" aria-valuenow="52" aria-valuemin="0" aria-valuemax="100"><?= number_format($kb_d) ?>%</div>
-                                        <div class="progress-bar bg-warning" role="progressbar" style="width:  <?= $kb_w = ($total_kb_pw->jumlah > 0) ? ($total_kb_pw->jumlah / $total_pr) * 100 : 0; ?>%;" aria-valuenow="52" aria-valuemin="0" aria-valuemax="100"><?= number_format($kb_w) ?>%</div>
-                                        <div class="progress-bar bg-success" role="progressbar" style="width: <?= $kb_s = ($total_kb_pw->jumlah > 0) ? ($total_kb_pw->jumlah / $total_pr) * 100 : 0; ?>%;" aria-valuenow="52" aria-valuemin="0" aria-valuemax="100"><?= number_format($kb_s) ?>%</div>
+                                        <div class="progress-bar bg-danger" role="progressbar" style="width: <?= $kb_d = ($total_kb_pw > 0) ? ($total_kb_pw / $total_pr) * 100 : 0; ?>%;" aria-valuenow="52" aria-valuemin="0" aria-valuemax="100"><?= number_format($kb_d) ?>%</div>
+                                        <div class="progress-bar bg-warning" role="progressbar" style="width:  <?= $kb_w = ($total_kb_pw > 0) ? ($total_kb_pw / $total_pr) * 100 : 0; ?>%;" aria-valuenow="52" aria-valuemin="0" aria-valuemax="100"><?= number_format($kb_w) ?>%</div>
+                                        <div class="progress-bar bg-success" role="progressbar" style="width: <?= $kb_s = ($total_kb_pw > 0) ? ($total_kb_pw / $total_pr) * 100 : 0; ?>%;" aria-valuenow="52" aria-valuemin="0" aria-valuemax="100"><?= number_format($kb_s) ?>%</div>
                                     </div>
 
 
                                 </td>
                                 <div class="">
                                     <td class="stat-cell text-danger  ">
-                                        <div class="mt-2"><b><?= $total_kb_blanks ?></b></div>
+                                        <div class="mt-2"><b><?= $total_kb_pw ?></b></div>
                                     </td>
                                     <td class="stat-cell text-warning">
-                                        <div class="mt-2"><b><?= $total_kb_rusak ?></b>
+                                        <div class="mt-2"><b><?= $total_kb_pw ?></b>
                                         </div>
                                     </td>
                                     <td class="stat-cell text-success">
-                                        <div class="mt-2"><b><?= $total_kb_ok ?></b>
+                                        <div class="mt-2"><b><?= $total_kb_pw ?></b>
                                         </div>
                                     </td>
                                     <td class="stat-cell ">
@@ -464,30 +464,50 @@
                                 </td>
                                 <td class=" ">
                                     <h5 class="meta">Kabel</h5>
-                                    <div class="progress h-50 ">
-                                        <div class="progress-bar bg-danger" role="progressbar" style="width: <?= $kb_d = ($total_kb_pw->jumlah > 0) ? ($total_kb_pw->jumlah / $total_pr) * 100 : 0; ?>%;" aria-valuenow="52" aria-valuemin="0" aria-valuemax="100"><?= number_format($kb_d) ?>%</div>
-                                        <div class="progress-bar bg-warning" role="progressbar" style="width:  <?= $kb_w = ($total_kb_rusak > 0) ? ($total_kb_rusak / $total_pr) * 100 : 0; ?>%;" aria-valuenow="52" aria-valuemin="0" aria-valuemax="100"><?= number_format($kb_w) ?>%</div>
-                                        <div class="progress-bar bg-success" role="progressbar" style="width: <?= $kb_s = ($total_kb_ok > 0) ? ($total_kb_ok / $total_pr) * 100 : 0; ?>%;" aria-valuenow="52" aria-valuemin="0" aria-valuemax="100"><?= number_format($kb_s) ?>%</div>
+                                    <div class="progress h-50">
+                                        <?php
+                                        // Array of different background colors
+                                        $bgColors = ['bg-danger', 'bg-warning', 'bg-success', 'bg-info', 'bg-primary'];
+
+                                        // Counter for color index
+                                        $colorIndex = 0;
+
+                                        // Calculate the total sum
+                                        $totalSum = array_sum(array_column($kabel, 'jumlah'));
+                                        ?>
+
+                                        <?php foreach ($kabel as $row) : ?>
+                                            <?php
+                                            // Get the current background color
+                                            $currentColor = $bgColors[$colorIndex % count($bgColors)];
+
+                                            // Calculate width and set the background color
+                                            $kb_d = ($row->jumlah > 0) ? ($row->jumlah / $totalSum) * 100 : 0;
+                                            ?>
+                                            <div class="progress-bar <?= $currentColor ?>" role="progressbar" style="width: <?= $kb_d ?>%;" aria-valuenow="<?= $kb_d ?>" aria-valuemin="0" aria-valuemax="100">
+                                                <?= $row->type . ' ' . $row->jumlah ?>
+                                            </div>
+
+                                            <?php
+
+                                            // Increment the color index for the next iteration
+                                            $colorIndex++;
+                                            ?>
+
+                                        <?php endforeach; ?>
+
                                     </div>
+
 
 
                                 </td>
                                 <div class="">
-                                    <td class="stat-cell text-danger  ">
-                                        <div class="mt-2"><b><?= $total_kb_pw->jumlah ?></b></div>
-                                    </td>
-                                    <td class="stat-cell text-warning">
-                                        <div class="mt-2"><b><?= $total_kb_dp->jumlah ?></b>
+
+                                    <td colspan="4" class="stat-cell ">
+                                        <div class="mt-2"><b><?= $totalSum ?></b>
                                         </div>
                                     </td>
-                                    <td class="stat-cell text-success">
-                                        <div class="mt-2"><b><?= $total_kb_hdmi->jumlah ?></b>
-                                        </div>
-                                    </td>
-                                    <td class="stat-cell ">
-                                        <div class="mt-2"><b><?= $total_kb_vga->jumlah ?></b>
-                                        </div>
-                                    </td>
+
                                 </div>
                             </tr>
                             <tr>

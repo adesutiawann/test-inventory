@@ -4,7 +4,7 @@ namespace App\Controllers\Admin;
 
 use App\Controllers\BaseController;
 use App\Models\AdminModel;
-use App\Models\Tahun_pelajaranModel;
+use App\Models\KabelModel;
 use App\Models\SiswaModel;
 use App\Models\AbsensiModel;
 
@@ -16,6 +16,7 @@ class Dashboard extends BaseController
     protected $tahun_pelajaran;
     protected $siswa;
     protected $absensi;
+    protected $kabel;
 
 
     protected $aset;
@@ -26,9 +27,8 @@ class Dashboard extends BaseController
         //$this->tahun_pelajaran = new Tahun_pelajaranModel();
         // $this->siswa           = new SiswaModel();
         //$this->absensi         = new AbsensiModel();
-
-
         $this->aset = new AsetModel();
+        $this->kabel = new KabelModel();
     }
 
     public function index()
@@ -38,7 +38,8 @@ class Dashboard extends BaseController
         }
 
         //  $ta = $this->tahun_pelajaran->where('aktif', 1)->first();
-
+        //$total_kb_pw = $this->kabel->find();
+        $result = $this->kabel->where('type', 'POWER')->find();
         $data = [
             'title'       => 'Dashboard',
             'segment'     => $this->request->uri->getSegments(),
@@ -84,11 +85,17 @@ class Dashboard extends BaseController
             'total_pr_rusak' => $this->aset->where('type', 'Printer')->where('kondisi', 'RUSAK')->countAllResults(),
             'total_pr_blanks' => $this->aset->where('type', 'Printer')->where('kondisi', 'BLANK')->countAllResults(),
 
-            'total_kb' => $this->aset->where('type', 'Printer')->countAllResults(),
-            'total_kb_pw' => $this->aset->where('type', 'POWER')->find(),
-            'total_kb_vga' => $this->aset->where('type', 'VGA')->findAll(),
-            'total_kb_hdmi' => $this->aset->where('type', 'HDMI')->findAll(),
-            'total_kb_dp' => $this->aset->where('type', 'DISPLAY')->findAll(),
+
+            'kabel'    => $this->kabel->find(),
+            //'aset' => $this->aset->where('type', 'pc')->orderBy('id', 'desc')->findAll(),
+
+            'total_kb' => $this->kabel->where('type', 'Printer')->countAllResults(),
+            //'total_kb_pw' => $this->kabel->where('type', 'POWER')->find(),
+            'total_kb_pw' => isset($result['jumlah']) ? $result['jumlah'] : null,
+
+            'total_kb_vga' => $this->kabel->where('type', 'VGA')->findAll(),
+            'total_kb_hdmi' => $this->kabel->where('type', 'HDMI')->findAll(),
+            'total_kb_dp' => $this->kabel->where('type', 'DISPLAY')->findAll(),
 
             //'total_siswa' => $this->siswa->where(['tahun_pelajaran' => $ta->tahun])->countAllResults(),
             //  'total_s'     => $this->absensi->where(['tanggal' => date("Y-m-d"), 'absensi' => 's', 'tahun_pelajaran' => $ta->tahun])->countAllResults(),
