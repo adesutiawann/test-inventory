@@ -221,7 +221,7 @@
                             <a href="<?= base_url('admin/suratkeluar/keranjang/' . $aset->serial) ?>" <?= ($admin->level == '3') ? 'hidden' : '' ?> class="btn btn-sm btn-success text-white mr-2">
                                 <i class="fa-solid fa-right-from-bracket"></i> Distribusikan
                             </a>
-                            <a href="<?= base_url('admin/suratkeluar/keranjang/' . $aset->serial) ?>" <?= ($admin->level == '3') ? 'hidden' : '' ?> class="btn btn-sm btn-primary text-white mr-2">
+                            <a href="<?= base_url('admin/suratpinjam/keranjang/' . $aset->serial) ?>" <?= ($admin->level == '3') ? 'hidden' : '' ?> class="btn btn-sm btn-primary text-white mr-2">
                                 <i class="fa-solid fa-chalkboard-user"></i> Dipinjam
                             </a>
 

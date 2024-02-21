@@ -30,7 +30,7 @@ $con = new mysqli("localhost", "root", "", "db_inventory") or die(mysqli_error($
         <div class="row ">
 
             <div class="col-md-8 col-sm-8 col-xs-6  <?= ($admin->level == '3') ? 'hidden' : '' ?> ">
-                <a href="<?= base_url('admin/suratkeluar/add') ?>" class="btn app-btn-primary text-white ml-5 ">
+                <a href="<?= base_url('admin/suratpinjam/add') ?>" class="btn app-btn-primary text-white ml-5 ">
                     <i class="fas fa-plus"></i> Surat Baru
                 </a>
 
@@ -54,19 +54,14 @@ $con = new mysqli("localhost", "root", "", "db_inventory") or die(mysqli_error($
 </div>
 
 
-<nav id="orders-table-tab" class="orders-table-tab app-nav-tabs nav shadow-sm flex-column flex-sm-row mb-1" role="tablist">
 
-    <a class="flex-sm-fill text-sm-center nav-link <?= ($menu == 'ALL') ? 'active' : '' ?>" href="<?= base_url('admin/suratkeluar') ?>" aria-controls="orders-all" aria-selected="false"><?= $suratkeluarttl ?> All</a>
-    <a class="flex-sm-fill text-sm-center nav-link <?= ($menu == 'Terdistribusi') ? 'active' : '' ?>" href="<?= base_url('admin/suratkeluar/search/Terdistribusi') ?>" aria-controls="orders-paid" aria-selected="false"><?= $suratkeluardis ?> Terdistribusi</a>
-    <a class="flex-sm-fill text-sm-center nav-link <?= ($menu == 'Backup') ? 'active' : '' ?>" href="<?= base_url('admin/suratkeluar/search/Backup') ?>" role="tab" aria-controls="orders-pending" aria-selected="true"><?= $suratkeluarbac ?> Backup</a>
-</nav>
 
 <div class="app-card app-card-accordion shadow-sm mb-4">
 
     <div class="app-card-body p-4">
 
         <div class="table-responsive">
-            <?php // print_r($suratkeluar)
+            <?php // print_r($suratpinjam)
             ?>
             <table id="tabel1" class="table table-striped">
                 <thead>
@@ -83,7 +78,7 @@ $con = new mysqli("localhost", "root", "", "db_inventory") or die(mysqli_error($
 
                     <?php
                     $no = 1;
-                    foreach ($suratkeluar as $key => $value) :
+                    foreach ($suratpinjam as $key => $value) :
 
                     ?>
                         <tr>
@@ -119,15 +114,15 @@ $con = new mysqli("localhost", "root", "", "db_inventory") or die(mysqli_error($
 
 
                             <td width="15%">
-                                <a href="<?= base_url('admin/suratkeluar/print?id=' . urlencode($value->id) . '&nomor=' . urlencode($value->nomor)) ?>" target="_blank" class="btn btn-sm btn-primary text-white mr-2">
+                                <a href="<?= base_url('admin/suratpinjam/print?id=' . urlencode($value->id) . '&nomor=' . urlencode($value->nomor)) ?>" target="_blank" class="btn btn-sm btn-primary text-white mr-2">
                                     <i class="fa-solid fa-print"></i>
                                 </a>
 
 
-                                <a href="<?= base_url('admin/suratkeluar/editsk/' . $value->id) ?>" class="btn btn-sm btn-info text-white  mr-2">
+                                <a href="<?= base_url('admin/suratpinjam/editsk/' . $value->id) ?>" class="btn btn-sm btn-info text-white  mr-2">
                                     <i class="fa-solid fa-pen-to-square"></i>
                                 </a>
-                                <a href="<?= base_url('admin/suratkeluar/delete_sk/' . $value->id) ?>" class="btn btn-sm btn-danger text-white" onclick="return confirm('Yakin ingin menghapus?')">
+                                <a href="<?= base_url('admin/suratpinjam/delete_sk/' . $value->id) ?>" class="btn btn-sm btn-danger text-white" onclick="return confirm('Yakin ingin menghapus?')">
                                     <i class="fa-solid fa-trash-can"></i>
                                 </a>
                             </td>
@@ -153,7 +148,7 @@ $con = new mysqli("localhost", "root", "", "db_inventory") or die(mysqli_error($
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form class="row" action="<?= base_url('admin/suratkeluar/cetaksuratkeluar') ?>" target="_blank" method="post" enctype="multipart/form-data">
+                <form class="row" action="<?= base_url('admin/suratpinjam/cetaksuratpinjam') ?>" target="_blank" method="post" enctype="multipart/form-data">
 
                     <div class="col-md-12 col-sm-12 col-xs-10 mb-2">
                         Filter

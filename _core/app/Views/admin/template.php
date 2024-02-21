@@ -361,7 +361,7 @@
 
 
                             <!--//nav-link-->
-                            <div id="submenu-5" class="collapse submenu submenu-5 <?= ($menu == 'sm' || $menu == 'sk' || $menu == 'sb' || $menu == 'suratkeluar') ? 'show' : '' ?>"" data-bs-parent=" #menu-accordion">
+                            <div id="submenu-5" class="collapse submenu submenu-5 <?= ($menu == 'sm' || $menu == 'sk' || $menu == 'suratpinjam' || $menu == 'suratkeluar') ? 'show' : '' ?>"" data-bs-parent=" #menu-accordion">
                                 <ul class="submenu-list list-unstyled">
 
 
@@ -385,7 +385,7 @@
                                     </li>
                                     <li class="submenu-item">
                                         <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-                                        <a class="submenu-link <?= ($menu == 'sp') ? 'active' : '' ?>" href=" <?= base_url('admin/suratpinjam') ?>">
+                                        <a class="submenu-link <?= ($menu == 'suratpinjam') ? 'active' : '' ?>" href=" <?= base_url('admin/suratpinjam') ?>">
 
                                             <span class="nav-link-text">Surat Pinjam</span>
                                         </a>
