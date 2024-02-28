@@ -14,7 +14,7 @@ class SuratpinjamModel extends Model
   protected $returnType       = 'object';
   protected $useSoftDeletes   = false;
   protected $protectFields    = true;
-  protected $allowedFields    = ['id', 'nomor', 'jumlah', 'satuan', 'ket', 'penerima', 'nik', 'lokasi', 'telpon', 'tgl', 'status'];
+  protected $allowedFields    = ['id', 'nomor', 'proyek', 'jumlah', 'satuan', 'ket', 'penerima', 'nik', 'lokasi', 'telpon', 'tgl', 'status'];
 
 
   protected $validationRules = [

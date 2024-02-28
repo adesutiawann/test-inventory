@@ -143,7 +143,7 @@
 
             </div>
 
-            <form action="<?= base_url('admin/suratkeluar/savesuratkeluar') ?>" method="POST">
+            <form action="<?= base_url('admin/suratpinjam/savesuratpinjam') ?>" method="POST">
 
                 <div class="col-md-12 mb-1  ">
 
@@ -178,7 +178,7 @@
 
                                     <div class="col-2">
                                         Jumlah :
-                                        <input type="text" name="jumlah" class="form-control" required placeholder="000">
+                                        <input type="text" name="jumlah" class="form-control" required placeholder="000" value="<?= $no - 1 ?>">
 
                                     </div>
                                     <div class="col-5">
@@ -188,12 +188,9 @@
                                     </div>
 
                                     <div class="col-5 mb-4">
-                                        Status
-                                        <select name="status" class="form-select">
-                                            <?php foreach ($stock as $gr) : ?>
-                                                <option value="<?= $gr->nama ?>"><?= $gr->nama ?></option>
-                                            <?php endforeach ?>
-                                        </select>
+                                        Proyek
+                                        <input type="text" name="proyek" class="form-control" required placeholder="">
+
                                     </div>
                                     <div class="col-md-12 mb-5">
                                         Keterangan

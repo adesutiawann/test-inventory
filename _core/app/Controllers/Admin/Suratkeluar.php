@@ -74,9 +74,10 @@ class Suratkeluar extends BaseController
         // script pengulangan;
         $suratKeluar = $this->suratkeluar->findAll();
         foreach ($suratKeluar as $key => $value) {
-            $aset = $this->aset->where('id_sk', $value->nomor)->findAll();
-            $suratKeluar[$key]->aset = $aset;
+            $aset = $this->asetk->where('id_sk', $value->nomor)->findAll();
+            $suratKeluar[$key]->asetk = $aset;
         }
+
 
         $data = [
             'title'   => 'Surat Keluar',
@@ -100,6 +101,43 @@ class Suratkeluar extends BaseController
         ];
 
 
+
+        return view('admin/suratkeluar', $data);
+    }
+    public function indexmmm()
+    {
+        if (session()->get('logged_admin') !== true) {
+            return redirect()->to(base_url());
+        }
+
+        $suratKeluar = $this->suratkeluar->findAll();
+
+        foreach ($suratKeluar as $keyOuter => $valueOuter) {
+            $asetks = $this->asetk->where('id_sk', $valueOuter->nomor)->findAll();
+
+            foreach ($asetks as $keyInner => $valueInner) {
+                $aset = $this->aset->where('serial', $valueInner->serial)->findAll();
+
+                // Assuming you want to create an 'aset' property for each 'asetk'
+                $suratKeluar[$keyOuter]->asetks[$keyInner] = [
+                    'asetk' => $valueInner,
+                    'aset'  => $aset,
+                ];
+            }
+        }
+
+
+        $data = [
+            'title'           => 'Surat Keluar',
+            'segment'         => $this->request->uri->getSegments(),
+            'admin'           => $this->admin->find(session()->get('id')),
+            'nama'            => $this->manufacture->orderBy('nama', 'asc')->findAll(),
+            'aktiv'           => 'ALL',
+            'suratkeluar'     => $suratKeluar,
+            'suratkeluarttl'  => $this->suratkeluar->countAllResults(),
+            'suratkeluardis'  => $this->suratkeluar->where('status', 'Terdistribusi')->countAllResults(),
+            'suratkeluarbac'  => $this->suratkeluar->where('status', 'Backup')->countAllResults(),
+        ];
 
         return view('admin/suratkeluar', $data);
     }
@@ -420,8 +458,14 @@ class Suratkeluar extends BaseController
                 //'tgl_keluar'           => $tgl,
                 'id_sk'            => '1',
             ];
+            $postasetk = [
 
-            if ($this->aset->updateDatax($serial, $post)) {
+                'serial' => $serial,
+                'tgl'           => $tgl,
+                'id_sk'            => $this->suratkeluar->generateCode(),
+            ];
+
+            if ($this->aset->updateDatax($serial, $post) && $this->asetk->save($postasetk)) {
                 // if ($this->suratkeluar->updateDatax($post)) {
                 session()->setFlashdata('success', 'Data berhasil masuk list.');
                 return redirect()->to(base_url('admin/suratkeluar/add'));
@@ -492,6 +536,7 @@ class Suratkeluar extends BaseController
                 'tgl_keluar'           => $tgl,
 
             ];
+
 
             if ($this->suratkeluar->save($post) && $this->aset->insertno_sk($postask)) {
 

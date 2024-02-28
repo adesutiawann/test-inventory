@@ -87,17 +87,16 @@
 
                     <h6>Divisi &nbsp; &nbsp;&nbsp; : &nbsp;INFRASTRUKTUR <br>
                         Dari &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: &nbsp;Leader Workshop <br>
-                        Perihal &nbsp;&nbsp;&nbsp;: &nbsp;Ijin Keluar/Masuk Barang<br>
-                        Tanggal &nbsp;: &nbsp;<?= date("d F Y") ?></h6>
+
 
                 </div>
                 <div class="col-6 ml-4  MT-3 mb-4">
 
 
-                    <h6>Divisi &nbsp; &nbsp;&nbsp; : &nbsp;INFRASTRUKTUR <br>
-                        Dari &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: &nbsp;Leader Workshop <br>
-                        Perihal &nbsp;&nbsp;&nbsp;: &nbsp;Ijin Keluar/Masuk Barang<br>
-                        Tanggal &nbsp;: &nbsp;<?= date("d F Y") ?></h6>
+                    <h6>Proyek &nbsp; &nbsp;&nbsp; &nbsp;: &nbsp; <?= $suratkeluar[0]->proyek ?> <br>
+                        Tanggal &nbsp;&nbsp;&nbsp;&nbsp;: &nbsp;<?= date("d F Y") ?><br>
+                        Kembali &nbsp;&nbsp;&nbsp;&nbsp;: &nbsp;
+                    </h6>
 
                 </div>
 
@@ -132,7 +131,7 @@
                                         foreach ($aset as $key => $value) :
 
                                         ?>
-                                            <?= $non++ . '-' . $value->type . ' ' . $value->manufacture . ' ' . $value->generasi . ' SN : <b>' . $value->serial ?></b><br>
+                                            <?= $non++ . '-' . $value->type . ' ' . $value->manufacture . ' SN : <b>' . $value->serial ?></b><br>
                                         <?php
                                         endforeach ?>
                                     </td>
@@ -142,10 +141,10 @@
                                         foreach ($aset as $key => $value) :
 
                                         ?>
-                                            <?= $non++ . '-' . $value->type . ' ' . $value->manufacture . ' ' . $value->generasi . ' SN : <b>' . $value->serial ?></b><br>
+                                            <?= $non++ . '-' . $value->prosesor . ' ' . $value->generasi . ' ' . $value->hdd . ' Ram :' . $value->ram . '(' . $value->rincian . ')' ?><br>
                                         <?php
                                         endforeach ?>
-                                    </td>s
+                                    </td>
                                     <td><?= $non - 1 ?> </td>
                                     <td><?= $value1->satuan ?></td>
                                     <td><?= $value1->ket ?></td>

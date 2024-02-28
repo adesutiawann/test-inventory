@@ -405,7 +405,7 @@ class Suratpinjam extends BaseController
         }
     }
 
-    public function keranjang($serial)
+    public function keranjang0ff($serial)
     {
 
         $tgl = date("Y-m-d");
@@ -416,8 +416,8 @@ class Suratpinjam extends BaseController
             $post = [
                 // 'id' => '1',
 
-                //'serial'            => $this->request->getVar('serial'),
-                //'tgl_keluar'           => $tgl,
+                'serial'            => $this->request->getVar('serial'),
+                'tgl_keluar'           => $tgl,
                 'id_sk'            => '2',
             ];
 
@@ -436,7 +436,37 @@ class Suratpinjam extends BaseController
             return redirect()->to(base_url('admin/suratkeluar/add'));
         }
     }
+    public function keranjang($serial)
+    {
 
+        $tgl = date("Y-m-d");
+        // $serial = $this->request->getVar('serial');
+        $existingData = $this->aset->where('serial', $serial)->first();
+        if ($existingData) {
+            $tgl = date("Y-m-d");
+            $post = [
+                // 'id' => '1',
+
+                'serial'            => $this->request->getVar('serial'),
+                'tgl_keluar'           => $tgl,
+                'id_sk'            => '2',
+            ];
+
+            if ($this->aset->updateDatax($serial, $post)) {
+                // if ($this->suratkeluar->updateDatax($post)) {
+                session()->setFlashdata('success', 'Data berhasil masuk list.');
+                return redirect()->to(base_url('admin/suratpinjam/add'));
+            } else {
+                session()->setFlashdata('error', 'Data Sudah Terdaftar !');
+                return redirect()->to(base_url('admin/suratpinjam/add'));
+            }
+        } else {
+            //  session()->setFlashdata('warning', '<strong>Peringatan!</strong> Data dengan nomor serial <b>' . $serial . '</b> sudah terdaftar.');
+            //return redirect()->to(base_url('admin/suratkeluar/add')); //break; // Exit the loop if any data already exists
+            session()->setFlashdata('warning', 'Serial <b>' . $serial . '</b>  tidak terdaftar dalam system !');
+            return redirect()->to(base_url('admin/suratkeluar/add'));
+        }
+    }
 
 
     public function saveedit()
@@ -460,7 +490,7 @@ class Suratpinjam extends BaseController
             return redirect()->to(base_url('admin/suratkeluar'));
         }
     }
-    public function savesuratkeluar()
+    public function savesuratpinjam()
     {
 
         $tgl = date("Y-m-d");
@@ -481,7 +511,9 @@ class Suratpinjam extends BaseController
 
                 'tgl'           => $tgl,
                 'nomor'       =>  $this->request->getVar('nomor'),
-                'status'            => $this->request->getVar('status')
+                'proyek'       =>  $this->request->getVar('proyek'),
+                'status'            => 'Dipinjam',
+
                 //'tahun_pelajaran' => $this->tp->tahun,
             ];
             $postask = [
@@ -493,17 +525,17 @@ class Suratpinjam extends BaseController
 
             ];
 
-            if ($this->suratkeluar->save($post) && $this->aset->insertno_sk($postask)) {
+            if ($this->suratkeluar->save($post) && $this->aset->insertno_sp($postask)) {
 
                 session()->setFlashdata('success', 'Data berhasil di simpan surat keluar ' . $serial . 'MASA !');
-                return redirect()->to(base_url('admin/suratkeluar'));
+                return redirect()->to(base_url('admin/suratpinjam'));
             } else {
                 session()->setFlashdata('error', 'Data Gagal di simpan.');
-                return redirect()->to(base_url('admin/suratkeluar'));
+                return redirect()->to(base_url('admin/suratpinjam'));
             }
         } else {
             session()->setFlashdata('error', 'NOMOR SURAT SUDAH DI GUNAKAN .');
-            return redirect()->to(base_url('admin/suratkeluar'));
+            return redirect()->to(base_url('admin/suratpinjam'));
         }
     }
     public function delete_asetk($serial)
@@ -515,20 +547,20 @@ class Suratpinjam extends BaseController
         ];
         if ($this->aset->updateDatax($serial, $post)) {
             session()->setFlashdata('success', 'Data berhasil di hapus.');
-            return redirect()->to(base_url('admin/suratkeluar/add'));
+            return redirect()->to(base_url('admin/suratpinjam/add'));
         } else {
             session()->setFlashdata('danger', 'Data berhasil di hapus.');
-            return redirect()->to(base_url('admin/suratkeluar/add'));
+            return redirect()->to(base_url('admin/suratpinjam/add'));
         }
     }
     public function delete_sk($id)
     {
         if ($this->suratkeluar->delete($id)) {
             session()->setFlashdata('success', 'Data berhasil di hapus.');
-            return redirect()->to(base_url('admin/suratkeluar'));
+            return redirect()->to(base_url('admin/suratpinjam'));
         } else {
             session()->setFlashdata('danger', 'Data berhasil di hapus.');
-            return redirect()->to(base_url('admin/suratkeluar'));
+            return redirect()->to(base_url('admin/suratpinjam'));
         }
     }
 }

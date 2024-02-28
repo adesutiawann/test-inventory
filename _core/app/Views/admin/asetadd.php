@@ -40,7 +40,7 @@
                 <div class="col-md-8">
                     Manufacture
                     <div class="input-group">
-                        <select class="form-select" id="inputGroupSelect04" aria-label="Example select with button addon">
+                        <select name="manufacture" class="form-select" id="inputGroupSelect04" aria-label="Example select with button addon">
                             <option selected="">Pilih Manufacture</option>
                             <?php foreach ($nama as $gr) : ?>
                                 <option value="<?= $gr->nama ?>"><?= $gr->nama ?></option>

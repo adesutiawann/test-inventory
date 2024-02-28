@@ -178,7 +178,7 @@
 
                                     <div class="col-2">
                                         Jumlah :
-                                        <input type="text" name="jumlah" class="form-control" required placeholder="000">
+                                        <input type="text" name="jumlah" class="form-control" required placeholder="000" value="<?= $no++ - 1 ?>">
 
                                     </div>
                                     <div class="col-5">

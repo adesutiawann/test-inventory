@@ -94,8 +94,8 @@ $con = new mysqli("localhost", "root", "", "db_inventory") or die(mysqli_error($
                             </td>
                             <td>
                                 <?php $non = 1; ?>
-                                <?php foreach ($value->aset as $g) : ?>
-                                    <?= esc($non++) . '. ' . esc($g->type) . '-<b>' . esc($g->serial) . '</b><br>'; ?>
+                                <?php foreach ($value->asetk as $g) : ?>
+                                    <?= esc($non++) . '. ' . esc($g->serial) . '</b><br>'; ?>
                                 <?php endforeach; ?>
                             </td>
 

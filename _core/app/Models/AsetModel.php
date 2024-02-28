@@ -75,6 +75,14 @@ class AsetModel extends Model
 
     return $this->update();
   }
+  public function insertno_sp($data)
+  {
+    // $tgl = '2';
+    $this->where('id_sk', '2');
+    $this->set($data);
+
+    return $this->update();
+  }
 
   function getId($id)
   {
