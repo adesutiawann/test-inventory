@@ -7,7 +7,7 @@ use \Hermawan\DataTables\DataTable;
 use App\Controllers\BaseController;
 use App\Models\AdminModel;
 use App\Models\AsetModel;
-use App\Models\SiswaModel;
+use App\Models\RiwayatModel;
 
 use App\Models\ManufactureModel;
 use App\Models\TypeModel;
@@ -19,15 +19,15 @@ use App\Models\RincianModel;
 use App\Models\StatusModel;
 use App\Models\StokModel;
 use App\Models\KondisiModel;
-//use App\Models\PelajaranModel;
+use App\Models\ImagesModel;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
-class laptop extends BaseController
+class Laptop extends BaseController
 {
     protected $admin;
-    protected $laptop;
-
+    protected $aset;
+    protected $riwayat;
     protected $manufacture;
     protected $type;
     protected $prosesor;
@@ -38,15 +38,13 @@ class laptop extends BaseController
     protected $status;
     protected $stok;
     protected $kondisi;
+    protected $images;
 
     public function __construct()
     {
         $this->admin     = new AdminModel();
-        $this->laptop = new AsetModel();
-        $this->siswa     = new SiswaModel();
-
-        // $this->pelajaran     = new PelajaranModel();
-
+        $this->aset = new AsetModel();
+        $this->riwayat = new RiwayatModel;
         $this->manufacture = new ManufactureModel;
         $this->type = new TypeModel;
         $this->prosesor = new ProsesorModel;
@@ -57,6 +55,7 @@ class laptop extends BaseController
         $this->status = new StatusModel;
         $this->stok = new StokModel;
         $this->kondisi = new KondisiModel;
+        $this->images = new ImagesModel;
     }
 
     public function index()
@@ -66,38 +65,143 @@ class laptop extends BaseController
         }
 
         $data = [
-            'title'   => 'Laptop',
+            'title'   => 'Persediaan / Laptop',
             'segment' => $this->request->uri->getSegments(),
             'admin'   => $this->admin->find(session()->get('id')),
 
             'aktiv'   => 'ALL',
-            'laptop' => $this->laptop->where('type', 'laptop')->orderBy('id', 'desc')->findAll(),
+            'aset' => $this->aset->where('type', 'laptop')->orderBy('id', 'desc')->findAll(),
 
-            // 'laptop' => $this->laptop->where('type', 'laptop')->where('kondisi', $id)->orderBy('id', 'desc')->findAll(),
+            // 'aset' => $this->aset->where('type', 'laptop')->where('kondisi', $id)->orderBy('id', 'desc')->findAll(),
 
-            'total_laptop' => $this->laptop->where('type', 'laptop')->countAllResults(),
-            'total_laptop_ok' => $this->laptop->where('type', 'laptop')->where('kondisi', 'OK')->countAllResults(),
-            'total_laptop_rusak' => $this->laptop->where('type', 'laptop')->where('kondisi', 'rusak')->countAllResults(),
-            'total_laptop_blanks' => $this->laptop->where('type', 'laptop')->where('kondisi', 'blanks')->countAllResults(),
+            'total_laptop' => $this->aset->where('type', 'laptop')->countAllResults(),
+            'total_laptop_ok' => $this->aset->where('type', 'laptop')->where('kondisi', 'OK')->countAllResults(),
+            'total_laptop_rusak' => $this->aset->where('type', 'laptop')->where('kondisi', 'rusak')->countAllResults(),
+            'total_laptop_blanks' => $this->aset->where('type', 'laptop')->where('kondisi', 'blanks')->countAllResults(),
 
         ];
 
         return view('admin/laptop', $data);
     }
+
+
+
+    public function cetakqrcode()
+    {
+        if (session()->get('logged_admin') !== true) {
+            return redirect()->to(base_url());
+        }
+
+        $cari = $this->request->getVar('cari');
+        $tglin = $this->request->getVar('tglin');
+        $tglout = $this->request->getVar('tglout');
+
+        // Inisialisasi Query Builder untuk data aset utama
+        $asetQuery = $this->aset->where('type', 'pc');
+
+        // Filter berdasarkan kriteria pencarian
+        if ($cari) {
+            $asetQuery->groupStart()
+                ->orWhere('serial', $cari)
+                ->orWhere('manufacture', $cari)
+                ->groupEnd();
+        }
+
+        // Filter berdasarkan rentang tanggal
+        if ($tglin && $tglout) {
+            $asetQuery->where('tgl_masuk>=', $tglin)
+                ->where('tgl_keluar <=', $tglout);
+        }
+
+        // Urutkan hasil query
+        $asetQuery->orderBy('id', 'desc');
+
+        // Data yang akan dikirim ke view
+        $data = [
+            'title'        => 'Print/QRcode',
+            'segment'      => $this->request->uri->getSegments(),
+            'admin'        => $this->admin->find(session()->get('id')),
+            'aktiv'        => 'ALL',
+            'aset'         => $asetQuery->findAll(),
+            'total_pc'     => $this->aset->where('type', 'pc')->countAllResults(),
+            'total_pc_ok'  => $this->getTotalByCondition('OK'),
+            'total_pc_rusak' => $this->getTotalByCondition('rusak'),
+            'total_pc_blanks' => $this->getTotalByCondition('blanks'),
+        ];
+
+        return view('admin/cetakqrcode', $data);
+    }
+
+    public function cetakpdf()
+    {
+        if (session()->get('logged_admin') !== true) {
+            return redirect()->to(base_url());
+        }
+
+        $cari = $this->request->getVar('cari');
+        $tglin = $this->request->getVar('tglin');
+        $tglout = $this->request->getVar('tglout');
+
+        // Inisialisasi Query Builder untuk data aset utama
+        $asetQuery = $this->aset->where('type', 'pc');
+
+        // Filter berdasarkan kriteria pencarian
+        if ($cari) {
+            $asetQuery->groupStart()
+                ->orWhere('serial', $cari)
+                ->orWhere('manufacture', $cari)
+                ->groupEnd();
+        }
+
+        // Filter berdasarkan rentang tanggal
+        if ($tglin && $tglout) {
+            $asetQuery->where('tgl_masuk>=', $tglin)
+                ->where('tgl_keluar <=', $tglout);
+        }
+
+        // Urutkan hasil query
+        $asetQuery->orderBy('id', 'desc');
+
+        // Data yang akan dikirim ke view
+        $data = [
+            'title'        => 'Print/QRcode',
+            'segment'      => $this->request->uri->getSegments(),
+            'admin'        => $this->admin->find(session()->get('id')),
+            'aktiv'        => 'ALL',
+            'aset'         => $asetQuery->findAll(),
+            'total_pc'     => $this->aset->where('type', 'pc')->countAllResults(),
+            'total_pc_ok'  => $this->getTotalByCondition('OK'),
+            'total_pc_rusak' => $this->getTotalByCondition('rusak'),
+            'total_pc_blanks' => $this->getTotalByCondition('blanks'),
+        ];
+        if (isset($_GET['excel'])) {
+            return view('admin/cetakexcel', $data);
+        } else {
+            return view('admin/cetakpdf', $data);
+        }
+    }
+
+    // Helper method to get total by condition
+    private function getTotalByCondition($condition)
+    {
+        return $this->aset->where('type', 'pc')->where('kondisi', $condition)->countAllResults();
+    }
+
+
     public function search($id)
     {
         $data = [
-            'title'   => 'Data Personal Computer',
+            'title'   => 'Data Laptop',
             'aktiv'   => $id,
             'segment' => $this->request->uri->getSegments(),
             'admin'   => $this->admin->find(session()->get('id')),
-            'laptop' => $this->laptop->where('type', 'laptop')->where('kondisi', $id)->orderBy('id', 'desc')->findAll(),
+            'aset' => $this->aset->where('type', 'pc')->where('kondisi', $id)->orderBy('id', 'desc')->findAll(),
 
-            'total_laptop' => $this->laptop->where('type', 'laptop')->countAllResults(),
-            'total_laptop_ok' => $this->laptop->where('type', 'laptop')->where('kondisi', 'OK')->countAllResults(),
-            'total_laptop_rusak' => $this->laptop->where('type', 'laptop')->where('kondisi', 'rusak')->countAllResults(),
-            'total_laptop_blanks' => $this->laptop->where('type', 'laptop')->where('kondisi', 'blanks')->countAllResults(),
-            //'laptop'    => $this->laptop->getId($id),
+            'total_pc' => $this->aset->where('type', 'pc')->countAllResults(),
+            'total_pc_ok' => $this->aset->where('type', 'pc')->where('kondisi', 'OK')->countAllResults(),
+            'total_pc_rusak' => $this->aset->where('type', 'pc')->where('kondisi', 'RUSAK')->countAllResults(),
+            'total_pc_blanks' => $this->aset->where('type', 'pc')->where('kondisi', 'BLANK')->countAllResults(),
+            //'aset'    => $this->aset->getId($id),
 
         ];
         return view('admin/laptop', $data);
@@ -110,11 +214,11 @@ class laptop extends BaseController
         }
 
         $data = [
-            'title'   => 'Add Laptop',
+            'title'   => 'Persediaan/Pc/Add',
             'segment' => $this->request->uri->getSegments(),
             'admin'   => $this->admin->find(session()->get('id')),
             'nama'    => $this->manufacture->orderBy('nama', 'asc')->findAll(),
-            'type' => $this->type->where('nama', 'laptop')->orderBy('nama', 'asc')->findAll(),
+            'type' => $this->type->where('nama', 'pc')->orderBy('nama', 'asc')->findAll(),
             'prosesor'    => $this->prosesor->orderBy('nama', 'asc')->findAll(),
             'generasi'    => $this->generasi->orderBy('nama', 'asc')->findAll(),
             'hdd'    => $this->hdd->orderBy('nama', 'asc')->findAll(),
@@ -126,19 +230,63 @@ class laptop extends BaseController
         ];
         return view('admin/laptopadd', $data);
     }
+    public function view($id)
+    {
+        // Check if the admin is logged in
+        if (!session()->get('logged_admin')) {
+            return redirect()->to(base_url());
+        }
+
+        // Find the asset by its serial number
+        $aset = $this->aset->where('serial', $id)->first();
+
+        // Redirect if the asset is not found
+        if (!$aset) {
+            session()->setFlashdata('error', 'Asset not found.');
+            return redirect()->to(base_url());
+        }
+
+        // Retrieve additional data
+        $manufacture = $aset->manufacture; // Assuming $aset is returned as an array
+
+        $data = [
+            'title' => 'Persediaan/Pc/Details',
+            'segment' => $this->request->uri->getSegments(),
+            'admin' => $this->admin->find(session()->get('id')),
+            'aset' => $aset,
+            'jumlahmanufaktur' => $this->aset->where('stock', 'Tersedia')
+                ->where('type', 'PC')
+                ->where('manufacture', $manufacture)
+                ->countAllResults(),
+            'images' => $this->images->where('serial', $id)->findAll(),
+            'riwayat' => $this->riwayat->where('serial', $id)->orderBy('id', 'desc')->findAll(),
+        ];
+
+        // Load the view with the data
+        return view('admin/view', $data);
+    }
+
+
+
     public function edit($id)
     {
         // $tgl= date("Y-m-d");
         if (session()->get('logged_admin') != true) {
             return redirect()->to(base_url());
         }
+        //$aset  = $this->aset->find($id);
+        //$serialx = $aset->serial;
+        $aset = $this->aset->where('serial', $id)->first();
         $data = [
-            'title'   => 'Edit Laptop',
+            'title'   => 'Persediaan/Pc/Edit',
             'edit'   => 'redy',
             'segment' => $this->request->uri->getSegments(),
             'admin'   => $this->admin->find(session()->get('id')),
             'nama'    => $this->manufacture->orderBy('nama', 'asc')->findAll(),
-            'type' => $this->type->where('nama', 'laptop')->orderBy('nama', 'asc')->findAll(),
+            'nama2'   => $this->aset->groupBy('manufacture')->findAll(),
+
+
+            'type' => $this->type->where('nama', 'pc')->orderBy('nama', 'asc')->findAll(),
             'prosesor'    => $this->prosesor->orderBy('nama', 'asc')->findAll(),
             'generasi'    => $this->generasi->orderBy('nama', 'asc')->findAll(),
             'hdd'    => $this->hdd->orderBy('nama', 'asc')->findAll(),
@@ -147,20 +295,27 @@ class laptop extends BaseController
             'status'    => $this->status->orderBy('nama', 'asc')->findAll(),
             'kondisi'    => $this->kondisi->orderBy('nama', 'asc')->findAll(),
             'stock'    => $this->stok->orderBy('nama', 'asc')->findAll(),
-            'laptop'    => $this->laptop->find($id),
+            // 'aset'    => $this->aset->where('serial', $id)->findAll(),
+            'aset'    => $aset,
+            'images' => $this->images->where('serial', $id)->findAll(),
+            'riwayat' => $this->riwayat->where('serial', $id)->orderBy('id', 'desc')->findAll(),
         ];
         return view('admin/laptopedit', $data);
     }
 
     public function save()
     {
+        //if (isset($_POST['Simpan'])) {
+
+
         // $tgl = date("Y-m-d");
         if ($this->request->getVar('id')) {
-
+            //$tgl = date("Y-m-d");
+            $idlink = $this->request->getVar('serial');
             $post = [
                 'id'       => $this->request->getVar('id'),
                 'manufacture'            => $this->request->getVar('manufacture'),
-                'type'            => $this->request->getVar('type'),
+                // 'type'            => $this->request->getVar('type'),
                 'prosesor'            => $this->request->getVar('prosesor'),
                 'generasi'            => $this->request->getVar('generasi'),
                 'hdd'            => $this->request->getVar('hdd'),
@@ -173,20 +328,69 @@ class laptop extends BaseController
                 'tgl_masuk'            => $this->request->getVar('masuk'),
                 'tgl_keluar'            => $this->request->getVar('keluar'),
                 'serial'            => $this->request->getVar('serial'),
+                'user'            => $this->request->getVar('user'),
+                'lokasi'            => $this->request->getVar('lokasi'),
             ];
 
-            if ($this->laptop->save($post)) {
+            $tgl = date("Y-m-d H:i:s");
+            // $admin = $this->Admin_model->find($this->session->userdata('id'));
+            $admin   = $this->admin->find(session()->get('id'));
+            $postx = [
+                //'id'       => $this->request->getVar('id'),      
+
+                'serial'            => $this->request->getVar('serial'),
+                'tgl'            => $tgl,
+                'ket'            => $this->request->getVar('ketupdate'),
+                'user'            => $this->request->getVar('user'),
+                'lokasi'            => $this->request->getVar('lokasi'),
+                //'teknisi'   => $this->admin->find(session()->get('id')),
+                'teknisi'   => $admin->nama,
+            ];
+
+            if ($this->aset->save($post) &&   $this->riwayat->save($postx)) {
+                //saveriwayat();
+                if (!empty($_FILES['foto']['name'][0])) {
+                    $tgl = date("Y-m-d");
+                    $files = $this->request->getFileMultiple('foto');
+                    $namaFiles = []; // Array untuk menyimpan nama-nama file
+
+                    foreach ($files as $file) {
+                        $nama = $file->getRandomName();
+                        $file->move('uploads/kegiatan/', $nama);
+
+                        // Simpan nama file ke dalam array
+                        $namaFiles[] = $nama;
+                    }
+
+                    // Persiapkan data untuk disimpan ke dalam database
+                    foreach ($namaFiles as $nama) {
+                        $postData = [
+                            'tgl' => $tgl,
+                            'serial' => $this->request->getVar('serial'),
+                            'image' => $nama,
+                        ];
+
+                        // Simpan data ke dalam database
+                        if ($this->images->insert($postData) === false) {
+                            session()->setFlashdata('error', 'Data gagal disimpan.');
+                            return redirect()->to(base_url('admin/laptop/edit/' . $idlink));
+                        }
+                    }
+
+                    session()->setFlashdata('success', 'Upload foto berhasil.');
+                    return redirect()->to(base_url('admin/laptop/edit/' . $idlink));
+                }
                 session()->setFlashdata('success', 'Data berhasil di edit.');
-                return redirect()->to(base_url('admin/laptop'));
+                return redirect()->to(base_url('admin/laptop/edit/' . $idlink));
             } else {
                 session()->setFlashdata('error', 'Data Gagal di simpan.');
-                return redirect()->to(base_url('admin/laptop'));
+                return redirect()->to(base_url('admin/laptop/edit/' . $idlink));
             }
         } else {
             // $tgl= date("Y-m-d");
             $post = [
                 'manufacture'            => $this->request->getVar('manufacture'),
-                'type'            => $this->request->getVar('type'),
+                'type'            => 'PC',
                 'prosesor'            => $this->request->getVar('prosesor'),
                 'generasi'            => $this->request->getVar('generasi'),
                 'hdd'            => $this->request->getVar('hdd'),
@@ -202,15 +406,157 @@ class laptop extends BaseController
 
             ];
 
-            if ($this->laptop->save($post)) {
-                session()->setFlashdata('success', '<strong>Berhasil !</strong> Data berhasil di simpan kedalam database.');
+            if ($this->aset->save($post)) {
+                session()->setFlashdata('success', 'Data berhasil di simpan.');
                 return redirect()->to(base_url('admin/laptop'));
             } else {
-                session()->setFlashdata('error', '<strong>Pringatan !</strong> Data sudah terdaftar kedalam database !');
+                session()->setFlashdata('error', 'Data Sudah Terdaftar !');
                 return redirect()->to(base_url('admin/laptop'));
             }
         }
     }
+
+
+    public function process()
+    {
+        // Validate the form data (add validation rules as needed)
+        $validation = \Config\Services::validation();
+        $validation->setRules([
+            'images' => 'uploaded[images]|max_size[images,10240]|mime_in[images,image/jpg,image/jpeg,image/png]'
+        ]);
+
+        if (!$validation->withRequest($this->request)->run()) {
+            return redirect()->to('/upload')->withInput()->with('errors', $validation->getErrors());
+        }
+
+        // Handle image upload
+        $uploadedFiles = $this->request->getFiles('images');
+
+        foreach ($uploadedFiles as $file) {
+            if ($file->isValid() && !$file->hasMoved()) {
+                $newName = $file->getRandomName();
+                $file->move('./assets/images/aset/', $newName);
+                // You can save the file name or other relevant information to the database here
+            }
+        }
+
+        session()->setFlashdata('success', 'Data berhasil di edit.');
+        return redirect()->to(base_url('admin/laptop'));
+    }
+
+    public function saveriwayat()
+    {
+        // $tgl = date("Y-m-d");
+        // if ($this->request->getVar('id')) {
+        $tgl = date("Y-m-d");
+
+        $post = [
+            //'id'       => $this->request->getVar('id'),      
+
+            'serial'            => $this->request->getVar('serial'),
+            'tgl'            => $tgl,
+            'ket'            => $this->request->getVar('ketupdate'),
+            'user'            => $this->request->getVar('user'),
+            'lokasi'            => $this->request->getVar('lokasi'),
+            //'teknisi'   => $this->admin->find(session()->get('id')),
+            'teknisi'   => 'Ade Sutiawan',
+        ];
+
+        if ($this->riwayat->save($post)) {
+
+            //  $this->riwayat->save($postr);
+            session()->setFlashdata('success', 'Data berhasil di edit.');
+            return redirect()->to(base_url('admin/laptop'));
+        } else {
+            session()->setFlashdata('error', 'Data Gagal di simpan.');
+            return redirect()->to(base_url('admin/laptop'));
+        }
+    }
+
+    public function saveedit()
+    {
+
+        $tgl = date("Y-m-d");
+
+        $post = [
+            'id'       => $this->request->getVar('id'),
+            'nama'            => $this->request->getVar('nama'),
+            'tgl'           => $tgl,
+            //'tahun_pelajaran' => $this->tp->tahun,
+        ];
+
+        if ($this->aset->save($post)) {
+            session()->setFlashdata('success', 'Data berhasil di edit.');
+            return redirect()->to(base_url('admin/laptop'));
+        } else {
+            session()->setFlashdata('error', 'Data Gagal di simpan.');
+            return redirect()->to(base_url('admin/laptop'));
+        }
+    }
+    public function delete($id)
+    {
+        if ($this->aset->delete($id)) {
+            session()->setFlashdata('hapussuccess', 'a');
+            return redirect()->to(base_url('admin/laptop'));
+        } else {
+            session()->setFlashdata('danger', 'Data berhasil di hapus.');
+            return redirect()->to(base_url('admin/laptop'));
+        }
+    }
+
+    public function deleteriwayat($id, $id2)
+    {
+        if ($this->riwayat->delete($id)) {
+            session()->setFlashdata('success', 'Data Riwayat berhasil di hapus.');
+            return redirect()->to(base_url('admin/laptop/edit/' . $id2));
+        } else {
+            session()->setFlashdata('danger', 'Data Gagal berhasil di hapus.');
+            return redirect()->to(base_url('admin/laptop/edit/' . $id2));
+        }
+    }
+
+    public function deleteimagesaa($id, $id2)
+    {
+        if ($this->images->delete($id)) {
+            session()->setFlashdata('success', 'Foto berhasil di hapus.');
+            return redirect()->to(base_url('admin/laptop/edit/' . $id));
+        } else {
+            session()->setFlashdata('danger', 'Data berhasil di hapus.');
+            return redirect()->to(base_url('admin/laptop/edit/' . $id));
+        }
+    }
+
+    public function deleteimages($id, $id2)
+    {
+        // Assuming you have a model method to get the image record based on $id
+        $img = $this->images->find($id);
+
+        if ($img) {
+            $filePath = 'uploads/kegiatan/' . $img->image; // Assuming the filename field stores the image name
+
+            // Check if the file exists and then try to delete it
+
+            if (unlink($filePath)) {
+                // Only delete the database record if the file deletion was successful
+                if ($this->images->delete($id)) {
+                    session()->setFlashdata('success', 'Foto dan data berhasil dihapus.');
+                } else {
+                    session()->setFlashdata('error', 'Gagal menghapus data.');
+                }
+            } else {
+                session()->setFlashdata('error', 'Gagal menghapus file.');
+            }
+        } else {
+            session()->setFlashdata('error', 'Data tidak ditemukan.');
+        }
+
+        return redirect()->to(base_url('admin/laptop/edit/' . $id2));
+    }
+
+
+
+
+
     public function import()
     {
         $file = $this->request->getFile('file_excel');
@@ -223,76 +569,48 @@ class laptop extends BaseController
             } else {
                 $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
             }
-
-            $spreadsheet = $reader->load($file);
-            $data = $spreadsheet->getActiveSheet()->toArray();
-
-            $importSuccess = true; // Assume success until proven otherwise
-
-            foreach ($data as $key => $value) {
+            $spreadsheed = $reader->load($file);
+            $contak = $spreadsheed->getActiveSheet()->toArray();
+            //print_r($contak);
+            foreach ($contak as $key => $value) {
                 if ($key == 0) {
                     continue;
                 }
+                $data = [
 
-                $rowData = [
                     'tgl_masuk' => $value[1],
                     'tgl_keluar' => $value[2],
-                    'manufacture'    => $value[3],
-                    'type'    => 'Laptop',
-                    'prosesor'    => $value[4],
-                    'generasi'    => $value[5],
-                    'serial' => $value[6],
+                    'serial' => $value[3],
+
+                    'manufacture'    => $value[4],
+                    'type'    => 'PC',
+                    'prosesor'    => $value[5],
+                    'generasi'    => $value[6],
+
                     'hdd' => $value[7],
                     'ram'    => $value[8],
                     'rincian'    => $value[9],
                     'status' => $value[10],
                     'stock'    => $value[11],
                     'kondisi' => $value[12],
-                    'ket' => $value[13],
+
+                    'user' => $value[13],
+                    'lokasi' => $value[14],
+                    'ket' => $value[15],
                 ];
-
-                // Check if the data already exists in the database
-                $existingData = $this->aset->where('serial', $rowData['serial'])->first();
-
-                if (!$existingData) {
-                    // Data doesn't exist, proceed with insertion
-                    $insertSuccess = $this->aset->insert($rowData);
-                } else {
-                    // Data already exists, set importSuccess to false
-                    $importSuccess = false;
-                    session()->setFlashdata('warning', '<strong>Peringatan!</strong> Data dengan nomor serial <b>' . $rowData['serial'] . '</b> sudah terdaftar.');
-                    break; // Exit the loop if any data already exists
-                }
+                $this->aset->insert($data);
             }
-
-            if ($importSuccess) {
-                session()->setFlashdata('success', '<strong>Berhasil !</strong>Data Berhasil di Import.');
-            } else {
-                session()->setFlashdata('danger', '<strong>Gagal !</strong>Data gagal di import.');
-            }
+            session()->setFlashdata('success', 'Data Berhasil di Import.');
+            return redirect()->to(base_url('admin/laptop'));
         } else {
             session()->setFlashdata('error', 'Format file tidak didukung; hanya format file <b>.xls</b> dan <b>.xlsx</b> yang diizinkan.');
-        }
-
-        return redirect()->to(base_url('admin/laptop'));
-    }
-
-
-    public function delete($id)
-    {
-        if ($this->laptop->delete($id)) {
-            session()->setFlashdata('success', '<strong>Berhasil !</strong> Data berhasil di hapus.');
-            return redirect()->to(base_url('admin/laptop'));
-        } else {
-            session()->setFlashdata('danger', '<strong>Gagal !</strong> Data gagal di hapus.');
             return redirect()->to(base_url('admin/laptop'));
         }
     }
-
     public function downloadExcel()
     {
-        // $file = 'public/Ex_laptop.csv';
-        $file = 'assets/Exel/Ex.Import file data laptop.xlsx';
+        // $file = 'public/Ex_pc.csv';
+        $file = 'assets/Exel/Ex.Import file data pc .xlsx';
 
         $response = $this->response
             ->download($file, null)
@@ -302,8 +620,35 @@ class laptop extends BaseController
     }
     public function export()
     {
+        if (session()->get('logged_admin') !== true) {
+            return redirect()->to(base_url());
+        }
 
-        $contacts = $this->laptop->where('type', 'laptop')->orderBy('id', 'desc')->findAll();
+        $cari = $this->request->getVar('cari');
+        $tglin = $this->request->getVar('tglin');
+        $tglout = $this->request->getVar('tglout');
+
+        // Inisialisasi Query Builder untuk data aset utama
+        $asetQuery = $this->aset->where('type', 'pc');
+
+        // Filter berdasarkan kriteria pencarian
+        if ($cari) {
+            $asetQuery->groupStart()
+                ->orWhere('serial', $cari)
+                ->orWhere('manufacture', $cari)
+                ->groupEnd();
+        }
+
+        // Filter berdasarkan rentang tanggal
+        if ($tglin && $tglout) {
+            $asetQuery->where('tgl_masuk>=', $tglin)
+                ->where('tgl_keluar <=', $tglout);
+        }
+
+        // Urutkan hasil query
+        $asetQuery->orderBy('id', 'desc');
+        $contacts = $asetQuery->findAll();
+        // $contacts = $this->aset->where('type', 'PC')->orderBy('id', 'desc')->findAll();
 
         $spreadsheet = new Spreadsheet();
 
@@ -383,7 +728,7 @@ class laptop extends BaseController
 
         $writer = new Xlsx($spreadsheet);
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-        header('Content-Disposition: attachment;filename=Export Data laptop.xlsx');
+        header('Content-Disposition: attachment;filename=Export Data PC.xlsx');
         header('Cache-Control: max-age=0');
         $writer->save('php://output');
 

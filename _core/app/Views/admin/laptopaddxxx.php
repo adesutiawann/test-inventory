@@ -14,7 +14,7 @@
         /* Tinggi textarea */
     }
 </style>
-<h2 class="app-page-title text-scondary fw-semibold"><?= $title ?></h2>
+<h1 class="app-page-title"><?= $title ?></h1>
 
 
 
@@ -31,7 +31,7 @@
             </div>
         <?php endif ?>
 
-        <form action="<?= base_url('admin/aset/save') ?>" method="POST">
+        <form action="<?= base_url('admin/laptop/save') ?>" method="POST">
             <div class="row">
                 <div class="col-md-12 mb-4">
                     <strong>Form Data :</strong>
@@ -39,22 +39,9 @@
                 <hr>
                 <div class="col-md-8">
                     Manufacture
-                    <div class="input-group">
-                        <select name="manufacture" class="form-select" id="inputGroupSelect04" aria-label="Example select with button addon">
-                            <option selected="">Pilih Manufacture</option>
-                            <?php foreach ($nama as $gr) : ?>
-                                <option value="<?= $gr->nama ?>"><?= $gr->nama ?></option>
-                            <?php endforeach ?>
-                        </select>
-                        <button class="btn btn-success" type="button" data-bs-toggle="modal" data-bs-target="#exampleModal"><i class="fa-regular fa-square-plus text-white"></i></i></button>
-                    </div>
-
-                </div>
-                <div class="col-md-4">
-                    Status
-                    <select name="status" class="form-select" required>
-                        <option value="">Pilih Status</option>
-                        <?php foreach ($status as $gr) : ?>
+                    <select name="manufacture" class="form-select" required>
+                        <option value="">Pilih Manufacture</option>
+                        <?php foreach ($nama as $gr) : ?>
                             <option value="<?= $gr->nama ?>"><?= $gr->nama ?></option>
                         <?php endforeach ?>
                     </select>
@@ -67,8 +54,7 @@
                         <?php endforeach ?>
                     </select>
                 </div>
-
-                <div class="col-md-2">
+                <div class="col-md-4">
                     Prosesor
                     <select name="prosesor" class="form-select" required>
                         <option value="">Pilih Prosesor</option>
@@ -77,7 +63,7 @@
                         <?php endforeach ?>
                     </select>
                 </div>
-                <div class="col-md-2">
+                <div class="col-md-4">
                     Generasi
                     <select name="generasi" class="form-select" required>
                         <option value="">Pilih Generasi</option>
@@ -86,7 +72,7 @@
                         <?php endforeach ?>
                     </select>
                 </div>
-                <div class="col-md-2">
+                <div class="col-md-4">
                     HDD/SSD
                     <select name="hdd" class="form-select" required>
                         <option value="">Pilih HDD/SSD</option>
@@ -95,7 +81,7 @@
                         <?php endforeach ?>
                     </select>
                 </div>
-                <div class="col-md-1">
+                <div class="col-md-2">
                     RAM
                     <select name="ram" class="form-select" required>
                         <option value="">Pilih RAM</option>
@@ -104,7 +90,7 @@
                         <?php endforeach ?>
                     </select>
                 </div>
-                <div class="col-md-1">
+                <div class="col-md-2">
                     Rincian
                     <select name="rincian" class="form-select" required>
                         <option value="">Pilih Rincian</option>
@@ -113,8 +99,16 @@
                         <?php endforeach ?>
                     </select>
                 </div>
-
-                <div class="col-md-2">
+                <div class="col-md-4">
+                    Status
+                    <select name="status" class="form-select" required>
+                        <option value="">Pilih Setatus</option>
+                        <?php foreach ($status as $gr) : ?>
+                            <option value="<?= $gr->nama ?>"><?= $gr->nama ?></option>
+                        <?php endforeach ?>
+                    </select>
+                </div>
+                <div class="col-md-4">
                     Stok
                     <select name="stock" class="form-select" required>
                         <option value="">Pilih Stock</option>
@@ -123,7 +117,7 @@
                         <?php endforeach ?>
                     </select>
                 </div>
-                <div class="col-md-2 mb-2">
+                <div class="col-md-4 mb-4">
                     Kondisi
                     <select name="kondisi" class="form-select" required>
                         <option value="">Pilih Kondisi</option>
@@ -133,7 +127,7 @@
                         <?php endforeach ?>
                     </select>
                 </div>
-
+                <hr>
                 <div class="col-md-4">
                     Serial
                     <input type="text" name="serial" oninput="convertToUppercase(this)" class="form-control" required>
@@ -149,15 +143,13 @@
 
                 </div>
                 <div class="col-md-12 mb-5">
-                    Deskripsi
+                    Keterangan
                     <div class="form-floating">
                         <textarea name="ket" id="sentenceCaseInput" class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px"></textarea>
                         <label for="floatingTextarea2">Comments</label>
                     </div>
 
                 </div>
-
-
 
 
                 <div class="col-md-12 text-right ">
@@ -170,33 +162,6 @@
     </div>
 </div>
 
-
-<!-- Button trigger modal -->
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-    Launch demo modal
-</button>
-
-<!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">New Manufacture</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <form action="<?= base_url('admin/manufacture/save') ?>" method="POST">
-
-                <div class="modal-body">
-                    <input type="text" name="nama" class="form-control" required placeholder="Dell Inspiration">
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Save changes</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
 <?= $this->endSection() ?>
 
 <?= $this->section('js') ?>
