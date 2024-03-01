@@ -31,7 +31,7 @@
             </div>
         <?php endif ?>
 
-        <form action="<?= base_url('admin/keyboard/save') ?>" method="POST">
+        <form action="<?= base_url('admin/mouse/save') ?>" method="POST">
             <div class="row">
                 <div class="col-md-12 mb-4">
                     <strong>Form Data Edit:</strong>

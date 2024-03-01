@@ -77,34 +77,34 @@ class Printer extends BaseController
 
             'aktiv'   => 'ALL',
             //'aset' => $this->aset->orderBy('id', 'desc')->findAll(),
-            'aset' => $this->aset->where('type', 'Printer')->orderBy('id', 'desc')->findAll(),
+            'aset' => $this->aset->where('type', 'printer')->orderBy('id', 'desc')->findAll(),
 
 
-            'total_mo' => $this->aset->where('type', 'Printer')->countAllResults(),
-            'total_mo_ok' => $this->aset->where('type', 'Printer')->where('kondisi', 'OK')->countAllResults(),
-            'total_mo_rusak' => $this->aset->where('type', 'Printer')->where('kondisi', 'RUSAK')->countAllResults(),
-            'total_mo_blanks' => $this->aset->where('type', 'Printer')->where('kondisi', 'BLANK')->countAllResults(),
+            'total_mo' => $this->aset->where('type', 'printer')->countAllResults(),
+            'total_mo_ok' => $this->aset->where('type', 'printer')->where('kondisi', 'OK')->countAllResults(),
+            'total_mo_rusak' => $this->aset->where('type', 'printer')->where('kondisi', 'rusak')->countAllResults(),
+            'total_mo_blanks' => $this->aset->where('type', 'printer')->where('kondisi', 'blanks')->countAllResults(),
         ];
 
-        return view('admin/Printer', $data);
+        return view('admin/printer', $data);
     }
     public function search($id)
     {
         $data = [
-            'title'   => 'Printer',
+            'title'   => 'printer',
             'aktiv'   => $id,
             'segment' => $this->request->uri->getSegments(),
             'admin'   => $this->admin->find(session()->get('id')),
-            'aset' => $this->aset->where('type', 'Printer')->where('kondisi', $id)->orderBy('id', 'desc')->findAll(),
+            'aset' => $this->aset->where('type', 'printer')->where('kondisi', $id)->orderBy('id', 'desc')->findAll(),
 
-            'total_ky' => $this->aset->where('type', 'Printer')->countAllResults(),
-            'total_ky_ok' => $this->aset->where('type', 'Printer')->where('kondisi', 'OK')->countAllResults(),
-            'total_ky_rusak' => $this->aset->where('type', 'Printer')->where('kondisi', 'RUSAK')->countAllResults(),
-            'total_ky_blanks' => $this->aset->where('type', 'Printer')->where('kondisi', 'BLANK')->countAllResults(),
+            'total_mo' => $this->aset->where('type', 'printer')->countAllResults(),
+            'total_mo_ok' => $this->aset->where('type', 'printer')->where('kondisi', 'OK')->countAllResults(),
+            'total_mo_rusak' => $this->aset->where('type', 'printer')->where('kondisi', 'rusak')->countAllResults(),
+            'total_mo_blanks' => $this->aset->where('type', 'printer')->where('kondisi', 'blanks')->countAllResults(),
 
 
         ];
-        return view('admin/Printer', $data);
+        return view('admin/printer', $data);
     }
 
     public function add()
@@ -114,11 +114,12 @@ class Printer extends BaseController
         }
 
         $data = [
-            'title'   => 'Add Printer',
+            'title'   => 'Add printer',
             'segment' => $this->request->uri->getSegments(),
             'admin'   => $this->admin->find(session()->get('id')),
             'nama'    => $this->manufacture->orderBy('nama', 'asc')->findAll(),
-            'type' => $this->type->where('nama', 'Printer')->orderBy('nama', 'asc')->findAll(),
+            // 'type' => $this->type->where('nama', 'printer')->orderBy('nama', 'asc')->findAll(),
+            'type' => $this->type->orderBy('nama', 'asc')->findAll(),
 
             'status'    => $this->status->orderBy('nama', 'asc')->findAll(),
             'kondisi'    => $this->kondisi->orderBy('nama', 'asc')->findAll(),
@@ -126,7 +127,7 @@ class Printer extends BaseController
 
             'port'    => $this->port->orderBy('port', 'asc')->findAll(),
         ];
-        return view('admin/Printeradd', $data);
+        return view('admin/printeradd', $data);
     }
     public function edit($id)
     {
@@ -135,13 +136,13 @@ class Printer extends BaseController
             return redirect()->to(base_url());
         }
         $data = [
-            'title'   => 'Edit Printer',
+            'title'   => 'Edit printer',
             'edit'   => 'redy',
             'segment' => $this->request->uri->getSegments(),
             'admin'   => $this->admin->find(session()->get('id')),
 
             'nama'    => $this->manufacture->orderBy('nama', 'asc')->findAll(),
-            'type' => $this->type->where('nama', 'Printer')->orderBy('nama', 'asc')->findAll(),
+            'port' => $this->type->orderBy('nama', 'asc')->findAll(),
 
 
             'status'    => $this->status->orderBy('nama', 'asc')->findAll(),
@@ -149,7 +150,7 @@ class Printer extends BaseController
             'stock'    => $this->stok->orderBy('nama', 'asc')->findAll(),
             'aset'    => $this->aset->find($id),
         ];
-        return view('admin/Printeredit', $data);
+        return view('admin/printeredit', $data);
     }
 
     public function save()
@@ -161,6 +162,8 @@ class Printer extends BaseController
                 'id'       => $this->request->getVar('id'),
                 'manufacture'            => $this->request->getVar('manufacture'),
                 'type'            => 'Printer',
+                'port' => $this->request->getVar('type'),
+
                 'status'            => $this->request->getVar('status'),
                 'stock'            => $this->request->getVar('stock'),
                 'kondisi'            => $this->request->getVar('kondisi'),
@@ -171,17 +174,18 @@ class Printer extends BaseController
             ];
 
             if ($this->aset->save($post)) {
-                session()->setFlashdata('success', 'Data berhasil di edit.');
-                return redirect()->to(base_url('admin/Printer'));
+                session()->setFlashdata('success', '<strong>Berhasil !</strong> Data berhasil di edit.');
+                return redirect()->to(base_url('admin/printer'));
             } else {
-                session()->setFlashdata('error', 'Data Gagal di simpan.');
-                return redirect()->to(base_url('admin/Printer'));
+                session()->setFlashdata('error', '<strong>Gagal !</strong> Data Gagal di edit.');
+                return redirect()->to(base_url('admin/printer'));
             }
         } else {
             // $tgl= date("Y-m-d");
             $post = [
                 'manufacture'            => $this->request->getVar('manufacture'),
                 'type'            => 'Printer',
+                'port'            => $this->request->getVar('type'),
 
                 'status'            => $this->request->getVar('status'),
                 'stock'            => $this->request->getVar('stock'),
@@ -193,15 +197,27 @@ class Printer extends BaseController
 
             ];
 
-            if ($this->aset->save($post)) {
-                session()->setFlashdata('success', 'Data berhasil di simpan.');
-                return redirect()->to(base_url('admin/Printer'));
+            $existingData = $this->aset->where('serial', $post['serial'])->first();
+
+            if (!$existingData) {
+                // Data doesn't exist, proceed with insertion
+                if ($this->aset->save($post)) {
+                    session()->setFlashdata('success', '<strong>Berhasil !</strong> Data berhasil di simpan kedalam database.');
+                    return redirect()->to(base_url('admin/printer'));
+                } else {
+                    session()->setFlashdata('error', '<strong>Pringatan !</strong> Data sudah terdaftar kedalam database !');
+                    return redirect()->to(base_url('admin/printer'));
+                }
             } else {
-                session()->setFlashdata('error', 'Data Sudah Terdaftar !');
-                return redirect()->to(base_url('admin/Printer'));
+                // Data already exists, set importSuccess to false
+                // $importSuccess = false;
+                session()->setFlashdata('warning', '<strong>Peringatan!</strong> Data dengan nomor serial <b>' . $post['serial'] . '</b> sudah terdaftar.');
+                return redirect()->to(base_url('admin/printer')); //break; // Exit the loop if any data already exists
             }
         }
     }
+
+
     public function import()
     {
         $file = $this->request->getFile('file_excel');
@@ -214,138 +230,75 @@ class Printer extends BaseController
             } else {
                 $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
             }
+
             $spreadsheet = $reader->load($file);
             $data = $spreadsheet->getActiveSheet()->toArray();
 
-            // Define an array to store encountered serial numbers
-            $existingSerials = [];
+            $importSuccess = true; // Assume success until proven otherwise
 
             foreach ($data as $key => $value) {
                 if ($key == 0) {
                     continue;
                 }
 
-                $serial = $value[4]; // Assuming serial is in the 4th column
-
-                // Check if the serial already exists
-                if (in_array($serial, $existingSerials)) {
-                    // Log an error (You can customize this part based on your logging mechanism)
-                    //log_message('error', 'Duplicate serial number found: ' . $serial);
-                    //continue; // Skip this record and move to the next one
-                    session()->setFlashdata('error', 'Duplicate serial number found: ' . $serial);
-                    return redirect()->to(base_url('admin/Printer'));
-                }
-
-                // Add the serial to the existingSerials array
-                $existingSerials[] = $serial;
-
-                // Continue with your data insertion
-                $insertData = [
+                $rowData = [
                     'tgl_masuk' => $value[1],
                     'tgl_keluar' => $value[2],
-                    'manufacture'    => $value[3],
-                    'type'    => 'Printer',
-                    'serial' => $value[4],
-                    'status' => $value[5],
-                    'stock'    => $value[6],
-                    'kondisi' => $value[7],
-                    'ket' => $value[8],
+                    'manufacture' => $value[3],
+                    'type' => 'Printer',
+                    'port' => $value[4],
+                    'serial' => $value[5],
+                    'status' => $value[6],
+                    'stock' => $value[7],
+                    'kondisi' => $value[8],
+                    'ket' => $value[9],
                 ];
 
-                $this->checkAndInsert($insertData); // Create a separate function for better organization
+                // Check if the data already exists in the database
+                $existingData = $this->aset->where('serial', $rowData['serial'])->first();
+
+                if (!$existingData) {
+                    // Data doesn't exist, proceed with insertion
+                    $insertSuccess = $this->aset->insert($rowData);
+                } else {
+                    // Data already exists, set importSuccess to false
+                    $importSuccess = false;
+                    session()->setFlashdata('warning', '<strong>Peringatan!</strong> Data dengan nomor serial <b>' . $rowData['serial'] . '</b> sudah terdaftar.');
+                    break; // Exit the loop if any data already exists
+                }
             }
 
-            session()->setFlashdata('success', 'Data Berhasil di Import.');
-            return redirect()->to(base_url('admin/Printer'));
-        } else {
-            session()->setFlashdata('error', 'Format file tidak didukung; hanya format file <b>.xls</b> dan <b>.xlsx</b> yang diizinkan.');
-            return redirect()->to(base_url('admin/Printer'));
-        }
-    }
-
-    // Function to check for duplicate serial and insert data
-    private function checkAndInsert($data)
-    {
-        $serial = $data['serial'];
-
-        // Check if the serial already exists in the database
-        if ($this->aset->where('serial', $serial)->first()) {
-            // Log an error or handle the duplicate serial case (You can customize this part)
-            log_message('error', 'Duplicate serial number found in database: ' . $serial);
-            return; // Skip the insertion for this record
-        }
-
-        // Insert the data into the database
-        $this->aset->insert($data);
-    }
-
-    public function import11111()
-    {
-        $file = $this->request->getFile('file_excel');
-        $extension = $file->getClientExtension();
-
-        if ($extension == 'xlsx' || $extension == 'xls') {
-
-            if ($extension == 'xls') {
-                $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xls();
+            if ($importSuccess) {
+                session()->setFlashdata('success', '<strong>Berhasil !</strong>Data Berhasil di Import.');
             } else {
-                $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
+                session()->setFlashdata('danger', '<strong>Gagal !</strong>Data gagal di import.');
             }
-            $spreadsheed = $reader->load($file);
-            $contak = $spreadsheed->getActiveSheet()->toArray();
-            //print_r($contak);
-            foreach ($contak as $key => $value) {
-                if ($key == 0) {
-                    continue;
-                }
-                $data = [
-
-                    'tgl_masuk' => $value[1],
-                    'tgl_keluar' => $value[2],
-                    'manufacture'    => $value[3],
-                    'type'    => 'Printer',
-                    'serial' => $value[4],
-                    'status' => $value[5],
-                    'stock'    => $value[6],
-                    'kondisi' => $value[7],
-                    'ket' => $value[8],
-                ];
-                $this->aset->insert($data);
-            }
-            session()->setFlashdata('success', 'Data Berhasil di Import.');
-            return redirect()->to(base_url('admin/Printer'));
         } else {
             session()->setFlashdata('error', 'Format file tidak didukung; hanya format file <b>.xls</b> dan <b>.xlsx</b> yang diizinkan.');
-            return redirect()->to(base_url('admin/Printer'));
         }
+
+        return redirect()->to(base_url('admin/printer'));
     }
+
+
 
     public function delete($id)
     {
         if ($this->aset->delete($id)) {
-            session()->setFlashdata('success', 'Data berhasil di hapus.');
-            return redirect()->to(base_url('admin/Printer'));
+            session()->setFlashdata('warning', '<strong>Berhasil !</strong> Data berhasil terhapus.');
+
+            return redirect()->to(base_url('admin/printer'));
         } else {
-            session()->setFlashdata('danger', 'Data berhasil di hapus.');
-            return redirect()->to(base_url('admin/Printer'));
-        }
-    }
-    public function deleteall($id)
-    {
-        // if ($this->aset->deleteByType($id)) {
-        if ($this->aset->where('type', $id)->delete()) {
-            session()->setFlashdata('success', 'Data berhasil di hapus.');
-            return redirect()->to(base_url('admin/Printer'));
-        } else {
-            session()->setFlashdata('danger', 'Data berhasil di hapus.');
-            return redirect()->to(base_url('admin/Printer'));
+            session()->setFlashdata('danger', '<strong>Gagal !</strong> Data gagal di hapus !');
+
+            return redirect()->to(base_url('admin/printer'));
         }
     }
 
     public function downloadExcel()
     {
         // $file = 'public/Ex_pc.csv';
-        $file = 'assets/Exel/Ex.Import file data Printer.xlsx';
+        $file = 'assets/Exel/Ex.Import file data printer.xlsx';
 
         $response = $this->response
             ->download($file, null)
@@ -356,7 +309,7 @@ class Printer extends BaseController
     public function export()
     {
 
-        $contacts =  $this->aset->where('type', 'Printer')->orderBy('id', 'desc')->findAll();
+        $contacts =  $this->aset->where('type', 'printer')->orderBy('id', 'desc')->findAll();
 
 
         $spreadsheet = new Spreadsheet();
@@ -367,13 +320,12 @@ class Printer extends BaseController
         $sheet->setCellValue('B1', 'Tgl Masuk');
         $sheet->setCellValue('C1', 'Tgl Keluar');
         $sheet->setCellValue('D1', 'Manufacture');
-
-        $sheet->setCellValue('E1', 'Serial');
-
-        $sheet->setCellValue('F1', 'Status');
-        $sheet->setCellValue('G1', 'Stock');
-        $sheet->setCellValue('H1', 'Kondisi');
-        $sheet->setCellValue('I1', 'Keterangan');
+        $sheet->setCellValue('E1', 'Type');
+        $sheet->setCellValue('F1', 'Serial');
+        $sheet->setCellValue('G1', 'Status');
+        $sheet->setCellValue('H1', 'Stock');
+        $sheet->setCellValue('I1', 'Kondisi');
+        $sheet->setCellValue('J1', 'Keterangan');
 
         $column = 2; // kolom start
 
@@ -382,18 +334,18 @@ class Printer extends BaseController
             $sheet->setCellValue('B' . $column, $value->tgl_masuk);
             $sheet->setCellValue('C' . $column, $value->tgl_keluar);
             $sheet->setCellValue('D' . $column, $value->manufacture);
+            $sheet->setCellValue('E' . $column, $value->port);
+            $sheet->setCellValue('F' . $column, $value->serial);
 
-            $sheet->setCellValue('E' . $column, $value->serial);
-
-            $sheet->setCellValue('F' . $column, $value->status);
-            $sheet->setCellValue('G' . $column, $value->stock);
-            $sheet->setCellValue('H' . $column, $value->kondisi);
-            $sheet->setCellValue('I' . $column, $value->ket);
+            $sheet->setCellValue('G' . $column, $value->status);
+            $sheet->setCellValue('H' . $column, $value->stock);
+            $sheet->setCellValue('I' . $column, $value->kondisi);
+            $sheet->setCellValue('J' . $column, $value->ket);
             $column++;
         }
 
-        $sheet->getStyle('A1:I1')->getFont()->setBold(true);
-        $sheet->getStyle('A1:I1')->getFill()
+        $sheet->getStyle('A1:J1')->getFont()->setBold(true);
+        $sheet->getStyle('A1:J1')->getFill()
             ->setFillType(\PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID)
             ->getStartColor()->setARGB('FFFFFF00');
         $styleArray = [
@@ -422,6 +374,7 @@ class Printer extends BaseController
         $sheet->getColumnDimension('G')->setAutoSize(true);
         $sheet->getColumnDimension('H')->setAutoSize(true);
         $sheet->getColumnDimension('I')->setAutoSize(true);
+        $sheet->getColumnDimension('J')->setAutoSize(true);
 
         $writer = new Xlsx($spreadsheet);
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');

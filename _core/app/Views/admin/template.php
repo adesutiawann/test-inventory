@@ -266,7 +266,7 @@
 
 
                             <!--//nav-link-->
-                            <div id="submenu-1" class="collapse submenu submenu-1 <?= ($menu == 'aset' || $menu == 'kabel' || $menu == 'monitor' || $menu == 'keyboard' || $menu == 'mouse' || $menu == 'laptop' || $menu == 'printer') ? 'show' : '' ?>"" data-bs-parent=" #menu-accordion">
+                            <div id="submenu-1" class="collapse submenu submenu-1 <?= ($menu == 'aset' || $menu == 'kabel' || $menu == 'monitor' || $menu == 'keyboard' || $menu == 'mouse' || $menu == 'leptop' || $menu == 'printer') ? 'show' : '' ?>"" data-bs-parent=" #menu-accordion">
                                 <ul class="submenu-list list-unstyled">
 
 
@@ -308,7 +308,7 @@
                                     </li>
                                     <li class="submenu-item">
                                         <!--//Bootstrap Icons: https://icons.getbootstrap.com/ -->
-                                        <a class="submenu-link <?= ($menu == 'laptop') ? 'active' : '' ?>"" href=" <?= base_url('admin/laptop') ?>">
+                                        <a class="submenu-link <?= ($menu == 'leptop') ? 'active' : '' ?>"" href=" <?= base_url('admin/leptop') ?>">
 
                                             <span class="nav-link-text">Laptop</span>
                                         </a>

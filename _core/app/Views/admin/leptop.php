@@ -34,7 +34,7 @@ $menu = $aktiv;
             <div class="col  ">
                 <div class="row ">
                     <div class="col  ">
-                        <a href="<?= base_url('admin/aset/add') ?>" class="btn app-btn-primary text-white ml-5 ">
+                        <a href="<?= base_url('admin/leptop/add') ?>" class="btn app-btn-primary text-white ml-5 ">
                             <i class="fas fa-plus"></i> New
                         </a>
                         <button type="button" class="btn btn-primary text-white" data-bs-toggle="modal" data-bs-target="#exampleModal">
@@ -52,6 +52,9 @@ $menu = $aktiv;
                         <button type="button" class="btn btn-success text-white" data-bs-toggle="modal" data-bs-target="#excel">
                             <i class="fa-solid fa-file-excel"></i>
                         </button>
+                        <a href="<?= base_url("admin/leptop/deleteall/Leptop") ?>" class="btn btn-sm btn-danger text-white hapusDataBtn" data-id="Semua leptop">
+                            <i class="fa-solid fa-trash-can"></i>
+                        </a>
                     </div>
                 </div>
             </div>
@@ -65,10 +68,10 @@ $menu = $aktiv;
 
 
 <nav id="orders-table-tab" class="orders-table-tab app-nav-tabs nav shadow-sm d-flex mb-1" role="tablist">
-    <a class="flex-fill text-center nav-link <?= ($menu == 'ALL') ? 'active' : '' ?>" href="<?= base_url('admin/aset') ?>" aria-controls="orders-all" aria-selected="false">All <?= $total_laptop ?></a>
-    <a class="flex-fill text-center nav-link <?= ($menu == 'OK') ? 'active' : '' ?>" href="<?= base_url('admin/aset/search/OK') ?>" aria-controls="orders-paid" aria-selected="false">Oke <?= $total_laptop_ok ?></a>
-    <a class="flex-fill text-center nav-link <?= ($menu == 'RUSAK') ? 'active' : '' ?>" href="<?= base_url('admin/aset/search/RUSAK') ?>" role="tab" aria-controls="orders-pending" aria-selected="true">Rusak <?= $total_laptop_rusak ?></a>
-    <a class="flex-fill text-center nav-link <?= ($menu == 'BLANK') ? 'active' : '' ?>" href="<?= base_url('admin/aset/search/BLANK') ?>" role="tab" aria-controls="orders-cancelled" aria-selected="true">Blank <?= $total_laptop_blanks ?></a>
+    <a class="flex-fill text-center nav-link <?= ($menu == 'ALL') ? 'active' : '' ?>" href="<?= base_url('admin/leptop') ?>" aria-controls="orders-all" aria-selected="false">All <?= $total_leptop ?></a>
+    <a class="flex-fill text-center nav-link <?= ($menu == 'OK') ? 'active' : '' ?>" href="<?= base_url('admin/leptop/search/OK') ?>" aria-controls="orders-paid" aria-selected="false">Oke <?= $total_leptop_ok ?></a>
+    <a class="flex-fill text-center nav-link <?= ($menu == 'RUSAK') ? 'active' : '' ?>" href="<?= base_url('admin/leptop/search/RUSAK') ?>" role="tab" aria-controls="orders-pending" aria-selected="true">Rusak <?= $total_leptop_rusak ?></a>
+    <a class="flex-fill text-center nav-link <?= ($menu == 'BLANK') ? 'active' : '' ?>" href="<?= base_url('admin/leptop/search/BLANK') ?>" role="tab" aria-controls="orders-cancelled" aria-selected="true">Blank <?= $total_leptop_blanks ?></a>
 </nav>
 
 
@@ -154,15 +157,15 @@ $menu = $aktiv;
                                     <i class="fa-solid fa-right-from-bracket"></i>
                                 </a>
 
-                                <a href="<?= base_url('admin/aset/view/' . $value->serial) ?>" <?= ($admin->level == '3') ? 'hidden' : '' ?> class="btn btn-sm btn-primary text-white mr-2">
+                                <a href="<?= base_url('admin/leptop/view/' . $value->serial) ?>" <?= ($admin->level == '3') ? 'hidden' : '' ?> class="btn btn-sm btn-primary text-white mr-2">
                                     <i class="fa-solid fa-circle-info"></i>
                                 </a>
 
-                                <a href="<?= base_url('admin/aset/edit/' . $value->serial) ?>" class="btn btn-sm btn-info text-white ">
+                                <a href="<?= base_url('admin/leptop/edit/' . $value->serial) ?>" class="btn btn-sm btn-info text-white ">
                                     <i class="fa-solid fa-pen-to-square"></i>
                                 </a>
 
-                                <a href="<?= base_url("admin/aset/delete/{$value->id}") ?>" class="btn btn-sm btn-danger text-white hapusDataBtn" data-id="<?php echo $value->serial; ?>">
+                                <a href="<?= base_url("admin/leptop/delete/{$value->id}") ?>" class="btn btn-sm btn-danger text-white hapusDataBtn" data-id="<?php echo $value->serial; ?>">
                                     <i class="fa-solid fa-trash-can"></i>
                                 </a>
 
@@ -182,7 +185,7 @@ $menu = $aktiv;
                 function generateQR(text, imgBox, qrImage) {
                     if (text.length > 0) {
                         // Generate QR code for each row
-                        let qrCodeUrl = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=<?= base_url() ?>/admin/aset/view/" + text;
+                        let qrCodeUrl = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=<?= base_url() ?>/admin/leptop/view/" + text;
                         qrImage.src = qrCodeUrl;
                         imgBox.classList.add("show-img");
                     } else {
@@ -208,18 +211,18 @@ $menu = $aktiv;
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel"><i class="fa-solid fa-file-import"></i> Import </h1>
+                <h1 class="modal-title fs-5" id="exampleModalLabel"><i class="fa-solid fa-file-import"></i> Import l </h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form class="row" action="<?= base_url('admin/aset/import') ?>" method="post" enctype="multipart/form-data">
+                <form class="row" action="<?= base_url('admin/leptop/import') ?>" method="post" enctype="multipart/form-data">
 
                     <div class="col-md-11 col-sm-6 col-xs-10 mb-2">
                         <input type="file" class="form-control" name="file_excel" required>
 
                     </div>
                     <div class="col-md-1 col-sm-3 text-end mb-2 ">
-                        <a href="<?= base_url('admin/aset/downloadExcel') ?>" class="text-info">
+                        <a href="<?= base_url('admin/leptop/downloadExcel') ?>" class="text-info">
                             <i class="fa-solid fa-file-circle-question"></i>
                         </a>
                     </div>
@@ -244,7 +247,7 @@ $menu = $aktiv;
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form class="row" action="<?= base_url('admin/aset/cetakqrcode') ?>" target="_blank" method="post" enctype="multipart/form-data">
+                <form class="row" action="<?= base_url('admin/leptop/cetakqrcode') ?>" target="_blank" method="post" enctype="multipart/form-data">
 
                     <div class="col-md-12 col-sm-12 col-xs-10 mb-2">
                         Filter
@@ -281,7 +284,7 @@ $menu = $aktiv;
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form class="row" action="<?= base_url('admin/aset/cetakpdf') ?>" target="_blank" method="post" enctype="multipart/form-data">
+                <form class="row" action="<?= base_url('admin/leptop/cetakpdf') ?>" target="_blank" method="post" enctype="multipart/form-data">
 
                     <div class="col-md-12 col-sm-12 col-xs-10 mb-2">
                         Filter
@@ -318,7 +321,7 @@ $menu = $aktiv;
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form class="row" action="<?= base_url('admin/aset/export') ?>" method="post" enctype="multipart/form-data">
+                <form class="row" action="<?= base_url('admin/leptop/export') ?>" method="post" enctype="multipart/form-data">
 
                     <div class="col-md-12 col-sm-12 col-xs-10 mb-2">
                         Filter

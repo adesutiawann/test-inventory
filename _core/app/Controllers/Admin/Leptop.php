@@ -23,7 +23,7 @@ use App\Models\ImagesModel;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
-class Laptop extends BaseController
+class leptop extends BaseController
 {
     protected $admin;
     protected $aset;
@@ -65,23 +65,23 @@ class Laptop extends BaseController
         }
 
         $data = [
-            'title'   => 'Persediaan / Laptop',
+            'title'   => 'Persediaan / leptop',
             'segment' => $this->request->uri->getSegments(),
             'admin'   => $this->admin->find(session()->get('id')),
 
             'aktiv'   => 'ALL',
-            'aset' => $this->aset->where('type', 'laptop')->orderBy('id', 'desc')->findAll(),
+            'aset' => $this->aset->where('type', 'leptop')->orderBy('id', 'desc')->findAll(),
 
-            // 'aset' => $this->aset->where('type', 'laptop')->where('kondisi', $id)->orderBy('id', 'desc')->findAll(),
+            // 'aset' => $this->aset->where('type', 'leptop')->where('kondisi', $id)->orderBy('id', 'desc')->findAll(),
 
-            'total_laptop' => $this->aset->where('type', 'laptop')->countAllResults(),
-            'total_laptop_ok' => $this->aset->where('type', 'laptop')->where('kondisi', 'OK')->countAllResults(),
-            'total_laptop_rusak' => $this->aset->where('type', 'laptop')->where('kondisi', 'rusak')->countAllResults(),
-            'total_laptop_blanks' => $this->aset->where('type', 'laptop')->where('kondisi', 'blanks')->countAllResults(),
+            'total_leptop' => $this->aset->where('type', 'leptop')->countAllResults(),
+            'total_leptop_ok' => $this->aset->where('type', 'leptop')->where('kondisi', 'OK')->countAllResults(),
+            'total_leptop_rusak' => $this->aset->where('type', 'leptop')->where('kondisi', 'rusak')->countAllResults(),
+            'total_leptop_blanks' => $this->aset->where('type', 'leptop')->where('kondisi', 'blanks')->countAllResults(),
 
         ];
 
-        return view('admin/laptop', $data);
+        return view('admin/leptop', $data);
     }
 
 
@@ -191,20 +191,20 @@ class Laptop extends BaseController
     public function search($id)
     {
         $data = [
-            'title'   => 'Data Laptop',
+            'title'   => 'Data leptop',
             'aktiv'   => $id,
             'segment' => $this->request->uri->getSegments(),
             'admin'   => $this->admin->find(session()->get('id')),
-            'aset' => $this->aset->where('type', 'pc')->where('kondisi', $id)->orderBy('id', 'desc')->findAll(),
+            'aset' => $this->aset->where('type', 'leptop')->where('kondisi', $id)->orderBy('id', 'desc')->findAll(),
 
-            'total_pc' => $this->aset->where('type', 'pc')->countAllResults(),
-            'total_pc_ok' => $this->aset->where('type', 'pc')->where('kondisi', 'OK')->countAllResults(),
-            'total_pc_rusak' => $this->aset->where('type', 'pc')->where('kondisi', 'RUSAK')->countAllResults(),
-            'total_pc_blanks' => $this->aset->where('type', 'pc')->where('kondisi', 'BLANK')->countAllResults(),
+            'total_leptop' => $this->aset->where('type', 'leptop')->countAllResults(),
+            'total_leptop_ok' => $this->aset->where('type', 'leptop')->where('kondisi', 'OK')->countAllResults(),
+            'total_leptop_rusak' => $this->aset->where('type', 'leptop')->where('kondisi', 'RUSAK')->countAllResults(),
+            'total_leptop_blanks' => $this->aset->where('type', 'leptop')->where('kondisi', 'BLANK')->countAllResults(),
             //'aset'    => $this->aset->getId($id),
 
         ];
-        return view('admin/laptop', $data);
+        return view('admin/leptop', $data);
     }
 
     public function add()
@@ -228,7 +228,7 @@ class Laptop extends BaseController
             'kondisi'    => $this->kondisi->orderBy('nama', 'asc')->findAll(),
             'stock'    => $this->stok->orderBy('nama', 'asc')->findAll(),
         ];
-        return view('admin/laptopadd', $data);
+        return view('admin/leptopadd', $data);
     }
     public function view($id)
     {
@@ -300,7 +300,7 @@ class Laptop extends BaseController
             'images' => $this->images->where('serial', $id)->findAll(),
             'riwayat' => $this->riwayat->where('serial', $id)->orderBy('id', 'desc')->findAll(),
         ];
-        return view('admin/laptopedit', $data);
+        return view('admin/leptopedit', $data);
     }
 
     public function save()
@@ -373,18 +373,18 @@ class Laptop extends BaseController
                         // Simpan data ke dalam database
                         if ($this->images->insert($postData) === false) {
                             session()->setFlashdata('error', 'Data gagal disimpan.');
-                            return redirect()->to(base_url('admin/laptop/edit/' . $idlink));
+                            return redirect()->to(base_url('admin/leptop/edit/' . $idlink));
                         }
                     }
 
                     session()->setFlashdata('success', 'Upload foto berhasil.');
-                    return redirect()->to(base_url('admin/laptop/edit/' . $idlink));
+                    return redirect()->to(base_url('admin/leptop/edit/' . $idlink));
                 }
                 session()->setFlashdata('success', 'Data berhasil di edit.');
-                return redirect()->to(base_url('admin/laptop/edit/' . $idlink));
+                return redirect()->to(base_url('admin/leptop/edit/' . $idlink));
             } else {
                 session()->setFlashdata('error', 'Data Gagal di simpan.');
-                return redirect()->to(base_url('admin/laptop/edit/' . $idlink));
+                return redirect()->to(base_url('admin/leptop/edit/' . $idlink));
             }
         } else {
             // $tgl= date("Y-m-d");
@@ -408,10 +408,10 @@ class Laptop extends BaseController
 
             if ($this->aset->save($post)) {
                 session()->setFlashdata('success', 'Data berhasil di simpan.');
-                return redirect()->to(base_url('admin/laptop'));
+                return redirect()->to(base_url('admin/leptop'));
             } else {
                 session()->setFlashdata('error', 'Data Sudah Terdaftar !');
-                return redirect()->to(base_url('admin/laptop'));
+                return redirect()->to(base_url('admin/leptop'));
             }
         }
     }
@@ -441,7 +441,7 @@ class Laptop extends BaseController
         }
 
         session()->setFlashdata('success', 'Data berhasil di edit.');
-        return redirect()->to(base_url('admin/laptop'));
+        return redirect()->to(base_url('admin/leptop'));
     }
 
     public function saveriwayat()
@@ -466,10 +466,10 @@ class Laptop extends BaseController
 
             //  $this->riwayat->save($postr);
             session()->setFlashdata('success', 'Data berhasil di edit.');
-            return redirect()->to(base_url('admin/laptop'));
+            return redirect()->to(base_url('admin/leptop'));
         } else {
             session()->setFlashdata('error', 'Data Gagal di simpan.');
-            return redirect()->to(base_url('admin/laptop'));
+            return redirect()->to(base_url('admin/leptop'));
         }
     }
 
@@ -487,31 +487,41 @@ class Laptop extends BaseController
 
         if ($this->aset->save($post)) {
             session()->setFlashdata('success', 'Data berhasil di edit.');
-            return redirect()->to(base_url('admin/laptop'));
+            return redirect()->to(base_url('admin/leptop'));
         } else {
             session()->setFlashdata('error', 'Data Gagal di simpan.');
-            return redirect()->to(base_url('admin/laptop'));
+            return redirect()->to(base_url('admin/leptop'));
         }
     }
     public function delete($id)
     {
         if ($this->aset->delete($id)) {
             session()->setFlashdata('hapussuccess', 'a');
-            return redirect()->to(base_url('admin/laptop'));
+            return redirect()->to(base_url('admin/leptop'));
         } else {
             session()->setFlashdata('danger', 'Data berhasil di hapus.');
-            return redirect()->to(base_url('admin/laptop'));
+            return redirect()->to(base_url('admin/leptop'));
         }
     }
-
+    public function deleteall($id)
+    {
+        // if ($this->aset->deleteByType($id)) {
+        if ($this->aset->where('type', $id)->delete()) {
+            session()->setFlashdata('success', 'Data berhasil di hapus.');
+            return redirect()->to(base_url('admin/leptop'));
+        } else {
+            session()->setFlashdata('danger', 'Data gagal di hapus.');
+            return redirect()->to(base_url('admin/leptop'));
+        }
+    }
     public function deleteriwayat($id, $id2)
     {
         if ($this->riwayat->delete($id)) {
             session()->setFlashdata('success', 'Data Riwayat berhasil di hapus.');
-            return redirect()->to(base_url('admin/laptop/edit/' . $id2));
+            return redirect()->to(base_url('admin/leptop/edit/' . $id2));
         } else {
             session()->setFlashdata('danger', 'Data Gagal berhasil di hapus.');
-            return redirect()->to(base_url('admin/laptop/edit/' . $id2));
+            return redirect()->to(base_url('admin/leptop/edit/' . $id2));
         }
     }
 
@@ -519,10 +529,10 @@ class Laptop extends BaseController
     {
         if ($this->images->delete($id)) {
             session()->setFlashdata('success', 'Foto berhasil di hapus.');
-            return redirect()->to(base_url('admin/laptop/edit/' . $id));
+            return redirect()->to(base_url('admin/leptop/edit/' . $id));
         } else {
             session()->setFlashdata('danger', 'Data berhasil di hapus.');
-            return redirect()->to(base_url('admin/laptop/edit/' . $id));
+            return redirect()->to(base_url('admin/leptop/edit/' . $id));
         }
     }
 
@@ -550,7 +560,7 @@ class Laptop extends BaseController
             session()->setFlashdata('error', 'Data tidak ditemukan.');
         }
 
-        return redirect()->to(base_url('admin/laptop/edit/' . $id2));
+        return redirect()->to(base_url('admin/leptop/edit/' . $id2));
     }
 
 
@@ -583,7 +593,7 @@ class Laptop extends BaseController
                     'serial' => $value[3],
 
                     'manufacture'    => $value[4],
-                    'type'    => 'PC',
+                    'type'    => 'Leptop',
                     'prosesor'    => $value[5],
                     'generasi'    => $value[6],
 
@@ -601,10 +611,10 @@ class Laptop extends BaseController
                 $this->aset->insert($data);
             }
             session()->setFlashdata('success', 'Data Berhasil di Import.');
-            return redirect()->to(base_url('admin/laptop'));
+            return redirect()->to(base_url('admin/leptop'));
         } else {
             session()->setFlashdata('error', 'Format file tidak didukung; hanya format file <b>.xls</b> dan <b>.xlsx</b> yang diizinkan.');
-            return redirect()->to(base_url('admin/laptop'));
+            return redirect()->to(base_url('admin/leptop'));
         }
     }
     public function downloadExcel()

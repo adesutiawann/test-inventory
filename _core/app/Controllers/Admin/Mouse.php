@@ -71,7 +71,7 @@ class Mouse extends BaseController
         }
 
         $data = [
-            'title'   => 'Mouse',
+            'title'   => 'mouse',
             'segment' => $this->request->uri->getSegments(),
             'admin'   => $this->admin->find(session()->get('id')),
 
@@ -82,8 +82,8 @@ class Mouse extends BaseController
 
             'total_mo' => $this->aset->where('type', 'mouse')->countAllResults(),
             'total_mo_ok' => $this->aset->where('type', 'mouse')->where('kondisi', 'OK')->countAllResults(),
-            'total_mo_rusak' => $this->aset->where('type', 'mouse')->where('kondisi', 'rusak')->countAllResults(),
-            'total_mo_blanks' => $this->aset->where('type', 'mouse')->where('kondisi', 'blanks')->countAllResults(),
+            'total_mo_rusak' => $this->aset->where('type', 'mouse')->where('kondisi', 'RUSAK')->countAllResults(),
+            'total_mo_blanks' => $this->aset->where('type', 'mouse')->where('kondisi', 'BLANK')->countAllResults(),
         ];
 
         return view('admin/mouse', $data);
@@ -91,16 +91,16 @@ class Mouse extends BaseController
     public function search($id)
     {
         $data = [
-            'title'   => 'Mouse',
+            'title'   => 'mouse',
             'aktiv'   => $id,
             'segment' => $this->request->uri->getSegments(),
             'admin'   => $this->admin->find(session()->get('id')),
             'aset' => $this->aset->where('type', 'mouse')->where('kondisi', $id)->orderBy('id', 'desc')->findAll(),
 
-            'total_mo' => $this->aset->where('type', 'mouse')->countAllResults(),
-            'total_mo_ok' => $this->aset->where('type', 'mouse')->where('kondisi', 'OK')->countAllResults(),
-            'total_mo_rusak' => $this->aset->where('type', 'mouse')->where('kondisi', 'rusak')->countAllResults(),
-            'total_mo_blanks' => $this->aset->where('type', 'mouse')->where('kondisi', 'blanks')->countAllResults(),
+            'total_ky' => $this->aset->where('type', 'mouse')->countAllResults(),
+            'total_ky_ok' => $this->aset->where('type', 'mouse')->where('kondisi', 'OK')->countAllResults(),
+            'total_ky_rusak' => $this->aset->where('type', 'mouse')->where('kondisi', 'RUSAK')->countAllResults(),
+            'total_ky_blanks' => $this->aset->where('type', 'mouse')->where('kondisi', 'BLANK')->countAllResults(),
 
 
         ];
@@ -114,7 +114,7 @@ class Mouse extends BaseController
         }
 
         $data = [
-            'title'   => 'Add Mouse',
+            'title'   => 'Add mouse',
             'segment' => $this->request->uri->getSegments(),
             'admin'   => $this->admin->find(session()->get('id')),
             'nama'    => $this->manufacture->orderBy('nama', 'asc')->findAll(),
@@ -135,7 +135,7 @@ class Mouse extends BaseController
             return redirect()->to(base_url());
         }
         $data = [
-            'title'   => 'Edit Mouse',
+            'title'   => 'Edit mouse',
             'edit'   => 'redy',
             'segment' => $this->request->uri->getSegments(),
             'admin'   => $this->admin->find(session()->get('id')),
@@ -160,7 +160,7 @@ class Mouse extends BaseController
             $post = [
                 'id'       => $this->request->getVar('id'),
                 'manufacture'            => $this->request->getVar('manufacture'),
-                'type'            => 'Mouse',
+                'type'            => 'mouse',
                 'status'            => $this->request->getVar('status'),
                 'stock'            => $this->request->getVar('stock'),
                 'kondisi'            => $this->request->getVar('kondisi'),
@@ -171,17 +171,17 @@ class Mouse extends BaseController
             ];
 
             if ($this->aset->save($post)) {
-                session()->setFlashdata('success', '<strong>Berhasil !</strong> Data berhasil di edit.');
+                session()->setFlashdata('success', 'Data berhasil di edit.');
                 return redirect()->to(base_url('admin/mouse'));
             } else {
-                session()->setFlashdata('error', '<strong>Gagal !</strong> Data Gagal di edit.');
+                session()->setFlashdata('error', 'Data Gagal di simpan.');
                 return redirect()->to(base_url('admin/mouse'));
             }
         } else {
             // $tgl= date("Y-m-d");
             $post = [
                 'manufacture'            => $this->request->getVar('manufacture'),
-                'type'            => 'Mouse',
+                'type'            => 'mouse',
 
                 'status'            => $this->request->getVar('status'),
                 'stock'            => $this->request->getVar('stock'),
@@ -194,16 +194,14 @@ class Mouse extends BaseController
             ];
 
             if ($this->aset->save($post)) {
-                session()->setFlashdata('success', '<strong>Berhasil !</strong> Data berhasil di simpan kedalam database.');
+                session()->setFlashdata('success', 'Data berhasil di simpan.');
                 return redirect()->to(base_url('admin/mouse'));
             } else {
-                session()->setFlashdata('error', '<strong>Pringatan !</strong> Data sudah terdaftar kedalam database !');
+                session()->setFlashdata('error', 'Data Sudah Terdaftar !');
                 return redirect()->to(base_url('admin/mouse'));
             }
         }
     }
-
-
     public function import()
     {
         $file = $this->request->getFile('file_excel');
@@ -216,66 +214,130 @@ class Mouse extends BaseController
             } else {
                 $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
             }
-
             $spreadsheet = $reader->load($file);
             $data = $spreadsheet->getActiveSheet()->toArray();
 
-            $importSuccess = true; // Assume success until proven otherwise
+            // Define an array to store encountered serial numbers
+            $existingSerials = [];
 
             foreach ($data as $key => $value) {
                 if ($key == 0) {
                     continue;
                 }
 
-                $rowData = [
+                $serial = $value[4]; // Assuming serial is in the 4th column
+
+                // Check if the serial already exists
+                if (in_array($serial, $existingSerials)) {
+                    // Log an error (You can customize this part based on your logging mechanism)
+                    //log_message('error', 'Duplicate serial number found: ' . $serial);
+                    //continue; // Skip this record and move to the next one
+                    session()->setFlashdata('error', 'Duplicate serial number found: ' . $serial);
+                    return redirect()->to(base_url('admin/mouse'));
+                }
+
+                // Add the serial to the existingSerials array
+                $existingSerials[] = $serial;
+
+                // Continue with your data insertion
+                $insertData = [
                     'tgl_masuk' => $value[1],
                     'tgl_keluar' => $value[2],
-                    'manufacture' => $value[3],
-                    'type' => 'Mouse',
+                    'manufacture'    => $value[3],
+                    'type'    => 'mouse',
                     'serial' => $value[4],
                     'status' => $value[5],
-                    'stock' => $value[6],
+                    'stock'    => $value[6],
                     'kondisi' => $value[7],
                     'ket' => $value[8],
                 ];
 
-                // Check if the data already exists in the database
-                $existingData = $this->aset->where('serial', $rowData['serial'])->first();
-
-                if (!$existingData) {
-                    // Data doesn't exist, proceed with insertion
-                    $insertSuccess = $this->aset->insert($rowData);
-                } else {
-                    // Data already exists, set importSuccess to false
-                    $importSuccess = false;
-                    session()->setFlashdata('warning', '<strong>Peringatan!</strong> Data dengan nomor serial <b>' . $rowData['serial'] . '</b> sudah terdaftar.');
-                    break; // Exit the loop if any data already exists
-                }
+                $this->checkAndInsert($insertData); // Create a separate function for better organization
             }
 
-            if ($importSuccess) {
-                session()->setFlashdata('success', '<strong>Berhasil !</strong>Data Berhasil di Import.');
-            } else {
-                session()->setFlashdata('danger', '<strong>Gagal !</strong>Data gagal di import.');
-            }
+            session()->setFlashdata('success', 'Data Berhasil di Import.');
+            return redirect()->to(base_url('admin/mouse'));
         } else {
             session()->setFlashdata('error', 'Format file tidak didukung; hanya format file <b>.xls</b> dan <b>.xlsx</b> yang diizinkan.');
+            return redirect()->to(base_url('admin/mouse'));
         }
-
-        return redirect()->to(base_url('admin/mouse'));
     }
 
+    // Function to check for duplicate serial and insert data
+    private function checkAndInsert($data)
+    {
+        $serial = $data['serial'];
 
+        // Check if the serial already exists in the database
+        if ($this->aset->where('serial', $serial)->first()) {
+            // Log an error or handle the duplicate serial case (You can customize this part)
+            log_message('error', 'Duplicate serial number found in database: ' . $serial);
+            return; // Skip the insertion for this record
+        }
+
+        // Insert the data into the database
+        $this->aset->insert($data);
+    }
+
+    public function import11111()
+    {
+        $file = $this->request->getFile('file_excel');
+        $extension = $file->getClientExtension();
+
+        if ($extension == 'xlsx' || $extension == 'xls') {
+
+            if ($extension == 'xls') {
+                $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xls();
+            } else {
+                $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
+            }
+            $spreadsheed = $reader->load($file);
+            $contak = $spreadsheed->getActiveSheet()->toArray();
+            //print_r($contak);
+            foreach ($contak as $key => $value) {
+                if ($key == 0) {
+                    continue;
+                }
+                $data = [
+
+                    'tgl_masuk' => $value[1],
+                    'tgl_keluar' => $value[2],
+                    'manufacture'    => $value[3],
+                    'type'    => 'mouse',
+                    'serial' => $value[4],
+                    'status' => $value[5],
+                    'stock'    => $value[6],
+                    'kondisi' => $value[7],
+                    'ket' => $value[8],
+                ];
+                $this->aset->insert($data);
+            }
+            session()->setFlashdata('success', 'Data Berhasil di Import.');
+            return redirect()->to(base_url('admin/mouse'));
+        } else {
+            session()->setFlashdata('error', 'Format file tidak didukung; hanya format file <b>.xls</b> dan <b>.xlsx</b> yang diizinkan.');
+            return redirect()->to(base_url('admin/mouse'));
+        }
+    }
 
     public function delete($id)
     {
         if ($this->aset->delete($id)) {
-            session()->setFlashdata('warning', '<strong>Berhasil !</strong> Data berhasil terhapus.');
-
+            session()->setFlashdata('success', 'Data berhasil di hapus.');
             return redirect()->to(base_url('admin/mouse'));
         } else {
-            session()->setFlashdata('danger', '<strong>Gagal !</strong> Data gagal di hapus !');
-
+            session()->setFlashdata('danger', 'Data berhasil di hapus.');
+            return redirect()->to(base_url('admin/mouse'));
+        }
+    }
+    public function deleteall($id)
+    {
+        // if ($this->aset->deleteByType($id)) {
+        if ($this->aset->where('type', $id)->delete()) {
+            session()->setFlashdata('success', 'Data berhasil di hapus.');
+            return redirect()->to(base_url('admin/mouse'));
+        } else {
+            session()->setFlashdata('danger', 'Data berhasil di hapus.');
             return redirect()->to(base_url('admin/mouse'));
         }
     }
@@ -307,12 +369,11 @@ class Mouse extends BaseController
         $sheet->setCellValue('D1', 'Manufacture');
 
         $sheet->setCellValue('E1', 'Serial');
-        $sheet->setCellValue('F1', 'Port');
 
-        $sheet->setCellValue('G1', 'Status');
-        $sheet->setCellValue('H1', 'Stock');
-        $sheet->setCellValue('I1', 'Kondisi');
-        $sheet->setCellValue('J1', 'Keterangan');
+        $sheet->setCellValue('F1', 'Status');
+        $sheet->setCellValue('G1', 'Stock');
+        $sheet->setCellValue('H1', 'Kondisi');
+        $sheet->setCellValue('I1', 'Keterangan');
 
         $column = 2; // kolom start
 
@@ -350,7 +411,7 @@ class Mouse extends BaseController
 
         ];
 
-        $sheet->getStyle('A1:I' . ($column - 1))->applyFromArray($styleArray);
+        $sheet->getStyle('A1:J' . ($column - 1))->applyFromArray($styleArray);
 
         $sheet->getColumnDimension('A')->setAutoSize(true);
         $sheet->getColumnDimension('B')->setAutoSize(true);

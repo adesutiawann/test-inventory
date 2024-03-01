@@ -382,9 +382,9 @@
                                 <td class=" ">
                                     <h5 class="meta">Laptop</h5>
                                     <div class="progress h-50 ">
-                                        <div class="progress-bar bg-danger" role="progressbar" style="width: <?= $la_d = ($total_ms_ok > 0) ? ($total_la_blanks / $total_la) * 100 : 0; ?>%;" aria-valuenow="52" aria-valuemin="0" aria-valuemax="100"><?= number_format($la_d) ?>%</div>
+                                        <div class="progress-bar bg-danger" role="progressbar" style="width: <?= $la_d = ($total_la_blanks > 0) ? ($total_la_blanks / $total_la) * 100 : 0; ?>%;" aria-valuenow="52" aria-valuemin="0" aria-valuemax="100"><?= number_format($la_d) ?>%</div>
                                         <div class="progress-bar bg-warning" role="progressbar" style="width:  <?= $la_w = ($total_la_rusak > 0) ? ($total_la_rusak / $total_la) * 100 : 0;  ?>%;" aria-valuenow="52" aria-valuemin="0" aria-valuemax="100"><?= number_format($la_w) ?>%</div>
-                                        <div class="progress-bar bg-success" role="progressbar" style="width: <?= $la_s = ($total_la_rusak > 0) ?  ($total_la_ok / $total_la) * 100 : 0;  ?>%;" aria-valuenow="52" aria-valuemin="0" aria-valuemax="100"><?= number_format($la_s) ?>%</div>
+                                        <div class="progress-bar bg-success" role="progressbar" style="width: <?= $la_s = ($total_la_ok > 0) ?  ($total_la_ok / $total_la) * 100 : 0;  ?>%;" aria-valuenow="52" aria-valuemin="0" aria-valuemax="100"><?= number_format($la_s) ?>%</div>
                                     </div>
 
 

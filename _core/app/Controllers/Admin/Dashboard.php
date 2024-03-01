@@ -75,10 +75,10 @@ class Dashboard extends BaseController
             'total_ms_blanks' => $this->aset->where('type', 'mouse')->where('kondisi', 'BLANK')->countAllResults(),
 
 
-            'total_la' => $this->aset->where('type', 'laptop')->countAllResults(),
-            'total_la_ok' => $this->aset->where('type', 'laptop')->where('kondisi', 'OK')->countAllResults(),
-            'total_la_rusak' => $this->aset->where('type', 'laptop')->where('kondisi', 'RUSAK')->countAllResults(),
-            'total_la_blanks' => $this->aset->where('type', 'laptop')->where('kondisi', 'BLANK')->countAllResults(),
+            'total_la' => $this->aset->where('type', 'Leptop')->countAllResults(),
+            'total_la_ok' => $this->aset->where('type', 'Leptop')->where('kondisi', 'OK')->countAllResults(),
+            'total_la_rusak' => $this->aset->where('type', 'Leptop')->where('kondisi', 'RUSAK')->countAllResults(),
+            'total_la_blanks' => $this->aset->where('type', 'Leptop')->where('kondisi', 'BLANK')->countAllResults(),
 
             'total_pr' => $this->aset->where('type', 'Printer')->countAllResults(),
             'total_pr_ok' => $this->aset->where('type', 'Printer')->where('kondisi', 'OK')->countAllResults(),

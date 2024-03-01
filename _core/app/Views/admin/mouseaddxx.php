@@ -31,49 +31,48 @@
             </div>
         <?php endif ?>
 
-        <form action="<?= base_url('admin/keyboard/save') ?>" method="POST">
+        <form action="<?= base_url('admin/mouse/save') ?>" method="POST">
             <div class="row">
-                <div class="col-md-12 mb-4">
-                    <strong>Form Data Edit:</strong>
+                <div class="col-md-3 mb-4">
+                    <strong>Form Data :</strong>
                 </div>
                 <hr>
-                <div class="col-md-8">
+                <div class="col-md-3">
                     Manufacture
-                    <input type="text" name="id" hidden class="form-control" value="<?= $aset->id ?>" required>
-
                     <select name="manufacture" class="form-select" required>
                         <option value="">Pilih Manufacture</option>
                         <?php foreach ($nama as $gr) : ?>
-                            <option value="<?= $gr->nama ?>" <?= ($gr->nama == $aset->manufacture) ? 'selected' : '' ?>><?= $gr->nama ?></option>
+                            <option value="<?= $gr->nama ?>"><?= $gr->nama ?></option>
                         <?php endforeach ?>
                     </select>
                 </div>
 
 
-                <div class="col-md-4">
+
+                <div class="col-md-3">
                     Status
                     <select name="status" class="form-select" required>
                         <option value="">Pilih Setatus</option>
                         <?php foreach ($status as $gr) : ?>
-                            <option value="<?= $gr->nama ?>" <?= ($gr->nama == $aset->status) ? 'selected' : '' ?>><?= $gr->nama ?></option>
+                            <option value="<?= $gr->nama ?>"><?= $gr->nama ?></option>
                         <?php endforeach ?>
                     </select>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-3">
                     Stok
                     <select name="stock" class="form-select" required>
                         <option value="">Pilih Stock</option>
                         <?php foreach ($stock as $gr) : ?>
-                            <option value="<?= $gr->nama ?>" <?= ($gr->nama == $aset->stock) ? 'selected' : '' ?>><?= $gr->nama ?></option>
+                            <option value="<?= $gr->nama ?>"><?= $gr->nama ?></option>
                         <?php endforeach ?>
                     </select>
                 </div>
-                <div class="col-md-4 mb-4">
+                <div class="col-md-3 mb-4">
                     Kondisi
                     <select name="kondisi" class="form-select" required>
-                        <option value="">Pilih Stock</option>
+                        <option value="">Pilih Kondisi</option>
                         <?php foreach ($kondisi as $gr) : ?>
-                            <option value="<?= $gr->nama ?>" <?= ($gr->nama == $aset->kondisi) ? 'selected' : '' ?>><?= $gr->nama ?></option>
+                            <option value="<?= $gr->nama ?>"><?= $gr->nama ?></option>
 
                         <?php endforeach ?>
                     </select>
@@ -81,13 +80,11 @@
                 <hr>
                 <div class="col-md-4">
                     Serial
-                    <input type="text" oninput="convertToUppercase(this)" name="serial" class="form-control" value="<?= $aset->serial ?>" required>
-
+                    <input type="text" id="serial" name="serial" class="form-control" oninput="convertToUppercase(this)" required>
                 </div>
                 <div class="col-md-4">
                     Tanggal Masuk
-                    <input type="date" id="tglMasuk" name="masuk" class="form-control" value="<?= htmlspecialchars($aset->tgl_masuk) ?>" required>
-
+                    <input type="date" name="masuk" value="<?= date('Y-m-d') ?>" class="form-control" required>
                 </div>
                 <div class="col-md-4">
                     Tanggal Keluar
@@ -97,7 +94,7 @@
                 <div class="col-md-12 mb-5">
                     Keterangan
                     <div class="form-floating">
-                        <textarea name="ket" id="sentenceCaseInput" class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px"><?= $aset->ket ?></textarea>
+                        <textarea name="ket" id="sentenceCaseInput" class="form-control" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px"></textarea>
                         <label for="floatingTextarea2">Comments</label>
                     </div>
 
@@ -109,6 +106,7 @@
                 </div>
             </div>
         </form>
+
 
     </div>
 </div>
