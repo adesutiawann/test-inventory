@@ -22,33 +22,30 @@
     <div class="app-card-body p-4">
         <form action="<?= base_url('admin/aset/save') ?>" method="POST" enctype="multipart/form-data">
             <div class="row">
+                <input type="text" name="id" hidden class="form-control" value="<?= $aset->id ?>" required>
+
                 <div class="col-md-12 mb-4">
                     <strong>Form Data Edit:</strong>
                 </div>
                 <hr>
                 <div class="col-md-8">
+
                     Manufacture
 
                     <div class="input-group">
-                        <select class="form-select" id="inputGroupSelect04" aria-label="Example select with button addon">
-                            <option selected>Choose...</option>
-                            <option value="1">One</option>
-                            <option value="2">Two</option>
-                            <option value="3">Three</option>
+                        <select name="manufacture" class="form-select" id="inputGroupSelect04" aria-label="Example select with button addon">
+                            <option value="">Pilih Manufacture</option>
+                            <?php foreach ($nama2 as $gr) : ?>
+                                <option value="<?= $gr->manufacture ?>" <?= ($gr->manufacture == $aset->manufacture) ? 'selected' : '' ?>><?= $gr->manufacture ?></option>
+                            <?php endforeach ?>
+                            <?php foreach ($nama as $gr) : ?>
+                                <option value="<?= $gr->nama ?>" <?= ($gr->nama == $aset->manufacture) ? 'selected' : '' ?>><?= $gr->nama ?></option>
+                            <?php endforeach ?>
                         </select>
-                        <button class="btn btn-primary" type="button">Button</button>
+                        <button class="btn btn-primary" type="button"><i class="fa-solid fa-plus text-white"></i></button>
                     </div>
-                    <input type="text" name="id" hidden class="form-control" value="<?= $aset->id ?>" required>
 
-                    <select name="manufacture" class="form-select" required>
-                        <option value="">Pilih Manufacture</option>
-                        <?php foreach ($nama2 as $gr) : ?>
-                            <option value="<?= $gr->manufacture ?>" <?= ($gr->manufacture == $aset->manufacture) ? 'selected' : '' ?>><?= $gr->manufacture ?></option>
-                        <?php endforeach ?>
-                        <?php foreach ($nama as $gr) : ?>
-                            <option value="<?= $gr->nama ?>" <?= ($gr->nama == $aset->manufacture) ? 'selected' : '' ?>><?= $gr->nama ?></option>
-                        <?php endforeach ?>
-                    </select>
+
                 </div>
                 <div class="col-md-4" hidden>
                     Type
@@ -60,6 +57,18 @@
                 </div>
                 <div class="col-md-4">
                     Prosesor
+                    <div class="input-group">
+                        <select name="manufacture" class="form-select" id="inputGroupSelect04" aria-label="Example select with button addon">
+                            <option value="">Pilih Prosesor</option>
+                            <?php foreach ($prosesor as $gr) : ?>
+                                <option value="<?= $gr->nama ?>" <?= ($gr->nama == $aset->prosesor) ? 'selected' : '' ?>><?= $gr->nama ?></option>
+                            <?php endforeach ?>
+                            <?php foreach ($aset as $gr) : ?>
+                                <option value="<?= $gr->prosesor ?>" <?= ($gr->prosesor == $aset->prosesor) ? 'selected' : '' ?>><?= $gr->prosesor ?></option>
+                            <?php endforeach ?>
+                        </select>
+                        <button class="btn btn-primary" type="button"><i class="fa-solid fa-plus text-white"></i></button>
+                    </div>
                     <select name="prosesor" class="form-select" required>
                         <option value="">Pilih Prosesor</option>
                         <?php foreach ($prosesor as $gr) : ?>

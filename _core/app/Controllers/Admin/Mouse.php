@@ -97,10 +97,10 @@ class Mouse extends BaseController
             'admin'   => $this->admin->find(session()->get('id')),
             'aset' => $this->aset->where('type', 'mouse')->where('kondisi', $id)->orderBy('id', 'desc')->findAll(),
 
-            'total_ky' => $this->aset->where('type', 'mouse')->countAllResults(),
-            'total_ky_ok' => $this->aset->where('type', 'mouse')->where('kondisi', 'OK')->countAllResults(),
-            'total_ky_rusak' => $this->aset->where('type', 'mouse')->where('kondisi', 'RUSAK')->countAllResults(),
-            'total_ky_blanks' => $this->aset->where('type', 'mouse')->where('kondisi', 'BLANK')->countAllResults(),
+            'total_mo' => $this->aset->where('type', 'mouse')->countAllResults(),
+            'total_mo_ok' => $this->aset->where('type', 'mouse')->where('kondisi', 'OK')->countAllResults(),
+            'total_mo_rusak' => $this->aset->where('type', 'mouse')->where('kondisi', 'RUSAK')->countAllResults(),
+            'total_mo_blanks' => $this->aset->where('type', 'mouse')->where('kondisi', 'BLANK')->countAllResults(),
 
 
         ];
