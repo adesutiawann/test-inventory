@@ -69,9 +69,16 @@ $menu = $aktiv;
 
 <nav id="orders-table-tab" class="orders-table-tab app-nav-tabs nav shadow-sm d-flex mb-1" role="tablist">
     <a class="flex-fill text-center nav-link <?= ($menu == 'ALL') ? 'active' : '' ?>" href="<?= base_url('admin/leptop') ?>" aria-controls="orders-all" aria-selected="false">All <?= $total_leptop ?></a>
+
+    <a class="flex-fill text-center nav-link <?= ($menu == 'Tersedia') ? 'active' : '' ?>" href="<?= base_url('admin/leptop/searchstock/Tersedia') ?>" role="tab" aria-controls="orders-pending" aria-selected="true">Tersedia <?= $total_leptop_tersedia ?></a>
+    <a class="flex-fill text-center nav-link <?= ($menu == 'Terdistribusi') ? 'active' : '' ?>" href="<?= base_url('admin/leptop/searchstock/Terdistribusi') ?>" role="tab" aria-controls="orders-pending" aria-selected="true">Terdistribusi <?= $total_leptop_terdistribusi ?></a>
+    <a class="flex-fill text-center nav-link <?= ($menu == 'Dipinjam') ? 'active' : '' ?>" href="<?= base_url('admin/leptop/searchstock/Dipinjam') ?>" role="tab" aria-controls="orders-cancelled" aria-selected="true">Dipinjam <?= $total_leptop_dipinjam ?></a>
+    <a class="flex-fill text-center nav-link <?= ($menu == 'Backup') ? 'active' : '' ?>" href="<?= base_url('admin/leptop/searchstock/Backup') ?>" role="tab" aria-controls="orders-cancelled" aria-selected="true">Backup <?= $total_leptop_backup ?></a>
+
     <a class="flex-fill text-center nav-link <?= ($menu == 'OK') ? 'active' : '' ?>" href="<?= base_url('admin/leptop/search/OK') ?>" aria-controls="orders-paid" aria-selected="false">Oke <?= $total_leptop_ok ?></a>
     <a class="flex-fill text-center nav-link <?= ($menu == 'RUSAK') ? 'active' : '' ?>" href="<?= base_url('admin/leptop/search/RUSAK') ?>" role="tab" aria-controls="orders-pending" aria-selected="true">Rusak <?= $total_leptop_rusak ?></a>
     <a class="flex-fill text-center nav-link <?= ($menu == 'BLANK') ? 'active' : '' ?>" href="<?= base_url('admin/leptop/search/BLANK') ?>" role="tab" aria-controls="orders-cancelled" aria-selected="true">Blank <?= $total_leptop_blanks ?></a>
+
 </nav>
 
 
@@ -149,6 +156,9 @@ $menu = $aktiv;
                                 </span>Lokasi :
                                 <span>
                                     <?= $value->lokasi ?><br>
+                                </span></span>Ket :
+                                <span>
+                                    <?= $value->ket ?><br>
                                 </span>
                             </td>
 

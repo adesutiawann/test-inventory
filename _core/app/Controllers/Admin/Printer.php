@@ -80,10 +80,10 @@ class Printer extends BaseController
             'aset' => $this->aset->where('type', 'Printer')->orderBy('id', 'desc')->findAll(),
 
 
-            'total_mo' => $this->aset->where('type', 'Printer')->countAllResults(),
-            'total_mo_ok' => $this->aset->where('type', 'Printer')->where('kondisi', 'OK')->countAllResults(),
-            'total_mo_rusak' => $this->aset->where('type', 'Printer')->where('kondisi', 'RUSAK')->countAllResults(),
-            'total_mo_blanks' => $this->aset->where('type', 'Printer')->where('kondisi', 'BLANK')->countAllResults(),
+            'total_pr' => $this->aset->where('type', 'Printer')->countAllResults(),
+            'total_pr_ok' => $this->aset->where('type', 'Printer')->where('kondisi', 'OK')->countAllResults(),
+            'total_pr_rusak' => $this->aset->where('type', 'Printer')->where('kondisi', 'RUSAK')->countAllResults(),
+            'total_pr_blanks' => $this->aset->where('type', 'Printer')->where('kondisi', 'BLANK')->countAllResults(),
         ];
 
         return view('admin/Printer', $data);
@@ -97,10 +97,10 @@ class Printer extends BaseController
             'admin'   => $this->admin->find(session()->get('id')),
             'aset' => $this->aset->where('type', 'Printer')->where('kondisi', $id)->orderBy('id', 'desc')->findAll(),
 
-            'total_ky' => $this->aset->where('type', 'Printer')->countAllResults(),
-            'total_ky_ok' => $this->aset->where('type', 'Printer')->where('kondisi', 'OK')->countAllResults(),
-            'total_ky_rusak' => $this->aset->where('type', 'Printer')->where('kondisi', 'RUSAK')->countAllResults(),
-            'total_ky_blanks' => $this->aset->where('type', 'Printer')->where('kondisi', 'BLANK')->countAllResults(),
+            'total_pr' => $this->aset->where('type', 'Printer')->countAllResults(),
+            'total_pr_ok' => $this->aset->where('type', 'Printer')->where('kondisi', 'OK')->countAllResults(),
+            'total_pr_rusak' => $this->aset->where('type', 'Printer')->where('kondisi', 'RUSAK')->countAllResults(),
+            'total_pr_blanks' => $this->aset->where('type', 'Printer')->where('kondisi', 'BLANK')->countAllResults(),
 
 
         ];

@@ -25,7 +25,9 @@
                 <input type="text" name="id" hidden class="form-control" value="<?= $aset->id ?>" required>
 
                 <div class="col-md-12 mb-4">
-                    <strong>Form Data Edit:</strong>
+                    <h2><?= $aset->manufacture ?></h2>
+                    <p class="lead"><b>Spesifikasi :</b> Prosesor <?= $aset->prosesor ?>, RAM <?= $aset->ram ?>, <?= $aset->hdd ?>,SN <?= $aset->serial ?></p>
+
                 </div>
                 <hr>
                 <div class="col-md-8">
@@ -42,7 +44,7 @@
                                 <option value="<?= $gr->nama ?>" <?= ($gr->nama == $aset->manufacture) ? 'selected' : '' ?>><?= $gr->nama ?></option>
                             <?php endforeach ?>
                         </select>
-                        <button class="btn btn-primary" type="button"><i class="fa-solid fa-plus text-white"></i></button>
+                        <button data-bs-toggle="modal" data-bs-target="#exampleModal" class="btn btn-primary" type="button"><i class="fa-solid fa-plus text-white"></i></button>
                     </div>
 
 
@@ -60,84 +62,126 @@
                     <div class="input-group">
                         <select name="manufacture" class="form-select" id="inputGroupSelect04" aria-label="Example select with button addon">
                             <option value="">Pilih Prosesor</option>
+                            <?php foreach ($prosesor2 as $gr) : ?>
+                                <option value="<?= $gr->prosesor ?>" <?= ($gr->prosesor == $aset->prosesor) ? 'selected' : '' ?>><?= $gr->prosesor ?></option>
+                            <?php endforeach ?>
                             <?php foreach ($prosesor as $gr) : ?>
                                 <option value="<?= $gr->nama ?>" <?= ($gr->nama == $aset->prosesor) ? 'selected' : '' ?>><?= $gr->nama ?></option>
                             <?php endforeach ?>
-                            <?php foreach ($aset as $gr) : ?>
-                                <option value="<?= $gr->prosesor ?>" <?= ($gr->prosesor == $aset->prosesor) ? 'selected' : '' ?>><?= $gr->prosesor ?></option>
+
+                        </select>
+                        <button class="btn btn-primary" type="button"><i class="fa-solid fa-plus text-white"></i></button>
+                    </div>
+
+                </div>
+                <div class="col-md-4">
+                    Generasi
+                    <div class="input-group">
+                        <select name="generasi" class="form-select" id="inputGroupSelect04" aria-label="Example select with button addon">
+                            <option value="">Pilih Generasi</option>
+                            <?php foreach ($generasi2 as $gr) : ?>
+                                <option value="<?= $gr->generasi ?>" <?= ($gr->generasi == $aset->generasi) ? 'selected' : '' ?>><?= $gr->generasi ?></option>
+                            <?php endforeach ?>
+                            <?php foreach ($generasi as $gr) : ?>
+                                <option value="<?= $gr->nama ?>" <?= ($gr->nama == $aset->generasi) ? 'selected' : '' ?>><?= $gr->nama ?></option>
+                            <?php endforeach ?>
+
+                        </select>
+                        <button class="btn btn-primary" type="button"><i class="fa-solid fa-plus text-white"></i></button>
+                    </div>
+
+                </div>
+                <div class="col-md-4">
+                    Penyimpanan
+                    <div class="input-group">
+                        <select name="hdd" class="form-select" id="inputGroupSelect04" aria-label="Example select with button addon">
+                            <option class="" value="">Pilih Penyimpanan</option>
+                            <?php foreach ($hdd2 as $gr) : ?>
+                                <option value="<?= $gr->hdd ?>" <?= ($gr->hdd == $aset->hdd) ? 'selected' : '' ?>><?= $gr->hdd ?></option>
+                            <?php endforeach ?>
+                            <?php foreach ($hdd as $gr) : ?>
+                                <option value="<?= $gr->nama ?>" <?= ($gr->nama == $aset->hdd) ? 'selected' : '' ?>><?= $gr->nama ?></option>
+                            <?php endforeach ?>
+
+                        </select>
+                        <button class="btn btn-primary" type="button"><i class="fa-solid fa-plus text-white"></i></button>
+                    </div>
+
+                </div>
+                <div class="col-md-2">
+                    RAM
+                    <div class="input-group">
+                        <select name="ram" class="form-select" id="inputGroupSelect04" aria-label="Example select with button addon">
+                            <option class="" value="">Pilih RAM</option>
+                            <?php foreach ($ram2 as $gr) : ?>
+                                <option value="<?= $gr->ram ?>" <?= ($gr->ram == $aset->ram) ? 'selected' : '' ?>><?= $gr->ram ?></option>
+                            <?php endforeach ?>
+                            <?php foreach ($ram as $gr) : ?>
+                                <option value="<?= $gr->nama ?>" <?= ($gr->nama == $aset->ram) ? 'selected' : '' ?>><?= $gr->nama ?></option>
                             <?php endforeach ?>
                         </select>
                         <button class="btn btn-primary" type="button"><i class="fa-solid fa-plus text-white"></i></button>
                     </div>
-                    <select name="prosesor" class="form-select" required>
-                        <option value="">Pilih Prosesor</option>
-                        <?php foreach ($prosesor as $gr) : ?>
-                            <option value="<?= $gr->nama ?>" <?= ($gr->nama == $aset->prosesor) ? 'selected' : '' ?>><?= $gr->nama ?></option>
-                        <?php endforeach ?>
-                    </select>
-                </div>
-                <div class="col-md-4">
-                    Generasi
-                    <select name="generasi" class="form-select" required>
-                        <option value="">Pilih Generasi</option>
-                        <?php foreach ($generasi as $gr) : ?>
-                            <option value="<?= $gr->nama ?>" <?= ($gr->nama == $aset->generasi) ? 'selected' : '' ?>><?= $gr->nama ?></option>
-                        <?php endforeach ?>
-                    </select>
-                </div>
-                <div class="col-md-4">
-                    HDD/SSD
-                    <select name="hdd" class="form-select" required>
-                        <option value="">Pilih HDD/SSD</option>
-                        <?php foreach ($hdd as $gr) : ?>
-                            <option value="<?= $gr->nama ?>" <?= ($gr->nama == $aset->hdd) ? 'selected' : '' ?>><?= $gr->nama ?></option>
-                        <?php endforeach ?>
-                    </select>
-                </div>
-                <div class="col-md-2">
-                    RAM
-                    <select name="ram" class="form-select" required>
-                        <option value="">Pilih RAM</option>
-                        <?php foreach ($ram as $gr) : ?>
-                            <option value="<?= $gr->nama ?>" <?= ($gr->nama == $aset->ram) ? 'selected' : '' ?>><?= $gr->nama ?></option>
-                        <?php endforeach ?>
-                    </select>
+
+
                 </div>
                 <div class="col-md-2">
                     Rincian
-                    <select name="rincian" class="form-select" required>
-                        <option value="">Pilih Rincian</option>
-                        <?php foreach ($rincian as $gr) : ?>
-                            <option value="<?= $gr->nama ?>" <?= ($gr->nama == $aset->rincian) ? 'selected' : '' ?>><?= $gr->nama ?></option>
-                        <?php endforeach ?>
-                    </select>
+                    <div class="input-group">
+                        <select name="rincian" class="form-select" id="inputGroupSelect04" aria-label="Example select with button addon">
+                            <option class="" value="">Pilih RAM</option>
+                            <?php foreach ($rincian2 as $gr) : ?>
+                                <option value="<?= $gr->rincian ?>" <?= ($gr->rincian == $aset->rincian) ? 'selected' : '' ?>><?= $gr->rincian ?></option>
+                            <?php endforeach ?>
+                            <?php foreach ($rincian as $gr) : ?>
+                                <option value="<?= $gr->nama ?>" <?= ($gr->nama == $aset->rincian) ? 'selected' : '' ?>><?= $gr->nama ?></option>
+                            <?php endforeach ?>
+
+                        </select>
+                        <button class="btn btn-primary" type="button"><i class="fa-solid fa-plus text-white"></i></button>
+                    </div>
+
                 </div>
                 <div class="col-md-4">
                     Status
-                    <select name="status" class="form-select" required>
-                        <option value="">Pilih Setatus</option>
-                        <?php foreach ($status as $gr) : ?>
-                            <option value="<?= $gr->nama ?>" <?= ($gr->nama == $aset->status) ? 'selected' : '' ?>><?= $gr->nama ?></option>
-                        <?php endforeach ?>
-                    </select>
+                    <div class="input-group">
+                        <select name="status" class="form-select" id="inputGroupSelect04" aria-label="Example select with button addon">
+                            <option class="" value="">Pilih RAM</option>
+                            <?php foreach ($status2 as $gr) : ?>
+                                <option value="<?= $gr->status ?>" <?= ($gr->status == $aset->status) ? 'selected' : '' ?>><?= $gr->status ?></option>
+                            <?php endforeach ?>
+                            <?php foreach ($status as $gr) : ?>
+                                <option value="<?= $gr->nama ?>" <?= ($gr->nama == $aset->status) ? 'selected' : '' ?>><?= $gr->nama ?></option>
+                            <?php endforeach ?>
+
+                        </select>
+                        <button class="btn btn-primary" type="button"><i class="fa-solid fa-plus text-white"></i></button>
+                    </div>
+
                 </div>
                 <div class="col-md-4">
                     Stok
                     <select name="stock" class="form-select" required>
                         <option value="">Pilih Stock</option>
-                        <?php foreach ($stock as $gr) : ?>
-                            <option value="<?= $gr->nama ?>" <?= ($gr->nama == $aset->stock) ? 'selected' : '' ?>><?= $gr->nama ?></option>
-                        <?php endforeach ?>
+
+                        <option value="Tersedia" <?= ("Tersedia" == $aset->stock) ? 'selected' : '' ?>>Tersedia</option>
+                        <option value="Terdistribusi" <?= ("Terdistribusi" == $aset->stock) ? 'selected' : '' ?>>Terdistribusi</option>
+                        <option value="Dipinjam" <?= ("Dipinjam" == $aset->stock) ? 'selected' : '' ?>>Dipinjam</option>
+                        <option value="Backup" <?= ("Backup" == $aset->stock) ? 'selected' : '' ?>>Backup</option>
+                        <option value="None" <?= ("None" == $aset->stock) ? 'selected' : '' ?>>None</option>
+
                     </select>
                 </div>
                 <div class="col-md-4 mb-4">
                     Kondisi
                     <select name="kondisi" class="form-select" required>
                         <option value="">Pilih Stock</option>
-                        <?php foreach ($kondisi as $gr) : ?>
-                            <option value="<?= $gr->nama ?>" <?= ($gr->nama == $aset->kondisi) ? 'selected' : '' ?>><?= $gr->nama ?></option>
+                        <option value="OK" <?= ("OK" == $aset->kondisi) ? 'selected' : '' ?>>OK</option>
+                        <option value="RUSAK" <?= ("RUSAK" == $aset->kondisi) ? 'selected' : '' ?>>RUSAK</option>
+                        <option value="BLANKS" <?= ("BLANKS" == $aset->kondisi) ? 'selected' : '' ?>>BLANKS</option>
+                        <option value="None" <?= ("None" == $aset->kondisi) ? 'selected' : '' ?>>None</option>
 
-                        <?php endforeach ?>
+
                     </select>
                 </div>
                 <hr>
@@ -437,6 +481,42 @@
         textInput2.focus();
     }
 </script>
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel"><i class="fa-solid fa-file-import"></i> Add Manufacture </h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form class="row" action="<?= base_url('admin/leptop/saveeditmodalmanufacture') ?>" method="POST">
+
+                    <div class="col-md-11 col-sm-6 col-xs-10 mb-2">
+                        <input type="text" hidden name="id" class="form-control" value="<?= $aset->serial ?>" required>
+
+                        <input type="input" class="form-control" name="nama" required placeholder="Manufacture">
+
+                    </div>
+                    <div class="col-md-1 col-sm-3 text-end mb-2 ">
+                        <a href="<?= base_url('admin/manufacture') ?>" class="text-info">
+                            <i class="fa-solid fa-file-circle-question"></i>
+                        </a>
+                    </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary text-white"> <i class="fa-solid fa-file-import"></i> Save</button>
+
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 <?= $this->endSection() ?>
 
 <?= $this->section('js') ?>

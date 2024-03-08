@@ -13,7 +13,7 @@
     <meta name="author" content="DukunWeb">
     <link rel="shortcut icon" href="<?= base_url() ?>/logoks.png">
 
-    <link rel="stylesheet" href="<?= base_url('/assets/css/loader.css') ?>">
+     <link rel="stylesheet" href="<?= base_url('/assets/css/loader.css') ?>">
 
     <!-- FontAwesome JS-->
     <script defer src="<?= base_url() ?>/assets/plugins/fontawesome/js/all.min.js"></script>
@@ -81,7 +81,7 @@
     </script>"; ?>
 
     <?php endif ?>
-    <?php if (session()->getFlashData('error')) : ?>
+    <?php if (session()->getFlashData('errorlogin')) : ?>
         <div class="alert alert-danger">
             <? session()->getFlashData('error') ?>
             <?= "<script>
@@ -113,7 +113,7 @@
         position: 'center',
         icon: 'success',
         title: 'Success!',
-        text: '<?= $pesan ?>',
+        text: '$pesan',
         showConfirmButton: false,
         timer: 2100,
         showClass: {
@@ -146,6 +146,21 @@
                   });
                         
                     </script>"; ?>
+
+    <?php endif ?>
+    <?php if (session()->getFlashData('error')) : ?>
+        <?php $pesan = session()->getFlashData('error') ?>
+        <?= "<script>
+        Swal.fire({
+            position: 'center',
+            icon: 'error',
+            title: 'Error !',
+            text: '$pesan',
+            showConfirmButton: false,
+            timer: 3000
+          });
+                
+            </script>"; ?>
 
     <?php endif ?>
 

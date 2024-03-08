@@ -78,6 +78,10 @@ class leptop extends BaseController
             'total_leptop_ok' => $this->aset->where('type', 'leptop')->where('kondisi', 'OK')->countAllResults(),
             'total_leptop_rusak' => $this->aset->where('type', 'leptop')->where('kondisi', 'rusak')->countAllResults(),
             'total_leptop_blanks' => $this->aset->where('type', 'leptop')->where('kondisi', 'blanks')->countAllResults(),
+            'total_leptop_terdistribusi' => $this->aset->where('type', 'leptop')->where('stock', 'terdistribusi')->where('kondisi', 'OK')->countAllResults(),
+            'total_leptop_dipinjam' => $this->aset->where('type', 'leptop')->where('stock', 'dipinjam')->where('kondisi', 'OK')->countAllResults(),
+            'total_leptop_tersedia' => $this->aset->where('type', 'leptop')->where('stock', 'tersedia')->where('kondisi', 'OK')->countAllResults(),
+            'total_leptop_backup' => $this->aset->where('type', 'leptop')->where('stock', 'backup')->where('kondisi', 'OK')->countAllResults(),
 
         ];
 
@@ -201,6 +205,34 @@ class leptop extends BaseController
             'total_leptop_ok' => $this->aset->where('type', 'leptop')->where('kondisi', 'OK')->countAllResults(),
             'total_leptop_rusak' => $this->aset->where('type', 'leptop')->where('kondisi', 'RUSAK')->countAllResults(),
             'total_leptop_blanks' => $this->aset->where('type', 'leptop')->where('kondisi', 'BLANK')->countAllResults(),
+            'total_leptop_terdistribusi' => $this->aset->where('type', 'leptop')->where('stock', 'terdistribusi')->where('kondisi', 'OK')->countAllResults(),
+            'total_leptop_dipinjam' => $this->aset->where('type', 'leptop')->where('stock', 'dipinjam')->where('kondisi', 'OK')->countAllResults(),
+            'total_leptop_tersedia' => $this->aset->where('type', 'leptop')->where('stock', 'tersedia')->where('kondisi', 'OK')->countAllResults(),
+            'total_leptop_backup' => $this->aset->where('type', 'leptop')->where('stock', 'backup')->where('kondisi', 'OK')->countAllResults(),
+
+            //'aset'    => $this->aset->getId($id),
+
+        ];
+        return view('admin/leptop', $data);
+    }
+
+    public function searchstock($id)
+    {
+        $data = [
+            'title'   => 'Data leptop',
+            'aktiv'   => $id,
+            'segment' => $this->request->uri->getSegments(),
+            'admin'   => $this->admin->find(session()->get('id')),
+            'aset' => $this->aset->where('type', 'leptop')->where('stock', $id)->where('kondisi', 'OK')->orderBy('id', 'desc')->findAll(),
+
+            'total_leptop' => $this->aset->where('type', 'leptop')->countAllResults(),
+            'total_leptop_ok' => $this->aset->where('type', 'leptop')->where('kondisi', 'OK')->countAllResults(),
+            'total_leptop_rusak' => $this->aset->where('type', 'leptop')->where('kondisi', 'RUSAK')->countAllResults(),
+            'total_leptop_blanks' => $this->aset->where('type', 'leptop')->where('kondisi', 'BLANK')->countAllResults(),
+            'total_leptop_terdistribusi' => $this->aset->where('type', 'leptop')->where('stock', 'terdistribusi')->where('kondisi', 'OK')->countAllResults(),
+            'total_leptop_dipinjam' => $this->aset->where('type', 'leptop')->where('stock', 'dipinjam')->where('kondisi', 'OK')->countAllResults(),
+            'total_leptop_tersedia' => $this->aset->where('type', 'leptop')->where('stock', 'tersedia')->where('kondisi', 'OK')->countAllResults(),
+            'total_leptop_backup' => $this->aset->where('type', 'leptop')->where('stock', 'backup')->where('kondisi', 'OK')->countAllResults(),
             //'aset'    => $this->aset->getId($id),
 
         ];
@@ -287,12 +319,25 @@ class leptop extends BaseController
 
 
             'type' => $this->type->where('nama', 'pc')->orderBy('nama', 'asc')->findAll(),
+
             'prosesor'    => $this->prosesor->orderBy('nama', 'asc')->findAll(),
+            'prosesor2'   => $this->aset->groupBy('prosesor')->findAll(),
+
             'generasi'    => $this->generasi->orderBy('nama', 'asc')->findAll(),
+            'generasi2'   => $this->aset->groupBy('generasi')->findAll(),
+
             'hdd'    => $this->hdd->orderBy('nama', 'asc')->findAll(),
+            'hdd2'   => $this->aset->groupBy('hdd')->findAll(),
+
             'ram'    => $this->ram->orderBy('nama', 'asc')->findAll(),
+            'ram2'   => $this->aset->groupBy('ram')->findAll(),
+
             'rincian'    => $this->rincian->orderBy('nama', 'asc')->findAll(),
+            'rincian2'   => $this->aset->groupBy('rincian')->findAll(),
+
             'status'    => $this->status->orderBy('nama', 'asc')->findAll(),
+            'status2'   => $this->aset->groupBy('status')->findAll(),
+
             'kondisi'    => $this->kondisi->orderBy('nama', 'asc')->findAll(),
             'stock'    => $this->stok->orderBy('nama', 'asc')->findAll(),
             // 'aset'    => $this->aset->where('serial', $id)->findAll(),
@@ -472,7 +517,28 @@ class leptop extends BaseController
             return redirect()->to(base_url('admin/leptop'));
         }
     }
+    public function saveeditmodalmanufacture()
+    {
 
+        $tgl = date("Y-m-d");
+        $idlink = $this->request->getVar('id');
+
+        // $tgl= date("Y-m-d");
+        $post = [
+            'nama'            => $this->request->getVar('nama'),
+            'tgl'           =>  $tgl,
+            //'kelas'           => $this->request->getVar('kelas'),
+            //'tahun_manufacture' => $this->tp->tahun,
+        ];
+
+        if ($this->manufacture->save($post)) {
+            session()->setFlashdata('success', 'Data berhasil di simpan.');
+            return redirect()->to(base_url('admin/leptop/edit/' . $idlink));
+        } else {
+            session()->setFlashdata('error', 'Data Sudah Terdaftar !');
+            return redirect()->to(base_url('admin/leptop/edit/' . $idlink));
+        }
+    }
     public function saveedit()
     {
 
