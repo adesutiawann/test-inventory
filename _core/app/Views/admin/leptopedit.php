@@ -218,7 +218,7 @@
                                 <div class="carousel-inner">
                                     <?php if ($images == null) : ?>
                                         <div class="carousel-item active">
-                                            <img src="<?= base_url() ?>/uploads/noimage.png" class="d-block w-100 rounded-1" alt="No Image">
+                                            <img src="<?= base_url() ?>/uploads/noimage.jpg" class="d-block w-100 rounded-1" alt="No Image">
                                         </div>
                                     <?php else : ?>
                                         <?php foreach ($images as $key => $value) : ?>

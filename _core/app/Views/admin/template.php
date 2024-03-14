@@ -13,7 +13,7 @@
     <meta name="author" content="DukunWeb">
     <link rel="shortcut icon" href="<?= base_url() ?>/logoks.png">
 
-     <link rel="stylesheet" href="<?= base_url('/assets/css/loader.css') ?>">
+    <link rel="stylesheet" href="<?= base_url('/assets/css/loader.css') ?>">
 
     <!-- FontAwesome JS-->
     <script defer src="<?= base_url() ?>/assets/plugins/fontawesome/js/all.min.js"></script>
@@ -600,6 +600,12 @@
                                         </svg>
                                     </span>
                                     <span class="nav-link-text">Setting</span>
+                                </a>
+                                <a class="nav-link <?= ($menu == 'setting') ? 'active' : '' ?>" target="_blank" href="https://www.dell.com/support/home/en-us/product-support/servicetag/0-bSttUkx2aVRGQ0FjNDNFR1RRTVF1Zz090/docs">
+                                    <span class="nav-icon">
+                                        <i class="fa-solid fa-link"></i>
+                                    </span>
+                                    <span class="nav-link-text">Support Services</span>
                                 </a>
                                 <!--//nav-link-->
                             </li>
