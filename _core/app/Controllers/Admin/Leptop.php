@@ -262,6 +262,7 @@ class leptop extends BaseController
         ];
         return view('admin/leptopadd', $data);
     }
+    //viewupdate
     public function view($id)
     {
         // Check if the admin is logged in
@@ -292,6 +293,27 @@ class leptop extends BaseController
                 ->countAllResults(),
             'images' => $this->images->where('serial', $id)->findAll(),
             'riwayat' => $this->riwayat->where('serial', $id)->orderBy('id', 'desc')->findAll(),
+
+            'nama'    => $this->manufacture->orderBy('nama', 'asc')->findAll(),
+            'nama2'   => $this->aset->groupBy('manufacture')->findAll(),
+
+            'prosesor'    => $this->prosesor->orderBy('nama', 'asc')->findAll(),
+            'prosesor2'   => $this->aset->groupBy('prosesor')->findAll(),
+
+            'generasi'    => $this->generasi->orderBy('nama', 'asc')->findAll(),
+            'generasi2'   => $this->aset->groupBy('generasi')->findAll(),
+
+            'hdd'    => $this->hdd->orderBy('nama', 'asc')->findAll(),
+            'hdd2'   => $this->aset->groupBy('hdd')->findAll(),
+
+            'ram'    => $this->ram->orderBy('nama', 'asc')->findAll(),
+            'ram2'   => $this->aset->groupBy('ram')->findAll(),
+
+            'rincian'    => $this->rincian->orderBy('nama', 'asc')->findAll(),
+            'rincian2'   => $this->aset->groupBy('rincian')->findAll(),
+
+            'status'    => $this->status->orderBy('nama', 'asc')->findAll(),
+            'status2'   => $this->aset->groupBy('status')->findAll(),
         ];
 
         // Load the view with the data
@@ -360,7 +382,7 @@ class leptop extends BaseController
             $post = [
                 'id'       => $this->request->getVar('id'),
                 'manufacture'            => $this->request->getVar('manufacture'),
-                // 'type'            => $this->request->getVar('type'),
+
                 'prosesor'            => $this->request->getVar('prosesor'),
                 'generasi'            => $this->request->getVar('generasi'),
                 'hdd'            => $this->request->getVar('hdd'),

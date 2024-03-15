@@ -20,7 +20,7 @@
 
 <div class="app-card app-card-accordion shadow-sm mb-4">
     <div class="app-card-body p-4">
-        <form action="<?= base_url('admin/aset/save') ?>" method="POST" enctype="multipart/form-data">
+        <form action="<?= base_url('admin/leptop/save') ?>" method="POST" enctype="multipart/form-data">
             <div class="row">
                 <input type="text" name="id" hidden class="form-control" value="<?= $aset->id ?>" required>
 
@@ -49,18 +49,11 @@
 
 
                 </div>
-                <div class="col-md-4" hidden>
-                    Type
-                    <select name="type" class="form-select">
-                        <?php foreach ($type as $gr) : ?>
-                            <option value="<?= $gr->nama ?>"><?= $gr->nama ?></option>
-                        <?php endforeach ?>
-                    </select>
-                </div>
+
                 <div class="col-md-4">
                     Prosesor
                     <div class="input-group">
-                        <select name="manufacture" class="form-select" id="inputGroupSelect04" aria-label="Example select with button addon">
+                        <select name="prosesor" class="form-select" id="inputGroupSelect04" aria-label="Example select with button addon">
                             <option value="">Pilih Prosesor</option>
                             <?php foreach ($prosesor2 as $gr) : ?>
                                 <option value="<?= $gr->prosesor ?>" <?= ($gr->prosesor == $aset->prosesor) ? 'selected' : '' ?>><?= $gr->prosesor ?></option>
