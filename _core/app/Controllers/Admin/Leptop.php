@@ -370,9 +370,9 @@ class leptop extends BaseController
         return view('admin/leptopedit', $data);
     }
 
-    public function save()
+    public function saveupdate()
     {
-        //if (isset($_POST['Simpan'])) {
+        //SAVE UPDATE {
 
 
         // $tgl = date("Y-m-d");
@@ -382,7 +382,6 @@ class leptop extends BaseController
             $post = [
                 'id'       => $this->request->getVar('id'),
                 'manufacture'            => $this->request->getVar('manufacture'),
-
                 'prosesor'            => $this->request->getVar('prosesor'),
                 'generasi'            => $this->request->getVar('generasi'),
                 'hdd'            => $this->request->getVar('hdd'),
@@ -395,69 +394,25 @@ class leptop extends BaseController
                 'tgl_masuk'            => $this->request->getVar('masuk'),
                 'tgl_keluar'            => $this->request->getVar('keluar'),
                 'serial'            => $this->request->getVar('serial'),
-                'user'            => $this->request->getVar('user'),
-                'lokasi'            => $this->request->getVar('lokasi'),
+
             ];
 
-            $tgl = date("Y-m-d H:i:s");
-            // $admin = $this->Admin_model->find($this->session->userdata('id'));
-            $admin   = $this->admin->find(session()->get('id'));
-            $postx = [
-                //'id'       => $this->request->getVar('id'),      
 
-                'serial'            => $this->request->getVar('serial'),
-                'tgl'            => $tgl,
-                'ket'            => $this->request->getVar('ketupdate'),
-                'user'            => $this->request->getVar('user'),
-                'lokasi'            => $this->request->getVar('lokasi'),
-                //'teknisi'   => $this->admin->find(session()->get('id')),
-                'teknisi'   => $admin->nama,
-            ];
 
-            if ($this->aset->save($post) &&   $this->riwayat->save($postx)) {
+            if ($this->aset->save($post)) {
                 //saveriwayat();
-                if (!empty($_FILES['foto']['name'][0])) {
-                    $tgl = date("Y-m-d");
-                    $files = $this->request->getFileMultiple('foto');
-                    $namaFiles = []; // Array untuk menyimpan nama-nama file
 
-                    foreach ($files as $file) {
-                        $nama = $file->getRandomName();
-                        $file->move('uploads/kegiatan/', $nama);
-
-                        // Simpan nama file ke dalam array
-                        $namaFiles[] = $nama;
-                    }
-
-                    // Persiapkan data untuk disimpan ke dalam database
-                    foreach ($namaFiles as $nama) {
-                        $postData = [
-                            'tgl' => $tgl,
-                            'serial' => $this->request->getVar('serial'),
-                            'image' => $nama,
-                        ];
-
-                        // Simpan data ke dalam database
-                        if ($this->images->insert($postData) === false) {
-                            session()->setFlashdata('error', 'Data gagal disimpan.');
-                            return redirect()->to(base_url('admin/leptop/edit/' . $idlink));
-                        }
-                    }
-
-                    session()->setFlashdata('success', 'Upload foto berhasil.');
-                    return redirect()->to(base_url('admin/leptop/edit/' . $idlink));
-                }
                 session()->setFlashdata('success', 'Data berhasil di edit.');
-                return redirect()->to(base_url('admin/leptop/edit/' . $idlink));
+                return redirect()->to(base_url('admin/leptop/view/' . $idlink));
             } else {
                 session()->setFlashdata('error', 'Data Gagal di simpan.');
-                return redirect()->to(base_url('admin/leptop/edit/' . $idlink));
+                return redirect()->to(base_url('admin/leptop/view/' . $idlink));
             }
         } else {
             // $tgl= date("Y-m-d");
             $post = [
                 'manufacture'            => $this->request->getVar('manufacture'),
-                'type'            => 'PC',
+                'type'            => 'Leptop',
                 'prosesor'            => $this->request->getVar('prosesor'),
                 'generasi'            => $this->request->getVar('generasi'),
                 'hdd'            => $this->request->getVar('hdd'),
@@ -480,6 +435,77 @@ class leptop extends BaseController
                 session()->setFlashdata('error', 'Data Sudah Terdaftar !');
                 return redirect()->to(base_url('admin/leptop'));
             }
+        }
+    }
+
+    public function saveenduser()
+    {
+        //SAVE END USER {
+
+
+        // $tgl = date("Y-m-d");
+        //  if ($this->request->getVar('serial')) {
+        //$tgl = date("Y-m-d");
+        $idlink = $this->request->getVar('serial');
+
+        $tgl = date("Y-m-d H:i:s");
+        // $admin = $this->Admin_model->find($this->session->userdata('id'));
+        $admin   = $this->admin->find(session()->get('id'));
+        $postx = [
+            //'id'       => $this->request->getVar('id'),      
+
+            'serial'            => $this->request->getVar('serial'),
+            'tgl'            => $tgl,
+            'ket'            => $this->request->getVar('ketupdate'),
+            'user'            => $this->request->getVar('user'),
+            'lokasi'            => $this->request->getVar('lokasi'),
+            //'teknisi'   => $this->admin->find(session()->get('id')),
+            'teknisi'   => $admin->nama,
+        ];
+        $post = [
+            'user'            => $this->request->getVar('user'),
+            'lokasi'            => $this->request->getVar('lokasi'),
+        ];
+        //$existingAsetData = $this->aset->where('user', $post['user'])->where('lokasi', $post['lokasi'])->first();
+
+        if ($this->riwayat->save($postx) &&  $this->aset->updateDatax($idlink, $post)) {
+            //saveriwayat();
+            if (!empty($_FILES['foto']['name'][0])) {
+                $tgl = date("Y-m-d");
+                $files = $this->request->getFileMultiple('foto');
+                $namaFiles = []; // Array untuk menyimpan nama-nama file
+
+                foreach ($files as $file) {
+                    $nama = $file->getRandomName();
+                    $file->move('uploads/kegiatan/', $nama);
+
+                    // Simpan nama file ke dalam array
+                    $namaFiles[] = $nama;
+                }
+
+                // Persiapkan data untuk disimpan ke dalam database
+                foreach ($namaFiles as $nama) {
+                    $postData = [
+                        'tgl' => $tgl,
+                        'serial' => $this->request->getVar('serial'),
+                        'image' => $nama,
+                    ];
+
+                    // Simpan data ke dalam database
+                    if ($this->images->insert($postData) === false) {
+                        session()->setFlashdata('error', 'Data gagal disimpan.');
+                        return redirect()->to(base_url('admin/leptop/view/' . $idlink));
+                    }
+                }
+
+                session()->setFlashdata('success', 'Upload foto berhasil.');
+                return redirect()->to(base_url('admin/leptop/view/' . $idlink));
+            }
+            session()->setFlashdata('success', 'Data berhasil di view.');
+            return redirect()->to(base_url('admin/leptop/view/' . $idlink));
+        } else {
+            session()->setFlashdata('error', 'Data Gagal di simpan.');
+            return redirect()->to(base_url('admin/leptop/view/' . $idlink));
         }
     }
 
@@ -606,10 +632,10 @@ class leptop extends BaseController
     {
         if ($this->riwayat->delete($id)) {
             session()->setFlashdata('success', 'Data Riwayat berhasil di hapus.');
-            return redirect()->to(base_url('admin/leptop/edit/' . $id2));
+            return redirect()->to(base_url('admin/leptop/view/' . $id2));
         } else {
             session()->setFlashdata('danger', 'Data Gagal berhasil di hapus.');
-            return redirect()->to(base_url('admin/leptop/edit/' . $id2));
+            return redirect()->to(base_url('admin/leptop/view/' . $id2));
         }
     }
 

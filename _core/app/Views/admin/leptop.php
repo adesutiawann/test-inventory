@@ -163,17 +163,13 @@ $menu = $aktiv;
                             </td>
 
                             <td>
-                                <a href="<?= base_url('admin/suratkeluar/keranjang/' . $value->serial) ?>" <?= ($admin->level == '3') ? 'hidden' : '' ?> class="btn btn-sm btn-success text-white mr-2">
-                                    <i class="fa-solid fa-right-from-bracket"></i>
-                                </a>
+
 
                                 <a href="<?= base_url('admin/leptop/view/' . $value->serial) ?>" <?= ($admin->level == '3') ? 'hidden' : '' ?> class="btn btn-sm btn-primary text-white mr-2">
                                     <i class="fa-solid fa-circle-info"></i>
                                 </a>
 
-                                <a href="<?= base_url('admin/leptop/edit/' . $value->serial) ?>" class="btn btn-sm btn-info text-white ">
-                                    <i class="fa-solid fa-pen-to-square"></i>
-                                </a>
+
 
                                 <a href="<?= base_url("admin/leptop/delete/{$value->id}") ?>" class="btn btn-sm btn-danger text-white hapusDataBtn" data-id="<?php echo $value->serial; ?>">
                                     <i class="fa-solid fa-trash-can"></i>
