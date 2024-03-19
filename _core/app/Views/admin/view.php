@@ -53,7 +53,10 @@
                 <button class="nav-link " id="update-tab" data-bs-toggle="tab" data-bs-target="#update-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="false"><i class="fa-solid fa-pen-to-square"></i> Update</button>
             </li>
             <li class="nav-item" role="presentation">
-                <button class="nav-link " id="enduser-tab" data-bs-toggle="tab" data-bs-target="#enduser-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="false">End User</button>
+                <button class="nav-link " id="enduser-tab" data-bs-toggle="tab" data-bs-target="#enduser-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="false">Images</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link " id="images-tab" data-bs-toggle="tab" data-bs-target="#enduser-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="false">End User</button>
             </li>
             <li class="nav-item" role="presentation">
                 <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact-tab-pane" type="button" role="tab" aria-controls="contact-tab-pane" aria-selected="false">Barcode</button>
@@ -617,6 +620,153 @@
                                     <hr>
                                     <div class="col-md-12">
                                         images
+                                        <div class="input-group">
+                                            <input type="file" name="foto[]" multiple="multiple" class="form-control" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
+
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-12">
+                                        User
+                                        <input type="text" hidden name="serial" oninput="convertToUppercase(this)" value="<?= $aset->serial ?>" class="form-control" required>
+
+                                        <input type="text" name="user" oninput="convertToUppercase(this)" value="<?= $aset->user ?>" class="form-control" required>
+
+                                    </div>
+                                    <div class="col-md-12">
+                                        Lokasi
+                                        <input type="text" name="lokasi" class="form-control" value="<?= $aset->lokasi ?>" required>
+                                    </div>
+
+                                    <div class="col-md-12 mb-3">
+                                        Keterangan
+                                        <div class="form-floating">
+                                            <textarea name="ketupdate" id="sentenceCaseInput" class="form-control" required placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px"></textarea>
+                                            <label for="floatingTextarea2">Comments</label>
+                                        </div>
+
+                                    </div>
+
+                                    <div class="col-md-12 text-right ">
+                                        <input type="submit" class="btn btn-primary text-white w-100" value="Simpan">
+                                    </div>
+
+
+
+                                </div>
+                            </div>
+                        </main>
+                    </form>
+                </div>
+            </div>
+            <!-- images user -->
+            <div class="tab-pane fade" id="images-tab-pane" role="tabpanel" aria-labelledby="contact-tab" tabindex="0">
+                <div class=" p-5  ">
+                    <form action="<?= base_url('admin/leptop/saveenduser') ?>" method="POST" enctype="multipart/form-data">
+
+                        <main class="app-card app-card-settings shadow-sm p-4">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+                                        <div class="carousel-inner">
+                                            <?php if ($images == null) : ?>
+                                                <div class="carousel-item active">
+                                                    <img src="<?= base_url() ?>/uploads/noimage.jpg" class="d-block w-100 rounded-1" alt="No Image">
+                                                </div>
+                                            <?php else : ?>
+                                                <?php foreach ($images as $key => $value) : ?>
+                                                    <div class="carousel-item<?= $key == 0 ? ' active' : '' ?>">
+                                                        <img src="<?= base_url() ?>/uploads/kegiatan/<?= $value->image ?>" data-bs-toggle="modal" data-bs-target="#imageModal3" class="d-block w-100 rounded-1" alt="Image <?= $key + 1 ?>">
+                                                    </div>
+                                                <?php endforeach; ?>
+                                            <?php endif; ?>
+                                        </div>
+                                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                            <span class="visually-hidden">Previous</span>
+                                        </button>
+                                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                            <span class="visually-hidden">Next</span>
+                                        </button>
+                                    </div>
+
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="imageModal3" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog modal-lg">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h1 class="modal-title fs-5" id="imageModalLabel">Modal title</h1>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body container">
+                                                    <div id="modalCarousel" class="carousel slide" data-bs-ride="carousel">
+                                                        <div class="carousel-inner">
+                                                            <?php if ($images == null) : ?>
+                                                                <div class="carousel-item active center">
+                                                                    <div class="imgBox text-center">
+                                                                        <img class="qrImage img-fluid" alt="QR Code">
+                                                                        <div class="text"><?= $aset->serial ?></div>
+                                                                    </div>
+                                                                </div>
+                                                            <?php else : ?>
+                                                                <?php foreach ($images as $key => $value) : ?>
+                                                                    <div class="carousel-item<?= $key == 0 ? ' active' : '' ?>">
+                                                                        <img src="<?= base_url() ?>/uploads/kegiatan/<?= $value->image ?>" class="d-block w-100 rounded-1 img-fluid" alt="Image <?= $key + 1 ?>">
+                                                                    </div>
+                                                                <?php endforeach; ?>
+                                                            <?php endif; ?>
+                                                        </div>
+                                                        <div class="btn-group">
+                                                            <button class="carousel-control-prev" type="button" data-bs-target="#modalCarousel" data-bs-slide="prev">
+                                                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                                                <span class="visually-hidden">Previous</span>
+                                                            </button>
+                                                            <button class="carousel-control-next" type="button" data-bs-target="#modalCarousel" data-bs-slide="next">
+                                                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                                                <span class="visually-hidden">Next</span>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="row mt-4">
+                                                        <?php if ($images != null) : ?>
+                                                            <?php foreach ($images as $key => $value) : ?>
+                                                                <div class="col-6 col-md-4 col-lg-3 mb-3">
+                                                                    <img src="<?= base_url() ?>/uploads/kegiatan/<?= $value->image ?>" class="d-block w-100 rounded-1 img-fluid" alt="Image <?= $key + 1 ?>" onclick="showImage('<?= base_url() ?>/uploads/kegiatan/<?= $value->image ?>')">
+                                                                    <a href="<?= base_url("admin/aset/deleteimages/{$value->id}/{$value->serial}") ?>" class="ms-4  text-white btn-sm hapusDataBtn">
+                                                                        <i class="fa-regular fa-trash-can text-danger"></i>
+                                                                    </a>
+                                                                </div>
+                                                            <?php endforeach; ?>
+                                                        <?php endif; ?>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                    <button type="button" class="btn btn-primary">Understood</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- TUTUP Modal -->
+
+                                </div>
+
+                                <script>
+                                    function showImage(imageUrl) {
+                                        $('#carouselExampleIndicators .carousel-inner').html(`<div class="carousel-item active"><img src="${imageUrl}" class="d-block w-100 rounded-1 " alt="Clicked Image"></div>`);
+                                    }
+                                </script>
+
+
+                                <div class="col-md-6">
+                                    <h2><?= $aset->manufacture ?></h2>
+                                    <p class="lead"><b>Spesifikasi :</b> Prosesor <?= $aset->prosesor ?>, RAM <?= $aset->ram ?>, <?= $aset->hdd ?></p>
+
+                                    <hr>
+                                    <div class="col-md-12">
+                                        images images
                                         <div class="input-group">
                                             <input type="file" name="foto[]" multiple="multiple" class="form-control" id="inputGroupFile04" aria-describedby="inputGroupFileAddon04" aria-label="Upload">
 

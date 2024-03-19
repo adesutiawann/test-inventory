@@ -147,6 +147,9 @@ $menu = $aktiv;
                                 <span>
                                     <?= $value->lokasi ?><br>
                                 </span>
+                                <span>Ket :
+                                    <?= $value->ket ?>
+                                </span>
                             </td>
 
                             <td>
