@@ -469,38 +469,7 @@ class leptop extends BaseController
         //$existingAsetData = $this->aset->where('user', $post['user'])->where('lokasi', $post['lokasi'])->first();
 
         if ($this->riwayat->save($postx) &&  $this->aset->updateDatax($idlink, $post)) {
-            //saveriwayat();
-            if (!empty($_FILES['foto']['name'][0])) {
-                $tgl = date("Y-m-d");
-                $files = $this->request->getFileMultiple('foto');
-                $namaFiles = []; // Array untuk menyimpan nama-nama file
-
-                foreach ($files as $file) {
-                    $nama = $file->getRandomName();
-                    $file->move('uploads/kegiatan/', $nama);
-
-                    // Simpan nama file ke dalam array
-                    $namaFiles[] = $nama;
-                }
-
-                // Persiapkan data untuk disimpan ke dalam database
-                foreach ($namaFiles as $nama) {
-                    $postData = [
-                        'tgl' => $tgl,
-                        'serial' => $this->request->getVar('serial'),
-                        'image' => $nama,
-                    ];
-
-                    // Simpan data ke dalam database
-                    if ($this->images->insert($postData) === false) {
-                        session()->setFlashdata('error', 'Data gagal disimpan.');
-                        return redirect()->to(base_url('admin/leptop/view/' . $idlink));
-                    }
-                }
-
-                session()->setFlashdata('success', 'Upload foto berhasil.');
-                return redirect()->to(base_url('admin/leptop/view/' . $idlink));
-            }
+            
             session()->setFlashdata('success', 'Data berhasil di view.');
             return redirect()->to(base_url('admin/leptop/view/' . $idlink));
         } else {
@@ -508,7 +477,47 @@ class leptop extends BaseController
             return redirect()->to(base_url('admin/leptop/view/' . $idlink));
         }
     }
+    public function images()
+    {
 
+        $idlink = $this->request->getVar('serial');
+        $tgl = date("Y-m-d H:i:s");
+
+        //saveriwayat();
+        if (!empty($_FILES['foto']['name'][0])) {
+            $tgl = date("Y-m-d");
+            $files = $this->request->getFileMultiple('foto');
+            $namaFiles = []; // Array untuk menyimpan nama-nama file
+
+            foreach ($files as $file) {
+                $nama = $file->getRandomName();
+                $file->move('uploads/kegiatan/', $nama);
+
+                // Simpan nama file ke dalam array
+                $namaFiles[] = $nama;
+            }
+
+            // Persiapkan data untuk disimpan ke dalam database
+            foreach ($namaFiles as $nama) {
+                $postData = [
+                    'tgl' => $tgl,
+                    'serial' => $this->request->getVar('serial'),
+                    'image' => $nama,
+                ];
+
+                // Simpan data ke dalam database
+                if ($this->images->insert($postData) === false) {
+                    session()->setFlashdata('error', 'Data gagal disimpan.');
+                    return redirect()->to(base_url('admin/leptop/view/' . $idlink));
+                }
+            }
+
+            session()->setFlashdata('success', 'Upload foto berhasil.');
+            return redirect()->to(base_url('admin/leptop/view/' . $idlink));
+        }
+        session()->setFlashdata('success', 'Data berhasil di view.');
+        return redirect()->to(base_url('admin/leptop/view/' . $idlink));
+    }
 
     public function process()
     {
