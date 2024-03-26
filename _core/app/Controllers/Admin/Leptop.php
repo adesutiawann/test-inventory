@@ -246,7 +246,7 @@ class leptop extends BaseController
         }
 
         $data = [
-            'title'   => 'Persediaan/Pc/Add',
+            'title'   => 'Persediaan/Leptop/Add',
             'segment' => $this->request->uri->getSegments(),
             'admin'   => $this->admin->find(session()->get('id')),
             'nama'    => $this->manufacture->orderBy('nama', 'asc')->findAll(),
@@ -283,7 +283,7 @@ class leptop extends BaseController
         $manufacture = $aset->manufacture; // Assuming $aset is returned as an array
 
         $data = [
-            'title' => 'Persediaan/Pc/Details',
+            'title' => 'Persediaan/Leptop/Details',
             'segment' => $this->request->uri->getSegments(),
             'admin' => $this->admin->find(session()->get('id')),
             'aset' => $aset,
@@ -469,7 +469,7 @@ class leptop extends BaseController
         //$existingAsetData = $this->aset->where('user', $post['user'])->where('lokasi', $post['lokasi'])->first();
 
         if ($this->riwayat->save($postx) &&  $this->aset->updateDatax($idlink, $post)) {
-            
+
             session()->setFlashdata('success', 'Data berhasil di view.');
             return redirect()->to(base_url('admin/leptop/view/' . $idlink));
         } else {
