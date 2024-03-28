@@ -141,8 +141,7 @@
                                             </div>
                                         </div>
                                         <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                            <button type="button" class="btn btn-primary">Understood</button>
+                                            <button type="button" class="btn btn-danger text-white" data-bs-dismiss="modal">Close</button>
                                         </div>
                                     </div>
                                 </div>
@@ -870,6 +869,11 @@
     }
 </script>
 
+<script>
+    function showImage(imageUrl) {
+        $('#imageModal .carousel-inner').html(`<div class="carousel-item active"><img src="${imageUrl}" class="d-block w-100 rounded-1 img-fluid" alt="Clicked Image"></div>`);
+    }
+</script>
 
 <?= $this->endSection() ?>
 

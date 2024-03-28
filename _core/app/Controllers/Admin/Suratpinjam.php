@@ -28,7 +28,7 @@ class Suratpinjam extends BaseController
     protected $admin;
     protected $asetk;
 
-    protected $suratkeluar;
+    protected $suratpinjam;
 
     protected $manufacture;
     protected $type;
@@ -50,7 +50,7 @@ class Suratpinjam extends BaseController
         $this->aset = new AsetModel();
         $this->asetk     = new AsetKModel();
 
-        $this->suratkeluar     = new SuratpinjamModel();
+        $this->suratpinjam     = new SuratpinjamModel();
 
         // $this->pelajaran     = new PelajaranModel();
 
@@ -72,10 +72,10 @@ class Suratpinjam extends BaseController
             return redirect()->to(base_url());
         }
         // script pengulangan;
-        $suratKeluar = $this->suratkeluar->findAll();
-        foreach ($suratKeluar as $key => $value) {
+        $suratpinjam = $this->suratpinjam->findAll();
+        foreach ($suratpinjam as $key => $value) {
             $aset = $this->aset->where('id_sk', $value->nomor)->findAll();
-            $suratKeluar[$key]->aset = $aset;
+            $suratpinjam[$key]->aset = $aset;
         }
 
         $data = [
@@ -86,16 +86,16 @@ class Suratpinjam extends BaseController
 
             'aktiv'   => 'ALL',
 
-            //'suratkeluar' => $this->suratkeluar->findAll(),
-            'suratpinjam' => $suratKeluar,
+            //'suratpinjam' => $this->suratpinjam->findAll(),
+            'suratpinjam' => $suratpinjam,
             // 'total_pc_ok' => $this->aset->where('type', 'pc')->where('kondisi', 'OK')->countAllResults(),
-            'suratpinjamttl' => $this->suratkeluar->countAllResults(),
-            'suratpinjamdis' => $this->suratkeluar->where('status', 'Terdistribusi')->countAllResults(),
-            'suratpinjambac' => $this->suratkeluar->where('status', 'Backup')->countAllResults(),
+            'suratpinjamttl' => $this->suratpinjam->countAllResults(),
+            'suratpinjamdis' => $this->suratpinjam->where('status', 'Terdistribusi')->countAllResults(),
+            'suratpinjambac' => $this->suratpinjam->where('status', 'Backup')->countAllResults(),
 
 
             //'asetk' => $this->asetk->findAll(),
-            //'suratkeluar'    => $this->asetk->find($id),
+            //'suratpinjam'    => $this->asetk->find($id),
 
         ];
 
@@ -111,10 +111,10 @@ class Suratpinjam extends BaseController
             'aktiv'   => $id,
             'segment' => $this->request->uri->getSegments(),
             'admin'   => $this->admin->find(session()->get('id')),
-            'suratkeluar' => $this->suratkeluar->where('status', $id)->findAll(),
-            'suratkeluarttl' => $this->suratkeluar->countAllResults(),
-            'suratkeluardis' => $this->suratkeluar->where('status', 'Terdistribusi')->countAllResults(),
-            'suratkeluarbac' => $this->suratkeluar->where('status', 'Backup')->countAllResults(),
+            'suratpinjam' => $this->suratpinjam->where('status', $id)->findAll(),
+            'suratpinjamttl' => $this->suratpinjam->countAllResults(),
+            'suratpinjamdis' => $this->suratpinjam->where('status', 'Terdistribusi')->countAllResults(),
+            'suratpinjambac' => $this->suratpinjam->where('status', 'Backup')->countAllResults(),
             //'asetk' => $this->asetk->where('status', $id)->orderBy('id', 'desc')->findAll(),
             //'asetk' => $this->asetk->findAll(),
             // 'total_pc' => $this->aset->where('type', 'pc')->countAllResults(),
@@ -124,10 +124,10 @@ class Suratpinjam extends BaseController
             //'aset'    => $this->aset->getId($id),
 
         ];
-        return view('admin/suratkeluar', $data);
+        return view('admin/suratpinjam', $data);
     }
 
-    public function cetaksuratkeluar()
+    public function cetaksuratpinjam()
     {
         if (session()->get('logged_admin') != true) {
             return redirect()->to(base_url());
@@ -141,7 +141,7 @@ class Suratpinjam extends BaseController
         // Inisialisasi Query Builder untuk data aset utama
         //$asetQuery = $this->aset->where('type', 'pc');
 
-        $asetQuery = $this->suratkeluar;
+        $asetQuery = $this->suratpinjam;
         // Filter berdasarkan kriteria pencarian
         if ($cari) {
             $asetQuery->groupStart()
@@ -159,10 +159,10 @@ class Suratpinjam extends BaseController
         // Urutkan hasil query
         $asetQuery->orderBy('id', 'desc');
 
-        $suratKeluar = $this->suratkeluar->findAll();
-        foreach ($suratKeluar as $key => $value) {
+        $suratpinjam = $this->suratpinjam->findAll();
+        foreach ($suratpinjam as $key => $value) {
             $aset = $this->aset->where('id_sk', $value->nomor)->findAll();
-            $suratKeluar[$key]->aset = $aset;
+            $suratpinjam[$key]->aset = $aset;
         }
         $data = [
             'title'   => 'Surat Pinjam',
@@ -171,23 +171,23 @@ class Suratpinjam extends BaseController
 
             'aset' => $this->aset->getAll(),
 
-            //'suratkeluar' => $this->suratkeluar->findAll(),
-            'suratkeluar' => $suratKeluar,
+            //'suratpinjam' => $this->suratpinjam->findAll(),
+            'suratpinjam' => $suratpinjam,
 
             // 'total_pc_ok' => $this->aset->where('type', 'pc')->where('kondisi', 'OK')->countAllResults(),
-            'suratkeluarttl' => $this->suratkeluar->countAllResults(),
-            'suratkeluardis' => $this->suratkeluar->where('status', 'Terdistribusi')->countAllResults(),
-            'suratkeluarbac' => $this->suratkeluar->where('status', 'Backup')->countAllResults(),
+            'suratpinjamttl' => $this->suratpinjam->countAllResults(),
+            'suratpinjamdis' => $this->suratpinjam->where('status', 'Terdistribusi')->countAllResults(),
+            'suratpinjambac' => $this->suratpinjam->where('status', 'Backup')->countAllResults(),
 
 
             'asetk' => $this->asetk->findAll(),
-            //'suratkeluar'    => $this->asetk->find($id),
+            //'suratpinjam'    => $this->asetk->find($id),
 
         ];
 
 
 
-        return view('admin/cetaksuratkeluar', $data);
+        return view('admin/cetaksuratpinjam', $data);
     }
     public function print()
     {
@@ -202,7 +202,7 @@ class Suratpinjam extends BaseController
 
             'aset' =>  $this->aset->where('id_sk', $nomor)->findAll(),
             //'aset'    => $this->asetk->getId($id),
-            'suratkeluar' => $this->suratkeluar->where('id', $id)->findAll(),
+            'suratpinjam' => $this->suratpinjam->where('id', $id)->findAll(),
 
         ];
         return view('admin/cetaksp', $data);
@@ -212,11 +212,11 @@ class Suratpinjam extends BaseController
         if (session()->get('logged_admin') != true) {
             return redirect()->to(base_url());
         }
-        // $code = $this->suratkeluar->generateCode();
+        // $code = $this->suratpinjam->generateCode();
         //  $id = '1';
         $data = [
             'title'   => 'Surat Pinjam',
-            'nomor' => $this->suratkeluar->generateCode(),
+            'nomor' => $this->suratpinjam->generateCode(),
             'segment' => $this->request->uri->getSegments(),
             'admin'   => $this->admin->find(session()->get('id')),
             'nama'    => $this->manufacture->orderBy('nama', 'asc')->findAll(),
@@ -231,7 +231,7 @@ class Suratpinjam extends BaseController
             'stock'    => $this->stok->orderBy('nama', 'asc')->findAll(),
             //'asetk' => $this->asetk->getIdasetkeluar(),
             'asetk' => $this->aset->where('id_sk', '2')->findAll(),
-            //'suratkeluar' => $this->suratkeluar->where('id_sk', '1')->getAllsuratkeluar(),
+            //'suratpinjam' => $this->suratpinjam->where('id_sk', '1')->getAllsuratpinjam(),
 
             // 'asetk' => $this->asetk->getIdasetkeluar(),
 
@@ -246,12 +246,12 @@ class Suratpinjam extends BaseController
         if (session()->get('logged_admin') != true) {
             return redirect()->to(base_url());
         }
-        // $code = $this->suratkeluar->generateCode();
+        // $code = $this->suratpinjam->generateCode();
         //  $id = '1';
-        $nos = $this->suratkeluar->where('id', $id)->first();
+        $nos = $this->suratpinjam->where('id', $id)->first();
         $data = [
             'title'   => 'Edit Surat Keluar',
-            'nomor' => $this->suratkeluar->generateCode(),
+            'nomor' => $this->suratpinjam->generateCode(),
             'segment' => $this->request->uri->getSegments(),
             'admin'   => $this->admin->find(session()->get('id')),
             'nama'    => $this->manufacture->orderBy('nama', 'asc')->findAll(),
@@ -266,24 +266,24 @@ class Suratpinjam extends BaseController
             'stock'    => $this->stok->orderBy('nama', 'asc')->findAll(),
             //'asetk' => $this->asetk->getIdasetkeluar(),
             //'asetk' => $this->aset->where('id_sk', '1')->findAll(),
-            'suratkeluar' => $this->suratkeluar->where('id', $id)->first(),
+            'suratpinjam' => $this->suratpinjam->where('id', $id)->first(),
             'asetk' => $this->aset->where('id_sk', $nos->nomor)->findAll(),
 
             // 'asetk' => $this->asetk->getIdasetkeluar(),
 
         ];
 
-        return view('admin/suratkeluaredit', $data);
+        return view('admin/suratpinjamedit', $data);
     }
 
     public function data()
     {
         // Menghubungkan ke database
         $db = db_connect();
-        // Membuat instance query builder untuk tabel 'tb_suratkeluar'      
-        $builder = $db->table('tb_suratkeluar')
+        // Membuat instance query builder untuk tabel 'tb_suratpinjam'      
+        $builder = $db->table('tb_suratpinjam')
             ->select(
-                'tb_suratkeluar.id,tb_suratkeluar.tgl_masuk,tb_suratkeluar.tgl_keluar,tb_suratkeluar.serial,tb_suratkeluar.ket,
+                'tb_suratpinjam.id,tb_suratpinjam.tgl_masuk,tb_suratpinjam.tgl_keluar,tb_suratpinjam.serial,tb_suratpinjam.ket,
                 tb_hdd.nama as hdd ,
                 tb_manufacture.nama as manufacture,
                 tb_prosesor.nama as prosesor,
@@ -297,32 +297,32 @@ class Suratpinjam extends BaseController
 
             )
 
-            ->join('tb_hdd', 'tb_hdd.id = tb_suratkeluar.hdd')
-            ->join('tb_manufacture', 'tb_manufacture.id = tb_suratkeluar.manufacture')
-            ->join('tb_type', 'tb_type.id = tb_suratkeluar.type')
-            ->join('tb_prosesor', 'tb_prosesor.id = tb_suratkeluar.prosesor')
-            ->join('tb_generasi', 'tb_generasi.id = tb_suratkeluar.generasi')
-            ->join('tb_ram', 'tb_ram.id = tb_suratkeluar.ram')
-            ->join('tb_rincian', 'tb_rincian.id = tb_suratkeluar.rincian')
-            ->join('tb_status', 'tb_status.id = tb_suratkeluar.status')
-            ->join('tb_stok', 'tb_stok.id = tb_suratkeluar.stock')
-            ->join('tb_kondisi', 'tb_kondisi.id = tb_suratkeluar.kondisi')
+            ->join('tb_hdd', 'tb_hdd.id = tb_suratpinjam.hdd')
+            ->join('tb_manufacture', 'tb_manufacture.id = tb_suratpinjam.manufacture')
+            ->join('tb_type', 'tb_type.id = tb_suratpinjam.type')
+            ->join('tb_prosesor', 'tb_prosesor.id = tb_suratpinjam.prosesor')
+            ->join('tb_generasi', 'tb_generasi.id = tb_suratpinjam.generasi')
+            ->join('tb_ram', 'tb_ram.id = tb_suratpinjam.ram')
+            ->join('tb_rincian', 'tb_rincian.id = tb_suratpinjam.rincian')
+            ->join('tb_status', 'tb_status.id = tb_suratpinjam.status')
+            ->join('tb_stok', 'tb_stok.id = tb_suratpinjam.stock')
+            ->join('tb_kondisi', 'tb_kondisi.id = tb_suratpinjam.kondisi')
 
-            //->where('tb_suratkeluar.kondisi',$id)
+            //->where('tb_suratpinjam.kondisi',$id)
 
-            ->orderBy('tb_suratkeluar.id', 'desc');
+            ->orderBy('tb_suratpinjam.id', 'desc');
 
 
         return DataTable::of($builder)
             ->add('action', function ($row) {
-                return '<a href="' . base_url('admin/suratkeluar/edit/' . $row->id) .
+                return '<a href="' . base_url('admin/suratpinjam/edit/' . $row->id) .
                     '" class="btn btn-sm btn-info text-white">
                 <i class="fa-solid fa-pen-to-square"></i></a> 
-                <a href="' . base_url('admin/suratkeluar/delete/' . $row->id) .
+                <a href="' . base_url('admin/suratpinjam/delete/' . $row->id) .
                     '" class="btn btn-sm btn-danger text-white" onclick="return confirm(\'Yakin?\')"><i class="fa-solid fa-trash-can"></i></a>';
             })
             ->addNumbering('no')->toJson(true);
-        //return view('admin/suratkeluar', $data);
+        //return view('admin/suratpinjam', $data);
     }
 
 
@@ -339,7 +339,7 @@ class Suratpinjam extends BaseController
 
         $data = [
 
-            'title'   => 'Edit suratkeluar',
+            'title'   => 'Edit suratpinjam',
             'input'   => 'hidden',
             'edit'   => '',
             'ade' => '1',
@@ -347,11 +347,11 @@ class Suratpinjam extends BaseController
             'segment' => $this->request->uri->getSegments(),
             //'pel'   => $this->admin->find(session()->get('id')),
 
-            'suratkeluar'    => $this->asetk->find($id),
+            'suratpinjam'    => $this->asetk->find($id),
             'nama'   => $this->asetk->select('nama'),
         ];
 
-        return view('admin/suratkeluar', $data);
+        return view('admin/suratpinjam', $data);
     }
 
     public function save()
@@ -369,10 +369,10 @@ class Suratpinjam extends BaseController
 
             if ($this->asetk->save($post)) {
                 session()->setFlashdata('success', 'Data berhasil di edit update.');
-                return redirect()->to(base_url('admin/suratkeluar'));
+                return redirect()->to(base_url('admin/suratpinjam'));
             } else {
                 session()->setFlashdata('error', 'Data Gagal di simpan.');
-                return redirect()->to(base_url('admin/suratkeluar'));
+                return redirect()->to(base_url('admin/suratpinjam'));
             }
         } else {
 
@@ -389,18 +389,18 @@ class Suratpinjam extends BaseController
                 ];
 
                 if ($this->aset->updateDatax($serial, $post)) {
-                    // if ($this->suratkeluar->updateDatax($post)) {
+                    // if ($this->suratpinjam->updateDatax($post)) {
                     session()->setFlashdata('success', 'Data berhasil masuk list.');
-                    return redirect()->to(base_url('admin/suratkeluar/add'));
+                    return redirect()->to(base_url('admin/suratpinjam/add'));
                 } else {
                     session()->setFlashdata('error', 'Data Sudah Terdaftar !');
-                    return redirect()->to(base_url('admin/suratkeluar/add'));
+                    return redirect()->to(base_url('admin/suratpinjam/add'));
                 }
             } else {
                 //  session()->setFlashdata('warning', '<strong>Peringatan!</strong> Data dengan nomor serial <b>' . $serial . '</b> sudah terdaftar.');
-                //return redirect()->to(base_url('admin/suratkeluar/add')); //break; // Exit the loop if any data already exists
+                //return redirect()->to(base_url('admin/suratpinjam/add')); //break; // Exit the loop if any data already exists
                 session()->setFlashdata('warning', 'Serial <b>' . $serial . '</b>  tidak terdaftar dalam system !');
-                return redirect()->to(base_url('admin/suratkeluar/add'));
+                return redirect()->to(base_url('admin/suratpinjam/add'));
             }
         }
     }
@@ -422,7 +422,7 @@ class Suratpinjam extends BaseController
             ];
 
             if ($this->aset->updateDatax($serial, $post)) {
-                // if ($this->suratkeluar->updateDatax($post)) {
+                // if ($this->suratpinjam->updateDatax($post)) {
                 session()->setFlashdata('success', 'Data berhasil masuk list.');
                 return redirect()->to(base_url('admin/suratpinjam/add'));
             } else {
@@ -431,12 +431,12 @@ class Suratpinjam extends BaseController
             }
         } else {
             //  session()->setFlashdata('warning', '<strong>Peringatan!</strong> Data dengan nomor serial <b>' . $serial . '</b> sudah terdaftar.');
-            //return redirect()->to(base_url('admin/suratkeluar/add')); //break; // Exit the loop if any data already exists
+            //return redirect()->to(base_url('admin/suratpinjam/add')); //break; // Exit the loop if any data already exists
             session()->setFlashdata('warning', 'Serial <b>' . $serial . '</b>  tidak terdaftar dalam system !');
-            return redirect()->to(base_url('admin/suratkeluar/add'));
+            return redirect()->to(base_url('admin/suratpinjam/add'));
         }
     }
-    public function keranjang($serial)
+    public function keranjangoffffff($serial)
     {
 
         $tgl = date("Y-m-d");
@@ -453,7 +453,7 @@ class Suratpinjam extends BaseController
             ];
 
             if ($this->aset->updateDatax($serial, $post)) {
-                // if ($this->suratkeluar->updateDatax($post)) {
+                // if ($this->suratpinjam->updateDatax($post)) {
                 session()->setFlashdata('success', 'Data berhasil masuk list.');
                 return redirect()->to(base_url('admin/suratpinjam/add'));
             } else {
@@ -462,9 +462,42 @@ class Suratpinjam extends BaseController
             }
         } else {
             //  session()->setFlashdata('warning', '<strong>Peringatan!</strong> Data dengan nomor serial <b>' . $serial . '</b> sudah terdaftar.');
-            //return redirect()->to(base_url('admin/suratkeluar/add')); //break; // Exit the loop if any data already exists
+            //return redirect()->to(base_url('admin/suratpinjam/add')); //break; // Exit the loop if any data already exists
             session()->setFlashdata('warning', 'Serial <b>' . $serial . '</b>  tidak terdaftar dalam system !');
-            return redirect()->to(base_url('admin/suratkeluar/add'));
+            return redirect()->to(base_url('admin/suratpinjam/add'));
+        }
+    }
+    public function keranjang($serial)
+    {
+
+        $tgl = date("Y-m-d");
+        // $serial = $this->request->getVar('serial');
+        $existingData = $this->aset->where('serial', $serial)->first();
+        if ($existingData) {
+            $tgl = date("Y-m-d");
+            $post = [
+                'id_sk'            => $this->suratpinjam->generateCode(),
+            ];
+            $postasetk = [
+
+                'serial' => $serial,
+                'tgl'           => $tgl,
+                'id_sk'            => $this->suratpinjam->generateCode(),
+            ];
+
+            if ($this->aset->updateDatax($serial, $post) && $this->asetk->save($postasetk)) {
+                // if ($this->suratpinjam->updateDatax($post)) {
+                session()->setFlashdata('success', 'Data berhasil masuk list.');
+                return redirect()->to(base_url('admin/suratpinjam/add'));
+            } else {
+                session()->setFlashdata('error', 'Data Sudah Terdaftar !');
+                return redirect()->to(base_url('admin/suratpinjam/add'));
+            }
+        } else {
+            //  session()->setFlashdata('warning', '<strong>Peringatan!</strong> Data dengan nomor serial <b>' . $serial . '</b> sudah terdaftar.');
+            //return redirect()->to(base_url('admin/suratpinjam/add')); //break; // Exit the loop if any data already exists
+            session()->setFlashdata('warning', 'Serial <b>' . $serial . '</b>  tidak terdaftar dalam system !');
+            return redirect()->to(base_url('admin/suratpinjam/add'));
         }
     }
 
@@ -484,10 +517,10 @@ class Suratpinjam extends BaseController
 
         if ($this->asetk->save($post)) {
             session()->setFlashdata('success', 'Data berhasil di edit.');
-            return redirect()->to(base_url('admin/suratkeluar'));
+            return redirect()->to(base_url('admin/suratpinjam'));
         } else {
             session()->setFlashdata('error', 'Data Gagal di simpan.');
-            return redirect()->to(base_url('admin/suratkeluar'));
+            return redirect()->to(base_url('admin/suratpinjam'));
         }
     }
     public function savesuratpinjam()
@@ -495,7 +528,7 @@ class Suratpinjam extends BaseController
 
         $tgl = date("Y-m-d");
         $serial = $this->request->getVar('nomor');
-        $existingData = $this->suratkeluar->where('nomor', $serial)->first();
+        $existingData = $this->suratpinjam->where('nomor', $serial)->first();
         if (!$existingData) {
 
             $post = [
@@ -525,7 +558,7 @@ class Suratpinjam extends BaseController
 
             ];
 
-            if ($this->suratkeluar->save($post) && $this->aset->insertno_sp($postask)) {
+            if ($this->suratpinjam->save($post) && $this->aset->insertno_sp($postask)) {
 
                 session()->setFlashdata('success', 'Data berhasil di simpan surat keluar ' . $serial . 'MASA !');
                 return redirect()->to(base_url('admin/suratpinjam'));
@@ -555,7 +588,7 @@ class Suratpinjam extends BaseController
     }
     public function delete_sk($id)
     {
-        if ($this->suratkeluar->delete($id)) {
+        if ($this->suratpinjam->delete($id)) {
             session()->setFlashdata('success', 'Data berhasil di hapus.');
             return redirect()->to(base_url('admin/suratpinjam'));
         } else {
