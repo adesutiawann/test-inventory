@@ -357,7 +357,7 @@
                                                 <?php endforeach ?>
 
                                             </select>
-                                            <button class="btn btn-primary" type="button"><i class="fa-solid fa-plus text-white"></i></button>
+                                            <button data-bs-toggle="modal" data-bs-target="#exampleModalprosessor" class="btn btn-primary" type="button"><i class="fa-solid fa-plus text-white"></i></button>
                                         </div>
 
                                     </div>
@@ -374,7 +374,7 @@
                                                 <?php endforeach ?>
 
                                             </select>
-                                            <button class="btn btn-primary" type="button"><i class="fa-solid fa-plus text-white"></i></button>
+                                            <button data-bs-toggle="modal" data-bs-target="#exampleModalgenerasi" class="btn btn-primary" type="button"><i class="fa-solid fa-plus text-white"></i></button>
                                         </div>
 
                                     </div>
@@ -391,7 +391,7 @@
                                                 <?php endforeach ?>
 
                                             </select>
-                                            <button class="btn btn-primary" type="button"><i class="fa-solid fa-plus text-white"></i></button>
+                                            <button data-bs-toggle="modal" data-bs-target="#exampleModalpenyimpanan" class="btn btn-primary" type="button"><i class="fa-solid fa-plus text-white"></i></button>
                                         </div>
 
                                     </div>
@@ -407,7 +407,7 @@
                                                     <option value="<?= $gr->nama ?>" <?= ($gr->nama == $aset->ram) ? 'selected' : '' ?>><?= $gr->nama ?></option>
                                                 <?php endforeach ?>
                                             </select>
-                                            <button class="btn btn-primary" type="button"><i class="fa-solid fa-plus text-white"></i></button>
+                                            <button data-bs-toggle="modal" data-bs-target="#exampleModalram" class="btn btn-primary" type="button"><i class="fa-solid fa-plus text-white"></i></button>
                                         </div>
 
 
@@ -425,7 +425,7 @@
                                                 <?php endforeach ?>
 
                                             </select>
-                                            <button class="btn btn-primary" type="button"><i class="fa-solid fa-plus text-white"></i></button>
+                                            <button data-bs-toggle="modal" data-bs-target="#exampleModalrincian" class="btn btn-primary" type="button"><i class="fa-solid fa-plus text-white"></i></button>
                                         </div>
 
                                     </div>
@@ -442,7 +442,7 @@
                                                 <?php endforeach ?>
 
                                             </select>
-                                            <button class="btn btn-primary" type="button"><i class="fa-solid fa-plus text-white"></i></button>
+                                            <button data-bs-toggle="modal" data-bs-target="#exampleModalstatus" class="btn btn-primary" type="button"><i class="fa-solid fa-plus text-white"></i></button>
                                         </div>
 
                                     </div>
@@ -696,7 +696,7 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">New Manufacture</h1>
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Add Manufacture</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form action="<?= base_url('admin/manufacture/save') ?>" method="POST">
@@ -715,11 +715,11 @@
 <!-- tutup Modal -->
 
 <!-- Modal add prosessor-->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="exampleModalprosessor" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">New Manufacture</h1>
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Add Prosesor</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form action="<?= base_url('admin/prosesor/save') ?>" method="POST">
@@ -738,11 +738,11 @@
 <!-- tutup Modal -->
 
 <!-- Modal add generasi-->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="exampleModalgenerasi" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">New Generasi</h1>
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Add Generasi</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form action="<?= base_url('admin/generasi/save') ?>" method="POST">
@@ -761,11 +761,11 @@
 <!-- tutup Modal -->
 
 <!-- Modal add penyimpanan-->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="exampleModalpenyimpanan" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">New Penyimpanan</h1>
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Add Penyimpanan</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form action="<?= base_url('admin/hdd/save') ?>" method="POST">
@@ -784,11 +784,11 @@
 <!-- tutup Modal -->
 
 <!-- Modal add Ram-->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="exampleModalram" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">New Ram</h1>
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Add Ram</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form action="<?= base_url('admin/ram/save') ?>" method="POST">
@@ -807,11 +807,11 @@
 <!-- tutup Modal -->
 
 <!-- Modal add Rincian-->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="exampleModalrincian" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">New Rincian</h1>
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Add Rincian</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form action="<?= base_url('admin/rincian/save') ?>" method="POST">
@@ -829,11 +829,11 @@
 </div>
 <!-- tutup Modal -->
 <!-- Modal add setatus-->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="exampleModalstatus" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">New Setatus</h1>
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Add Setatus</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form action="<?= base_url('admin/setatus/save') ?>" method="POST">
