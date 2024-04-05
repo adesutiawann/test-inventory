@@ -596,6 +596,29 @@ class leptop extends BaseController
             return redirect()->to(base_url('admin/leptop/edit/' . $idlink));
         }
     }
+
+    public function saveeditmodalmanufactureview()
+    {
+
+        $tgl = date("Y-m-d");
+        $idlink = $this->request->getVar('id');
+
+        // $tgl= date("Y-m-d");
+        $post = [
+            'nama'            => $this->request->getVar('nama'),
+            'tgl'           =>  $tgl,
+            //'kelas'           => $this->request->getVar('kelas'),
+            //'tahun_manufacture' => $this->tp->tahun,
+        ];
+
+        if ($this->manufacture->save($post)) {
+            session()->setFlashdata('success', 'Data berhasil di simpan.');
+            return redirect()->to(base_url('admin/leptop/view/' . $idlink));
+        } else {
+            session()->setFlashdata('error', 'Data Sudah Terdaftar !');
+            return redirect()->to(base_url('admin/leptop/view/' . $idlink));
+        }
+    }
     public function saveedit()
     {
 

@@ -71,7 +71,11 @@
                         <div class="col-md-6  col-lg-4">
                             <div id="mainCarousel" class="carousel slide" data-bs-ride="carousel">
                                 <div class="carousel-inner">
-                                    <?php if ($images == null) : ?>
+                                    <?php
+
+                                    use Kint\Zval\Value;
+
+                                    if ($images == null) : ?>
                                         <div class=" center">
                                             <img src="<?= base_url() ?>/uploads/noimage.jpg ?>" class="d-block w-100 rounded-4 img-fluid" alt="Image ">
 
@@ -699,10 +703,11 @@
                 <h1 class="modal-title fs-5" id="exampleModalLabel">Add Manufacture</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form action="<?= base_url('admin/manufacture/save') ?>" method="POST">
+            <form action="<?= base_url('admin/leptop/saveeditmodalmanufactureview') ?>" method="POST">
 
                 <div class="modal-body">
-                    <input type="text" name="nama" class="form-control" required placeholder="Dell Inspiration">
+                    <input type="text" name="id" value="<?= $aset->serial ?>" class="form-control" required placeholder="Manufacture">
+                    <input type="text" name="nama" class="form-control" required placeholder="Manufacture">
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -725,7 +730,7 @@
             <form action="<?= base_url('admin/prosesor/save') ?>" method="POST">
 
                 <div class="modal-body">
-                    <input type="text" name="nama" class="form-control" required placeholder="Dell Inspiration">
+                    <input type="text" name="nama" class="form-control" required placeholder="Prosessor">
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -748,7 +753,7 @@
             <form action="<?= base_url('admin/generasi/save') ?>" method="POST">
 
                 <div class="modal-body">
-                    <input type="text" name="nama" class="form-control" required placeholder="Dell Inspiration">
+                    <input type="text" name="nama" class="form-control" required placeholder="Generasi">
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -771,7 +776,7 @@
             <form action="<?= base_url('admin/hdd/save') ?>" method="POST">
 
                 <div class="modal-body">
-                    <input type="text" name="nama" class="form-control" required placeholder="Dell Inspiration">
+                    <input type="text" name="nama" class="form-control" required placeholder="Penyimpanan">
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -794,7 +799,7 @@
             <form action="<?= base_url('admin/ram/save') ?>" method="POST">
 
                 <div class="modal-body">
-                    <input type="text" name="nama" class="form-control" required placeholder="Dell Inspiration">
+                    <input type="text" name="nama" class="form-control" required placeholder="Ram">
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -817,7 +822,7 @@
             <form action="<?= base_url('admin/rincian/save') ?>" method="POST">
 
                 <div class="modal-body">
-                    <input type="text" name="nama" class="form-control" required placeholder="Dell Inspiration">
+                    <input type="text" name="nama" class="form-control" required placeholder="Rincian">
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -833,13 +838,13 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabel">Add Setatus</h1>
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Add Status</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <form action="<?= base_url('admin/setatus/save') ?>" method="POST">
 
                 <div class="modal-body">
-                    <input type="text" name="nama" class="form-control" required placeholder="Dell Inspiration">
+                    <input type="text" name="nama" class="form-control" required placeholder="Status">
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
