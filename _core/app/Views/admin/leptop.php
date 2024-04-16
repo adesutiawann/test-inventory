@@ -94,13 +94,13 @@ $menu = $aktiv;
                 <thead>
                     <tr>
                         <th>NO.</th>
-                        <th>QRCODE</th>
+
                         <th>Serial</th>
                         <th>Manufacture</th>
                         <th>Spesifikasi</th>
                         <th>Status</th>
                         <th>Pengguna</th>
-                        <th>Action</th>
+                        <th width="12%">Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -112,7 +112,7 @@ $menu = $aktiv;
                     ?>
                         <tr class="table-<?= ($value->kondisi == 'OK') ? 'success ' : (($value->kondisi == 'RUSAK') ? 'warning' : 'danger') ?>">
                             <td><?= $no++ ?></td>
-                            <td>
+                            <td hidden>
                                 <div class="imgBox">
                                     <img src="" width="40%" class="qrImage">
                                 </div>
@@ -121,7 +121,7 @@ $menu = $aktiv;
                                 </div>
                             </td>
                             <td><b><?= $value->serial ?></b><br>
-                                In :
+                                In :_
                                 <span class="text-success">
                                     <?= $value->tgl_masuk ?><br>
                                 </span>Out :
@@ -162,16 +162,17 @@ $menu = $aktiv;
                                 </span>
                             </td>
 
-                            <td>
-
-
-                                <a href="<?= base_url('admin/leptop/view/' . $value->serial) ?>" <?= ($admin->level == '3') ? 'hidden' : '' ?> class="btn btn-sm btn-primary text-white mr-2">
+                            <td class="auto">
+                                <a href="<?= base_url('admin/leptop/view/' . $value->serial) ?>" <?= ($admin->level == '3') ? 'hidden' : '' ?> class="btn btn-xm btn-primary text-white mr-2">
                                     <i class="fa-solid fa-circle-info"></i>
+                                </a>
+                                <a href="<?= base_url('admin/leptop/edit/' . $value->serial) ?>" class="btn btn-sm btn-warning text-white ">
+                                    <i class="fa-solid fa-pen-to-square"></i>
                                 </a>
 
 
 
-                                <a href="<?= base_url("admin/leptop/delete/{$value->id}") ?>" class="btn btn-sm btn-danger text-white hapusDataBtn" data-id="<?php echo $value->serial; ?>">
+                                <a href="<?= base_url("admin/leptop/delete/{$value->id}") ?>" class="btn btn-xm btn-danger text-white hapusDataBtn" data-id="<?php echo $value->serial; ?>">
                                     <i class="fa-solid fa-trash-can"></i>
                                 </a>
 
