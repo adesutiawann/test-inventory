@@ -722,17 +722,24 @@
                 <h1 class="modal-title fs-5" id="exampleModalLabel">Add Manufacture</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form action="<?= base_url('admin/leptop/saveeditmodalmanufactureview') ?>" method="POST">
+            <div class="modal-body">
+                <form action="<?= base_url('admin/leptop/saveeditmodalmanufactureview') ?>" method="POST">
 
-                <div class="modal-body">
-                    <input type="text" name="id" value="<?= $aset->serial ?>" class="form-control" required placeholder="Manufacture">
-                    <input type="text" name="nama" class="form-control" required placeholder="Manufacture">
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Save changes</button>
-                </div>
-            </form>
+                    <div class="col-md-11 col-sm-6 col-xs-10 mb-2">
+                        <input type="text" name="id" value="<?= $aset->serial ?>" class="form-control" required placeholder="Manufacture">
+                        <input type="text" name="nama" class="form-control" required placeholder="Manufacture">
+                    </div>
+                    <div class="col-md-1 col-sm-3 text-end mb-2 ">
+                        <a href="<?= base_url('admin/manufacture') ?>" class="text-info">
+                            <i class="fa-solid fa-file-circle-question"></i>
+                        </a>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save changes</button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 </div>
@@ -746,16 +753,23 @@
                 <h1 class="modal-title fs-5" id="exampleModalLabel">Add Prosesor</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form action="<?= base_url('admin/prosesor/save') ?>" method="POST">
+            <div class="modal-body">
+                <form action="<?= base_url('admin/prosesor/save') ?>" method="POST">
 
-                <div class="modal-body">
-                    <input type="text" name="nama" class="form-control" required placeholder="Prosessor">
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary">Save changes</button>
-                </div>
-            </form>
+                    <div class="col-md-11 col-lg-11 col-sm-6 col-xs-10 mb-2">
+                        <input type="text" name="nama" class="form-control" required placeholder="Prosessor">
+                    </div>
+                    <div class="col-md-1 col-lg-1 col-sm-3 text-end mb-2 ">
+                        <a href="<?= base_url('admin/manufacture') ?>" class="text-info">
+                            <i class="fa-solid fa-file-circle-question"></i>
+                        </a>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Save changes</button>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 </div>
